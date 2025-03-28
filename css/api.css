@@ -1,0 +1,266 @@
+
+html,body{
+    border: 0;
+    margin: 0;
+    padding: 0;
+    font-size: 92%;
+    box-sizing: border-box;
+
+
+}
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 20px;
+    color: #333;
+    /*width: 1000px;*/
+    /*margin: 0 auto;*/
+}
+
+
+#api{
+    border: 0;
+    margin: 0;
+    padding: 0;
+}
+
+.app-header{
+    height: 50px;
+    width: 100%;
+    background-color: #050202;
+    /*background-color: #dc8ff1;*/
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.app-header-homepagetitle{
+    display: block;
+    width: 1000px;
+    margin: 0 auto;
+    height: 50px;
+    line-height: 50px;
+
+    /*background-color: purple;*/
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.app-header-homepagetitle span{
+    color: white;
+    font-family: "Microsoft Sans Serif";
+    font-size: 1.2rem;
+    z-index: 100;
+    font-weight: lighter;
+}
+.header-nav{
+    /*float: right;*/
+    /*background: blue;*/
+    width: 100%;
+    font-size: 1rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    /*margin-right: 20px;*/
+}
+.header-nav a{
+    text-decoration: none;
+    display: inline-block;
+    flex:1;
+    color: white;
+    /*letter-spacing: 1px;*/
+    text-align:center;
+    list-style-type: none;
+}
+.header-nav a:hover{
+    /*background-color: #f6c00e;*/
+    background-color: orange;
+    cursor: pointer;
+}
+
+
+
+.api-class-container{
+    display: inline-block;
+    height: calc(100vh - 80px);
+    overflow-y: auto;
+    position: fixed;
+    top:50px;
+    left: 10px;
+    width: 200px;
+    overflow-x: hidden;
+    /*background-color: red;*/
+}
+.api-class-container li{
+    list-style-type: none;
+    cursor: pointer;
+}
+.api_class_name {
+    padding: 4px 2px;
+    /*margin: 4px 0;*/
+    background: #f8f9fa;
+    /*border-radius: 4px;*/
+    transition: all 0.2s;
+    /*background: blue;*/
+
+    list-style-type: none;
+    line-height: 3rem;
+    /*width: 80%;*/
+    padding-left: 15px;
+    font-weight: lighter;
+    font-size: 1.1rem;
+    color: #3498db;
+}
+
+.api_class_name:hover {
+    background: #e9ecef;
+    transform: translateX(5px);
+    font-weight: bolder;
+}
+
+/* 选中状态 */
+.api_class_name.selected {
+    background: #007bff;
+    color: white;
+    font-weight: bold;
+}
+
+.api_class_name.active {
+    background-color: #007bff;
+    color: white;
+    border-left: 4px solid #ffdd00;
+}
+
+
+
+.api-detail{
+    width: 900px;
+    padding-left: 160px;
+    padding-top:40px;
+    /*background-color: blue;*/
+    box-sizing: content-box;
+    margin: 0 auto
+    /*margin: 200px;*/
+}
+
+ul{
+    /*width: 100%;*/
+}
+li{
+    /*list-style-type: none;*/
+    /*line-height: 3rem;*/
+    /*width: 80%;*/
+    /*padding-left: 20px;*/
+    /*font-weight: lighter;*/
+    /*font-size: 1.1rem;*/
+    /*color: #3498db;*/
+}
+p{
+    line-height: 1.5rem;
+}
+
+
+
+
+
+
+h3 {
+    color: #16a085;
+}
+.class-name {
+    background-color: #f8f9fa;
+    padding: 2px 5px;
+    border-radius: 3px;
+    font-family: monospace;
+    color: #c7254e;
+    font-weight: bold;
+}
+
+
+.param-name {
+    font-style: italic;
+}
+.return {
+    font-weight: bold;
+    color: #27ae60;
+}
+code {
+    background-color: #f8f9fa;
+    padding: 2px 4px;
+    border-radius: 3px;
+    font-family: monospace;
+    color: #c7254e;
+}
+pre {
+    background-color: #f8f9fa;
+    padding: 10px;
+    border-radius: 5px;
+    overflow-x: auto;
+}
+.feature-list {
+    columns: 2;
+    column-gap: 20px;
+}
+.feature-item {
+    break-inside: avoid;
+    margin-bottom: 10px;
+}
+.note {
+    background-color: #fff8e1;
+    padding: 10px;
+    border-radius: 5px;
+    border-left: 4px solid #ffc107;
+    margin: 15px 0;
+}
+
+
+
+
+h1 {
+    color: #2c3e50;
+    border-bottom: 2px solid #3498db;
+    padding-bottom: 10px;
+}
+h2 {
+    color: #2980b9;
+    margin-top: 30px;
+    border-left: 4px solid #3498db;
+    padding-left: 10px;
+}
+
+.method {
+    background-color: #f8f9fa;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    border-left: 3px solid #6c757d;
+}
+.method-name {
+    font-weight: bold;
+    color: #0066cc;
+}
+.method-desc {
+    margin-top: 5px;
+    color: #6c757d;
+}
+.param {
+    margin-left: 20px;
+    font-family: monospace;
+}
+.app-footer{
+    height: 30px;
+    width: 100%;
+    background-color: #eeeeea;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

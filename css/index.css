@@ -1,0 +1,260 @@
+html,body{
+    border: 0;
+    margin: 0;
+    padding: 0;
+    font-size: 90%;
+    box-sizing: border-box;
+}
+#app{
+    border: 0;
+    margin: 0;
+    padding: 0;
+}
+
+.app-header{
+    height: 50px;
+    width: 100%;
+    background-color: #050202;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.app-header-homepagetitle{
+    display: block;
+    width: 800px;
+    margin: 0 auto;
+    height: 50px;
+    line-height: 50px;
+
+    /*background-color: purple;*/
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.app-header-homepagetitle span{
+    color: white;
+    font-family: "Microsoft Sans Serif";
+    font-size: 1rem;
+    z-index: 100;
+    font-weight: lighter;
+}
+.app-header-menu{
+    display: block;
+    width: 800px;
+    margin: 0 auto;
+    height: 50px;
+    line-height: 50px;
+    /*background-color: purple;*/
+}
+.app-header-menu ul{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.app-header-menu ul li {
+    list-style-type: none;
+    display: inline-block;
+    /*width: 40%;*/
+    min-width: 22%;
+    max-width: 25%;
+    font-size: 1rem;
+    margin-bottom: 0;
+    font-family: "Microsoft Sans Serif";
+    color: white;
+    /*background-color: red;*/
+    /*z-index: 100;*/
+}
+.app-header-menu ul li:hover{
+    cursor: pointer;
+}
+
+#release-content-container{
+    width: 1000px;
+    box-sizing: border-box;
+    margin: 0 auto;
+    margin-top: 60px;
+    /*background-color: red;*/
+
+}
+
+.release-content{
+    min-height: 5vh;
+    margin-bottom: 10px;
+    /*border-bottom: 2px solid black;*/
+    margin-left: 100px;
+}
+
+
+ul > li{
+    line-height: 1.8rem;
+}
+.remove_list_default_type{
+    list-style-type: none;
+    line-height: 1.8rem;
+}
+.update-time{
+    color: #171515;
+    font-size: 0.6rem;
+}
+
+a {
+    all: unset;
+}
+a:link{
+    color: black;
+}
+/*a:visited{*/
+/*    color:red;*/
+/*}*/
+a:hover{
+    /*color:yellow;*/
+    font-weight: bolder;
+    cursor: pointer;
+}
+/*a:active {*/
+/*    color: red;*/
+/*}*/
+a{
+    text-decoration: none;
+}
+
+
+
+.sidebar{
+    /*height: 80vh;*/
+    max-height: 85vh;
+    width:80px;
+    background-color: #f7f7f8;
+    /*display: inline-block;*/
+    float: left;
+    position: sticky;
+    top:60px;
+    /*border:1px solid blue;*/
+    /*overflow: hidden;*/
+}
+
+.sidebar ul {
+    list-style-type: none;
+    padding: 0;
+    position: relative;
+    left:0;
+    top:0;
+}
+
+.sidebar ul li {
+    width:80px;
+    position: relative;
+    padding: 10px;
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 1rem;
+    font-style: italic;
+    color: grey;
+    text-align: center;
+    /*width: 100%;*/
+    /*background-color: blue;*/
+}
+
+
+.sidebar ul li a.active {
+    /*background-color: red;*/
+    font-weight: bolder;
+    color: midnightblue;
+}
+
+
+
+.styled-table {
+    border-collapse: collapse;
+    margin: 25px 0;
+    font-size: 0.9em;
+    min-width: 400px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+.styled-table thead tr {
+    /*background-color: #009879;*/
+    background-color: #878989;
+    color: #ffffff;
+    text-align: left;
+}
+
+.styled-table th{
+    padding: 2px 1px;
+    border: 1px solid #dddddd;
+}
+.styled-table td {
+    padding: 2px 8px;
+    border: 1px solid #dddddd;
+}
+
+.styled-table tbody tr {
+    border-bottom: 1px solid #dddddd;
+}
+
+.styled-table tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+}
+
+.styled-table tbody tr:last-of-type {
+    /*border-bottom: 2px solid #009879;*/
+}
+
+.styled-table tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+
+/*.table-title{*/
+/*    font-size: 0.8rem;*/
+/*    text-align: center;*/
+/*}*/
+.table-title th{
+    font-size: 0.8rem;
+    text-align: center;
+}
+.release-version{
+    font-size: 0.8rem;
+    text-align: center;
+    color: #0642bd;
+    font-weight: bold;
+}
+
+.release-date{
+    font-size: 0.8rem;
+    text-align: center;
+    padding: 5px 0;
+}
+.release-md5sum{
+    font-size: 0.8rem;
+    text-align: center;
+    padding: 5px 0;
+}
+.download-button {
+    padding: 4px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    color: #0856fa;
+    font-size: 0.8rem;
+
+}
+.download-button:hover {
+    cursor: pointer;
+}
+
+.app-footer{
+    height: 30px;
+    width: 100%;
+    background-color: #eeeeea;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

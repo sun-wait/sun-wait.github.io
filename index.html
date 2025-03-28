@@ -1,103 +1,227 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Python 3.12.9 环境更新说明</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-            margin: 20px;
-        }
-        h1, h2, h3 {
-            color: #333;
-        }
-        code {
-            background-color: #f4f4f4;
-            padding: 2px 5px;
-            border-radius: 3px;
-            font-family: monospace;
-        }
-        ul {
-            list-style-type: square;
-            margin-left: 20px;
-        }
-        .note {
-            background-color: #f9f9f9;
-            border-left: 4px solid #ccc;
-            padding: 10px;
-            margin: 10px 0;
-        }
-    </style>
+
+    <title>Release page of VCU automation solution</title>
+    <link rel="stylesheet" type="text/css" href="./css/style.css" />
+    <link rel="stylesheet" type="text/css" href="./css/animate.css" />
+    <!--        <link rel="stylesheet" type="text/css" href="./css/elementui-index.css" />-->
 </head>
 <body>
+<div id="app">
+    <div class="app-header">
+        <div class="app-header-homepagetitle">
+                <span class="header-nav">
+                    <a href="./index.html" style="background-color: #f6c00e;"><span>Homepage</span></a>
+                    <a href="./html/overview.html"><span>Overview</span></a>
+                    <a href="./html/api.html"><span>API</span></a>
 
-<h1>Python 3.12.9 环境更新说明</h1>
 
-<p>基于 Python 3.12.9 环境，集成了 Python 版本的 <code>customLib</code>，主要适配项包括：</p>
+<!--                    <li><a href="./html/overview.html">Overview</a></li>-->
+<!--                    <li><a href="./html/api.html">API Doc</a></li>-->
 
-<h2>1. 第三方库的重新筛选</h2>
-<ul>
-    <li>原来 <code>requirements</code> 文件中第三方库的重新筛选，必须用的会保留，其他的开发者可以使用虚拟环境开发调试，并且以后请尽量使用 Python 原生库。</li>
-</ul>
+                </span>
+        </div>
 
-<h2>2. uiautomator2 更新至 3.2.8 版本</h2>
-<ul>
-    <li><code>connectDevice</code> 接口内部变更</li>
-    <li><code>swipe</code> 滑动接口变更</li>
-    <li><code>scroll_to_element_by_xpath</code> 接口变更</li>
-    <li>添加 <code>clear_element_text_by_resourceId</code>，之前的 <code>by_xpath</code> 不再支持</li>
-    <li><code>get_element_all_info_by_resourceid</code> 接口变更</li>
-    <li><code>show_toast</code> 接口不再支持</li>
-    <li>添加 <code>get_checked_info_by_resource_id</code> 接口，替换之前中科的 AT 接口</li>
-    <li><code>watcher</code>：由于内部轮询机制，无法立即停止 <code>watcher</code>，需要上层在 <code>callback</code> 方法中使用标志位来保证 <code>callback</code> 只执行一次</li>
-</ul>
+    </div>
+<!--    <div class="app-header">-->
+<!--        <div class="app-header-homepagetitle">-->
+<!--            <span>Release page for the automation solution of VCU simulation on bench</span>-->
+<!--            <div class="header-nav">-->
+<!--                <ul>-->
+<!--                    <li>Overview</li>-->
+<!--                    <li>API文档</li>-->
+<!--                </ul>-->
+<!--            </div>-->
+<!--        </div>-->
 
-<h2>3. 安卓控件元素信息捕获</h2>
-<p>使用新引入的 <code>uiautodev</code> 库，在新的 Python 环境下，执行 <code>python -m uiautodev</code> 调起页面进行开发。</p>
+<!--    </div>-->
 
-<h2>4. 第三方库升级</h2>
-<ul>
-    <li><code>paramiko</code> 升级到了 3.5.0</li>
-    <li><code>openpyxl</code> 升级到了 3.1.0，以免运行时报错</li>
-</ul>
 
-<h2>5. 代码语法适配</h2>
-<ul>
-    <li><code>invalid escape sequence</code> 报错：在代码中在转义字符串前面添加 <code>r</code></li>
-    <li><code>FutureWarning: DataFrame.applymap has been deprecated. Use DataFrame.map instead.</code> 警告：需要调用者更新 <code>pandas</code> 接口</li>
-</ul>
+    <div id="release-content-container">
+            <div class="release-content">
 
-<h2>6. 一键部署脚本更新</h2>
-<p>修改了下载 2 个代码分仓的逻辑，并会自动添加 <code>adb</code> 和新 Python 环境的环境变量；执行前需要将 <code>GIT</code> 安装目录下的 <code>bin</code> 添加到 <code>PATH</code> 环境变量。</p>
 
-<h2>TODO</h2>
-<ul>
-    <li>需要大家适配各自的 <code>case</code></li>
-    <li>继续对应和适配上面第 5 点中因为 Python 环境变更出现的问题</li>
-</ul>
+                <section id="overview">
+                    <h2>Welcome</h2>
+<!--                    <p>Release page for the automation solution of VCU test on bench.</p>-->
+<!--                    <p>This page is used for the release for the automation solution of VCU test on bench, you can download the automation solution software packages from release info page,-->
+<!--                        and deploy automation environment on your own computer with the guide from the overview page, and more, you can develop more effective and more customed scripts with the-->
+<!--                        help from the API page.-->
+<!--                    </p>-->
+                    <p>This page is used for the release of automation solutions for VCU bench testing. You can download the automation solution software package from the release information page and deploy the automation environment on your own computer using the guidelines on the overview page. In addition, you can also search for relevant APIs on the API page to help you develop automated testing scripts that meet specific needs.</p>
+<!--                    <p>The LifeCycle module provides decorators to manage test scenario setup, execution, and teardown phases. It includes utilities for logging, file management, and thread monitoring.</p>-->
+                    <p>此页面用于VCU台架测试的自动化解决方案的发布，您可以从发布信息页面下载自动化解决方案软件包，并使用概览页面中的指南在您自己的计算机上部署自动化环境。此外，还可以在API页面中检索相关API帮助您开发满足特定需求的自动化测试脚本。</p>
+                </section>
 
-<h2>手动更新环境步骤</h2>
-<ol>
-    <li>更新 <code>pycharm</code> 版本到 2024.3</li>
-    <li>如果本地 <code>case</code> 库不存在，下载 <code>automation_cases</code> 库，即执行 <code>git clone https://xxxxxx@info-gerrit.apps.saic-gm.com/a/automationCase ./automation_cases</code> 指令，其中 <code>xxxxxx</code> 为用户账号</li>
-    <li>下载 <code>automation_lib</code> 库，建议和之前的 <code>automation_cases</code> 目录在同一目录下，即执行 <code>git clone https://xxxxxx@info-gerrit.apps.saic-gm.com/a/automationLib ./automation_lib</code> 指令，其中 <code>xxxxxx</code> 为用户账号</li>
-    <li>在 <code>pycharm</code> 中分别导入 <code>case</code> 和 <code>lib</code> 库，选择新的 Python 执行器，路径为 <code>automation_lib/python-3.12.9-embed-amd64/python.exe</code></li>
-    <li>根据具体车型信息更新 <code>config</code> 文件</li>
-</ol>
+                <section id="releases">
+                    <h2>Release</h2>
 
-<h2>bat 脚本更新步骤</h2>
-<ol>
-    <li>更新 <code>pycharm</code> 版本到 2024.3</li>
-    <li>执行“桌面自动化部署更新.bat”脚本。磁盘目前指定为 D 盘，如需变更盘符可以直接修改代码</li>
-    <li>在 <code>pycharm</code> 中分别导入 <code>case</code> 和 <code>lib</code> 库，选择新的 Python 执行器，路径为 <code>automation_lib/python-3.12.9-embed-amd64/python.exe</code></li>
-    <li>根据具体车型信息更新 <code>config</code> 文件</li>
-</ol>
+                </section>
 
-<div class="note">
-    <strong>注意：</strong> 请确保在执行脚本前，已将 <code>GIT</code> 安装目录下的 <code>bin</code> 添加到 <code>PATH</code> 环境变量。
+
+
+                <div class="grid-table" id="table-header" >
+                    <div class="grid-header">Release date</div>
+                    <div class="grid-header">Release version</div>
+                    <div class="grid-header">md5</div>
+                    <div class="grid-header">URL</div>
+                    <div class="grid-header">Description</div>
+
+                </div>
+
+
+
+
+<!--                <div class="grid-table" id="Version_0_4" >-->
+<!--                    <div class="grid-item common-item">2025-03-28</div>-->
+<!--                    <div class="grid-item common-item">V0.4</div>-->
+<!--                    <div class="grid-item common-item">c2d99382e2aa8ea8ad4887273ac5b658</div>-->
+<!--                    <div class="grid-item"><a href="https://peedp.saic-gm.com/ccm/web/projects/VCS_Info4.0_High_Platform_PATAC_RTC#action=com.ibm.team.scm.browseElement&workspaceItemId=_ewzjAL8DEemrVdX-kVROUQ&componentItemId=_eMVJwO8jEemB8pkZYRolcA&itemType=com.ibm.team.scm.Folder&itemId=_25FM8P5WEe-imMtnq71XVQ">-->
+<!--                        <button class="download-button">下载 V0.1</button></a></div>-->
+<!--                    <div class="grid-item">-->
+<!--                        <div class="description" style="float: left;text-align: left">-->
+<!--                            <li>0.初版本发布;</li>-->
+<!--                            <li>1.实现can报文的发送、接收、停发、报文录制和对手件模拟的业务;</li>-->
+<!--                            <li>2.实现仪表Guage,Telltale,Warning,Chime等各模块的信号封装，可以使用MessageSender来按需调用;</li>-->
+<!--                            <li>3.基于uiautomator2，封装了presenter、page、locator、model类实现安卓UI自动化;</li>-->
+<!--                            <li>4.封装slog，gmlog，dlt，serail等common日志抓取;</li>-->
+<!--                            <li>5.封装Audio日志、蓝牙日志、Carplay日志、语音导航等Feature日志的抓取;</li>-->
+<!--                            <li>6.封装minidump，guestdump，emtrace, coredump等System日志的抓取;</li>-->
+<!--                            <li>7.提供了性能的专项测试，包括冷暖热启动，帧率测试，多场景性能测试;</li>-->
+<!--                            <li>8.提供了音频处理、图片处理、远程指令执行、文件操作等更多的通用接口;</li>-->
+<!--                        </div>-->
+
+<!--                    </div>-->
+<!--                </div>-->
+
+
+
+<!--                <div class="grid-table" id="Version_0_3" >-->
+<!--                    <div class="grid-item common-item">2025-03-28</div>-->
+<!--                    <div class="grid-item common-item">V0.3</div>-->
+<!--                    <div class="grid-item common-item">c2d99382e2aa8ea8ad4887273ac5b658</div>-->
+<!--                    <div class="grid-item"><a href="https://peedp.saic-gm.com/ccm/web/projects/VCS_Info4.0_High_Platform_PATAC_RTC#action=com.ibm.team.scm.browseElement&workspaceItemId=_ewzjAL8DEemrVdX-kVROUQ&componentItemId=_eMVJwO8jEemB8pkZYRolcA&itemType=com.ibm.team.scm.Folder&itemId=_25FM8P5WEe-imMtnq71XVQ">-->
+<!--                        <button class="download-button">下载 V0.1</button></a></div>-->
+<!--                    <div class="grid-item">-->
+<!--                        <div class="description" style="float: left;text-align: left">-->
+<!--                            <li>0.初版本发布;</li>-->
+<!--                            <li>1.实现can报文的发送、接收、停发、报文录制和对手件模拟的业务;</li>-->
+<!--                            <li>2.实现仪表Guage,Telltale,Warning,Chime等各模块的信号封装，可以使用MessageSender来按需调用;</li>-->
+<!--                            <li>3.基于uiautomator2，封装了presenter、page、locator、model类实现安卓UI自动化;</li>-->
+<!--                            <li>4.封装slog，gmlog，dlt，serail等common日志抓取;</li>-->
+<!--                            <li>5.封装Audio日志、蓝牙日志、Carplay日志、语音导航等Feature日志的抓取;</li>-->
+<!--                            <li>6.封装minidump，guestdump，emtrace, coredump等System日志的抓取;</li>-->
+<!--                            <li>7.提供了性能的专项测试，包括冷暖热启动，帧率测试，多场景性能测试;</li>-->
+<!--                            <li>8.提供了音频处理、图片处理、远程指令执行、文件操作等更多的通用接口;</li>-->
+<!--                        </div>-->
+
+<!--                    </div>-->
+<!--                </div>-->
+
+
+<!--                <div class="grid-table" id="Version_0_2" >-->
+<!--                    <div class="grid-item common-item">2025-03-28</div>-->
+<!--                    <div class="grid-item common-item">V0.2</div>-->
+<!--                    <div class="grid-item common-item">c2d99382e2aa8ea8ad4887273ac5b658</div>-->
+<!--                    <div class="grid-item"><a href="https://peedp.saic-gm.com/ccm/web/projects/VCS_Info4.0_High_Platform_PATAC_RTC#action=com.ibm.team.scm.browseElement&workspaceItemId=_ewzjAL8DEemrVdX-kVROUQ&componentItemId=_eMVJwO8jEemB8pkZYRolcA&itemType=com.ibm.team.scm.Folder&itemId=_25FM8P5WEe-imMtnq71XVQ">-->
+<!--                        <button class="download-button">下载 V0.1</button></a></div>-->
+<!--                    <div class="grid-item">-->
+<!--                        <div class="description" style="float: left;text-align: left">-->
+<!--                            <li>0.初版本发布;</li>-->
+<!--                            <li>1.实现can报文的发送、接收、停发、报文录制和对手件模拟的业务;</li>-->
+<!--                            <li>2.实现仪表Guage,Telltale,Warning,Chime等各模块的信号封装，可以使用MessageSender来按需调用;</li>-->
+<!--                            <li>3.基于uiautomator2，封装了presenter、page、locator、model类实现安卓UI自动化;</li>-->
+<!--                            <li>4.封装slog，gmlog，dlt，serail等common日志抓取;</li>-->
+<!--                            <li>5.封装Audio日志、蓝牙日志、Carplay日志、语音导航等Feature日志的抓取;</li>-->
+<!--                            <li>6.封装minidump，guestdump，emtrace, coredump等System日志的抓取;</li>-->
+<!--                            <li>7.提供了性能的专项测试，包括冷暖热启动，帧率测试，多场景性能测试;</li>-->
+<!--                            <li>8.提供了音频处理、图片处理、远程指令执行、文件操作等更多的通用接口;</li>-->
+<!--                        </div>-->
+
+<!--                    </div>-->
+<!--                </div>-->
+
+
+                <div class="grid-table" id="Version_0_1" >
+                    <div class="grid-item common-item">2025-03-28</div>
+                    <div class="grid-item common-item">V0.1 (Initial release)</div>
+                    <div class="grid-item common-item">c2d99382e2aa8ea8ad4887273ac5b658</div>
+                    <div class="grid-item"><a href="https://peedp.saic-gm.com/ccm/web/projects/VCS_Info4.0_High_Platform_PATAC_RTC#action=com.ibm.team.scm.browseElement&workspaceItemId=_ewzjAL8DEemrVdX-kVROUQ&componentItemId=_eMVJwO8jEemB8pkZYRolcA&itemType=com.ibm.team.scm.Folder&itemId=_25FM8P5WEe-imMtnq71XVQ">
+                        <button class="download-button">下载 V0.1</button></a></div>
+                    <div class="grid-item">
+                        <div class="description" style="float: left;text-align: left">
+<!--                            <li>0.初版本发布;</li>-->
+                            <li>1.实现can报文的发送、接收、停发、报文录制和对手件模拟的业务;</li>
+                            <li>2.实现仪表Guage,Telltale,Warning,Chime等各模块的信号封装，可以使用MessageSender来按需调用;</li>
+                            <li>3.基于uiautomator2，封装了presenter、page、locator、model类实现安卓UI自动化;</li>
+                            <li>4.对slog，gmlog，dlt，serail等common日志抓取实现接口封装;</li>
+                            <li>5.对Audio日志、蓝牙日志、Carplay日志、语音导航等Feature日志的抓取实现接口封装;</li>
+                            <li>6.对minidump，guestdump，emtrace, coredump等System日志的抓取实现接口封装;</li>
+                            <li>7.提供了性能专项测试接口，包括冷暖热启动，帧率测试，多场景性能测试;</li>
+                            <li>8.提供了音频处理、图片处理、远程指令执行、文件操作等更多的通用接口;</li>
+                        </div>
+
+                    </div>
+                </div>
+
+
+
+
+
+
+
+
+
+
+
+            </div>
+
+
+
+
+
+    </div>
+
+    <div class="app-footer">
+        <div class="copyright-container">
+            <span class="copyright">© - 2025 PATAC. All Rights Reserved.</span>
+        </div>
+    </div>
 </div>
-
 </body>
+
+<script src="./js/jquery.js" type="text/javascript"></script>
+<!--<script src="./js/vue.min.js" type="text/javascript"></script>-->
+<!--<script src="./js/axios.min.js" type="text/javascript"></script>-->
+<!--<script src="./js/elementui-index.js" type="text/javascript"></script>-->
+
+
+
+
+<script>
+
+
+
+
+
+    var now = new Date();
+    var year = now.getFullYear()
+    // var hours = now.getHours();
+    // var minutes = now.getMinutes();
+    // var seconds = now.getSeconds();
+    // console.log(hours + ":" + minutes + ":" + seconds);
+    $('.copyright').text(`© - ${year} PATAC. All Rights Reserved.`)
+    const homepage_url = window.location.href
+    console.log(homepage_url)
+    sessionStorage.setItem("homepage_url",homepage_url)
+
+
+</script>
+
+<style>
+
+
+
+</style>
 </html>

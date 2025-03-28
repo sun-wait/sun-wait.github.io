@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>File Sharing</title>
+<!--    <link rel="icon" type="image/x-ico" href="./icon-8.png" />-->
+    <link rel="stylesheet" type="text/css" href="../css/index.css" />
+    <link rel="stylesheet" type="text/css" href="../css/animate.css" />
+    <link rel="stylesheet" type="text/css" href="../css/elementui-index.css" />
+    <!-- <link rel="stylesheet" type="text/css" href="https://unpkg.com/animate.css@3.5.2/animate.min.css" /> -->
+  </head>
+  <body>
+<!--    <div id="upper-left-nav" onclick="wakeupVA()">唤</div>-->
+<!--    <div id="lower-left-nav" onclick="returnToLastPage()">返</div>-->
+<!--    <div id="top-nav" onclick="releaseFilterResult()"> </div>-->
+
+    <div id="app">
+      <div id="app-container">
+
+        <h5>Guage:</h5>
+        <el-button type="primary" disabled="true">speed</el-button>
+        <el-button type="primary" disabled="true">gear</el-button>
+        <hr/>
+        <h5>PowerMode:</h5>
+<!--        <span style="color:red;">Power:</span>-->
+        <el-button-group>
+          <el-button type="primary" @click="handleClick('OFF')">OFF</el-button>
+          <el-button type="primary" @click="handleClick('ACC')">ACC</el-button>
+          <el-button type="primary" @click="handleClick('RUN')">RUN</el-button>
+          <el-button type="primary" @click="handleClick('Propulsion')">Propulsion</el-button>
+        </el-button-group>
+<!--        <span style="color:red;">Startup:</span>-->
+        <el-button-group>
+          <el-button type="success" @click="handleClick('STR')">STR</el-button>
+          <el-button type="success" @click="handleClick('Cold')">Cold</el-button>
+          <el-button type="success" @click="handleClick('Pullback')">Pullback</el-button>
+        </el-button-group>
+
+<!--        <span style="color:red;">Door:</span>-->
+        <el-button-group>
+          <el-button type="warning" @click="handleClick('Door_On')">On</el-button>
+          <el-button type="warning" @click="handleClick('Door_Off')">Off</el-button>
+        </el-button-group>
+
+<!--        <br/>-->
+<!--        <span style="color:red;">SystemState:</span>-->
+        <el-button-group>
+          <el-button type="info" @click="handleClick('SystemState')">Get SystemState</el-button>
+        </el-button-group>
+        <span class="system_state" style="color:red;">--</span>
+
+        <hr/>
+
+        <h5>Log:</h5>
+        <el-button type="primary" @click="handleClick('get_log_list')">获取log信息</el-button>
+
+        <hr/>
+
+        <h5>脚本任务:</h5>
+        <el-button type="primary" @click="handleClick('get_project_structure')">获取脚本结构树</el-button>
+        <el-button type="primary" @click="handleClick('run_script_task')">下发脚本任务</el-button>
+
+        <hr/>
+
+
+        <h5>标定:</h5>
+        <el-button type="primary" @click="handleClick('get_calibration_value')">读取标定</el-button>
+        <el-button type="primary" @click="handleClick('modify_calibration_value')">更改标定</el-button>
+
+        <hr/>
+
+        <h5>USB刷机:</h5>
+        <el-button type="primary" @click="handleClick('perform_usb_update')">USB刷机</el-button>
+
+      </div>
+    </div>
+  </body>
+
+<script src="jquery.js" type="text/javascript"></script>
+<script src="vue.min.js" type="text/javascript"></script>
+<script src="axios.min.js" type="text/javascript"></script>
+<script src="elementui-index.js" type="text/javascript"></script>
+
+
+
+
+<script>
+  var vm = new Vue({
+    el: '#app',
+    data: {
+      site: "菜鸟教程",
+      url: "www.runoob.com",
+      alexa: "10000"
+    },
+    methods: {
+      details: function() {
+        return  this.site + " - 学的不仅是技术，更是梦想！";
+      }
+    }
+  })
+
+
+  function handleClick(event){
+    console.log(event)
+    const data = {
+      cmd: event.toString().toUpperCase()
+    };
+
+
+    //
+    // $.ajax({
+    //   url: 'http://localhost:4000/request_from_frontend', // 替换为你的API端点
+    //   type: 'POST',
+    //   data: data,
+    //   success: function(response) {
+    //     console.log('Success:', response);
+    //   },
+    //   error: function(xhr, status, error) {
+    //     console.error('Error:', error);
+    //   }
+    // });
+
+
+
+    // 使用 axios 发出 POST 请求
+    axios.post('/request_from_frontend', data) // 替换为你的 API 端点
+            .then(function(response) {
+              // 请求成功时执行的代码
+              console.log('Response data:', response.data);
+              // 你可以在这里处理响应数据，比如更新页面内容
+            })
+            .catch(function(error) {
+              // 请求失败时执行的代码
+              console.error('Error:', error);
+              // 你可以在这里处理错误，比如显示错误消息
+            });
+
+  }
+</script>
+
+<style>
+
+
+  #app{
+    width: 100%;
+    display: flex;
+    flex-direction:row;
+    align-content: center;
+    /*background: #0F9E5E;*/
+  }
+  #app-container{
+    width: 80%;
+    /*margin-top: 20px;*/
+    margin: 20px auto;
+    /*background: rgba(239, 173, 233, 0.07);*/
+  }
+
+  el-button{
+    padding: 10px 20px;
+    margin: 0 auto 10px;
+    font-size: 4em;
+  }
+
+
+</style>
+</html>
