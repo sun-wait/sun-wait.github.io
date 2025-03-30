@@ -1,227 +1,362 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
-
-    <title>Release page of VCU automation solution</title>
-    <link rel="stylesheet" type="text/css" href="./css/style.css" />
-    <link rel="stylesheet" type="text/css" href="./css/animate.css" />
-    <!--        <link rel="stylesheet" type="text/css" href="./css/elementui-index.css" />-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sun Wait | 个人主页</title>
+    <style>
+        :root {
+            --apple-black: #1d1d1f;
+            --apple-dark-gray: #333336;
+            --apple-gray: #86868b;
+            --apple-light-gray: #f5f5f7;
+            --apple-blue: #0066cc;
+            --apple-white: #ffffff;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+        
+        body {
+            background-color: var(--apple-white);
+            color: var(--apple-black);
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+        }
+        
+        .navbar {
+            background-color: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 44px;
+            padding: 0 22px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            z-index: 999;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+        
+        .nav-logo {
+            font-size: 21px;
+            font-weight: 500;
+            color: var(--apple-black);
+            text-decoration: none;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+        
+        .nav-link {
+            color: var(--apple-black);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 400;
+            transition: opacity 0.3s;
+        }
+        
+        .nav-link:hover {
+            opacity: 0.7;
+        }
+        
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 22px;
+            margin-top: -44px;
+            background: linear-gradient(to bottom, var(--apple-light-gray), var(--apple-white));
+        }
+        
+        .hero h1 {
+            font-size: 80px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            background: linear-gradient(to right, #000, #333);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .hero p {
+            font-size: 28px;
+            color: var(--apple-gray);
+            max-width: 700px;
+            margin-bottom: 40px;
+        }
+        
+        .hero-links {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .hero-link {
+            color: var(--apple-blue);
+            text-decoration: none;
+            font-size: 21px;
+            position: relative;
+        }
+        
+        .hero-link:after {
+            content: "";
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background-color: var(--apple-blue);
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.3s ease;
+        }
+        
+        .hero-link:hover:after {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+        
+        .section {
+            padding: 100px 22px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .section-title {
+            font-size: 40px;
+            font-weight: 600;
+            margin-bottom: 60px;
+            text-align: center;
+        }
+        
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .project-card {
+            background-color: var(--apple-light-gray);
+            border-radius: 18px;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .project-image {
+            height: 200px;
+            background-color: #ddd;
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .project-content {
+            padding: 25px;
+        }
+        
+        .project-title {
+            font-size: 21px;
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+        
+        .project-desc {
+            color: var(--apple-gray);
+            margin-bottom: 15px;
+        }
+        
+        .project-link {
+            color: var(--apple-blue);
+            text-decoration: none;
+            font-size: 17px;
+            display: inline-flex;
+            align-items: center;
+        }
+        
+        .project-link svg {
+            margin-left: 5px;
+            transition: transform 0.3s;
+        }
+        
+        .project-link:hover svg {
+            transform: translateX(3px);
+        }
+        
+        .footer {
+            background-color: var(--apple-light-gray);
+            padding: 50px 22px;
+            text-align: center;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .footer-link {
+            color: var(--apple-gray);
+            text-decoration: none;
+            font-size: 14px;
+        }
+        
+        .footer-link:hover {
+            color: var(--apple-blue);
+        }
+        
+        .copyright {
+            color: var(--apple-gray);
+            font-size: 12px;
+        }
+        
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 48px;
+            }
+            
+            .hero p {
+                font-size: 21px;
+            }
+            
+            .section-title {
+                font-size: 32px;
+            }
+            
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 <body>
-<div id="app">
-    <div class="app-header">
-        <div class="app-header-homepagetitle">
-                <span class="header-nav">
-                    <a href="./index.html" style="background-color: #f6c00e;"><span>Homepage</span></a>
-                    <a href="./html/overview.html"><span>Overview</span></a>
-                    <a href="./html/api.html"><span>API</span></a>
-
-
-<!--                    <li><a href="./html/overview.html">Overview</a></li>-->
-<!--                    <li><a href="./html/api.html">API Doc</a></li>-->
-
-                </span>
+    <nav class="navbar">
+<!--        <a href="#" class="nav-logo">重新定义车辆神经网络仿真</a>-->
+        <a href="#" class="nav-logo">带你一起玩车辆神经网络仿真</a>
+        <div class="nav-links">
+            <a href="#projects" class="nav-link">项目</a>
+            <a href="#about" class="nav-link">关于</a>
+            <a href="#contact" class="nav-link">联系</a>
         </div>
-
-    </div>
-<!--    <div class="app-header">-->
-<!--        <div class="app-header-homepagetitle">-->
-<!--            <span>Release page for the automation solution of VCU simulation on bench</span>-->
-<!--            <div class="header-nav">-->
-<!--                <ul>-->
-<!--                    <li>Overview</li>-->
-<!--                    <li>API文档</li>-->
-<!--                </ul>-->
-<!--            </div>-->
-<!--        </div>-->
-
-<!--    </div>-->
-
-
-    <div id="release-content-container">
-            <div class="release-content">
-
-
-                <section id="overview">
-                    <h2>Welcome</h2>
-<!--                    <p>Release page for the automation solution of VCU test on bench.</p>-->
-<!--                    <p>This page is used for the release for the automation solution of VCU test on bench, you can download the automation solution software packages from release info page,-->
-<!--                        and deploy automation environment on your own computer with the guide from the overview page, and more, you can develop more effective and more customed scripts with the-->
-<!--                        help from the API page.-->
-<!--                    </p>-->
-                    <p>This page is used for the release of automation solutions for VCU bench testing. You can download the automation solution software package from the release information page and deploy the automation environment on your own computer using the guidelines on the overview page. In addition, you can also search for relevant APIs on the API page to help you develop automated testing scripts that meet specific needs.</p>
-<!--                    <p>The LifeCycle module provides decorators to manage test scenario setup, execution, and teardown phases. It includes utilities for logging, file management, and thread monitoring.</p>-->
-                    <p>此页面用于VCU台架测试的自动化解决方案的发布，您可以从发布信息页面下载自动化解决方案软件包，并使用概览页面中的指南在您自己的计算机上部署自动化环境。此外，还可以在API页面中检索相关API帮助您开发满足特定需求的自动化测试脚本。</p>
-                </section>
-
-                <section id="releases">
-                    <h2>Release</h2>
-
-                </section>
-
-
-
-                <div class="grid-table" id="table-header" >
-                    <div class="grid-header">Release date</div>
-                    <div class="grid-header">Release version</div>
-                    <div class="grid-header">md5</div>
-                    <div class="grid-header">URL</div>
-                    <div class="grid-header">Description</div>
-
+    </nav>
+    
+    <section class="hero">
+        <h1>汽车 · 仿真 · 重新定义</h1>
+<!--        <p>开发者 · 设计师 · 技术爱好者</p>-->
+        <p>智能座舱软件测试团队</p>
+        <div class="hero-links">
+            <a href="#projects" class="hero-link">查看项目</a>
+            <a href="#contact" class="hero-link">联系我</a>
+        </div>
+    </section>
+    
+    <section id="projects" class="section">
+        <h2 class="section-title">精选项目</h2>
+        <div class="projects-grid">
+            <div class="project-card">
+                <div class="project-image" style="background-image: url('https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80')"></div>
+                <div class="project-content">
+                    <h3 class="project-title">VCU Simulator</h3>
+                    <p class="project-desc">专业的VCU仿真工具，支持多种测试场景和数据分析功能。</p>
+                    <a href="https://peedp.saic-gm.com/ccm/web/projects/VCS_Info4.0_High_Platform_PATAC_RTC#action=com.ibm.team.scm.browseElement&workspaceItemId=_ewzjAL8DEemrVdX-kVROUQ&componentItemId=_eMVJwO8jEemB8pkZYRolcA&itemType=com.ibm.team.scm.Folder&itemId=_25FM8P5WEe-imMtnq71XVQ" class="project-link">
+                        下载工具
+                        <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M1 11L11 1M11 1H1M11 1V11" stroke="#0066cc" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </a>
                 </div>
-
-
-
-
-<!--                <div class="grid-table" id="Version_0_4" >-->
-<!--                    <div class="grid-item common-item">2025-03-28</div>-->
-<!--                    <div class="grid-item common-item">V0.4</div>-->
-<!--                    <div class="grid-item common-item">c2d99382e2aa8ea8ad4887273ac5b658</div>-->
-<!--                    <div class="grid-item"><a href="https://peedp.saic-gm.com/ccm/web/projects/VCS_Info4.0_High_Platform_PATAC_RTC#action=com.ibm.team.scm.browseElement&workspaceItemId=_ewzjAL8DEemrVdX-kVROUQ&componentItemId=_eMVJwO8jEemB8pkZYRolcA&itemType=com.ibm.team.scm.Folder&itemId=_25FM8P5WEe-imMtnq71XVQ">-->
-<!--                        <button class="download-button">下载 V0.1</button></a></div>-->
-<!--                    <div class="grid-item">-->
-<!--                        <div class="description" style="float: left;text-align: left">-->
-<!--                            <li>0.初版本发布;</li>-->
-<!--                            <li>1.实现can报文的发送、接收、停发、报文录制和对手件模拟的业务;</li>-->
-<!--                            <li>2.实现仪表Guage,Telltale,Warning,Chime等各模块的信号封装，可以使用MessageSender来按需调用;</li>-->
-<!--                            <li>3.基于uiautomator2，封装了presenter、page、locator、model类实现安卓UI自动化;</li>-->
-<!--                            <li>4.封装slog，gmlog，dlt，serail等common日志抓取;</li>-->
-<!--                            <li>5.封装Audio日志、蓝牙日志、Carplay日志、语音导航等Feature日志的抓取;</li>-->
-<!--                            <li>6.封装minidump，guestdump，emtrace, coredump等System日志的抓取;</li>-->
-<!--                            <li>7.提供了性能的专项测试，包括冷暖热启动，帧率测试，多场景性能测试;</li>-->
-<!--                            <li>8.提供了音频处理、图片处理、远程指令执行、文件操作等更多的通用接口;</li>-->
-<!--                        </div>-->
-
-<!--                    </div>-->
-<!--                </div>-->
-
-
-
-<!--                <div class="grid-table" id="Version_0_3" >-->
-<!--                    <div class="grid-item common-item">2025-03-28</div>-->
-<!--                    <div class="grid-item common-item">V0.3</div>-->
-<!--                    <div class="grid-item common-item">c2d99382e2aa8ea8ad4887273ac5b658</div>-->
-<!--                    <div class="grid-item"><a href="https://peedp.saic-gm.com/ccm/web/projects/VCS_Info4.0_High_Platform_PATAC_RTC#action=com.ibm.team.scm.browseElement&workspaceItemId=_ewzjAL8DEemrVdX-kVROUQ&componentItemId=_eMVJwO8jEemB8pkZYRolcA&itemType=com.ibm.team.scm.Folder&itemId=_25FM8P5WEe-imMtnq71XVQ">-->
-<!--                        <button class="download-button">下载 V0.1</button></a></div>-->
-<!--                    <div class="grid-item">-->
-<!--                        <div class="description" style="float: left;text-align: left">-->
-<!--                            <li>0.初版本发布;</li>-->
-<!--                            <li>1.实现can报文的发送、接收、停发、报文录制和对手件模拟的业务;</li>-->
-<!--                            <li>2.实现仪表Guage,Telltale,Warning,Chime等各模块的信号封装，可以使用MessageSender来按需调用;</li>-->
-<!--                            <li>3.基于uiautomator2，封装了presenter、page、locator、model类实现安卓UI自动化;</li>-->
-<!--                            <li>4.封装slog，gmlog，dlt，serail等common日志抓取;</li>-->
-<!--                            <li>5.封装Audio日志、蓝牙日志、Carplay日志、语音导航等Feature日志的抓取;</li>-->
-<!--                            <li>6.封装minidump，guestdump，emtrace, coredump等System日志的抓取;</li>-->
-<!--                            <li>7.提供了性能的专项测试，包括冷暖热启动，帧率测试，多场景性能测试;</li>-->
-<!--                            <li>8.提供了音频处理、图片处理、远程指令执行、文件操作等更多的通用接口;</li>-->
-<!--                        </div>-->
-
-<!--                    </div>-->
-<!--                </div>-->
-
-
-<!--                <div class="grid-table" id="Version_0_2" >-->
-<!--                    <div class="grid-item common-item">2025-03-28</div>-->
-<!--                    <div class="grid-item common-item">V0.2</div>-->
-<!--                    <div class="grid-item common-item">c2d99382e2aa8ea8ad4887273ac5b658</div>-->
-<!--                    <div class="grid-item"><a href="https://peedp.saic-gm.com/ccm/web/projects/VCS_Info4.0_High_Platform_PATAC_RTC#action=com.ibm.team.scm.browseElement&workspaceItemId=_ewzjAL8DEemrVdX-kVROUQ&componentItemId=_eMVJwO8jEemB8pkZYRolcA&itemType=com.ibm.team.scm.Folder&itemId=_25FM8P5WEe-imMtnq71XVQ">-->
-<!--                        <button class="download-button">下载 V0.1</button></a></div>-->
-<!--                    <div class="grid-item">-->
-<!--                        <div class="description" style="float: left;text-align: left">-->
-<!--                            <li>0.初版本发布;</li>-->
-<!--                            <li>1.实现can报文的发送、接收、停发、报文录制和对手件模拟的业务;</li>-->
-<!--                            <li>2.实现仪表Guage,Telltale,Warning,Chime等各模块的信号封装，可以使用MessageSender来按需调用;</li>-->
-<!--                            <li>3.基于uiautomator2，封装了presenter、page、locator、model类实现安卓UI自动化;</li>-->
-<!--                            <li>4.封装slog，gmlog，dlt，serail等common日志抓取;</li>-->
-<!--                            <li>5.封装Audio日志、蓝牙日志、Carplay日志、语音导航等Feature日志的抓取;</li>-->
-<!--                            <li>6.封装minidump，guestdump，emtrace, coredump等System日志的抓取;</li>-->
-<!--                            <li>7.提供了性能的专项测试，包括冷暖热启动，帧率测试，多场景性能测试;</li>-->
-<!--                            <li>8.提供了音频处理、图片处理、远程指令执行、文件操作等更多的通用接口;</li>-->
-<!--                        </div>-->
-
-<!--                    </div>-->
-<!--                </div>-->
-
-
-                <div class="grid-table" id="Version_0_1" >
-                    <div class="grid-item common-item">2025-03-28</div>
-                    <div class="grid-item common-item">V0.1 (Initial release)</div>
-                    <div class="grid-item common-item">c2d99382e2aa8ea8ad4887273ac5b658</div>
-                    <div class="grid-item"><a href="https://peedp.saic-gm.com/ccm/web/projects/VCS_Info4.0_High_Platform_PATAC_RTC#action=com.ibm.team.scm.browseElement&workspaceItemId=_ewzjAL8DEemrVdX-kVROUQ&componentItemId=_eMVJwO8jEemB8pkZYRolcA&itemType=com.ibm.team.scm.Folder&itemId=_25FM8P5WEe-imMtnq71XVQ">
-                        <button class="download-button">下载 V0.1</button></a></div>
-                    <div class="grid-item">
-                        <div class="description" style="float: left;text-align: left">
-<!--                            <li>0.初版本发布;</li>-->
-                            <li>1.实现can报文的发送、接收、停发、报文录制和对手件模拟的业务;</li>
-                            <li>2.实现仪表Guage,Telltale,Warning,Chime等各模块的信号封装，可以使用MessageSender来按需调用;</li>
-                            <li>3.基于uiautomator2，封装了presenter、page、locator、model类实现安卓UI自动化;</li>
-                            <li>4.对slog，gmlog，dlt，serail等common日志抓取实现接口封装;</li>
-                            <li>5.对Audio日志、蓝牙日志、Carplay日志、语音导航等Feature日志的抓取实现接口封装;</li>
-                            <li>6.对minidump，guestdump，emtrace, coredump等System日志的抓取实现接口封装;</li>
-                            <li>7.提供了性能专项测试接口，包括冷暖热启动，帧率测试，多场景性能测试;</li>
-                            <li>8.提供了音频处理、图片处理、远程指令执行、文件操作等更多的通用接口;</li>
-                        </div>
-
-                    </div>
-                </div>
-
-
-
-
-
-
-
-
-
-
-
             </div>
-
-
-
-
-
-    </div>
-
-    <div class="app-footer">
-        <div class="copyright-container">
-            <span class="copyright">© - 2025 PATAC. All Rights Reserved.</span>
+            
+            <div class="project-card">
+                <div class="project-image" style="background-image: url('https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80')"></div>
+                <div class="project-content">
+                    <h3 class="project-title">产品Overview</h3>
+                    <p class="project-desc">全面展示产品特性和技术规格的专业文档。</p>
+                    <a href="./html/overview.html" class="project-link">
+                        查看详情
+                        <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M1 11L11 1M11 1H1M11 1V11" stroke="#0066cc" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="project-card">
+                <div class="project-image" style="background-image: url('https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80')"></div>
+                <div class="project-content">
+                    <h3 class="project-title">API文档小屋</h3>
+                    <p class="project-desc">简洁高效的API文档生成与展示系统，支持多种格式。</p>
+                    <a href="./html/api.html" class="project-link">
+                        访问文档
+                        <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M1 11L11 1M11 1H1M11 1V11" stroke="#0066cc" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="project-card">
+                <div class="project-image" style="background-image: url('https://images.unsplash.com/photo-1522542550221-31fd19575a2d?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80')"></div>
+                <div class="project-content">
+                    <h3 class="project-title">工具集合站</h3>
+                    <p class="project-desc">精选开发工具集合，提高工作效率的利器。</p>
+                    <a href="#" class="project-link">
+                        工具研制中
+                        <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M1 11L11 1M11 1H1M11 1V11" stroke="#0066cc" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
         </div>
-    </div>
-</div>
+    </section>
+    
+    <section id="about" class="section" style="background-color: var(--apple-light-gray);">
+        <h2 class="section-title">关于我们</h2>
+        <div style="max-width: 700px; margin: 0 auto; text-align: center;">
+            <p style="font-size: 21px; color: var(--apple-gray); margin-bottom: 30px;">
+                我们是一群来自智能座舱软件测试团队、极富激情与动力的励志开发者，专注于构建优雅、高效的新一代智能汽车电子架构车联仿真及自动化工具链。
+            </p>
+            <p style="font-size: 21px; color: var(--apple-gray);">
+                技术栈包括 JavaScript, Python, Node.js 等。追求开发极致体验的自动化工具链，赋能实际生产。
+            </p>
+        </div>
+    </section>
+    
+    <section id="contact" class="section">
+        <h2 class="section-title">保持联系</h2>
+        <div style="text-align: center;">
+            <p style="font-size: 21px; color: var(--apple-gray); margin-bottom: 30px;">
+                如果您对我们的工作感兴趣或有任何问题，欢迎联系我们。
+            </p>
+            <a href="mailto:your-email@example.com" class="hero-link" style="font-size: 24px;">your-email@example.com</a>
+        </div>
+    </section>
+    
+    <footer class="footer">
+        <div class="footer-links">
+            <a href="#" class="footer-link">GitHub</a>
+            <a href="#" class="footer-link">Twitter</a>
+            <a href="#" class="footer-link">LinkedIn</a>
+            <a href="#" class="footer-link">知乎</a>
+        </div>
+<!--        <p class="copyright">© 2023 Sun Wait. All rights reserved.</p>-->
+        <p class="copyright">© - 2025 PATAC. All Rights Reserved.</p>
+    </footer>
 </body>
-
-<script src="./js/jquery.js" type="text/javascript"></script>
-<!--<script src="./js/vue.min.js" type="text/javascript"></script>-->
-<!--<script src="./js/axios.min.js" type="text/javascript"></script>-->
-<!--<script src="./js/elementui-index.js" type="text/javascript"></script>-->
-
-
-
-
-<script>
-
-
-
-
-
-    var now = new Date();
-    var year = now.getFullYear()
-    // var hours = now.getHours();
-    // var minutes = now.getMinutes();
-    // var seconds = now.getSeconds();
-    // console.log(hours + ":" + minutes + ":" + seconds);
-    $('.copyright').text(`© - ${year} PATAC. All Rights Reserved.`)
-    const homepage_url = window.location.href
-    console.log(homepage_url)
-    sessionStorage.setItem("homepage_url",homepage_url)
-
-
-</script>
-
-<style>
-
-
-
-</style>
 </html>

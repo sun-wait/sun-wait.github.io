@@ -28,7 +28,7 @@ body {
 .app-header{
     height: 50px;
     width: 100%;
-    background-color: #050202;
+    /*background-color: #050202;*/
     /*background-color: #dc8ff1;*/
     position: fixed;
     top: 0;
