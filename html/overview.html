@@ -340,9 +340,9 @@
         <a href="#" class="nav-logo">VCU Simulator</a>
         <div class="nav-links">
             <a href="#features" class="nav-link">特性</a>
-            <a href="#specs" class="nav-link">规格</a>
-            <a href="#download" class="nav-link">下载</a>
-            <a href="./mannul-guide.html" class="nav-link">部署</a>
+<!--            <a href="#specs" class="nav-link">规格</a>-->
+<!--            <a href="#download" class="nav-link">下载</a>-->
+            <a href="../resources/user-manual.pdf" class="nav-link">部署文档</a>
             <a href="./api.html" class="nav-link">API文档</a>
         </div>
     </nav>
@@ -366,40 +366,7 @@
                 <h3 class="feature-title">多协议支持</h3>
                 <p class="feature-desc">支持CAN、CAN FD、LIN等多种车辆总线协议，满足不同场景下的仿真需求</p>
             </div>
-            
-            <div class="feature-card">
-                <div class="feature-icon">
-                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M22 12H18L15 21L9 3L6 12H2" stroke="#0066cc" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                </div>
-                <h3 class="feature-title">实时监控</h3>
-                <p class="feature-desc">实时显示总线数据和信号状态，帮助快速定位问题</p>
-            </div>
-            
-            <div class="feature-card">
-                <div class="feature-icon">
-                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="#0066cc" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path d="M2 17L12 22L22 17" stroke="#0066cc" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path d="M2 12L12 17L22 12" stroke="#0066cc" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                </div>
-                <h3 class="feature-title">自动化测试</h3>
-                <p class="feature-desc">内置测试脚本引擎，支持自动化测试用例编写和执行</p>
-            </div>
-            
-            <div class="feature-card">
-                <div class="feature-icon">
-                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="#0066cc" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path d="M12 8V12L15 15" stroke="#0066cc" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                </div>
-                <h3 class="feature-title">高性能引擎</h3>
-                <p class="feature-desc">优化的仿真引擎，支持高频率信号仿真，确保测试准确性</p>
-            </div>
-            
+
             <div class="feature-card">
                 <div class="feature-icon">
                     <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -409,10 +376,60 @@
                         <path d="M17 3.13C17.8604 3.35031 18.623 3.85071 19.1676 4.55232C19.7122 5.25392 20.0078 6.11683 20.0078 7.005C20.0078 7.89318 19.7122 8.75608 19.1676 9.45769C18.623 10.1593 17.8604 10.6597 17 10.88" stroke="#0066cc" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
                 </div>
-                <h3 class="feature-title">团队协作</h3>
-                <p class="feature-desc">支持多用户同时操作，项目文件云端同步，方便团队协作</p>
+                <h3 class="feature-title">仪表功能仿真</h3>
+                <p class="feature-desc">支持仪表Warning、Guage、Telltale、Adas、Chime等各模块的定向仿真测试，及定制组合各模块进行压力测试</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="#0066cc" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M2 17L12 22L22 17" stroke="#0066cc" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M2 12L12 17L22 12" stroke="#0066cc" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                <h3 class="feature-title">自动化测试</h3>
+                <p class="feature-desc">集成UI autmomator2, 并内置丰富的测试脚本, 支持安卓/QNX UI及功能的自动化测试执行</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M22 12H18L15 21L9 3L6 12H2" stroke="#0066cc" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                <h3 class="feature-title">日志抓取</h3>
+                <p class="feature-desc">支持通用日志、特性日志、系统日志等所有类别近20种日志的自动化部署与截取</p>
+            </div>
+
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="#0066cc" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M12 8V12L15 15" stroke="#0066cc" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                <h3 class="feature-title">核心功能稳定性压测</h3>
+                <p class="feature-desc">支持配置不同模块的测试压力, 多循环、长时间持续验证 STR/Cold以及持续运行下系统稳定性</p>
             </div>
             
+
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M17 21V19C17 17.9391 16.5786 16.9217 15.8284 16.1716C15.0783 15.4214 14.0609 15 13 15H5C3.93913 15 2.92172 15.4214 2.17157 16.1716C1.42143 16.9217 1 17.9391 1 19V21" stroke="#0066cc" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M9 11C11.2091 11 13 9.20914 13 7C13 4.79086 11.2091 3 9 3C6.79086 3 5 4.79086 5 7C5 9.20914 6.79086 11 9 11Z" stroke="#0066cc" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M23 21V19C22.9993 18.1137 22.7044 17.2528 22.1614 16.5523C21.6184 15.8519 20.8581 15.3516 20 15.13" stroke="#0066cc" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M17 3.13C17.8604 3.35031 18.623 3.85071 19.1676 4.55232C19.7122 5.25392 20.0078 6.11683 20.0078 7.005C20.0078 7.89318 19.7122 8.75608 19.1676 9.45769C18.623 10.1593 17.8604 10.6597 17 10.88" stroke="#0066cc" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                <!--                <h3 class="feature-title">团队协作</h3>-->
+                <!--                <p class="feature-desc">支持多用户同时操作，项目文件云端同步，方便团队协作</p>-->
+                <h3 class="feature-title">性能专项</h3>
+                <p class="feature-desc">提供性能专项自动化测试模板, 包括冷暖热启动、帧率测试、多场景性能测试场景</p>
+            </div>
+
             <div class="feature-card">
                 <div class="feature-icon">
                     <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -422,93 +439,96 @@
                         <path d="M15 9H15.01" stroke="#0066cc" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
                 </div>
-                <h3 class="feature-title">友好界面</h3>
-                <p class="feature-desc">直观的用户界面设计，降低学习成本，提高工作效率</p>
+<!--                <h3 class="feature-title">友好界面</h3>-->
+<!--                <p class="feature-desc">直观的用户界面设计，降低学习成本，提高工作效率</p>-->
+                <h3 class="feature-title">其他</h3>
+                <p class="feature-desc">提供了音频处理、图片处理、远程指令执行、文件操作等通用接口，具体参考API接口文档</p>
             </div>
         </div>
     </section>
     
-    <section id="specs" class="section">
-        <h2 class="section-title">技术规格</h2>
-        <div class="specs-container">
-            <table class="specs-table">
-                <tr>
-                    <th>系统要求</th>
-                    <td>Windows 10/11 (64位)</td>
-                </tr>
-                <tr>
-                    <th>处理器</th>
-                    <td>Intel Core i5 或同等性能处理器，推荐i7及以上</td>
-                </tr>
-                <tr>
-                    <th>内存</th>
-                    <td>最低8GB，推荐16GB或更高</td>
-                </tr>
-                <tr>
-                    <th>存储空间</th>
-                    <td>安装需要256GB可用空间，运行时需要额外空间存储项目文件及系统日志</td>
-                </tr>
-                <tr>
-                    <th>硬件接口</th>
-                    <td>支持CAN卡接口：PEAK USB-CAN</td>
-                </tr>
-                <tr>
-                    <th>总线支持</th>
-                    <td>CAN 2.0A/B, CAN FD, LIN 2.0/2.1/2.2</td>
-                </tr>
-                <tr>
-                    <th>协议支持</th>
-                    <td>J1939, ISO15765, ISO14229 (UDS), CCP/XCP等</td>
-                </tr>
-                <tr>
-                    <th>版本</th>
-                    <td>当前版本：v0.1 (2025年3月发布)</td>
-                </tr>
-            </table>
-        </div>
-    </section>
+<!--    <section id="specs" class="section">-->
+<!--        <h2 class="section-title">技术规格</h2>-->
+<!--        <div class="specs-container">-->
+<!--            <table class="specs-table">-->
+<!--                <tr>-->
+<!--                    <th>系统要求</th>-->
+<!--                    <td>Windows 10/11 (64位)</td>-->
+<!--                </tr>-->
+<!--                <tr>-->
+<!--                    <th>处理器</th>-->
+<!--                    <td>Intel Core i5 或同等性能处理器，推荐i7及以上</td>-->
+<!--                </tr>-->
+<!--                <tr>-->
+<!--                    <th>内存</th>-->
+<!--                    <td>最低8GB，推荐16GB或更高</td>-->
+<!--                </tr>-->
+<!--                <tr>-->
+<!--                    <th>存储空间</th>-->
+<!--                    <td>安装需要256GB可用空间，运行时需要额外空间存储项目文件及系统日志</td>-->
+<!--                </tr>-->
+<!--                <tr>-->
+<!--                    <th>硬件接口</th>-->
+<!--                    <td>支持CAN卡接口：PEAK USB-CAN</td>-->
+<!--                </tr>-->
+<!--                <tr>-->
+<!--                    <th>总线支持</th>-->
+<!--                    <td>CAN 2.0A/B, CAN FD, LIN 2.0/2.1/2.2</td>-->
+<!--                </tr>-->
+<!--                <tr>-->
+<!--                    <th>协议支持</th>-->
+<!--                    <td>J1939, ISO15765, ISO14229 (UDS), CCP/XCP等</td>-->
+<!--                </tr>-->
+<!--                <tr>-->
+<!--                    <th>版本</th>-->
+<!--                    <td>当前版本：v0.1 (2025年3月发布)</td>-->
+<!--                </tr>-->
+<!--            </table>-->
+<!--        </div>-->
+<!--    </section>-->
     
-    <section id="download" class="download-section">
-        <h2 class="download-title">立即下载 VCU Simulator</h2>
-        <p class="download-subtitle">开始体验专业的车辆控制单元仿真测试工具，提升您的开发效率</p>
-        <a href="https://peedp.saic-gm.com/ccm/web/projects/VCS_Info4.0_High_Platform_PATAC_RTC#action=com.ibm.team.scm.browseElement&workspaceItemId=_ewzjAL8DEemrVdX-kVROUQ&componentItemId=_eMVJwO8jEemB8pkZYRolcA&itemType=com.ibm.team.scm.Folder&itemId=_25FM8P5WEe-imMtnq71XVQ" class="download-btn">免费下载</a>
-        <div class="os-badges">
-            <div class="os-badge">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M18 3H6C4.34315 3 3 4.34315 3 6V18C3 19.6569 4.34315 21 6 21H18C19.6569 21 21 19.6569 21 18V6C21 4.34315 19.6569 3 18 3Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M9 9H15" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M9 15H15" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M9 12H15" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-                Windows
-            </div>
-            <div class="os-badge">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M12 8V16" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M8 12H16" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-                macOS
-            </div>
-            <div class="os-badge">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M12 8V12L15 15" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-                Linux
-            </div>
-        </div>
-    </section>
+<!--    <section id="download" class="download-section">-->
+<!--        <h2 class="download-title">立即下载 VCU Simulator</h2>-->
+<!--        <p class="download-subtitle">开始体验专业的车辆控制单元仿真测试工具，提升您的开发效率</p>-->
+<!--        <a href="https://peedp.saic-gm.com/ccm/web/projects/VCS_Info4.0_High_Platform_PATAC_RTC#action=com.ibm.team.scm.browseElement&workspaceItemId=_ewzjAL8DEemrVdX-kVROUQ&componentItemId=_eMVJwO8jEemB8pkZYRolcA&itemType=com.ibm.team.scm.Folder&itemId=_25FM8P5WEe-imMtnq71XVQ" class="download-btn">免费下载</a>-->
+<!--        <div class="os-badges">-->
+<!--            <div class="os-badge">-->
+<!--                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">-->
+<!--                    <path d="M18 3H6C4.34315 3 3 4.34315 3 6V18C3 19.6569 4.34315 21 6 21H18C19.6569 21 21 19.6569 21 18V6C21 4.34315 19.6569 3 18 3Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>-->
+<!--                    <path d="M9 9H15" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>-->
+<!--                    <path d="M9 15H15" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>-->
+<!--                    <path d="M9 12H15" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>-->
+<!--                </svg>-->
+<!--                Windows-->
+<!--            </div>-->
+<!--            <div class="os-badge">-->
+<!--                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">-->
+<!--                    <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>-->
+<!--                    <path d="M12 8V16" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>-->
+<!--                    <path d="M8 12H16" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>-->
+<!--                </svg>-->
+<!--                macOS-->
+<!--            </div>-->
+<!--            <div class="os-badge">-->
+<!--                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">-->
+<!--                    <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>-->
+<!--                    <path d="M12 8V12L15 15" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>-->
+<!--                </svg>-->
+<!--                Linux-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </section>-->
 
     <footer class="footer">
-        <div class="footer-links">
-            <a href="#" class="footer-link">文档中心</a>
-            <a href="#" class="footer-link">技术支持</a>
-            <a href="https://sun-wait.github.io/html/api.html" class="footer-link">API文档</a>
-            <a href="#" class="footer-link">更新日志</a>
-            <a href="#" class="footer-link">隐私政策</a>
-        </div>
-        <p class="copyright">© 2023 VCU Simulator 版权所有</p>
+<!--        <div class="footer-links">-->
+<!--            <a href="#" class="footer-link">文档中心</a>-->
+<!--            <a href="#" class="footer-link">技术支持</a>-->
+<!--            <a href="https://sun-wait.github.io/html/api.html" class="footer-link">API文档</a>-->
+<!--            <a href="#" class="footer-link">更新日志</a>-->
+<!--            <a href="#" class="footer-link">隐私政策</a>-->
+<!--        </div>-->
+<!--        <p class="copyright">© 2023 VCU Simulator 版权所有</p>-->
+        <p class="copyright">© - 2025 PATAC. All Rights Reserved.</p>
     </footer>
 </body>
 </html>
