@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sun Wait | 个人主页</title>
+    <title>汽车 · 仿真 · 重新定义</title>
+    <link rel="stylesheet" type="text/css" href="./css/animate.css" />
     <style>
         :root {
             --apple-black: #1d1d1f;
@@ -68,6 +69,36 @@
         .nav-link:hover {
             opacity: 0.7;
         }
+
+
+
+        .hero-slideshow {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 100%;  /* 初始位置在屏幕右侧 */
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            transition: left 1s ease-in-out;  /* 添加left属性的过渡效果 */
+        }
+
+        .slide.active {
+            left: 0;  /* 当前幻灯片移动到正常位置 */
+        }
+
+        .slide.prev {
+            left: -100%;  /* 上一张幻灯片移动到左侧 */
+        }
         
         .hero {
             min-height: 100vh;
@@ -79,22 +110,35 @@
             padding: 0 22px;
             margin-top: -44px;
             background: linear-gradient(to bottom, var(--apple-light-gray), var(--apple-white));
+            /*background: red;*/
+            /*background-image: url("./resources/images/home.png"); !* 图片路径 *!*/
+            /*background-repeat: no-repeat;           !* 不重复 *!*/
+            /*background-position: center;            !* 居中 *!*/
+            /*background-size: cover;*/
+            position: relative;
+            overflow: hidden;
         }
         
         .hero h1 {
             font-size: 80px;
             font-weight: 600;
+            font-color: red;
             margin-bottom: 10px;
-            background: linear-gradient(to right, #000, #333);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            /*background: linear-gradient(to right, #000, #333);*/
+            /*-webkit-background-clip: text;*/
+            /*-webkit-text-fill-color: transparent;*/
+            z-index: 10;
         }
         
         .hero p {
             font-size: 28px;
             color: var(--apple-gray);
+            color: var(--apple-white);
+            /*color: white;*/
+            /*color: yellow;*/
             max-width: 700px;
             margin-bottom: 40px;
+            z-index: 10;
         }
         
         .hero-links {
@@ -255,15 +299,41 @@
         </div>
     </nav>
     
+<!--    <section class="hero">-->
+<!--        <h1>汽车 · 仿真 · 重新定义</h1>-->
+<!--&lt;!&ndash;        <p>开发者 · 设计师 · 技术爱好者</p>&ndash;&gt;-->
+<!--        <p>智能座舱软件测试团队</p>-->
+<!--        <div class="hero-links">-->
+<!--            <a href="#projects" class="hero-link">查看项目</a>-->
+<!--&lt;!&ndash;            <a href="#contact" class="hero-link">联系我们</a>&ndash;&gt;-->
+<!--        </div>-->
+<!--    </section>-->
+
+
     <section class="hero">
-        <h1>汽车 · 仿真 · 重新定义</h1>
-<!--        <p>开发者 · 设计师 · 技术爱好者</p>-->
+        <div class="hero-slideshow">
+<!--            <div class="slide" style="background-image: url('./resources/images/home-10.png');"></div>-->
+            <div class="slide animated slideOutDown" style="background-image: url('./resources/images/home-10.png');"></div>
+            <div class="slide" style="background-image: url('./resources/images/home-1.png');"></div>
+            <div class="slide" style="background-image: url('./resources/images/home-2.png');"></div>
+            <div class="slide" style="background-image: url('./resources/images/home-3.png');"></div>
+            <div class="slide" style="background-image: url('./resources/images/home-4.png');"></div>
+            <div class="slide" style="background-image: url('./resources/images/home-5.png');"></div>
+            <div class="slide" style="background-image: url('./resources/images/home-6.png');"></div>
+            <div class="slide" style="background-image: url('./resources/images/home-7.png');"></div>
+            <div class="slide" style="background-image: url('./resources/images/home-8.png');"></div>
+            <div class="slide" style="background-image: url('./resources/images/home-9.png');"></div>
+
+
+        </div>
+        <h1 class="animated zoomInDown">汽车 · 仿真 · 重新定义</h1>
         <p>智能座舱软件测试团队</p>
         <div class="hero-links">
             <a href="#projects" class="hero-link">查看项目</a>
-<!--            <a href="#contact" class="hero-link">联系我们</a>-->
         </div>
     </section>
+
+
     
     <section id="projects" class="section">
         <h2 class="section-title">精选项目</h2>
@@ -359,4 +429,37 @@
         <p class="copyright">© - 2025 PATAC. All Rights Reserved.</p>
     </footer>
 </body>
+<script>
+    const slides = document.querySelectorAll('.slide');
+    let currentSlide = 0;
+
+    function showSlide(index) {
+        // 移除所有幻灯片的active和prev类
+        slides.forEach(slide => {
+            slide.classList.remove('active', 'prev');
+        });
+
+        // 如果存在上一张幻灯片，添加prev类
+        if (index > 0) {
+            slides[index - 1].classList.add('prev');
+        } else {
+            slides[slides.length - 1].classList.add('prev');
+        }
+
+        // 为当前幻灯片添加active类
+        slides[index].classList.add('active');
+    }
+
+    function nextSlide() {
+        currentSlide = (currentSlide + 1) % slides.length;
+        showSlide(currentSlide);
+    }
+
+    // 初始化：显示第一张幻灯片
+    showSlide(currentSlide);
+
+    // 设置轮播间隔时间（例如5秒）
+    setInterval(nextSlide, 5000);
+</script>
+</script>
 </html>
