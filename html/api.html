@@ -65,6 +65,94 @@
         border: 1px solid rgba(108,92,123,0.1);
         color: #6C5B7B;
     }
+
+
+
+    .navbar {
+        background-color: rgba(255, 255, 255, 0.8);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 44px;
+        padding: 0 22px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        z-index: 999;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    .nav-logo {
+        font-size: 21px;
+        font-weight: 500;
+        color: var(--apple-black);
+        text-decoration: none;
+    }
+
+    .nav-links {
+        display: flex;
+        gap: 30px;
+        align-items: center;
+    }
+
+    .nav-link {
+        color: var(--apple-black);
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: 400;
+        transition: opacity 0.3s;
+    }
+
+    .nav-link:hover {
+        opacity: 0.7;
+    }
+
+    .nav-dropdown {
+        position: relative;
+        display: flex;
+        align-items: center;
+    }
+
+    .dropdown-menu {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        background-color: rgba(255, 255, 255, 0.9);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        padding: 8px 0;
+        min-width: 160px;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s, visibility 0.3s;
+    }
+
+    .dropdown-item {
+        display: block;
+        padding: 8px 16px;
+        color: var(--apple-black);
+        text-decoration: none;
+        font-size: 14px;
+        transition: background-color 0.3s;
+    }
+
+    .dropdown-item:hover {
+        background-color: var(--apple-light-gray);
+    }
+
+    .nav-dropdown:hover .dropdown-menu {
+        opacity: 1;
+        visibility: visible;
+    }
+
+
+
+
 </style>
 </head>
 <body>
@@ -72,16 +160,36 @@
 
 <div id="api">
 
-    <div class="app-header">
-        <div class="app-header-homepagetitle">
-<!--                    <span class="header-nav">-->
-<!--                        <a id="back_homepage"><span>Homepage</span></a>-->
-<!--                        <a href="../html/mannul-guide.html"><span>Overview</span></a>-->
-<!--                        <a href="../html/api.html" style="background-color: #f6c00e;"><span>API</span></a>-->
+<!--    <div class="app-header">-->
+<!--        <div class="app-header-homepagetitle">-->
+<!--&lt;!&ndash;                    <span class="header-nav">&ndash;&gt;-->
+<!--&lt;!&ndash;                        <a id="back_homepage"><span>Homepage</span></a>&ndash;&gt;-->
+<!--&lt;!&ndash;                        <a href="../html/mannul-guide.html"><span>Overview</span></a>&ndash;&gt;-->
+<!--&lt;!&ndash;                        <a href="../html/api.html" style="background-color: #f6c00e;"><span>API</span></a>&ndash;&gt;-->
 
-<!--                    </span>-->
+<!--&lt;!&ndash;                    </span>&ndash;&gt;-->
+<!--        </div>-->
+<!--    </div>-->
+
+    <nav class="navbar">
+        <a href="#" class="nav-logo">API文档</a>
+        <div class="nav-links">
+<!--            <div class="nav-dropdown">-->
+<!--                <a href="#" class="nav-link">指南</a>-->
+<!--                <div class="dropdown-menu">-->
+<!--                    <a href="./html/overview.html" class="dropdown-item">Overview</a>-->
+<!--                    <a href="./resources/user-manual.pdf" class="dropdown-item" target="_blank">部署文档</a>-->
+
+<!--                    <a href="./html/api.html" class="dropdown-item">API文档</a>-->
+<!--                </div>-->
+<!--            </div>-->
+            <a href="../index.html" class="nav-link">首页</a>
+            <a href="../resources/user-manual.pdf" class="nav-link"  target="_blank">部署文档</a>
+            <a href="./api.html" class="nav-link">API文档</a>
+
         </div>
-    </div>
+    </nav>
+
     <div class="api-class-container">
         <div class="class_list" id="class_list">
 
