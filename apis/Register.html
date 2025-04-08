@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register 模块 API 文档</title>
+    <style>
+        body {
+            font-family: "Microsoft YaHei", sans-serif;
+            line-height: 1.8;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 25px;
+            color: #333;
+            background-color: #f5f5f5;
+        }
+        h1 {
+            color: #1e50a2;
+            border-bottom: 2px solid #1e50a2;
+            padding-bottom: 10px;
+            text-align: center;
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        h2 {
+            color: #1e50a2;
+            margin-top: 35px;
+            border-left: 5px solid #1e50a2;
+            padding-left: 15px;
+            background-color: white;
+            padding: 15px;
+            border-radius: 5px 0 0 5px;
+        }
+        h3 {
+            color: #2b6cb0;
+            margin-top: 25px;
+            padding-bottom: 5px;
+            border-bottom: 1px dashed #2b6cb0;
+        }
+        .class-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 25px;
+            border-left: 4px solid #4a89dc;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .method {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            border-left: 3px solid #a0b3d6;
+        }
+        .class-name {
+            color: #d9480f;
+            font-weight: bold;
+            font-family: Consolas, monospace;
+            background-color: #f8f9fa;
+            padding: 2px 5px;
+            border-radius: 3px;
+        }
+        .property {
+            color: #2b6cb0;
+            font-family: Consolas, monospace;
+            font-weight: bold;
+        }
+        code {
+            background-color: #f8f9fa;
+            padding: 3px 5px;
+            border-radius: 3px;
+            font-family: Consolas, monospace;
+            color: #333;
+        }
+        pre {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            border-left: 3px solid #4a89dc;
+            font-family: Consolas, monospace;
+        }
+        .note {
+            background-color: #fff8e1;
+            padding: 15px;
+            border-left: 4px solid #ffc107;
+            margin: 20px 0;
+            border-radius: 0 5px 5px 0;
+        }
+        .param {
+            font-weight: bold;
+            color: #555;
+        }
+        .param-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        .param-table th {
+            background-color: #e7f1ff;
+            text-align: left;
+            padding: 8px;
+            border: 1px solid #d0d0d0;
+        }
+        .param-table td {
+            padding: 8px;
+            border: 1px solid #d0d0d0;
+        }
+        .return {
+            font-weight: bold;
+            color: #2b6cb0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Register 模块 API 文档</h1>
+    
+    <div class="class-container">
+        <h2><span class="class-name">Register</span> 类</h2>
+        <p>注册器类，提供函数注册和回调功能。</p>
+        
+        <h3>类属性</h3>
+        <ul>
+            <li><span class="property">_instance</span>: 类实例(单例模式使用)，初始为None</li>
+        </ul>
+        
+        <div class="method">
+            <h3><code class="class-name">__init__(table)</code></h3>
+            <p>构造函数，初始化注册表。</p>
+            
+            <h4>参数说明:</h4>
+            <table class="param-table">
+                <tr>
+                    <th>参数名</th>
+                    <th>类型</th>
+                    <th>说明</th>
+                </tr>
+                <tr>
+                    <td><span class="param">table</span></td>
+                    <td>dict</td>
+                    <td>注册表字典</td>
+                </tr>
+            </table>
+            
+            <h4>功能说明:</h4>
+            <ol>
+                <li>打印构造信息"Register Construct..."</li>
+                <li>将传入的注册表保存到实例变量self.table</li>
+            </ol>
+            
+            <h4>示例代码:</h4>
+            <pre><code># 初始化注册器
+reg_table = {
+    "func1": {
+        "request": "req1",
+        "callback": "cb1"
+    }
+}
+register = Register(reg_table)</code></pre>
+        </div>
+        
+        <div class="method">
+            <h3><code class="class-name">register(function)</code></h3>
+            <p>注册函数并返回对应的请求和回调。</p>
+            
+            <h4>参数说明:</h4>
+            <table class="param-table">
+                <tr>
+                    <th>参数名</th>
+                    <th>类型</th>
+                    <th>说明</th>
+                </tr>
+                <tr>
+                    <td><span class="param">function</span></td>
+                    <td>str</td>
+                    <td>要注册的函数名</td>
+                </tr>
+            </table>
+            
+            <h4>返回值:</h4>
+            <p><span class="return">tuple</span> - (request, callback) 请求对象和回调函数，如果出错则返回None</p>
+            
+            <h4>功能说明:</h4>
+            <ol>
+                <li>检查注册表中是否存在指定函数的"callback"键</li>
+                <li>从注册表获取request和callback名称</li>
+                <li>通过_instance获取回调函数对象</li>
+                <li>返回(request, callback)元组</li>
+                <li>捕获并打印所有异常</li>
+            </ol>
+            
+            <h4>示例代码:</h4>
+            <pre><code># 注册函数
+request, callback = register.register("func1")
+
+# 使用返回的回调
+result = callback(request)</code></pre>
+        </div>
+    </div>
+    
+    <div class="note">
+        <h3>注意事项</h3>
+        <ul>
+            <li>该类使用单例模式(_instance类变量)</li>
+            <li>注册表(table)应为字典结构，包含"callback"和"request"信息</li>
+            <li>register方法会打印异常但不会抛出，调用方需检查返回值</li>
+            <li>回调函数需要通过_instance对象获取</li>
+        </ul>
+    </div>
+    
+    <div class="note">
+        <h3>典型使用模式</h3>
+        <pre><code># 初始化注册表
+reg_table = {
+    "process_data": {
+        "request": "data_request",
+        "callback": "data_processor"
+    }
+}
+
+# 创建注册器实例
+register = Register(reg_table)
+
+# 注册并获取回调
+req, cb = register.register("process_data")
+if req and cb:
+    # 使用回调处理请求
+    result = cb(req)</code></pre>
+    </div>
+</body>
+</html>

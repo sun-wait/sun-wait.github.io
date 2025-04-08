@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>PackageActivityLocator API 文档</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            color: #333;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #2980b9;
+            margin-top: 30px;
+        }
+        .class-name {
+            background-color: #f8f9fa;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-family: monospace;
+            color: #d63384;
+            font-weight: bold;
+        }
+        .method {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            border-left: 4px solid #3498db;
+        }
+        .method-name {
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        .method-desc {
+            margin-top: 10px;
+        }
+        .param {
+            margin-top: 10px;
+        }
+        .param-name {
+            font-weight: bold;
+        }
+        .config-section {
+            background-color: #e8f4f8;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 20px 0;
+        }
+        .config-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .inheritance {
+            background-color: #e8f5e9;
+            padding: 10px;
+            border-left: 4px solid #4caf50;
+            margin: 10px 0;
+        }
+        .singleton {
+            background-color: #fff3e0;
+            padding: 10px;
+            border-left: 4px solid #ffa726;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>PackageActivityLocator API 文档</h1>
+
+    <div class="inheritance">
+        <strong>继承关系：</strong> 继承自 <code>BaseLocator</code> 类
+    </div>
+
+    <div class="singleton">
+        <strong>单例模式：</strong> 该类采用单例设计模式，请使用 <code>getInstance()</code> 方法获取实例
+    </div>
+
+    <div class="config-section">
+        <div class="config-title">配置常量</div>
+        <ul>
+            <li><strong>VCU_PACKAGE_ACTIVITY_FILE_NAME</strong>: VCU包活动配置文件名 (默认: "patac_app_package_activity")</li>
+            <li><strong>PHONE_PACKAGE_ACTIVITY_FILE_NAME</strong>: 手机包活动配置文件名 (默认: "phone_app_package_activity")</li>
+            <li><strong>JSON_FILE_SUFFIX</strong>: JSON文件后缀 (默认: ".json")</li>
+            <li><strong>DEFAULT_MODE</strong>: 默认模式 (默认: "default")</li>
+        </ul>
+    </div>
+
+    <h2><span class="class-name">PackageActivityLocator</span> 类</h2>
+    <p>该类用于定位VCU和手机应用的包名和活动名，基于项目配置自动选择正确的配置项。</p>
+
+    <div class="method">
+        <div class="method-name">__init__(self)</div>
+        <div class="method-desc">
+            构造函数，初始化PackageActivityLocator实例。
+            <p>从配置中获取项目(PROJECT)、车型年份(MODEL_YEAR)和车辆动力类型(VEHICLE_PROPULSION_TYPE)信息，组合生成模式字符串。</p>
+        </div>
+    </div>
+
+    <div class="method">
+        <div class="method-name">getInstance()</div>
+        <div class="method-desc">
+            获取PackageActivityLocator单例实例。
+        </div>
+        <div class="param">
+            <span class="param-name">返回:</span> PackageActivityLocator实例
+        </div>
+    </div>
+
+    <div class="method">
+        <div class="method-name">getVCUIndicator(indicatorName)</div>
+        <div class="method-desc">
+            获取VCU应用的指定指示器(包名或活动名)。
+            <p>首先尝试从与当前模式匹配的配置中获取，如果找不到则使用默认配置。</p>
+        </div>
+        <div class="param">
+            <span class="param-name">参数:</span>
+            <ul>
+                <li>indicatorName - 要获取的指示器名称</li>
+            </ul>
+            <span class="param-name">返回:</span> 指示器值，如果失败返回None
+        </div>
+    </div>
+
+    <div class="method">
+        <div class="method-name">getPhoneIndicator(indicatorName, serial)</div>
+        <div class="method-desc">
+            获取手机应用的指定指示器(包名或活动名)。
+            <p>首先尝试从与设备序列号匹配的配置中获取，如果找不到则使用默认配置。</p>
+        </div>
+        <div class="param">
+            <span class="param-name">参数:</span>
+            <ul>
+                <li>indicatorName - 要获取的指示器名称</li>
+                <li>serial - 手机设备序列号</li>
+            </ul>
+            <span class="param-name">返回:</span> 指示器值，如果失败返回None
+        </div>
+    </div>
+
+    <h3>配置文件路径规则</h3>
+    <ul>
+        <li>VCU配置文件路径: <code>项目目录/customAPI/uiautomator/locators/patac_app_package_activity.json</code></li>
+        <li>手机配置文件路径: <code>项目目录/customAPI/uiautomator/locators/phone_app_package_activity.json</code></li>
+    </ul>
+
+    <h3>配置查找逻辑</h3>
+    <ul>
+        <li><strong>VCU配置</strong>: 优先查找[项目_年份_动力类型]节点，找不到则使用default节点</li>
+        <li><strong>手机配置</strong>: 优先查找[设备序列号]节点，找不到则使用default节点</li>
+    </ul>
+</body>
+</html>

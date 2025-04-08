@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Power Cycle & System Pressure Test Quick Start</title>
+</head>
+<body>
+    <h1>Power Cycle & System Pressure Test Quick Start</h1>
+
+    <h2>1. Power Cycle Stress Test (STRStressRunner)</h2>
+    <h3>1.1 基本用法</h3>
+    <pre><code>
+from power_cycle_stress_str_test import STRStressRunner
+
+# 创建测试实例
+test = STRStressRunner()
+
+# 运行测试（默认24小时）
+test.main()
+    </code></pre>
+
+    <h3>1.2 方法详解</h3>
+    <ul>
+        <li><strong>start_cluster_functions()</strong>: 启动集群功能
+            <pre><code>
+# 启动集群功能（仪表、ADAS、环境光等）
+test.start_cluster_functions()
+            </code></pre>
+        </li>
+        <li><strong>stop_cluster_functions()</strong>: 停止集群功能
+            <pre><code>
+# 停止所有集群功能
+test.stop_cluster_functions()
+            </code></pre>
+        </li>
+        <li><strong>start_monkey_test()</strong>: 启动Monkey测试
+            <pre><code>
+# 启动Monkey测试
+test.start_monkey_test()
+            </code></pre>
+        </li>
+        <li><strong>stop_monkey_test()</strong>: 停止Monkey测试
+            <pre><code>
+# 停止Monkey测试
+test.stop_monkey_test()
+            </code></pre>
+        </li>
+        <li><strong>teardown()</strong>: 清理测试环境
+            <pre><code>
+# 清理测试环境
+test.teardown()
+            </code></pre>
+        </li>
+    </ul>
+
+    <h2>2. System Pressure Test (SystemPressureRunner)</h2>
+    <h3>2.1 基本用法</h3>
+    <pre><code>
+from SystemPressureRunner import SystemPressureRunner
+
+# 创建测试实例
+stress = SystemPressureRunner()
+
+# 设置并运行测试（默认24小时）
+stress.setup(log_folder="your_log_path")
+stress.main()
+    </code></pre>
+
+    <h3>2.2 方法详解</h3>
+    <ul>
+        <li><strong>startMonkeyTest(packageActivity=None)</strong>: 启动Monkey测试
+            <pre><code>
+# 启动Monkey测试
+stress.startMonkeyTest()
+            </code></pre>
+        </li>
+        <li><strong>stopMonkeyTest()</strong>: 停止Monkey测试
+            <pre><code>
+# 停止Monkey测试
+stress.stopMonkeyTest()
+            </code></pre>
+        </li>
+        <li><strong>startClusterFunctions()</strong>: 启动集群功能
+            <pre><code>
+# 启动集群功能（ADAS、仪表、警告等）
+stress.startClusterFunctions()
+            </code></pre>
+        </li>
+        <li><strong>stopClusterFunctions()</strong>: 停止集群功能
+            <pre><code>
+# 停止所有集群功能
+stress.stopClusterFunctions()
+            </code></pre>
+        </li>
+        <li><strong>startExceptionChecker(module)</strong>: 启动异常检查
+            <pre><code>
+# 启动异常检查
+stress.startExceptionChecker(module="performance")
+            </code></pre>
+        </li>
+        <li><strong>stopExceptionChecker()</strong>: 停止异常检查
+            <pre><code>
+# 停止异常检查
+stress.stopExceptionChecker()
+            </code></pre>
+        </li>
+        <li><strong>startRecordVideo(videoPath)</strong>: 开始录制视频
+            <pre><code>
+# 开始录制视频
+stress.startRecordVideo(videoPath="your_video_path")
+            </code></pre>
+        </li>
+        <li><strong>stopRecordVideo()</strong>: 停止录制视频
+            <pre><code>
+# 停止录制视频
+stress.stopRecordVideo()
+            </code></pre>
+        </li>
+        <li><strong>teardown()</strong>: 清理测试环境
+            <pre><code>
+# 清理测试环境
+stress.teardown()
+            </code></pre>
+        </li>
+    </ul>
+
+    <h2>3. 主要区别</h2>
+    <table border="1">
+        <tr>
+            <th>功能</th>
+            <th>STRStressRunner</th>
+            <th>SystemPressureRunner</th>
+        </tr>
+        <tr>
+            <td>测试重点</td>
+            <td>电源循环稳定性</td>
+            <td>系统压力测试</td>
+        </tr>
+        <tr>
+            <td>集群功能</td>
+            <td>基础功能</td>
+            <td>更全面的功能</td>
+        </tr>
+        <tr>
+            <td>日志收集</td>
+            <td>基本日志</td>
+            <td>全面的日志收集（包括核心转储、视频等）</td>
+        </tr>
+        <tr>
+            <td>异常处理</td>
+            <td>基本处理</td>
+            <td>完善的异常处理机制</td>
+        </tr>
+    </table>
+
+    <h2>4. 选择指南</h2>
+    <ul>
+        <li>如果需要测试电源循环稳定性，选择 <strong>STRStressRunner</strong></li>
+        <li>如果需要全面的系统压力测试，选择 <strong>SystemPressureRunner</strong></li>
+    </ul>
+
+    <h2>5. 注意事项</h2>
+    <ul>
+        <li>确保测试环境配置正确</li>
+        <li>为日志收集预留足够的存储空间</li>
+        <li>测试过程中避免手动干预</li>
+        <li>测试完成后及时分析日志</li>
+    </ul>
+</body>
+</html> 

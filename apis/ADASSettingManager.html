@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ADASSettingManager API 文档</title>
+    <style>
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #2980b9;
+            margin-top: 30px;
+        }
+        h3 {
+            color: #16a085;
+        }
+        .class-name {
+            background-color: #f8f9fa;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-family: monospace;
+            color: #c7254e;
+            font-weight: bold;
+        }
+        .method {
+            background-color: #f5f5f5;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            border-left: 4px solid #3498db;
+        }
+        .method-name {
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        .param {
+            margin-left: 20px;
+        }
+        .param-name {
+            font-style: italic;
+        }
+        .return {
+            font-weight: bold;
+            color: #27ae60;
+        }
+        code {
+            background-color: #f8f9fa;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-family: monospace;
+            color: #c7254e;
+        }
+        pre {
+            background-color: #f8f9fa;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        .feature-list {
+            columns: 2;
+            column-gap: 20px;
+        }
+        .feature-item {
+            break-inside: avoid;
+            margin-bottom: 10px;
+        }
+        .note {
+            background-color: #fff8e1;
+            padding: 10px;
+            border-radius: 5px;
+            border-left: 4px solid #ffc107;
+            margin: 15px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>ADASSettingManager API 文档</h1>
+
+    <section>
+        <h2>类 <span class="class-name">ADASSettingManager</span></h2>
+        <p><span class="class-name">ADASSettingManager</span> 是一个高级驾驶辅助系统(ADAS)设置管理类，用于配置车辆的各种ADAS功能。它采用单例模式设计，通过 <code>getInstance()</code> 方法获取实例。</p>
+        
+        <div class="note">
+            <p><strong>依赖说明</strong>：此类依赖于 VehicleTypeManager 和 CanBusClient 类。</p>
+        </div>
+    </section>
+
+    <section>
+        <h2>方法列表</h2>
+
+        <div class="method">
+            <h3><span class="method-name">getInstance()</span></h3>
+            <p><strong>描述</strong>：获取 ADASSettingManager 的单例实例。</p>
+            <p><strong>返回</strong>：<span class="return">ADASSettingManager</span> 的实例。</p>
+            <pre>@classmethod
+def getInstance(cls)</pre>
+        </div>
+
+        <div class="method">
+            <h3><span class="method-name">adassetting_configuration()</span></h3>
+            <p><strong>描述</strong>：配置车辆的ADAS功能设置。当前仅支持CLEA平台。</p>
+            <p><strong>功能列表</strong>：</p>
+            <div class="feature-list">
+                <div class="feature-item">• 前置行人预警</div>
+                <div class="feature-item">• 自动防撞准备</div>
+                <div class="feature-item">• 车辆通过紧急制动</div>
+                <div class="feature-item">• 后方自动紧急制动</div>
+                <div class="feature-item">• 后方车辆通过预警</div>
+                <div class="feature-item">• 变道预警</div>
+                <div class="feature-item">• 侧盲区预警</div>
+                <div class="feature-item">• 开门预警</div>
+                <div class="feature-item">• 行驶风格</div>
+                <div class="feature-item">• 车道偏离辅助</div>
+                <div class="feature-item">• 跟车起步提醒</div>
+                <div class="feature-item">• 弯道自动限速</div>
+                <div class="feature-item">• 自动调整车速</div>
+                <div class="feature-item">• 交通信号与停止线控制</div>
+                <div class="feature-item">• 智能辅助变道</div>
+                <div class="feature-item">• 智能避让</div>
+                <div class="feature-item">• 限速提示</div>
+                <div class="feature-item">• 智慧领航</div>
+            </div>
+            <pre>def adassetting_configuration(self)</pre>
+        </div>
+    </section>
+
+    <section>
+        <h2>使用示例</h2>
+        <div class="method">
+            <h3>基本使用</h3>
+            <pre># 获取ADASSettingManager实例
+adas_manager = ADASSettingManager.getInstance()
+
+# 配置ADAS设置
+adas_manager.adassetting_configuration()</pre>
+        </div>
+    </section>
+
+    <section>
+        <h2>注意事项</h2>
+        <div class="note">
+            <ul>
+                <li>此类的功能目前仅支持CLEA平台</li>
+                <li>调用adassetting_configuration()方法前需要确保CanBusClient已正确连接</li>
+                <li>所有配置都是通过CAN总线发送信号实现的</li>
+                <li>每个功能配置会发送多个CAN信号以确保设置生效</li>
+                <li>实际效果可能因车辆型号和配置不同而有所差异</li>
+            </ul>
+        </div>
+    </section>
+
+    <section>
+        <h2>技术实现</h2>
+        <p>ADASSettingManager 通过以下方式实现功能配置：</p>
+        <ul>
+            <li>使用单例模式确保全局唯一实例</li>
+            <li>依赖VehicleTypeManager获取车辆平台信息</li>
+            <li>通过CanBusClient发送CAN信号配置各项功能</li>
+            <li>每个功能配置包含多个相关信号的设置</li>
+            <li>使用特定的CAN ID和信号名称进行精确控制</li>
+        </ul>
+    </section>
+</body>
+</html>

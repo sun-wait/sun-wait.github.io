@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>DltDumpThread API 文档</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #2980b9;
+            margin-top: 30px;
+            border-left: 4px solid #3498db;
+            padding-left: 10px;
+        }
+        .class-name {
+            background-color: #f8f9fa;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-family: monospace;
+            color: #d63384;
+            font-weight: bold;
+        }
+        .method {
+            background-color: #f8f9fa;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            border-left: 3px solid #6c757d;
+        }
+        .method-name {
+            font-weight: bold;
+            color: #0066cc;
+        }
+        .method-desc {
+            margin-top: 5px;
+            color: #6c757d;
+        }
+        .param {
+            font-family: monospace;
+        }
+        code {
+            background-color: #f8f9fa;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-family: monospace;
+            color: #d63384;
+        }
+        .note {
+            background-color: #fff3cd;
+            padding: 10px;
+            border-radius: 5px;
+            border-left: 3px solid #ffc107;
+            margin: 15px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>DltDumpThread API 文档</h1>
+    <p>该模块提供了DLT(Diagnostic Log and Trace)日志的定期转储功能，支持从远程设备拉取DLT日志文件。</p>
+
+    <div class="note">
+        <strong>主要功能：</strong>
+        <ul>
+            <li>多线程DLT日志收集</li>
+            <li>支持不同车型的DLT日志路径配置</li>
+            <li>定期自动拉取日志文件</li>
+            <li>日志文件按时间戳命名</li>
+        </ul>
+    </div>
+
+    <h2>类文档</h2>
+
+    <div class="method">
+        <h3><span class="class-name">DltDumpThread</span></h3>
+        <p>DLT日志转储线程类，负责定期从远程设备拉取DLT日志文件。</p>
+        
+        <div class="method">
+            <div class="method-name">__init__(self, caseFolder)</div>
+            <div class="method-desc">构造函数，初始化DLT日志转储任务。</div>
+            <p><strong>参数:</strong></p>
+            <ul>
+                <li><span class="param">caseFolder</span>: 测试用例文件夹路径，用于存储DLT日志</li>
+            </ul>
+            <p><strong>初始化行为:</strong></p>
+            <ul>
+                <li>创建dlt子文件夹</li>
+                <li>初始化任务停止标志</li>
+            </ul>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">stopTask(self)</div>
+            <div class="method-desc">停止DLT日志转储任务。</div>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">pullOutDltLogs(self, dltFolder)</div>
+            <div class="method-desc">执行单次DLT日志拉取操作。</div>
+            <p><strong>参数:</strong></p>
+            <ul>
+                <li><span class="param">dltFolder</span>: DLT日志存储文件夹路径</li>
+            </ul>
+            <p><strong>返回:</strong> 布尔值，表示操作是否成功</p>
+            <p><strong>实现细节:</strong></p>
+            <ul>
+                <li>获取QNX系统时间作为日志文件名时间戳</li>
+                <li>根据车辆类型确定远程DLT日志路径</li>
+                <li>使用SCP命令拉取远程日志文件</li>
+                <li>日志文件命名为"dlt_时间戳"格式</li>
+            </ul>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">run(self)</div>
+            <div class="method-desc">线程主循环，定期执行DLT日志拉取。</div>
+            <p><strong>工作流程:</strong></p>
+            <ol>
+                <li>检查是否收到停止信号</li>
+                <li>如果达到时间间隔(15分钟)或首次运行，执行日志拉取</li>
+                <li>循环检查直到任务停止</li>
+            </ol>
+        </div>
+    </div>
+
+    <h2>常量</h2>
+    <ul>
+        <li><code>PULL_OUT_DLT_RAW_CMD</code>: SCP命令模板，用于拉取DLT日志</li>
+        <li><code>PULL_OUT_DLT_TIMEOUT</code>: DLT日志拉取超时时间(秒)，默认为1000</li>
+        <li><code>PULL_OUT_DLT_INTERVAL</code>: DLT日志拉取间隔(秒)，默认为900(15分钟)</li>
+    </ul>
+
+    <h2>使用示例</h2>
+    <pre>
+# 创建DLT日志转储线程
+dlt_thread = DltDumpThread("C:/test_case")
+
+# 启动日志转储
+dlt_thread.start()
+
+# 停止日志转储
+dlt_thread.stopTask()
+dlt_thread.join()
+    </pre>
+
+    <h2>日志文件结构</h2>
+    <pre>
+test_case/
+└── dlt/               # DLT日志文件夹
+    ├── dlt_20230101120000  # 按时间戳命名的DLT日志
+    └── dlt_20230101121500
+    </pre>
+
+    <h2>注意事项</h2>
+    <ul>
+        <li>需要确保SSH连接配置正确</li>
+        <li>不同车型的DLT日志路径可能不同</li>
+        <li>拉取操作可能需要较长时间，设置了1000秒的超时</li>
+    </ul>
+</body>
+</html>

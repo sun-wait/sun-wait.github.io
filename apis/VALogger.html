@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VALogger API 文档</title>
+    <style>
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.7;
+            margin: 0;
+            padding: 30px;
+            color: #333;
+            background-color: #f8fafc;
+        }
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            box-shadow: 0 0 25px rgba(0,0,0,0.08);
+            border-radius: 12px;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 15px;
+            margin-top: 0;
+            font-size: 36px;
+            text-align: center;
+        }
+        h2 {
+            color: #2980b9;
+            margin-top: 45px;
+            border-left: 6px solid #3498db;
+            padding-left: 20px;
+            font-size: 28px;
+        }
+        h3 {
+            color: #16a085;
+            margin-top: 35px;
+            font-size: 24px;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 8px;
+        }
+        .class-name {
+            background-color: #f8f9fa;
+            padding: 25px;
+            border-radius: 10px;
+            border-left: 6px solid #3498db;
+            font-family: 'Fira Code', monospace;
+            font-size: 1.5em;
+            margin: 40px 0;
+            color: #2c3e50;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        .method {
+            background-color: #f0f7ff;
+            padding: 25px;
+            border-radius: 10px;
+            margin: 35px 0;
+            border-left: 5px solid #7f8c8d;
+            transition: all 0.4s ease;
+        }
+        .method:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 25px rgba(0,0,0,0.1);
+        }
+        .method-name {
+            font-weight: bold;
+            color: #16a085;
+            font-size: 1.3em;
+        }
+        .method-desc {
+            margin-top: 15px;
+            color: #555;
+            line-height: 1.9;
+        }
+        .method-params {
+            margin-top: 20px;
+            font-size: 1.05em;
+        }
+        .param {
+            margin-left: 40px;
+            font-family: 'Fira Code', monospace;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: baseline;
+        }
+        .param-name {
+            font-weight: bold;
+            color: #8e44ad;
+            min-width: 180px;
+        }
+        .param-desc {
+            margin-left: 15px;
+            flex: 1;
+        }
+        .method-return {
+            margin-top: 20px;
+            font-size: 1.05em;
+        }
+        .return-desc {
+            margin-left: 40px;
+            font-family: 'Fira Code', monospace;
+        }
+        code {
+            background-color: #f0f0f0;
+            padding: 5px 10px;
+            border-radius: 6px;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.98em;
+        }
+        .cmd {
+            background-color: #f5f7fa;
+            padding: 18px 25px;
+            border-radius: 8px;
+            font-family: 'Fira Code', monospace;
+            display: block;
+            margin: 25px 0;
+            overflow-x: auto;
+            border-left: 5px solid #95a5a6;
+            font-size: 0.98em;
+            line-height: 1.7;
+        }
+        .note {
+            background-color: #fff8e1;
+            padding: 25px;
+            border-left: 6px solid #ffc107;
+            margin: 30px 0;
+            border-radius: 8px;
+        }
+        .note-title {
+            font-weight: bold;
+            color: #ff8f00;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+        .example {
+            background-color: #e8f5e9;
+            padding: 25px;
+            border-radius: 10px;
+            margin: 35px 0;
+            border-left: 6px solid #4caf50;
+        }
+        .example-title {
+            font-weight: bold;
+            color: #2e7d32;
+            margin-bottom: 18px;
+            font-size: 1.25em;
+        }
+        .version-info {
+            display: flex;
+            margin: 30px 0;
+            gap: 20px;
+        }
+        .version-card {
+            flex: 1;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+        }
+        .v3-card {
+            background-color: #e3f2fd;
+            border-left: 5px solid #2196f3;
+        }
+        .v5-card {
+            background-color: #e8f5e9;
+            border-left: 5px solid #4caf50;
+        }
+        .version-title {
+            font-weight: bold;
+            font-size: 1.2em;
+            margin-bottom: 15px;
+            color: #2c3e50;
+        }
+        .log-type {
+            display: flex;
+            margin: 30px 0;
+            gap: 20px;
+        }
+        .log-card {
+            flex: 1;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+        }
+        .tts-card {
+            background-color: #fff3e0;
+            border-left: 5px solid #ff9800;
+        }
+        .sdk-card {
+            background-color: #f3e5f5;
+            border-left: 5px solid #9c27b0;
+        }
+        .yuliao-card {
+            background-color: #e0f7fa;
+            border-left: 5px solid #00bcd4;
+        }
+        .log-title {
+            font-weight: bold;
+            font-size: 1.2em;
+            margin-bottom: 15px;
+            color: #2c3e50;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>VALogger API 文档</h1>
+        
+        <p>该模块提供了收集百度语音助手(VA)相关日志的功能，包括TTS日志、SDK日志和语料日志的开启、关闭和导出。</p>
+        
+        <div class="version-info">
+            <div class="version-card v3-card">
+                <div class="version-title">3.0版本</div>
+                <p>适用于版本号以"1"开头的VA应用</p>
+            </div>
+            <div class="version-card v5-card">
+                <div class="version-title">5.0版本</div>
+                <p>适用于版本号以"7"开头的VA应用</p>
+            </div>
+        </div>
+        
+        <div class="log-type">
+            <div class="log-card tts-card">
+                <div class="log-title">TTS日志</div>
+                <p>文本转语音相关日志</p>
+                <ul>
+                    <li>路径: <code>/mnt/user/{userid}/emulated/{userid}/tts_result</code></li>
+                    <li>操作: 开启/关闭/导出</li>
+                </ul>
+            </div>
+            <div class="log-card sdk-card">
+                <div class="log-title">SDK日志</div>
+                <p>语音SDK相关日志</p>
+                <ul>
+                    <li>操作: 开启/关闭</li>
+                </ul>
+            </div>
+            <div class="log-card yuliao-card">
+                <div class="log-title">语料日志</div>
+                <p>语音识别相关日志</p>
+                <ul>
+                    <li>包含: ASR日志、音频录制日志、VR数据</li>
+                    <li>操作: 开启/关闭/导出</li>
+                </ul>
+            </div>
+        </div>
+        
+        <h2>命令说明</h2>
+        <div class="cmd">OPEN_VA_LOG_PAGE_CMD = 'adb shell "am start com.baidu.che.codriver/.ui.DebugActivity"'</div>
+        <p>打开VA日志调试页面。</p>
+        
+        <div class="cmd">GET_CURRENT_USER_ID = 'adb shell "dumpsys user | grep -i current"'</div>
+        <p>获取当前用户ID。</p>
+        
+        <div class="cmd">GET_VA_VERSION_CMD = 'adb shell "dumpsys package com.baidu.che.codriver | grep versionName"'</div>
+        <p>获取VA应用版本号。</p>
+        
+        <div class="cmd">DUMP_TTS_LOG_CMD = "adb pull /mnt/user/{}/emulated/{}/tts_result {}/VALog"</div>
+        <p>导出TTS日志文件。</p>
+        
+        <div class="cmd">DELETE_TTS_LOG_CMD = "adb shell rm -rf /mnt/user/{}/emulated/{}/tts_result"</div>
+        <p>删除设备上的TTS日志文件。</p>
+        
+        <div class="cmd">DUMP_ASR_LOG_CMD = "adb pull /mnt/user/{}/emulated/{}/asr {}/VALog"</div>
+        <p>导出ASR日志文件。</p>
+        
+        <div class="cmd">DUNP_AUD_LOG_CMD = "adb pull /mnt/user/{}/emulated/{}/aud_rec {}/VALog"</div>
+        <p>导出音频录制日志文件。</p>
+        
+        <div class="cmd">DUMP_VRDATA_LOG_CMD = "adb pull /mnt/user/{}/emulated/{}/vrData {}/VALog"</div>
+        <p>导出VR数据文件。</p>
+        
+        <div class="cmd">DELETE_ASR_LOG_CMD = "adb shell rm -rf /mnt/user/{}/emulated/{}/asr"</div>
+        <p>删除设备上的ASR日志文件。</p>
+        
+        <div class="cmd">DELETE_AUD_LOG_CMD = "adb shell rm -rf /mnt/user/{}/emulated/{}/aud_rec"</div>
+        <p>删除设备上的音频录制日志文件。</p>
+        
+        <div class="cmd">DELETE_VRDATA_LOG_CMD = "adb shell rm -rf /mnt/user/{}/emulated/{}/vrData"</div>
+        <p>删除设备上的VR数据文件。</p>
+        
+        <div class="note">
+            <div class="note-title">重要说明</div>
+            <p>1. 所有命令中的<code>{}</code>会被自动替换为当前用户ID。</p>
+            <p>2. 不同版本的VA应用可能有不同的UI操作方式。</p>
+            <p>3. 导出日志后会自动清理设备上的日志文件。</p>
+        </div>
+        
+        <h2>类文档</h2>
+        
+        <div class="class-name">VALogger</div>
+        <p>百度语音助手(VA)日志收集器的主类，提供收集各类VA日志的功能。</p>
+        
+        <div class="method">
+            <div class="method-name">getInstance()</div>
+            <div class="method-desc">获取VALogger的单例实例。</div>
+            <div class="method-return">
+                <span>返回:</span>
+                <div class="return-desc">VALogger的实例</div>
+            </div>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">open_tts_sound_log(device)</div>
+            <div class="method-desc">开启TTS日志记录。</div>
+            <div class="method-params">
+                <div class="param">
+                    <span class="param-name">device</span>
+                    <span class="param-desc">uiautomator设备对象，用于UI操作</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">close_tts_sound_log(device)</div>
+            <div class="method-desc">关闭TTS日志记录。</div>
+            <div class="method-params">
+                <div class="param">
+                    <span class="param-name">device</span>
+                    <span class="param-desc">uiautomator设备对象，用于UI操作</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">dump_tts_log(caseFolder)</div>
+            <div class="method-desc">导出TTS日志文件。</div>
+            <div class="method-params">
+                <div class="param">
+                    <span class="param-name">caseFolder</span>
+                    <span class="param-desc">日志保存的文件夹路径</span>
+                </div>
+            </div>
+            <div class="method-return">
+                <span>返回:</span>
+                <div class="return-desc">布尔值，表示是否成功导出</div>
+            </div>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">open_sdk_log(device)</div>
+            <div class="method-desc">开启SDK日志记录。</div>
+            <div class="method-params">
+                <div class="param">
+                    <span class="param-name">device</span>
+                    <span class="param-desc">uiautomator设备对象，用于UI操作</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">close_sdk_log(device)</div>
+            <div class="method-desc">关闭SDK日志记录。</div>
+            <div class="method-params">
+                <div class="param">
+                    <span class="param-name">device</span>
+                    <span class="param-desc">uiautomator设备对象，用于UI操作</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">open_yuliao_log(device)</div>
+            <div class="method-desc">开启语料日志记录。</div>
+            <div class="method-params">
+                <div class="param">
+                    <span class="param-name">device</span>
+                    <span class="param-desc">uiautomator设备对象，用于UI操作</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">close_yuliao_log(device)</div>
+            <div class="method-desc">关闭语料日志记录。</div>
+            <div class="method-params">
+                <div class="param">
+                    <span class="param-name">device</span>
+                    <span class="param-desc">uiautomator设备对象，用于UI操作</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">dump_yuliao_log(caseFolder)</div>
+            <div class="method-desc">导出语料日志文件(包括ASR日志、音频录制日志和VR数据)。</div>
+            <div class="method-params">
+                <div class="param">
+                    <span class="param-name">caseFolder</span>
+                    <span class="param-desc">日志保存的文件夹路径</span>
+                </div>
+            </div>
+            <div class="method-return">
+                <span>返回:</span>
+                <div class="return-desc">布尔值，表示是否成功导出</div>
+            </div>
+        </div>
+        
+        <h2>使用示例</h2>
+        <div class="example">
+            <div class="example-title">收集TTS日志</div>
+            <pre><code>
+# 获取VALogger实例
+logger = VALogger.getInstance()
+
+# 开启TTS日志记录
+logger.open_tts_sound_log(device)
+
+# 进行语音测试...
+
+# 导出TTS日志
+logger.dump_tts_log("/path/to/logs")
+
+# 关闭TTS日志记录
+logger.close_tts_sound_log(device)
+            </code></pre>
+        </div>
+        
+        <div class="example">
+            <div class="example-title">收集语料日志</div>
+            <pre><code>
+# 获取VALogger实例
+logger = VALogger.getInstance()
+
+# 开启语料日志记录
+logger.open_yuliao_log(device)
+
+# 进行语音识别测试...
+
+# 导语料日志
+logger.dump_yuliao_log("/path/to/logs")
+
+# 关闭语料日志记录
+logger.close_yuliao_log(device)
+            </code></pre>
+        </div>
+        
+        <h2>工作流程</h2>
+        <ol>
+            <li>获取VALogger实例</li>
+            <li>调用相应的open方法开启日志记录</li>
+            <li>进行语音相关测试操作</li>
+            <li>调用dump方法导出日志文件</li>
+            <li>日志文件将被保存在指定的<code>caseFolder/VALog</code>目录下</li>
+            <li>调用相应的close方法关闭日志记录</li>
+            <li>导出完成后会自动清理设备上的日志文件</li>
+        </ol>
+    </div>
+</body>
+</html>

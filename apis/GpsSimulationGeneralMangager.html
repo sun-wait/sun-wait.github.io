@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GPS Simulation API 文档</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #2980b9;
+            margin-top: 30px;
+        }
+        h3 {
+            color: #16a085;
+        }
+        .class-name {
+            background-color: #f8f9fa;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-family: monospace;
+            color: #d63384;
+            font-weight: bold;
+        }
+        .method {
+            background-color: #e9ecef;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+        .method-name {
+            font-weight: bold;
+            color: #6f42c1;
+        }
+        .param {
+            font-style: italic;
+            color: #e83e8c;
+        }
+        .return {
+            font-weight: bold;
+            color: #20c997;
+        }
+        code {
+            background-color: #f8f9fa;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-family: monospace;
+            color: #d63384;
+        }
+        pre {
+            background-color: #f8f9fa;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>GPS Simulation API 文档</h1>
+    
+    <h2>1. 概述</h2>
+    <p>该API提供了GPS模拟功能，支持通过CAN总线或以太网发送模拟的GPS数据。包含坐标转换、路径规划、航向角计算等功能。</p>
+    
+    <h2>2. 主要类</h2>
+    
+    <h3><span class="class-name">_GpsSimulationCommon</span></h3>
+    <p>GPS模拟的核心功能类，提供坐标转换、插值计算、航向角计算等基础功能。</p>
+    
+    <div class="method">
+        <h4><span class="method-name">gcj2wgs(location)</span></h4>
+        <p>将GCJ02坐标转换为WGS84坐标。</p>
+        <p><strong>参数:</strong> <span class="param">location</span> - GCJ02格式的GPS坐标字符串，如"113.923745,22.530824"</p>
+        <p><strong>返回:</strong> <span class="return">tuple</span> - (lon_wgs, lat_wgs) WGS84格式的经纬度</p>
+    </div>
+    
+    <div class="method">
+        <h4><span class="method-name">interpolation(loc1, loc2, a, b, v_speed, network)</span></h4>
+        <p>对两个坐标点之间进行线性插值。</p>
+        <p><strong>参数:</strong></p>
+        <ul>
+            <li><span class="param">loc1</span> - 坐标1</li>
+            <li><span class="param">loc2</span> - 坐标2</li>
+            <li><span class="param">a</span> - 坐标1的经/纬度</li>
+            <li><span class="param">b</span> - 坐标2的经/纬度</li>
+            <li><span class="param">v_speed</span> - 车速(km/h)</li>
+            <li><span class="param">network</span> - 是否为网络模式</li>
+        </ul>
+        <p><strong>返回:</strong> <span class="return">list</span> - 插值后的坐标列表</p>
+    </div>
+    
+    <div class="method">
+        <h4><span class="method-name">get_polyline(src, des, strategy)</span></h4>
+        <p>获取从起点到终点的路径点。</p>
+        <p><strong>参数:</strong></p>
+        <ul>
+            <li><span class="param">src</span> - 始发地</li>
+            <li><span class="param">des</span> - 目的地</li>
+            <li><span class="param">strategy</span> - 路径策略('高速优先','躲避拥堵','不走高速','避免收费')</li>
+        </ul>
+        <p><strong>返回:</strong> <span class="return">list</span> - 路径点列表</p>
+    </div>
+    
+    <h3><span class="class-name">GpsSimulationGeneralMangager</span></h3>
+    <p>GPS模拟的管理类，提供高级接口控制GPS模拟过程。</p>
+    
+    <div class="method">
+        <h4><span class="method-name">set_gps_location(src=None)</span></h4>
+        <p>设置GPS位置。</p>
+        <p><strong>参数:</strong> <span class="param">src</span> - 可以是坐标点或地址(如"上海市巨峰路2199号")</p>
+        <p><strong>返回:</strong> <span class="return">bool</span> - 操作是否成功</p>
+    </div>
+    
+    <div class="method">
+        <h4><span class="method-name">gps_can_navigation_simulation(src, des, strategy, vs_h, elevation_interval=600, replay=True)</span></h4>
+        <p>执行CAN总线GPS导航模拟。</p>
+        <p><strong>参数:</strong></p>
+        <ul>
+            <li><span class="param">src</span> - 起点(坐标或地址)</li>
+            <li><span class="param">des</span> - 终点(坐标或地址)</li>
+            <li><span class="param">strategy</span> - 路径策略</li>
+            <li><span class="param">vs_h</span> - 车速(km/h)</li>
+            <li><span class="param">elevation_interval</span> - 高程采样间隔(默认600点)</li>
+            <li><span class="param">replay</span> - 是否立即回放(默认True)</li>
+        </ul>
+        <p><strong>返回:</strong> <span class="return">bool</span> - 操作是否成功</p>
+    </div>
+    
+    <div class="method">
+        <h4><span class="method-name">gps_ethernet_navigation_simulation(src, des, strategy, vs_h, D2_ABS=12.6, ABS_hr=13.8, elevation_interval=600)</span></h4>
+        <p>执行以太网GPS导航模拟。</p>
+        <p><strong>参数:</strong></p>
+        <ul>
+            <li><span class="param">src</span> - 起点(坐标或地址)</li>
+            <li><span class="param">des</span> - 终点(坐标或地址)</li>
+            <li><span class="param">strategy</span> - 路径策略</li>
+            <li><span class="param">vs_h</span> - 车速(km/h)</li>
+            <li><span class="param">D2_ABS</span> - 2D绝对位置误差估计(默认12.6)</li>
+            <li><span class="param">ABS_hr</span> - 绝对航向误差估计(默认13.8)</li>
+            <li><span class="param">elevation_interval</span> - 高程采样间隔(默认600点)</li>
+        </ul>
+        <p><strong>返回:</strong> <span class="return">bool</span> - 操作是否成功</p>
+    </div>
+    
+    <div class="method">
+        <h4><span class="method-name">send_enthernet_pcap(iface, vs_h, replay=False)</span></h4>
+        <p>发送以太网PCAP数据包。</p>
+        <p><strong>参数:</strong></p>
+        <ul>
+            <li><span class="param">iface</span> - 网络接口(如'以太网4')</li>
+            <li><span class="param">vs_h</span> - 车速(km/h)</li>
+            <li><span class="param">replay</span> - 是否立即回放(默认False)</li>
+        </ul>
+        <p><strong>返回:</strong> <span class="return">bool</span> - 操作是否成功</p>
+    </div>
+    
+    <h2>3. 使用示例</h2>
+    
+    <h3>CAN总线GPS模拟示例</h3>
+    <pre><code>gps_manager = GpsSimulationGeneralMangager.getInstance()
+gps_manager.gps_can_navigation_simulation(
+    src="上海市巨峰路2199号",
+    des="上海市虹桥火车站",
+    strategy='高速优先',
+    vs_h=50
+)</code></pre>
+    
+    <h3>以太网GPS模拟示例</h3>
+    <pre><code>gps_manager = GpsSimulationGeneralMangager.getInstance()
+gps_manager.gps_ethernet_navigation_simulation(
+    src="上海市巨峰路2199号",
+    des="上海市虹桥火车站",
+    strategy='高速优先',
+    vs_h=50
+)
+gps_manager.send_enthernet_pcap('以太网4', 50, True)</code></pre>
+    
+    <h2>4. 注意事项</h2>
+    <ul>
+        <li>使用前需要确保WiFi连接正常，并断开TBOX连接</li>
+        <li>以太网模拟需要使用Canoe或1000baseT1转1000baseTX设备</li>
+        <li>地址输入时需要包含城市信息，如"上海市巨峰路2199号"</li>
+        <li>路径策略支持: '高速优先', '躲避拥堵', '不走高速', '避免收费'</li>
+    </ul>
+</body>
+</html>

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ScreenRecorder API 文档</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #2980b9;
+            margin-top: 30px;
+        }
+        h3 {
+            color: #16a085;
+        }
+        .class-name {
+            background-color: #f8f9fa;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-family: monospace;
+            color: #d63384;
+            font-weight: bold;
+        }
+        .method {
+            background-color: #e9ecef;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+        .method-name {
+            font-weight: bold;
+            color: #6f42c1;
+        }
+        .param {
+            font-style: italic;
+            color: #e83e8c;
+        }
+        .return {
+            font-weight: bold;
+            color: #20c997;
+        }
+        code {
+            background-color: #f8f9fa;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-family: monospace;
+            color: #d63384;
+        }
+        pre {
+            background-color: #f8f9fa;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>ScreenRecorder API 文档</h1>
+    
+    <h2>1. 概述</h2>
+    <p>该API提供了Android设备屏幕录制功能，支持后台线程录制和异步操作。</p>
+    
+    <h2>2. 主要类</h2>
+    
+    <h3><span class="class-name">ScreenRecordTask</span></h3>
+    <p>屏幕录制任务线程类，继承自<code>threading.Thread</code>，负责实际的屏幕录制操作。</p>
+    
+    <div class="method">
+        <h4><span class="method-name">__init__(device, timeout, remoteVideo)</span></h4>
+        <p>构造函数。</p>
+        <p><strong>参数:</strong></p>
+        <ul>
+            <li><span class="param">device</span> - 设备对象</li>
+            <li><span class="param">timeout</span> - 录制超时时间(秒)</li>
+            <li><span class="param">remoteVideo</span> - 远程视频文件路径</li>
+        </ul>
+    </div>
+    
+    <div class="method">
+        <h4><span class="method-name">run()</span></h4>
+        <p>线程执行方法，实际执行屏幕录制命令。</p>
+    </div>
+    
+    <h3><span class="class-name">ScreenRecorder</span></h3>
+    <p>屏幕录制管理类，提供单例模式和录制任务控制功能。</p>
+    
+    <div class="method">
+        <h4><span class="method-name">getInstance()</span> [类方法]</h4>
+        <p>获取ScreenRecorder单例实例。</p>
+        <p><strong>返回:</strong> <span class="return">ScreenRecorder</span> - ScreenRecorder实例</p>
+    </div>
+    
+    <div class="method">
+        <h4><span class="method-name">startRecordTask(device, timeout, remoteVideo)</span></h4>
+        <p>启动屏幕录制任务。</p>
+        <p><strong>参数:</strong></p>
+        <ul>
+            <li><span class="param">device</span> - 设备对象</li>
+            <li><span class="param">timeout</span> - 录制超时时间(秒)</li>
+            <li><span class="param">remoteVideo</span> - 远程视频文件路径</li>
+        </ul>
+    </div>
+    
+    <div class="method">
+        <h4><span class="method-name">waitRecordTaskFinish()</span></h4>
+        <p>等待录制任务完成。</p>
+    </div>
+    
+    <h2>3. 使用示例</h2>
+    
+    <h3>3.1 基本使用</h3>
+    <pre><code># 获取设备连接
+device = DeviceUtil.connectDevice("emulator-5554")
+
+# 获取屏幕录制器实例
+recorder = ScreenRecorder.getInstance()
+
+# 开始录制(60秒，保存到/sdcard/demo.mp4)
+recorder.startRecordTask(device, 60, "/sdcard/demo.mp4")
+
+# 等待录制完成
+recorder.waitRecordTaskFinish()</code></pre>
+    
+    <h3>3.2 异步录制</h3>
+    <pre><code># 开始录制但不等待完成
+recorder.startRecordTask(device, 30, "/sdcard/async.mp4")
+
+# 这里可以执行其他操作...
+
+# 需要时再等待录制完成
+recorder.waitRecordTaskFinish()</code></pre>
+    
+    <h2>4. 注意事项</h2>
+    <ul>
+        <li>使用前需要确保设备已通过ADB连接</li>
+        <li>录制时间(timeout)以秒为单位</li>
+        <li>远程视频路径需要有写入权限</li>
+        <li>录制任务在后台线程执行，可以异步操作</li>
+        <li>waitRecordTaskFinish()会阻塞当前线程直到录制完成</li>
+        <li>设备需要支持screenrecord命令(Android 4.4及以上)</li>
+    </ul>
+</body>
+</html>

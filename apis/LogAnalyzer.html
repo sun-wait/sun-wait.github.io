@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>LogAnalyzer API 文档</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            color: #333;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #2980b9;
+            margin-top: 30px;
+        }
+        .class-name {
+            background-color: #f8f9fa;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-family: monospace;
+            color: #d63384;
+            font-weight: bold;
+        }
+        .method {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            border-left: 4px solid #3498db;
+        }
+        .method-name {
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        .method-desc {
+            margin-top: 10px;
+        }
+        .param {
+            margin-top: 10px;
+        }
+        .param-name {
+            font-weight: bold;
+        }
+        .config-section {
+            background-color: #e8f4f8;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 20px 0;
+        }
+        .config-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .note {
+            background-color: #fff8e1;
+            padding: 10px;
+            border-left: 4px solid #ffc107;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>LogAnalyzer API 文档</h1>
+
+    <div class="config-section">
+        <div class="config-title">配置参数</div>
+        <p><strong>LOGCAT_ASSERT_MSG</strong>: Logcat断言消息</p>
+        <p><strong>LOGCAT_ASSERT_TIMES</strong>: Logcat断言次数 (默认为1)</p>
+        <p><strong>SLOG_ASSERT_MSG</strong>: Slog断言消息</p>
+        <p><strong>SLOG_ASSERT_TIMES</strong>: Slog断言次数 (默认为1)</p>
+        <p><strong>SLOG_PREFIX</strong>: Slog日志文件前缀 (默认为"slog_")</p>
+        <p><strong>LOGCAT_PREFIX</strong>: Logcat日志文件前缀 (默认为"gmlog_")</p>
+        <p><strong>CANLOG_PREFIX</strong>: CAN日志文件前缀 (默认为"canlog_")</p>
+        <p><strong>SERIAL_PREFIX</strong>: 串口日志文件前缀 (默认为"serialLog")</p>
+    </div>
+
+    <div class="note">
+        <strong>注意：</strong>这是一个工具类，不能被实例化。所有方法都是静态方法。
+    </div>
+
+    <h2><span class="class-name">LogAnalyzer</span> 类</h2>
+    <p>该类提供了日志分析的功能，包括检查SUSD PLC状态、CAN总线传输稳定性、系统状态等。</p>
+
+    <div class="method">
+        <div class="method-name">check_plain_text_log(keyword, log_dir, log_prefix)</div>
+        <div class="method-desc">
+            检查普通文本日志中是否包含指定关键字。
+        </div>
+        <div class="param">
+            <span class="param-name">参数:</span>
+            <ul>
+                <li>keyword - 要搜索的关键字</li>
+                <li>log_dir - 日志目录路径</li>
+                <li>log_prefix - 日志文件前缀</li>
+            </ul>
+            <span class="param-name">返回:</span> 如果找到关键字返回False，否则返回True
+        </div>
+    </div>
+
+    <div class="method">
+        <div class="method-name">check_susd_plc_state(log_dir, result_output_file, serial_prefix=SERIAL_PREFIX, thread=True)</div>
+        <div class="method-desc">
+            检查SUSD PLC状态，支持线程模式和非线程模式。
+            <p>该方法会检查串口日志中的以下关键字：</p>
+            <ul>
+                <li>"SusdClient.cpp onPLCStateChanged: current=SUSD_PLC_STATE_RTOS_SUSPEND" - 表示STR状态</li>
+                <li>"PPS has terminated" - 表示冷启动状态</li>
+            </ul>
+        </div>
+        <div class="param">
+            <span class="param-name">参数:</span>
+            <ul>
+                <li>log_dir - 日志目录路径</li>
+                <li>result_output_file - 结果输出文件路径</li>
+                <li>serial_prefix - 串口日志文件前缀 (默认为SERIAL_PREFIX)</li>
+                <li>thread - 是否以线程方式运行 (默认为True)</li>
+            </ul>
+            <span class="param-name">返回:</span> 如果thread=True返回线程对象，否则无返回值
+        </div>
+    </div>
+
+    <div class="method">
+        <div class="method-name">check_can_tx_stability(log_dir, result_output_file)</div>
+        <div class="method-desc">
+            检查CAN总线传输稳定性，特别是PowerMode报文的掉帧情况。
+            <p>根据平台类型(GB或CLEA)检查不同的CAN消息ID和信号。</p>
+        </div>
+        <div class="param">
+            <span class="param-name">参数:</span>
+            <ul>
+                <li>log_dir - CAN日志目录路径</li>
+                <li>result_output_file - 结果输出文件路径</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="method">
+        <div class="method-name">check_can_system_state(log_dir, result_output_file, start_timestamp=0, end_timestamp=float('inf'))</div>
+        <div class="method-desc">
+            检查CAN总线上的系统状态信息。
+            <p>根据平台类型(GB或CLEA)检查不同的CAN消息ID和信号，验证系统状态是否符合预期值。</p>
+        </div>
+        <div class="param">
+            <span class="param-name">参数:</span>
+            <ul>
+                <li>log_dir - CAN日志目录路径</li>
+                <li>result_output_file - 结果输出文件路径</li>
+                <li>start_timestamp - 开始时间戳 (默认为0)</li>
+                <li>end_timestamp - 结束时间戳 (默认为无穷大)</li>
+            </ul>
+        </div>
+    </div>
+
+    <h2>私有方法</h2>
+    <div class="method">
+        <div class="method-name">__get_log_content(log_dir, log_file_prefix)</div>
+        <div class="method-desc">
+            私有方法，获取指定前缀的日志文件内容。
+        </div>
+    </div>
+
+    <div class="method">
+        <div class="method-name">__get_canlog_content(log_dir, log_file_suffix="asc")</div>
+        <div class="method-desc">
+            私有方法，获取CAN日志文件内容。
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ExceptionChecker API 文档</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            color: #333;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #2980b9;
+            margin-top: 30px;
+        }
+        .class-name {
+            background-color: #f8f9fa;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-family: monospace;
+            color: #d63384;
+            font-weight: bold;
+        }
+        .method {
+            background-color: #f8f9fa;
+            padding: 10px;
+            border-left: 4px solid #6c757d;
+            margin: 15px 0;
+            border-radius: 0 4px 4px 0;
+        }
+        .method-name {
+            font-weight: bold;
+            color: #0066cc;
+        }
+        .param {
+            font-family: monospace;
+            color: #28a745;
+        }
+        .return {
+            font-family: monospace;
+            color: #dc3545;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        code {
+            background-color: #f8f9fa;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-family: monospace;
+        }
+        .note {
+            background-color: #fff3cd;
+            padding: 10px;
+            border-left: 4px solid #ffc107;
+            margin: 15px 0;
+            border-radius: 0 4px 4px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>ExceptionChecker API 文档</h1>
+    
+    <h2>概述</h2>
+    <p><span class="class-name">ExceptionChecker</span> 是一个继承自 threading.Thread 的异常检测线程类，用于在后台持续检测系统异常情况，包括电源模式、ADB连接状态和system_server进程状态。</p>
+    
+    <h2>类初始化</h2>
+    <div class="method">
+        <div class="method-name">__init__(event=EventConstant.eventName.pressureExceptionEvent.value, module=EventConstant.EventModule.default.value, adb_check_times=3)</div>
+        <p><strong>描述</strong>: 初始化异常检测线程。</p>
+        <p><strong>参数</strong>:</p>
+        <ul>
+            <li><span class="param">event</span>: 异常事件名称，默认为压力异常事件</li>
+            <li><span class="param">module</span>: 事件模块，默认为default</li>
+            <li><span class="param">adb_check_times</span>: ADB连接检查重试次数，默认为3次</li>
+        </ul>
+    </div>
+    
+    <h2>常量</h2>
+    <table>
+        <tr>
+            <th>常量名</th>
+            <th>值</th>
+            <th>描述</th>
+        </tr>
+        <tr>
+            <td>GET_SYSTEM_SERVER_PID_CMD</td>
+            <td>adb shell命令</td>
+            <td>获取system_server进程ID的命令</td>
+        </tr>
+        <tr>
+            <td>EXCEPTION_CHECK_INTERVAL</td>
+            <td>30</td>
+            <td>异常检查间隔时间(秒)</td>
+        </tr>
+        <tr>
+            <td>CAMERA_INDEX</td>
+            <td>"1"</td>
+            <td>摄像头索引(用于黑屏检测)</td>
+        </tr>
+    </table>
+    
+    <h2>主要方法</h2>
+    
+    <div class="method">
+        <div class="method-name">checkPowerMode()</div>
+        <p><strong>描述</strong>: 检查电源模式是否符合预期。</p>
+        <p><strong>返回</strong>: <span class="return">bool</span> 电源模式是否正常</p>
+        <div class="note">
+            <strong>注意</strong>: 当前存在资源竞争问题，如果获取不到系统状态或超时，默认返回True(正常)
+        </div>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">checkAdbConnect()</div>
+        <p><strong>描述</strong>: 检查ADB连接状态，如果连接失败会重试指定次数。</p>
+        <p><strong>返回</strong>: <span class="return">bool</span> ADB连接是否正常</p>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">getSystemServerId()</div>
+        <p><strong>描述</strong>: 获取当前system_server进程ID。</p>
+        <p><strong>返回</strong>: <span class="return">str</span> 进程ID，获取失败返回None</p>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">checkSystemServer(systemServer)</div>
+        <p><strong>描述</strong>: 检查system_server进程是否与初始值一致。</p>
+        <p><strong>参数</strong>:</p>
+        <ul>
+            <li><span class="param">systemServer</span>: 初始的system_server进程ID</li>
+        </ul>
+        <p><strong>返回</strong>: <span class="return">bool</span> 进程是否一致</p>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">onBlackScreenDetected()</div>
+        <p><strong>描述</strong>: 黑屏检测回调函数，检测到黑屏时触发异常。</p>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">onExceptionDetect()</div>
+        <p><strong>描述</strong>: 异常检测处理函数，触发异常事件。</p>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">startBlackScreenDetect()</div>
+        <p><strong>描述</strong>: 启动黑屏检测。</p>
+        <div class="note">
+            <strong>注意</strong>: 当前为待实现功能，等待中科优化接口
+        </div>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">stopBlackScreenDetect()</div>
+        <p><strong>描述</strong>: 停止黑屏检测。</p>
+        <div class="note">
+            <strong>注意</strong>: 当前为待实现功能，等待中科优化接口
+        </div>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">run()</div>
+        <p><strong>描述</strong>: 线程主函数，执行异常检测循环。</p>
+        <p><strong>检测逻辑</strong>:</p>
+        <ol>
+            <li>获取初始system_server进程ID</li>
+            <li>启动黑屏检测</li>
+            <li>循环检测(间隔30秒):
+                <ul>
+                    <li>检查电源模式</li>
+                    <li>检查ADB连接</li>
+                    <li>检查system_server进程</li>
+                </ul>
+            </li>
+            <li>任何一项检查失败则触发异常事件</li>
+        </ol>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">stopTask()</div>
+        <p><strong>描述</strong>: 停止异常检测任务。</p>
+    </div>
+    
+    <h2>使用示例</h2>
+    <pre><code>
+# 创建异常检测线程
+exception_checker = ExceptionChecker(
+    event="custom_exception_event",
+    adb_check_times=5
+)
+
+# 启动线程
+exception_checker.start()
+
+# 停止线程
+exception_checker.stopTask()
+    </code></pre>
+    
+    <h2>检测流程</h2>
+    <ol>
+        <li>初始化时设置检测参数</li>
+        <li>启动线程后开始周期性检测</li>
+        <li>检测项目包括:
+            <ul>
+                <li>电源模式是否符合平台要求</li>
+                <li>ADB连接是否正常</li>
+                <li>system_server进程是否变化</li>
+                <li>黑屏检测(待实现)</li>
+            </ul>
+        </li>
+        <li>任何一项检测失败会触发异常事件</li>
+        <li>调用stopTask()可以停止检测</li>
+    </ol>
+    
+    <h2>注意事项</h2>
+    <ul>
+        <li>电源模式检测存在资源竞争问题，可能获取不到状态</li>
+        <li>黑屏检测功能当前未实现，等待外部接口</li>
+        <li>ADB连接检查支持重试机制，默认重试3次</li>
+        <li>system_server进程变化通常表示系统重启</li>
+        <li>检测间隔为30秒，但内部循环间隔为5秒</li>
+    </ul>
+</body>
+</html>

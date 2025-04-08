@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>customLib 项目文档</title>
+  <style>
+    :root {
+      --primary-color: #3498db;
+      --secondary-color: #2980b9;
+      --accent-color: #e74c3c;
+      --light-color: #ecf0f1;
+      --dark-color: #2c3e50;
+      --text-color: #333;
+      --border-radius: 6px;
+      --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      --transition: all 0.3s ease;
+    }
+
+    body {
+      font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+      line-height: 1.6;
+      color: var(--text-color);
+      background-color: #f9f9f9;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    header {
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      color: white;
+      padding: 2rem 0;
+      border-radius: var(--border-radius);
+      margin-bottom: 2rem;
+      box-shadow: var(--box-shadow);
+      text-align: center;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 2.5rem;
+    }
+
+    h2 {
+      color: var(--secondary-color);
+      border-bottom: 2px solid var(--light-color);
+      padding-bottom: 0.5rem;
+      margin-top: 2rem;
+    }
+
+    h3 {
+      color: var(--primary-color);
+      margin-top: 1.5rem;
+    }
+
+    .section {
+      background-color: white;
+      border-radius: var(--border-radius);
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      box-shadow: var(--box-shadow);
+      transition: var(--transition);
+    }
+
+    .section:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .feature-card {
+      background-color: var(--light-color);
+      border-left: 4px solid var(--primary-color);
+      padding: 1rem;
+      margin-bottom: 1rem;
+      border-radius: 0 var(--border-radius) var(--border-radius) 0;
+    }
+
+    .module-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .module-card {
+      background-color: white;
+      border: 1px solid #ddd;
+      border-radius: var(--border-radius);
+      padding: 1rem;
+      transition: var(--transition);
+    }
+
+    .module-card:hover {
+      border-color: var(--primary-color);
+      transform: translateY(-3px);
+    }
+
+    .module-card h4 {
+      color: var(--secondary-color);
+      margin-top: 0;
+      border-bottom: 1px dashed #ddd;
+      padding-bottom: 0.5rem;
+    }
+
+    .tree {
+      font-family: monospace;
+      background-color: #f5f5f5;
+      padding: 1rem;
+      border-radius: var(--border-radius);
+      overflow-x: auto;
+      line-height: 1.8;
+    }
+
+    .tree .folder {
+      color: var(--primary-color);
+      font-weight: bold;
+    }
+
+    .tree .file {
+      color: var(--dark-color);
+    }
+
+    .tree .pyd {
+      color: var(--accent-color);
+    }
+
+    .highlight {
+      background-color: #fffde7;
+      padding: 0.2rem 0.4rem;
+      border-radius: 3px;
+      font-weight: bold;
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem 0;
+      color: #777;
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 768px) {
+      .module-grid {
+        grid-template-columns: 1fr;
+      }
+
+      h1 {
+        font-size: 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+<header>
+  <div class="container">
+    <h1>customLib 项目文档</h1>
+    <p>一个综合性的 Python 库集合，专为车载系统测试、性能监控和自动化测试而设计</p>
+  </div>
+</header>
+
+<div class="container">
+  <section class="section">
+    <h2>项目概述</h2>
+    <p>customLib 是一个综合性的 Python 库集合，专为车载系统测试、性能监控、自动化测试和数据分析而设计。该库封装了多种常用功能模块，使开发人员和测试人员能够快速实现各种测试场景，提高测试效率和质量。customLib 提供了丰富的工具和接口，支持从音频处理、CAN 总线通信到性能监控等多种功能，适用于车载系统的开发、测试和验证。</p>
+  </section>
+  <section class="section">
+    <h2>项目结构</h2>
+    <p>customLib项目结构如下：</p>
+    <div class="project_structure" id="project_structure">
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>主要功能模块</h2>
+    <p>customLib 包含以下主要功能模块：</p>
+
+    <h3>1. common - 通用工具模块</h3>
+    <div class="feature-card">
+      <p>通用工具类集合，提供基础功能支持：</p>
+      <ul>
+        <li><span class="highlight">AppMonitor</span>: 应用监控工具，跟踪应用运行状态</li>
+        <li><span class="highlight">CommandExcutor</span>: 命令执行工具，执行系统命令</li>
+        <li><span class="highlight">DeviceUtil</span>: 设备工具类，管理设备连接和操作</li>
+        <li><span class="highlight">PageSliderTask</span>: 页面滑动任务工具</li>
+        <li><span class="highlight">ScreenRecorder</span>: 屏幕录制工具</li>
+        <li><span class="highlight">ScreenShoter</span>: 屏幕截图工具</li>
+        <li><span class="highlight">SerialClient</span>: 串口客户端工具</li>
+        <li><span class="highlight">TimeUtil</span>: 时间工具类，处理时间相关操作</li>
+        <li><span class="highlight">Utils</span>: 通用工具类，包含文件操作、日志等功能</li>
+        <li><span class="highlight">VehicleTypeManager</span>: 车型管理工具</li>
+      </ul>
+    </div>
+
+    <h3>2. performance - 性能监控模块</h3>
+    <div class="feature-card">
+      <p>性能监测与分析相关工具：</p>
+      <ul>
+        <li><span class="highlight">BaseScenarioRunner</span>: 基础场景运行器，管理测试场景的执行流程</li>
+        <li><span class="highlight">CpuMonitorTask</span>: CPU 监控任务</li>
+        <li><span class="highlight">DmaMemoryChecker</span>: DMA 内存检查工具</li>
+        <li><span class="highlight">IncTrafficMonitor</span>: 网络流量监控工具</li>
+        <li><span class="highlight">IoMonitor</span>: IO 监控工具</li>
+        <li><span class="highlight">MemoryCpuManager</span>: 内存和 CPU 管理工具</li>
+        <li><span class="highlight">MemoryDumper</span>: 内存转储工具</li>
+        <li><span class="highlight">MemoryMonitor</span>: 内存监控工具</li>
+        <li><span class="highlight">MonkeyMonitor</span>: Monkey 测试监控工具</li>
+        <li><span class="highlight">PageSwitchManager</span>: 页面切换管理器</li>
+        <li><span class="highlight">StartupManager</span>: 启动管理器</li>
+        <li><span class="highlight">reporter</span>: 性能报告生成工具</li>
+      </ul>
+    </div>
+
+    <h3>3. uiautomator - UI 自动化测试模块</h3>
+    <div class="feature-card">
+      <p>UI 自动化测试相关工具：</p>
+      <ul>
+        <li><span class="highlight">key</span>: 按键操作模块</li>
+        <li><span class="highlight">locators</span>: 元素定位器</li>
+        <li><span class="highlight">model</span>: 数据模型</li>
+        <li><span class="highlight">network</span>: 网络管理工具</li>
+        <li><span class="highlight">pages</span>: 页面对象模型</li>
+        <li><span class="highlight">watcher</span>: UI 监视器</li>
+      </ul>
+    </div>
+
+    <div class="module-grid">
+      <div class="module-card">
+        <h4>4. opencv - 图像处理模块</h4>
+        <p>基于 OpenCV 的图像处理工具：</p>
+        <ul>
+          <li>Camera: 摄像头操作工具</li>
+          <li>ImageUtils: 图像处理工具类</li>
+        </ul>
+      </div>
+
+      <div class="module-card">
+        <h4>5. loggers - 日志管理模块</h4>
+        <p>日志收集与管理工具</p>
+        <li><span class="highlight"></span>对slog，gmlog，dlt，serail等common日志抓取实现接口封装;</li>
+        <li><span class="highlight"></span>对Audio日志、蓝牙日志、Carplay日志、语音导航等Feature日志的抓取实现接口封装;</li>
+        <li><span class="highlight"></span>对minidump，guestdump，emtrace, coredump等System日志的抓取实现接口封装;</li>
+      </div>
+
+      <div class="module-card">
+        <h4>6. sqlite - 数据库模块</h4>
+        <p>SQLite 数据库操作工具</p>
+      </div>
+
+      <div class="module-card">
+        <h4>8. canbus - CAN 总线模块</h4>
+        <p>CAN 总线通信工具</p>
+        <li><span class="highlight"></span>CAN信号发送;</li>
+        <li><span class="highlight"></span>CAN信号接收;</li>
+        <li><span class="highlight"></span>CAN信号解析;</li>
+        <li><span class="highlight"></span>CAN报文录制;</li>
+      </div>
+
+      <div class="module-card">
+        <h4>9. linbus - LIN 总线模块</h4>
+        <p>LIN 总线通信工具</p>
+        <li><span class="highlight"></span>LIN信号发送;</li>
+        <li><span class="highlight"></span>LIN信号接收;</li>
+        <li><span class="highlight"></span>LIN信号解析;</li>
+        <li><span class="highlight"></span>LIN报文录制;</li>
+      </div>
+
+      <div class="module-card">
+        <h4>10. calibration - 校准模块</h4>
+        <p>系统校准工具</p>
+        <li><span class="highlight"></span>标定读取;</li>
+        <li><span class="highlight"></span>Override标定写入;</li>
+      </div>
+
+      <div class="module-card">
+        <h4>11. chart - 图表模块</h4>
+        <p>数据可视化工具</p>
+      </div>
+
+      <div class="module-card">
+        <h4>12. cluster - 仪表盘模块</h4>
+        <p>仪表盘相关工具</p>
+        <li><span class="highlight">Guage</span>:车速、档位等信号发送;</li>
+        <li><span class="highlight">Telltale</span>:可触发任一Telltale;</li>
+        <li><span class="highlight">Warning</span>:可触发任一warning;</li>
+        <li><span class="highlight">Chime</span>:可触发任一Chime;</li>
+        <li><span class="highlight"></span>更多...</li>
+      </div>
+
+      <div class="module-card">
+        <h4>13. datatrack - 数据追踪模块</h4>
+        <p>数据跟踪与分析工具</p>
+      </div>
+
+      <div class="module-card">
+        <h4>14. audio - 音频模块</h4>
+        <p>音频处理与测试工具</p>
+        <li><span class="highlight"></span>;</li>
+        <li><span class="highlight"></span>;</li>
+        <li><span class="highlight"></span>;</li>
+      </div>
+
+      <div class="module-card">
+        <h4>15. powercycle - 电源循环模块</h4>
+        <p>电源循环测试工具</p>
+        <li><span class="highlight"></span>;</li>
+        <li><span class="highlight"></span>;</li>
+        <li><span class="highlight"></span>;</li>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>应用场景</h2>
+    <p>customLib 适用于以下应用场景：</p>
+    <ol>
+      <li><strong>车载系统性能测试</strong>：监控 CPU、内存、IO 等性能指标</li>
+      <li><strong>自动化 UI 测试</strong>：通过 uiautomator 模块实现 UI 自动化测试</li>
+      <li><strong>图像对比分析</strong>：使用 opencv 模块进行图像处理和对比</li>
+      <li><strong>数据采集与分析</strong>：收集系统运行数据并生成报告</li>
+      <li><strong>系统监控</strong>：实时监控系统状态和性能</li>
+      <li><strong>车载网络通信测试</strong>：CAN 总线和 LIN 总线测试</li>
+    </ol>
+  </section>
+
+  <section class="section">
+    <h2>技术特点</h2>
+    <ol>
+      <li><strong>模块化设计</strong>：功能模块独立，易于扩展和维护</li>
+      <li><strong>高性能</strong>：核心模块使用 C 扩展提升性能（.pyd 文件）</li>
+      <li><strong>跨平台兼容</strong>：支持 Windows 和 Linux 操作系统</li>
+      <li><strong>丰富的 API</strong>：提供丰富的接口满足不同测试需求</li>
+      <li><strong>完善的文档</strong>：详细的使用文档和示例代码</li>
+    </ol>
+  </section>
+
+
+  <footer>
+    <p>© 2023 customLib 项目组 | 最后更新: 2023年11月</p>
+  </footer>
+</div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.3.2/dist/echarts.min.js"></script>
+<script>
+
+  const jsonData = {
+    "customLib": {
+      "loggers": {
+        "UsbLogger": {
+          "type": "file",
+          "path": "customLib\\loggers\\UsbLogger"
+        },
+        "VehicleProblemLogTask": {
+          "type": "file",
+          "path": "customLib\\loggers\\VehicleProblemLogTask"
+        },
+        "FeatureLogTask": {
+          "type": "file",
+          "path": "customLib\\loggers\\FeatureLogTask"
+        },
+        "AdbLogger": {
+          "type": "file",
+          "path": "customLib\\loggers\\AdbLogger"
+        },
+        "Slogger": {
+          "type": "file",
+          "path": "customLib\\loggers\\Slogger"
+        },
+        "VehicleLogStateHandler": {
+          "type": "file",
+          "path": "customLib\\loggers\\VehicleLogStateHandler"
+        },
+        "LogCleaner": {
+          "type": "file",
+          "path": "customLib\\loggers\\LogCleaner"
+        },
+        "CommonLogTask": {
+          "type": "file",
+          "path": "customLib\\loggers\\CommonLogTask"
+        },
+        "DltDumpThread": {
+          "type": "file",
+          "path": "customLib\\loggers\\DltDumpThread"
+        },
+        "VehicleCommonLogTask": {
+          "type": "file",
+          "path": "customLib\\loggers\\VehicleCommonLogTask"
+        },
+        "AudioRecording": {
+          "type": "file",
+          "path": "customLib\\loggers\\AudioRecording"
+        },
+        "VehiclePerformanceLogManager": {
+          "type": "file",
+          "path": "customLib\\loggers\\VehiclePerformanceLogManager"
+        },
+        "LogParser": {
+          "type": "file",
+          "path": "customLib\\loggers\\LogParser"
+        },
+        "IncLogger": {
+          "type": "file",
+          "path": "customLib\\loggers\\IncLogger"
+        },
+        "VehicleLogDumper": {
+          "type": "file",
+          "path": "customLib\\loggers\\VehicleLogDumper"
+        }
+      },
+      "performance": {
+        "MonkeyMonitor": {
+          "type": "file",
+          "path": "customLib\\performance\\MonkeyMonitor"
+        },
+        "CpuMonitorTask": {
+          "type": "file",
+          "path": "customLib\\performance\\CpuMonitorTask"
+        },
+        "IncTrafficMonitor": {
+          "type": "file",
+          "path": "customLib\\performance\\IncTrafficMonitor"
+        },
+        "MemoryMonitor": {
+          "type": "file",
+          "path": "customLib\\performance\\MemoryMonitor"
+        },
+        "StartupManager": {
+          "type": "file",
+          "path": "customLib\\performance\\StartupManager"
+        },
+        "PageSwitchManager": {
+          "type": "file",
+          "path": "customLib\\performance\\PageSwitchManager"
+        },
+        "DmaMemoryChecker": {
+          "type": "file",
+          "path": "customLib\\performance\\DmaMemoryChecker"
+        },
+        "MemoryDumper": {
+          "type": "file",
+          "path": "customLib\\performance\\MemoryDumper"
+        },
+        "MemoryCpuManager": {
+          "type": "file",
+          "path": "customLib\\performance\\MemoryCpuManager"
+        },
+        "IoMonitor": {
+          "type": "file",
+          "path": "customLib\\performance\\IoMonitor"
+        },
+        "BaseScenarioRunner": {
+          "type": "file",
+          "path": "customLib\\performance\\BaseScenarioRunner"
+        }
+      },
+      "calibration": {
+        "CalibrationManager": {
+          "type": "file",
+          "path": "customLib\\calibration\\CalibrationManager"
+        }
+      },
+      "common": {
+        "SerialClient": {
+          "type": "file",
+          "path": "customLib\\common\\SerialClient"
+        },
+        "KeyEventer": {
+          "type": "file",
+          "path": "customLib\\common\\KeyEventer"
+        },
+        "Utils": {
+          "type": "file",
+          "path": "customLib\\common\\Utils"
+        },
+        "PageSliderTask": {
+          "type": "file",
+          "path": "customLib\\common\\PageSliderTask"
+        },
+        "DeviceUtil": {
+          "type": "file",
+          "path": "customLib\\common\\DeviceUtil"
+        },
+        "TimeUtil": {
+          "type": "file",
+          "path": "customLib\\common\\TimeUtil"
+        },
+        "Watcher": {
+          "type": "file",
+          "path": "customLib\\common\\Watcher"
+        },
+        "VehicleTypeManager": {
+          "type": "file",
+          "path": "customLib\\common\\VehicleTypeManager"
+        },
+        "ScreenRecorder": {
+          "type": "file",
+          "path": "customLib\\common\\ScreenRecorder"
+        },
+        "AppMonitor": {
+          "type": "file",
+          "path": "customLib\\common\\AppMonitor"
+        },
+        "ScreenShoter": {
+          "type": "file",
+          "path": "customLib\\common\\ScreenShoter"
+        },
+        "CommandExcutor": {
+          "type": "file",
+          "path": "customLib\\common\\CommandExcutor"
+        },
+        "LocationManager": {
+          "type": "file",
+          "path": "customLib\\common\\LocationManager"
+        }
+      },
+      "powercycle": {
+        "LogAnalyzer": {
+          "type": "file",
+          "path": "customLib\\powercycle\\LogAnalyzer"
+        },
+        "PowerCycleScenario": {
+          "type": "file",
+          "path": "customLib\\powercycle\\PowerCycleScenario"
+        },
+        "PowerCycleLogger": {
+          "type": "file",
+          "path": "customLib\\powercycle\\PowerCycleLogger"
+        }
+      },
+      "cluster": {
+        "ADASSettingManager": {
+          "type": "file",
+          "path": "customLib\\cluster\\ADASSettingManager"
+        },
+        "ClusterGeneralManager": {
+          "type": "file",
+          "path": "customLib\\cluster\\ClusterGeneralManager"
+        },
+        "VehicleInitManager": {
+          "type": "file",
+          "path": "customLib\\cluster\\VehicleInitManager"
+        },
+        "MessageExcluder": {
+          "type": "file",
+          "path": "customLib\\cluster\\MessageExcluder"
+        },
+        "LinGeneralManager": {
+          "type": "file",
+          "path": "customLib\\cluster\\LinGeneralManager"
+        },
+        "RvcManager": {
+          "type": "file",
+          "path": "customLib\\cluster\\RvcManager"
+        },
+        "MessageSender": {
+          "type": "file",
+          "path": "customLib\\cluster\\MessageSender"
+        },
+        "GpsSimulationGeneralMangager": {
+          "type": "file",
+          "path": "customLib\\cluster\\GpsSimulationGeneralMangager"
+        }
+      },
+      "canbus": {
+        "DataDefinition": {
+          "type": "file",
+          "path": "customLib\\canbus\\DataDefinition"
+        },
+        "CysMacDll": {
+          "type": "file",
+          "path": "customLib\\canbus\\CysMacDll"
+        },
+        "CanRegister": {
+          "type": "file",
+          "path": "customLib\\canbus\\CanRegister"
+        },
+        "CanShareData": {
+          "type": "file",
+          "path": "customLib\\canbus\\CanShareData"
+        },
+        "CanBusServer": {
+          "type": "file",
+          "path": "customLib\\canbus\\CanBusServer"
+        },
+        "CanMessageSend": {
+          "type": "file",
+          "path": "customLib\\canbus\\CanMessageSend"
+        },
+        "CanBusClient": {
+          "type": "file",
+          "path": "customLib\\canbus\\CanBusClient"
+        }
+      },
+      "opencv": {
+        "Camera": {
+          "type": "file",
+          "path": "customLib\\opencv\\Camera"
+        }
+      },
+      "audio": {
+        "AudioManager": {
+          "type": "file",
+          "path": "customLib\\audio\\AudioManager"
+        },
+        "A2BManager": {
+          "type": "file",
+          "path": "customLib\\audio\\A2BManager"
+        }
+      },
+      "linbus": {
+        "LinBusClient": {
+          "type": "file",
+          "path": "customLib\\linbus\\LinBusClient"
+        }
+      }
+    }
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  // const jsonData = {
+  //   "customLib": {
+  //     "audio": {
+  //       "type": "dir",
+  //       "path": "audio"
+  //     },
+  //     "calibration": {
+  //       "type": "dir",
+  //       "path": "calibration"
+  //     },
+  //     "canbus": {
+  //       "type": "dir",
+  //       "path": "canbus"
+  //     },
+  //     "chart": {
+  //       "type": "dir",
+  //       "path": "chart"
+  //     },
+  //     "cloud_test": {
+  //       "type": "dir",
+  //       "path": "cloud_test"
+  //     },
+  //     "cluster": {
+  //       "type": "dir",
+  //       "path": "cluster"
+  //     },
+  //     "common": {
+  //       "type": "dir",
+  //       "path": "common"
+  //     },
+  //     "datatrack": {
+  //       "type": "dir",
+  //       "path": "datatrack"
+  //     },
+  //     "docs": {
+  //       "type": "dir",
+  //       "path": "docs"
+  //     },
+  //     "event": {
+  //       "type": "dir",
+  //       "path": "event"
+  //     },
+  //     "linbus": {
+  //       "type": "dir",
+  //       "path": "linbus"
+  //     },
+  //     "locators": {
+  //       "type": "dir",
+  //       "path": "locators"
+  //     },
+  //     "loggers": {
+  //       "type": "dir",
+  //       "path": "loggers"
+  //     },
+  //     "opencv": {
+  //       "type": "dir",
+  //       "path": "opencv"
+  //     },
+  //     "pages": {
+  //       "type": "dir",
+  //       "path": "pages"
+  //     },
+  //     "performance": {
+  //       "type": "dir",
+  //       "path": "performance"
+  //     },
+  //     "powercycle": {
+  //       "type": "dir",
+  //       "path": "powercycle"
+  //     },
+  //     "shell": {
+  //       "type": "dir",
+  //       "path": "shell"
+  //     },
+  //     "sqlite": {
+  //       "type": "dir",
+  //       "path": "sqlite"
+  //     },
+  //     "uiautomator": {
+  //       "type": "dir",
+  //       "path": "uiautomator"
+  //     }
+  //   }
+  // };
+
+
+
+  // 将 JSON 数据转换为 ECharts 所需的树形结构
+  function convertToTreeData(data) {
+    const root = {
+      name: 'customLib',
+      children: []
+    };
+
+    function processNode(currentNode, data) {
+      for (const key in data) {
+        if (data[key].type === 'file') {
+          currentNode.children.push({
+            name: key,
+            value: data[key].path
+          });
+        } else if (typeof data[key] === 'object') {
+          const newNode = {
+            name: key,
+            children: []
+          };
+          currentNode.children.push(newNode);
+          processNode(newNode, data[key]);
+        }
+      }
+    }
+
+    processNode(root, data.customLib);
+    return root;
+  }
+
+  // 初始化 ECharts 实例
+  // const chartDom = document.createElement('div');
+  const chartDom = document.getElementById('project_structure');
+  chartDom.style.width = '100%';  // 宽度自适应
+  chartDom.style.height = 'auto'; // 高度自适应
+  // document.body.appendChild(chartDom);
+  const myChart = echarts.init(chartDom);
+  //
+  // const option = {
+  //   tooltip: {
+  //     trigger: 'item',
+  //     triggerOn: 'mousemove'
+  //   },
+  //   series: [
+  //     {
+  //       type: 'tree',
+  //       data: [convertToTreeData(jsonData)],
+  //       top: '1%',
+  //       left: '7%',
+  //       bottom: '1%',
+  //       right: '20%',
+  //       symbolSize: 10,
+  //       orient: 'LR', // 从左到右布局
+  //       label: {
+  //         position: 'left',
+  //         verticalAlign: 'middle',
+  //         align: 'right',
+  //         fontSize: 12
+  //       },
+  //       leaves: {
+  //         label: {
+  //           position: 'right',
+  //           verticalAlign: 'middle',
+  //           align: 'left'
+  //         }
+  //       },
+  //       expandAndCollapse: true,
+  //       animationDuration: 550,
+  //       animationDurationUpdate: 750,
+  //       itemStyle: {
+  //         color: '#007bff',
+  //         borderColor: '#0056b3',
+  //         borderWidth: 1
+  //       },
+  //       lineStyle: {
+  //         color: '#666',
+  //         width: 1,
+  //         curveness: 0.5 // 增加 curveness 值，使线条变为折线
+  //       },
+  //       layout: {
+  //         verticalGap: 100,
+  //         horizontalGap: 20
+  //       }
+  //     }
+  //   ]
+  // };
+
+
+
+  const option = {
+    tooltip: {
+      trigger: 'item',
+      triggerOn: 'mousemove'
+    },
+    series: [
+      {
+        type: 'tree',
+        id: 0,
+        name: 'tree1',
+        data: [convertToTreeData(jsonData)],
+        top: '10%',
+        left: '8%',
+        bottom: '10%',  // 调整底部间距
+        right: '20%',
+        symbolSize: 7,
+        edgeShape: 'polyline',
+        edgeForkPosition: '45%',
+        initialTreeDepth: 3,
+        lineStyle: {
+          width: 2,
+          color: '#111',
+          type: 'solid',
+          opacity: 0.8
+        },
+        label: {
+          backgroundColor: '#fff',
+          position: 'left',
+          verticalAlign: 'middle',
+          align: 'right',
+          fontSize: 12
+        },
+        leaves: {
+          label: {
+            position: 'right',
+            verticalAlign: 'left',
+            align: 'left',
+            fontSize: 10
+          }
+        },
+        emphasis: {
+          focus: 'descendant',
+        },
+        expandAndCollapse: true,
+        animationDuration: 550,
+        animationDurationUpdate: 750,
+      }
+    ]
+  };
+
+  // 渲染图表
+  myChart.setOption(option);
+
+
+
+
+</script>
+</html>

@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ClusterGeneralManager API 文档</title>
+    <style>
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #2980b9;
+            margin-top: 30px;
+        }
+        h3 {
+            color: #16a085;
+            margin-top: 20px;
+        }
+        .class-name {
+            background-color: #f8f9fa;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-family: monospace;
+            color: #c7254e;
+            font-weight: bold;
+        }
+        .method {
+            background-color: #f5f5f5;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            border-left: 4px solid #3498db;
+        }
+        .method-name {
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        .param {
+            margin-left: 20px;
+        }
+        .param-name {
+            font-style: italic;
+        }
+        .return {
+            font-weight: bold;
+            color: #27ae60;
+        }
+        code {
+            background-color: #f8f9fa;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-family: monospace;
+            color: #c7254e;
+        }
+        pre {
+            background-color: #f8f9fa;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        .feature-list {
+            columns: 2;
+            column-gap: 20px;
+        }
+        .feature-item {
+            break-inside: avoid;
+            margin-bottom: 10px;
+        }
+        .note {
+            background-color: #fff8e1;
+            padding: 10px;
+            border-radius: 5px;
+            border-left: 4px solid #ffc107;
+            margin: 15px 0;
+        }
+        .sub-class {
+            background-color: #e8f4f8;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 25px;
+        }
+        .warning {
+            color: #e74c3c;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>ClusterGeneralManager API 文档</h1>
+
+    <section>
+        <h2>概述</h2>
+        <p>ClusterGeneralManager 是一个综合性的仪表盘管理类，包含多个子管理器，用于控制车辆仪表盘的各种功能和显示。所有类都采用单例模式设计。</p>
+        
+        <div class="note">
+            <p><strong>依赖说明</strong>：这些类依赖于 VehicleTypeManager 和 CanBusClient 类。</p>
+        </div>
+    </section>
+
+    <section>
+        <h2>类列表</h2>
+
+        <div class="sub-class">
+            <h3><span class="class-name">ClusterGuageManager</span></h3>
+            <p>仪表盘指针和显示管理类，控制车速、转速、油量、电池等仪表显示。</p>
+            
+            <div class="method">
+                <h4><span class="method-name">getInstance()</span></h4>
+                <p><strong>描述</strong>：获取 ClusterGuageManager 的单例实例。</p>
+                <pre>@classmethod
+def getInstance(cls)</pre>
+            </div>
+
+            <div class="method">
+                <h4><span class="method-name">set_speed(speed)</span></h4>
+                <p><strong>描述</strong>：设置车速表显示速度。</p>
+                <p><strong>参数</strong>：<span class="param-name">speed</span> - 车速值</p>
+                <pre>def set_speed(self, speed)</pre>
+            </div>
+
+            <div class="method">
+                <h4><span class="method-name">set_tachometer(tachometer)</span></h4>
+                <p><strong>描述</strong>：设置转速表显示转速。</p>
+                <p><strong>参数</strong>：<span class="param-name">tachometer</span> - 转速值</p>
+                <pre>def set_tachometer(self, tachometer)</pre>
+            </div>
+
+            <div class="method">
+                <h4><span class="method-name">set_fuel(flp, fuel_capacity=50)</span></h4>
+                <p><strong>描述</strong>：设置油量表显示。</p>
+                <p><strong>参数</strong>：</p>
+                <ul>
+                    <li class="param"><span class="param-name">flp</span> - 燃油液位百分比</li>
+                    <li class="param"><span class="param-name">fuel_capacity</span> - 油箱容量，默认50</li>
+                </ul>
+                <pre>def set_fuel(self, flp, fuel_capacity=50)</pre>
+            </div>
+
+            <!-- 更多方法... -->
+        </div>
+
+        <div class="sub-class">
+            <h3><span class="class-name">PowerModeManager</span></h3>
+            <p>电源模式管理类，控制车辆的电源状态（OFF/ACC/RUN/CRANK等）。</p>
+            
+            <div class="method">
+                <h4><span class="method-name">getInstance()</span></h4>
+                <p><strong>描述</strong>：获取 PowerModeManager 的单例实例。</p>
+                <pre>@classmethod
+def getInstance(cls)</pre>
+            </div>
+
+            <div class="method">
+                <h4><span class="method-name">set_power_mode(power)</span></h4>
+                <p><strong>描述</strong>：设置电源模式。</p>
+                <p><strong>参数</strong>：<span class="param-name">power</span> - 电源模式（"off"/"acc"/"run"/"crank"/"propulsion"）</p>
+                <pre>def set_power_mode(self, power)</pre>
+            </div>
+
+            <div class="method">
+                <h4><span class="method-name">get_power_mode_state(analysis=False)</span></h4>
+                <p><strong>描述</strong>：获取当前电源模式状态。</p>
+                <p><strong>参数</strong>：<span class="param-name">analysis</span> - 是否返回解析后的字符串，默认为False返回数字</p>
+                <p><strong>返回</strong>：电源模式状态</p>
+                <pre>def get_power_mode_state(self, analysis=False)</pre>
+            </div>
+
+            <!-- 更多方法... -->
+        </div>
+
+        <div class="sub-class">
+            <h3><span class="class-name">ThemesManager</span></h3>
+            <p>仪表盘主题管理类，控制日间/夜间主题切换。</p>
+            
+            <div class="method">
+                <h4><span class="method-name">getInstance()</span></h4>
+                <p><strong>描述</strong>：获取 ThemesManager 的单例实例。</p>
+                <pre>@classmethod
+def getInstance(cls)</pre>
+            </div>
+
+            <div class="method">
+                <h4><span class="method-name">setNightTheme(flag)</span></h4>
+                <p><strong>描述</strong>：设置夜间主题。</p>
+                <p><strong>参数</strong>：<span class="param-name">flag</span> - True启用夜间主题，False关闭</p>
+                <pre>def setNightTheme(self, flag)</pre>
+            </div>
+        </div>
+
+        <div class="sub-class">
+            <h3><span class="class-name">ClusterChimeManager</span></h3>
+            <p>仪表盘提示音管理类，控制各种提示音的播放。</p>
+            
+            <div class="method">
+                <h4><span class="method-name">getInstance()</span></h4>
+                <p><strong>描述</strong>：获取 ClusterChimeManager 的单例实例。</p>
+                <pre>@classmethod
+def getInstance(cls)</pre>
+            </div>
+
+            <div class="method">
+                <h4><span class="method-name">send_different_priority_chime(priority_quantity=2, num="all", sleep=5, low_high=True)</span></h4>
+                <p><strong>描述</strong>：发送不同优先级的提示音。</p>
+                <p><strong>参数</strong>：</p>
+                <ul>
+                    <li class="param"><span class="param-name">priority_quantity</span> - 优先级数量，默认2</li>
+                    <li class="param"><span class="param-name">num</span> - 每种优先级发送的提示音数量，默认"all"</li>
+                    <li class="param"><span class="param-name">sleep</span> - 发送间隔时间(秒)，默认5</li>
+                    <li class="param"><span class="param-name">low_high</span> - 是否从低到高优先级发送，默认True</li>
+                </ul>
+                <pre>def send_different_priority_chime(self, priority_quantity=2, num="all", sleep=5, low_high=True)</pre>
+            </div>
+
+            <!-- 更多方法... -->
+        </div>
+
+        <div class="sub-class">
+            <h3><span class="class-name">ClusterTelltaleManager</span></h3>
+            <p>仪表盘指示灯管理类，控制转向灯等指示灯的显示。</p>
+            
+            <div class="method">
+                <h4><span class="method-name">getInstance()</span></h4>
+                <p><strong>描述</strong>：获取 ClusterTelltaleManager 的单例实例。</p>
+                <pre>@classmethod
+def getInstance(cls)</pre>
+            </div>
+
+            <div class="method">
+                <h4><span class="method-name">open_left_turn_lamp(frequency="0.5")</span></h4>
+                <p><strong>描述</strong>：开启左转向灯。</p>
+                <p><strong>参数</strong>：<span class="param-name">frequency</span> - 闪烁频率，默认0.5</p>
+                <p><strong>返回</strong>：操作是否成功</p>
+                <pre>def open_left_turn_lamp(self, frequency="0.5")</pre>
+            </div>
+
+            <!-- 更多方法... -->
+        </div>
+
+        <div class="sub-class">
+            <h3><span class="class-name">ClusterWarningManager</span></h3>
+            <p>仪表盘警告信息管理类，控制各种警告信息的显示。</p>
+            
+            <div class="method">
+                <h4><span class="method-name">getInstance()</span></h4>
+                <p><strong>描述</strong>：获取 ClusterWarningManager 的单例实例。</p>
+                <pre>@classmethod
+def getInstance(cls)</pre>
+            </div>
+
+            <div class="method">
+                <h4><span class="method-name">send_single_priority_warning(priority)</span></h4>
+                <p><strong>描述</strong>：发送指定优先级的警告信息。</p>
+                <p><strong>参数</strong>：<span class="param-name">priority</span> - 优先级("Low"/"Medium"/"High"/"Immediate"/"Critical")</p>
+                <p><strong>返回</strong>：操作是否成功</p>
+                <pre>def send_single_priority_warning(self, priority)</pre>
+            </div>
+
+            <!-- 更多方法... -->
+        </div>
+    </section>
+
+    <section>
+        <h2>使用示例</h2>
+        <div class="method">
+            <h3>基本使用</h3>
+            <pre># 获取车速管理器实例
+guage_manager = ClusterGuageManager.getInstance()
+
+# 设置车速为80
+guage_manager.set_speed(80)
+
+# 获取电源管理器实例
+power_manager = PowerModeManager.getInstance()
+
+# 设置电源模式为RUN
+power_manager.set_power_mode("run")
+
+# 获取转向灯管理器实例
+telltale_manager = ClusterTelltaleManager.getInstance()
+
+# 开启左转向灯
+telltale_manager.open_left_turn_lamp()</pre>
+        </div>
+    </section>
+
+    <section>
+        <h2>注意事项</h2>
+        <div class="note">
+            <ul>
+                <li>所有方法都针对特定平台(GB/CLEA)实现，调用前需确认当前平台</li>
+                <li>部分功能仅支持特定车型或动力类型(ICE/HEV/BEV/PHEV)</li>
+                <li>使用前需确保CanBusClient已正确连接</li>
+                <li>参数范围需符合实际物理限制(如温度范围-40到87.5度)</li>
+                <li>多线程环境下需注意线程安全</li>
+            </ul>
+        </div>
+    </section>
+</body>
+</html>

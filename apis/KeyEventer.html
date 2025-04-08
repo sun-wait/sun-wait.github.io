@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>KeyEventer API 文档</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            color: #333;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #2980b9;
+            margin-top: 30px;
+        }
+        .class-name {
+            background-color: #f8f9fa;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-family: monospace;
+            color: #d63384;
+            font-weight: bold;
+        }
+        .method {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            border-left: 4px solid #3498db;
+        }
+        .method-name {
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        .method-desc {
+            margin-top: 10px;
+        }
+        .param {
+            margin-top: 10px;
+        }
+        .param-name {
+            font-weight: bold;
+        }
+        .note {
+            background-color: #fff8e1;
+            padding: 10px;
+            border-left: 4px solid #ffc107;
+            margin: 10px 0;
+        }
+        .singleton {
+            background-color: #e8f5e9;
+            padding: 10px;
+            border-left: 4px solid #4caf50;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>KeyEventer API 文档</h1>
+
+    <div class="singleton">
+        <strong>单例模式：</strong>该类采用单例设计模式，请使用getInstance()方法获取实例。
+    </div>
+
+    <h2><span class="class-name">KeyEventer</span> 类</h2>
+    <p>该类提供了发送按键事件的功能，支持发送按键码和预定义的按键事件。</p>
+
+    <div class="method">
+        <div class="method-name">__init__(self)</div>
+        <div class="method-desc">
+            构造函数，初始化KeyEventer实例。
+            <p class="note">注意：不应直接实例化该类，请使用getInstance()方法获取实例。</p>
+        </div>
+    </div>
+
+    <div class="method">
+        <div class="method-name">getInstance()</div>
+        <div class="method-desc">
+            获取KeyEventer单例实例。
+        </div>
+        <div class="return">
+            <span class="param-name">返回:</span> KeyEventer实例
+        </div>
+    </div>
+
+    <div class="method">
+        <div class="method-name">sendKeyCode(self, device, keycode)</div>
+        <div class="method-desc">
+            发送按键码到指定设备。
+            <p>按键码可以是十六进制格式。</p>
+        </div>
+        <div class="param">
+            <span class="param-name">参数:</span>
+            <ul>
+                <li>device - 目标设备对象</li>
+                <li>keycode - 要发送的按键码</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="method">
+        <div class="method-name">sendKeyEvent(self, device, event)</div>
+        <div class="method-desc">
+            发送预定义的按键事件到指定设备。
+            <p>通常使用预定义的常量值作为事件参数。</p>
+        </div>
+        <div class="param">
+            <span class="param-name">参数:</span>
+            <ul>
+                <li>device - 目标设备对象</li>
+                <li>event - 要发送的按键事件</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="note">
+        <strong>使用示例：</strong>
+        <pre>
+# 获取KeyEventer实例
+key_eventer = KeyEventer.getInstance()
+
+# 发送HOME键事件
+key_eventer.sendKeyEvent(device, Constant.KeyEvent.home.value)
+
+# 发送按键码
+key_eventer.sendKeyCode(device, 0x03)
+        </pre>
+    </div>
+</body>
+</html>

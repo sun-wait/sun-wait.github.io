@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>LogCleaner API 文档</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #2980b9;
+            margin-top: 30px;
+            border-left: 4px solid #3498db;
+            padding-left: 10px;
+        }
+        .class-name {
+            background-color: #f8f9fa;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-family: monospace;
+            color: #d63384;
+            font-weight: bold;
+        }
+        .method {
+            background-color: #f8f9fa;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            border-left: 3px solid #6c757d;
+        }
+        .method-name {
+            font-weight: bold;
+            color: #0066cc;
+        }
+        .method-desc {
+            margin-top: 5px;
+            color: #6c757d;
+        }
+        .param {
+            font-family: monospace;
+        }
+        code {
+            background-color: #f8f9fa;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-family: monospace;
+            color: #d63384;
+        }
+        .note {
+            background-color: #fff3cd;
+            padding: 10px;
+            border-radius: 5px;
+            border-left: 3px solid #ffc107;
+            margin: 15px 0;
+        }
+        .log-type {
+            font-weight: bold;
+            color: #28a745;
+        }
+    </style>
+</head>
+<body>
+    <h1>LogCleaner API 文档</h1>
+    <p>该模块提供了自动化清理过期日志文件的功能，支持多种类型的日志文件清理。</p>
+
+    <div class="note">
+        <strong>主要功能：</strong>
+        <ul>
+            <li>多线程定期检查并清理过期日志</li>
+            <li>支持多种日志类型清理：CAN日志、系统日志、视频、DLT日志、串口日志、gmlogger日志</li>
+            <li>可自定义过期时间阈值</li>
+            <li>支持QNX系统时间校验</li>
+        </ul>
+    </div>
+
+    <h2>类文档</h2>
+
+    <div class="method">
+        <h3><span class="class-name">LogCleaner</span></h3>
+        <p>日志清理线程类，负责定期清理各类过期日志文件。</p>
+        
+        <div class="method">
+            <div class="method-name">__init__(self, casePath, canLogPath=None, slogPath=None, videoPath=None, dltPath=None, serialLogPath=None, gmlogPath=None)</div>
+            <div class="method-desc">构造函数，初始化日志清理任务。</div>
+            <p><strong>参数:</strong></p>
+            <ul>
+                <li><span class="param">casePath</span>: 测试用例基础路径</li>
+                <li><span class="param">canLogPath</span>: CAN日志路径，默认为None(使用casePath/canlog)</li>
+                <li><span class="param">slogPath</span>: 系统日志路径，默认为None(使用casePath/slog)</li>
+                <li><span class="param">videoPath</span>: 视频路径，默认为None(使用casePath/video)</li>
+                <li><span class="param">dltPath</span>: DLT日志路径，默认为None(使用casePath/dlt)</li>
+                <li><span class="param">serialLogPath</span>: 串口日志路径，默认为None(使用casePath/serial)</li>
+                <li><span class="param">gmlogPath</span>: gmlogger日志路径，默认为None(使用casePath/gmlogger)</li>
+            </ul>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">isOutOfdate(self, dateTime, threshold)</div>
+            <div class="method-desc">检查给定时间是否已过期。</div>
+            <p><strong>参数:</strong></p>
+            <ul>
+                <li><span class="param">dateTime</span>: 时间字符串(格式为%Y%m%d%H%M%S)</li>
+                <li><span class="param">threshold</span>: 过期阈值(秒)</li>
+            </ul>
+            <p><strong>返回:</strong> 布尔值，表示是否已过期</p>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">isOutOfQnxDate(self, dateTime, threshold)</div>
+            <div class="method-desc">基于QNX系统时间检查给定时间是否已过期。</div>
+            <p><strong>参数:</strong></p>
+            <ul>
+                <li><span class="param">dateTime</span>: 时间字符串(格式为%Y%m%d%H%M%S)</li>
+                <li><span class="param">threshold</span>: 过期阈值(秒)</li>
+            </ul>
+            <p><strong>返回:</strong> 布尔值，表示是否已过期</p>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">cleanupCanLogs(self, canLogFolder)</div>
+            <div class="method-desc">清理过期的CAN日志文件。</div>
+            <p><strong>参数:</strong></p>
+            <ul>
+                <li><span class="param">canLogFolder</span>: CAN日志文件夹路径</li>
+            </ul>
+            <p><strong>清理规则:</strong> 匹配文件名"canlog_时间戳.*"格式的文件，超过阈值则删除</p>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">cleanupGmlogs(self, gmlogFolder)</div>
+            <div class="method-desc">清理过期的gmlogger日志文件夹。</div>
+            <p><strong>参数:</strong></p>
+            <ul>
+                <li><span class="param">gmlogFolder</span>: gmlogger日志文件夹路径</li>
+            </ul>
+            <p><strong>清理规则:</strong> 匹配文件夹名"gmlogger_时间戳.*"格式的文件夹，超过阈值则删除</p>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">cleanupSlogs(self, slogFolder)</div>
+            <div class="method-desc">清理过期的系统日志文件。</div>
+            <p><strong>参数:</strong></p>
+            <ul>
+                <li><span class="param">slogFolder</span>: 系统日志文件夹路径</li>
+            </ul>
+            <p><strong>清理规则:</strong> 匹配文件名"slog_时间戳.*"格式的文件，超过阈值则删除</p>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">cleanupVideos(self, videoFolder)</div>
+            <div class="method-desc">清理过期的视频文件。</div>
+            <p><strong>参数:</strong></p>
+            <ul>
+                <li><span class="param">videoFolder</span>: 视频文件夹路径</li>
+            </ul>
+            <p><strong>清理规则:</strong> 匹配文件名"Video_时间戳.*"格式的文件，超过阈值则删除</p>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">cleanupDlts(self, dltFolder)</div>
+            <div class="method-desc">清理过期的DLT日志文件夹。</div>
+            <p><strong>参数:</strong></p>
+            <ul>
+                <li><span class="param">dltFolder</span>: DLT日志文件夹路径</li>
+            </ul>
+            <p><strong>清理规则:</strong> 匹配文件夹名"dlt_时间戳.*"格式的文件夹，基于QNX时间超过阈值则删除</p>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">cleanupSerialLogs(self, serialLogFolder)</div>
+            <div class="method-desc">清理过期的串口日志文件。</div>
+            <p><strong>参数:</strong></p>
+            <ul>
+                <li><span class="param">serialLogFolder</span>: 串口日志文件夹路径</li>
+            </ul>
+            <p><strong>清理规则:</strong> 匹配文件名"serialLog_时间戳.*"格式的文件，超过阈值则删除</p>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">run(self)</div>
+            <div class="method-desc">线程主循环，定期执行各类日志清理任务。</div>
+            <p><strong>工作流程:</strong></p>
+            <ol>
+                <li>每10分钟检查一次日志文件</li>
+                <li>调用各类日志的清理方法</li>
+                <li>循环检查直到任务停止</li>
+            </ol>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">stopTask(self)</div>
+            <div class="method-desc">停止日志清理任务。</div>
+        </div>
+    </div>
+
+    <h2>常量</h2>
+    <ul>
+        <li><code>CLEAN_UP_CHECK_INTERVAL</code>: 清理检查间隔(秒)，默认为600(10分钟)</li>
+        <li><code>OUT_OF_DATE_THRESHOLD</code>: 日志过期阈值(秒)，默认为172800(48小时)</li>
+    </ul>
+
+    <h2>支持的日志类型</h2>
+    <ul>
+        <li><span class="log-type">CAN日志</span>: canlog_时间戳.*</li>
+        <li><span class="log-type">系统日志</span>: slog_时间戳.*</li>
+        <li><span class="log-type">视频文件</span>: Video_时间戳.*</li>
+        <li><span class="log-type">DLT日志</span>: dlt_时间戳.* (基于QNX时间)</li>
+        <li><span class="log-type">串口日志</span>: serialLog_时间戳.*</li>
+        <li><span class="log-type">gmlogger日志</span>: gmlogger_时间戳.*</li>
+    </ul>
+
+    <h2>使用示例</h2>
+    <pre>
+# 创建日志清理任务
+log_cleaner = LogCleaner("C:/test_case")
+
+# 启动清理任务
+log_cleaner.start()
+
+# 停止清理任务
+log_cleaner.stopTask()
+log_cleaner.join()
+    </pre>
+
+    <h2>注意事项</h2>
+    <ul>
+        <li>默认清理48小时前的日志文件</li>
+        <li>DLT日志使用QNX系统时间进行过期判断</li>
+        <li>gmlogger和DLT日志会删除整个文件夹</li>
+        <li>其他日志类型只删除单个文件</li>
+        <li>清理操作不可逆，请谨慎设置过期阈值</li>
+    </ul>
+</body>
+</html>

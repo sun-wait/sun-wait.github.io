@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SystemLogger API 文档</title>
+    <style>
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.7;
+            margin: 0;
+            padding: 30px;
+            color: #333;
+            background-color: #f8fafc;
+        }
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            box-shadow: 0 0 25px rgba(0,0,0,0.08);
+            border-radius: 12px;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 15px;
+            margin-top: 0;
+            font-size: 36px;
+            text-align: center;
+        }
+        h2 {
+            color: #2980b9;
+            margin-top: 45px;
+            border-left: 6px solid #3498db;
+            padding-left: 20px;
+            font-size: 28px;
+        }
+        h3 {
+            color: #16a085;
+            margin-top: 35px;
+            font-size: 24px;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 8px;
+        }
+        .class-name {
+            background-color: #f8f9fa;
+            padding: 25px;
+            border-radius: 10px;
+            border-left: 6px solid #3498db;
+            font-family: 'Fira Code', monospace;
+            font-size: 1.5em;
+            margin: 40px 0;
+            color: #2c3e50;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        .method {
+            background-color: #f0f7ff;
+            padding: 25px;
+            border-radius: 10px;
+            margin: 35px 0;
+            border-left: 5px solid #7f8c8d;
+            transition: all 0.4s ease;
+        }
+        .method:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 25px rgba(0,0,0,0.1);
+        }
+        .method-name {
+            font-weight: bold;
+            color: #16a085;
+            font-size: 1.3em;
+        }
+        .method-desc {
+            margin-top: 15px;
+            color: #555;
+            line-height: 1.9;
+        }
+        .method-params {
+            margin-top: 20px;
+            font-size: 1.05em;
+        }
+        .param {
+            margin-left: 40px;
+            font-family: 'Fira Code', monospace;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: baseline;
+        }
+        .param-name {
+            font-weight: bold;
+            color: #8e44ad;
+            min-width: 180px;
+        }
+        .param-desc {
+            margin-left: 15px;
+            flex: 1;
+        }
+        .method-return {
+            margin-top: 20px;
+            font-size: 1.05em;
+        }
+        .return-desc {
+            margin-left: 40px;
+            font-family: 'Fira Code', monospace;
+        }
+        code {
+            background-color: #f0f0f0;
+            padding: 5px 10px;
+            border-radius: 6px;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.98em;
+        }
+        .cmd {
+            background-color: #f5f7fa;
+            padding: 18px 25px;
+            border-radius: 8px;
+            font-family: 'Fira Code', monospace;
+            display: block;
+            margin: 25px 0;
+            overflow-x: auto;
+            border-left: 5px solid #95a5a6;
+            font-size: 0.98em;
+            line-height: 1.7;
+        }
+        .note {
+            background-color: #fff8e1;
+            padding: 25px;
+            border-left: 6px solid #ffc107;
+            margin: 30px 0;
+            border-radius: 8px;
+        }
+        .note-title {
+            font-weight: bold;
+            color: #ff8f00;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+        .example {
+            background-color: #e8f5e9;
+            padding: 25px;
+            border-radius: 10px;
+            margin: 35px 0;
+            border-left: 6px solid #4caf50;
+        }
+        .example-title {
+            font-weight: bold;
+            color: #2e7d32;
+            margin-bottom: 18px;
+            font-size: 1.25em;
+        }
+        .dump-type {
+            display: flex;
+            margin: 30px 0;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .dump-card {
+            flex: 1;
+            min-width: 300px;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+        }
+        .mini-dump-card {
+            background-color: #e3f2fd;
+            border-left: 5px solid #2196f3;
+        }
+        .guest-dump-card {
+            background-color: #e8f5e9;
+            border-left: 5px solid #4caf50;
+        }
+        .em-trace-card {
+            background-color: #fff3e0;
+            border-left: 5px solid #ff9800;
+        }
+        .misc-dump-card {
+            background-color: #f3e5f5;
+            border-left: 5px solid #9c27b0;
+        }
+        .dump-title {
+            font-weight: bold;
+            font-size: 1.2em;
+            margin-bottom: 15px;
+            color: #2c3e50;
+        }
+        .timeout-info {
+            background-color: #e3f2fd;
+            padding: 15px 20px;
+            border-radius: 6px;
+            margin: 20px 0;
+            border-left: 5px solid #2196f3;
+        }
+        .timeout-item {
+            display: flex;
+            margin-bottom: 8px;
+        }
+        .timeout-value {
+            font-weight: bold;
+            color: #0d47a1;
+            min-width: 100px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>SystemLogger API 文档</h1>
+        
+        <p>该模块提供了收集系统级日志的功能，包括SOC内核崩溃日志、Android内核崩溃日志、Bosch错误内存日志和QNX核心转储日志等。</p>
+        
+        <div class="dump-type">
+            <div class="dump-card mini-dump-card">
+                <div class="dump-title">Mini Dump</div>
+                <p>收集SOC内核崩溃日志</p>
+                <ul>
+                    <li>文件: <code>/var/log/sbldump.bin</code></li>
+                    <li>超时: 3000秒</li>
+                </ul>
+            </div>
+            <div class="dump-card guest-dump-card">
+                <div class="dump-title">Guest Dump</div>
+                <p>收集Android内核崩溃日志</p>
+                <ul>
+                    <li>脚本: <code>/var/guestDump.sh</code></li>
+                </ul>
+            </div>
+            <div class="dump-card em-trace-card">
+                <div class="dump-title">EM Trace</div>
+                <p>收集Bosch错误内存日志</p>
+                <ul>
+                    <li>文件: <code>/var/log/em_trace.txt</code></li>
+                    <li>超时: 60秒</li>
+                </ul>
+            </div>
+            <div class="dump-card misc-dump-card">
+                <div class="dump-title">Misc Coredumps</div>
+                <p>收集QNX核心转储日志</p>
+                <ul>
+                    <li>包含: ham_coredumps, coredumps, errmemlog等</li>
+                    <li>超时: 60-2000秒</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="timeout-info">
+            <h3>超时设置</h3>
+            <div class="timeout-item">
+                <span class="timeout-value">MINI_DUMP_TIMEOUT:</span>
+                <span>3000秒 (50分钟)</span>
+            </div>
+            <div class="timeout-item">
+                <span class="timeout-value">DUMP_LOGS_TIMEOUT:</span>
+                <span>60秒</span>
+            </div>
+            <div class="timeout-item">
+                <span class="timeout-value">PULL_OUT_LOGS_TIMEOUT_DEFAULT:</span>
+                <span>60秒</span>
+            </div>
+            <div class="timeout-item">
+                <span class="timeout-value">PULL_OUT_DLT_TIMEOUT:</span>
+                <span>2000秒 (约33分钟)</span>
+            </div>
+        </div>
+        
+        <h2>命令说明</h2>
+        <div class="cmd">GENERATE_MINI_DUMP_CMD = 'ssh root@{} "/bin/log_collector"'</div>
+        <p>生成SOC内核崩溃日志。</p>
+        
+        <div class="cmd">PULL_OUT_MINI_DUMP_CMD = "scp -r root@{}:/var/log/sbldump.bin {}"</div>
+        <p>拉取SOC内核崩溃日志文件。</p>
+        
+        <div class="cmd">DELETE_REMOTE_MINI_DUMP_CMD = 'ssh root@{} "rm -rf /var/log/sbldump.bin"'</div>
+        <p>删除设备上的SOC内核崩溃日志文件。</p>
+        
+        <div class="cmd">UPLOAD_GUEST_DUMP_SCRIPT_CMD = "scp {} root@{}:/var/guestDump.sh"</div>
+        <p>上传Guest Dump脚本到设备。</p>
+        
+        <div class="cmd">EXECUTE_GUEST_DUMP_SCRIPT_CMD = 'ssh root@{} "sh /var/guestDump.sh"'</div>
+        <p>执行Guest Dump脚本。</p>
+        
+        <div class="cmd">EXECUTE_EM_TRACE_CMD = 'ssh root@{} "em_trace -f /var/log/em_trace.txt"'</div>
+        <p>执行EM Trace命令生成错误内存日志。</p>
+        
+        <div class="cmd">PULL_OUT_EM_TRACE_CMD = "scp -r root@{}:/var/log/em_trace.txt {}"</div>
+        <p>拉取EM Trace日志文件。</p>
+        
+        <div class="cmd">PULL_OUT_HAM_COREDUMP_CMD = "scp -r root@{}:/var/log/ham_coredumps {}"</div>
+        <p>拉取HAM核心转储文件。</p>
+        
+        <div class="cmd">PULL_OUT_COREDUMP_CMD = "scp -r root@{}:/var/log/coredumps {}"</div>
+        <p>拉取核心转储文件。</p>
+        
+        <div class="cmd">PULL_OUT_ERROR_MEMORY_LOG_CMD = "scp -r root@{}:/var/log/errmemlog {}"</div>
+        <p>拉取错误内存日志文件。</p>
+        
+        <div class="cmd">PULL_OUT_PERSIST_EM_FOLDER_CMD = "scp -r root@{}:/persist/em {}"</div>
+        <p>拉取persist/em目录。</p>
+        
+        <div class="cmd">PULL_OUT_DLT_RAW_CMD = "scp -r root@{}:/var/log/dlt_raw {}"</div>
+        <p>拉取DLT原始日志文件。</p>
+        
+        <div class="cmd">UPLOAD_DUMP_SCRIPT_CMD = "scp {} root@{}:/var/dumpLogs.sh"</div>
+        <p>上传Dump脚本到设备。</p>
+        
+        <div class="cmd">EXECUTE_DUMP_LOGS_SCRIPT_CMD = 'ssh root@{} "sh /var/dumpLogs.sh"'</div>
+        <p>执行Dump脚本。</p>
+        
+        <div class="cmd">PULL_OUT_DUMP_LOGS_CMD = "scp -r root@{}:/ota_update/qnx_misc_dump {}"</div>
+        <p>拉取QNX杂项转储文件。</p>
+        
+        <div class="note">
+            <div class="note-title">重要说明</div>
+            <p>1. 所有操作都需要SSH连接到QNX系统。</p>
+            <p>2. 不同车型可能需要不同的处理方式。</p>
+            <p>3. 大文件操作(如DLT日志)可能需要较长时间。</p>
+            <p>4. 操作完成后会自动清理设备上的临时文件。</p>
+        </div>
+        
+        <h2>类文档</h2>
+        
+        <div class="class-name">SystemLogger</div>
+        <p>系统日志收集器类，提供收集各类系统级日志的功能。</p>
+        
+        <div class="method">
+            <div class="method-name">startMiniDump(caseFolder)</div>
+            <div class="method-desc">收集SOC内核崩溃日志(mini dump)。</div>
+            <div class="method-params">
+                <div class="param">
+                    <span class="param-name">caseFolder</span>
+                    <span class="param-desc">日志保存的文件夹路径</span>
+                </div>
+            </div>
+            <div class="method-return">
+                <span>返回:</span>
+                <div class="return-desc">布尔值，表示是否成功</div>
+            </div>
+            <div class="method-desc">
+                <p>执行步骤：</p>
+                <ol>
+                    <li>生成SOC内核崩溃日志</li>
+                    <li>拉取日志文件到本地</li>
+                    <li>删除设备上的日志文件</li>
+                </ol>
+            </div>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">startGuestDump()</div>
+            <div class="method-desc">收集Android内核崩溃日志(guest dump)。</div>
+            <div class="method-return">
+                <span>返回:</span>
+                <div class="return-desc">布尔值，表示是否成功</div>
+            </div>
+            <div class="method-desc">
+                <p>执行步骤：</p>
+                <ol>
+                    <li>上传guestDump.sh脚本到设备</li>
+                    <li>添加执行权限</li>
+                    <li>执行脚本</li>
+                </ol>
+            </div>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">startEmTrace(caseFolder)</div>
+            <div class="method-desc">收集Bosch错误内存日志(em trace)。</div>
+            <div class="method-params">
+                <div class="param">
+                    <span class="param-name">caseFolder</span>
+                    <span class="param-desc">日志保存的文件夹路径</span>
+                </div>
+            </div>
+            <div class="method-return">
+                <span>返回:</span>
+                <div class="return-desc">布尔值，表示是否成功</div>
+            </div>
+            <div class="method-desc">
+                <p>执行步骤：</p>
+                <ol>
+                    <li>执行em_trace命令生成日志</li>
+                    <li>拉取日志文件到本地</li>
+                    <li>删除设备上的日志文件</li>
+                </ol>
+            </div>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">startMiscCoredumps(caseFolder)</div>
+            <div class="method-desc">收集QNX核心转储日志(misc coredumps)。</div>
+            <div class="method-params">
+                <div class="param">
+                    <span class="param-name">caseFolder</span>
+                    <span class="param-desc">日志保存的文件夹路径</span>
+                </div>
+            </div>
+            <div class="method-return">
+                <span>返回:</span>
+                <div class="return-desc">布尔值，表示是否成功</div>
+            </div>
+            <div class="method-desc">
+                <p>执行步骤：</p>
+                <ol>
+                    <li>拉取ham_coredumps, coredumps, errmemlog等文件</li>
+                    <li>拉取persist/em目录</li>
+                    <li>拉取dlt_raw日志</li>
+                    <li>上传并执行dumpLogs.sh脚本</li>
+                    <li>拉取qnx_misc_dump文件</li>
+                </ol>
+            </div>
+        </div>
+        
+        <h2>使用示例</h2>
+        <div class="example">
+            <div class="example-title">收集SOC内核崩溃日志</div>
+            <pre><code>
+# 收集SOC内核崩溃日志
+SystemLogger.startMiniDump("/path/to/logs")
+            </code></pre>
+        </div>
+        
+        <div class="example">
+            <div class="example-title">收集QNX核心转储日志</div>
+            <pre><code>
+# 收集QNX核心转储日志
+SystemLogger.startMiscCoredumps("/path/to/logs")
+            </code></pre>
+        </div>
+        
+        <h2>工作流程</h2>
+        <ol>
+            <li>检查SSH连接是否可用</li>
+            <li>根据需求调用相应的方法(startMiniDump/startGuestDump/startEmTrace/startMiscCoredumps)</li>
+            <li>方法内部会执行相应的命令序列</li>
+            <li>日志文件会被保存到指定的目录</li>
+            <li>操作完成后会自动清理设备上的临时文件</li>
+        </ol>
+    </div>
+</body>
+</html>

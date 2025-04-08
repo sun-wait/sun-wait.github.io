@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SerialClient API 文档</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #2980b9;
+            margin-top: 30px;
+        }
+        .class-name {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-left: 4px solid #3498db;
+            margin: 20px 0;
+            font-family: monospace;
+            font-size: 18px;
+        }
+        .method {
+            background-color: #f0f7ff;
+            padding: 12px;
+            border-left: 3px solid #2980b9;
+            margin: 15px 0;
+        }
+        .method-name {
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        .param {
+            font-style: italic;
+            color: #7f8c8d;
+        }
+        .return {
+            color: #27ae60;
+        }
+        code {
+            background-color: #f0f0f0;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+    <h1>SerialClient API 文档</h1>
+    
+    <div class="class-name">class SerialClient</div>
+    
+    <p>SerialClient 是一个串口通信客户端类，实现了单例模式，提供了串口连接管理、数据读写以及后台持续读取等功能。</p>
+    
+    <h2>类方法</h2>
+    
+    <div class="method">
+        <div class="method-name">@classmethod getInstance()</div>
+        <p>获取 SerialClient 的单例实例。</p>
+        <p><strong>返回:</strong> <span class="return">SerialClient</span> - SerialClient 的单例实例</p>
+    </div>
+    
+    <h2>实例方法</h2>
+    
+    <div class="method">
+        <div class="method-name">create_serial_connection()</div>
+        <p>创建串口连接。</p>
+        <p><strong>返回:</strong> <span class="return">bool</span> - 连接是否成功</p>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">close_serial_connection()</div>
+        <p>关闭串口连接。</p>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">serial_read(save_path=None, size=128)</div>
+        <p>从串口读取数据。</p>
+        <p><strong>参数:</strong></p>
+        <ul>
+            <li><span class="param">save_path</span> - 可选，保存读取数据的文件路径</li>
+            <li><span class="param">size</span> - 读取的字节数，默认为128</li>
+        </ul>
+        <p><strong>返回:</strong> <span class="return">tuple</span> - (connected, response)，connected表示连接状态，response是读取的数据</p>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">serial_write(data)</div>
+        <p>向串口写入数据。</p>
+        <p><strong>参数:</strong></p>
+        <ul>
+            <li><span class="param">data</span> - 要写入的数据</li>
+        </ul>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">serial_write_get_response(data, size=128)</div>
+        <p>向串口写入数据并获取响应。</p>
+        <p><strong>参数:</strong></p>
+        <ul>
+            <li><span class="param">data</span> - 要写入的数据</li>
+            <li><span class="param">size</span> - 读取的字节数，默认为128</li>
+        </ul>
+        <p><strong>返回:</strong> <span class="return">str</span> - 从串口读取的响应数据</p>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">start_read_task(log_save_path, fail_limit=5)</div>
+        <p>启动后台持续读取任务。</p>
+        <p><strong>参数:</strong></p>
+        <ul>
+            <li><span class="param">log_save_path</span> - 保存读取数据的文件路径</li>
+            <li><span class="param">fail_limit</span> - 最大失败次数限制，默认为5</li>
+        </ul>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">stop_read_task()</div>
+        <p>停止后台持续读取任务。</p>
+    </div>
+    
+    <h2>注意事项</h2>
+    <ul>
+        <li>该类使用单例模式，应通过 <code>getInstance()</code> 方法获取实例</li>
+        <li>读写操作都使用了线程锁(<code>RLock</code>)保证线程安全</li>
+        <li>串口参数(端口、波特率、超时时间)从配置文件中读取</li>
+        <li>读写失败时会自动尝试重新连接</li>
+    </ul>
+</body>
+</html>

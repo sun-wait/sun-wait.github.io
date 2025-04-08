@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DeviceUtil API 文档</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #2980b9;
+            margin-top: 30px;
+        }
+        h3 {
+            color: #16a085;
+        }
+        .class-name {
+            background-color: #f8f9fa;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-family: monospace;
+            color: #d63384;
+            font-weight: bold;
+        }
+        .method {
+            background-color: #e9ecef;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+        .method-name {
+            font-weight: bold;
+            color: #6f42c1;
+        }
+        .param {
+            font-style: italic;
+            color: #e83e8c;
+        }
+        .return {
+            font-weight: bold;
+            color: #20c997;
+        }
+        code {
+            background-color: #f8f9fa;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-family: monospace;
+            color: #d63384;
+        }
+        pre {
+            background-color: #f8f9fa;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        .category {
+            margin-top: 30px;
+            padding-bottom: 5px;
+            border-bottom: 1px solid #dee2e6;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h1>DeviceUtil API 文档</h1>
+    
+    <h2>1. 概述</h2>
+    <p>该API提供了设备管理功能，包括ADB设备连接、应用管理、文件操作、设备信息获取等。</p>
+    
+    <h2>2. 主要类</h2>
+    
+    <h3><span class="class-name">DeviceUtil</span></h3>
+    <p>设备工具类，提供设备连接、应用管理、文件操作等功能。</p>
+    
+    <h2>3. 主要方法</h2>
+    
+    <div class="category">
+        <h3>3.1 设备连接</h3>
+    </div>
+    
+    <div class="method">
+        <h4><span class="method-name">getAdbAddress()</span> [静态方法]</h4>
+        <p>获取ADB连接地址。</p>
+        <p><strong>返回:</strong> <span class="return">str</span> - ADB连接地址</p>
+    </div>
+    
+    <div class="method">
+        <h4><span class="method-name">checkAdbConnection(need_double_check=True)</span> [静态方法]</h4>
+        <p>检查ADB连接状态。</p>
+        <p><strong>参数:</strong> <span class="param">need_double_check</span> - 是否需要双重检查(默认True)</p>
+        <p><strong>返回:</strong> <span class="return">bool</span> - 连接是否成功</p>
+    </div>
+    
+    <div class="method">
+        <h4><span class="method-name">getSshAddress()</span> [静态方法]</h4>
+        <p>获取SSH连接地址。</p>
+        <p><strong>返回:</strong> <span class="return">str</span> - SSH连接地址</p>
+    </div>
+    
+    <div class="method">
+        <h4><span class="method-name">getSshPort()</span> [静态方法]</h4>
+        <p>获取SSH连接端口。</p>
+        <p><strong>返回:</strong> <span class="return">str</span> - SSH连接端口</p>
+    </div>
+    
+    <div class="method">
+        <h4><span class="method-name">connectDevice(serial)</span> [静态方法]</h4>
+        <p>连接设备。</p>
+        <p><strong>参数:</strong> <span class="param">serial</span> - 设备序列号</p>
+        <p><strong>返回:</strong> <span class="return">uiautomator2.Device</span> - 设备对象</p>
+    </div>
+    
+    <div class="method">
+        <h4><span class="method-name">connectPhone(phoneSerials)</span> [静态方法]</h4>
+        <p>连接多个手机设备。</p>
+        <p><strong>参数:</strong> <span class="param">phoneSerials</span> - 设备序列号列表</p>
+        <p><strong>返回:</strong> <span class="return">dict</span> - 设备字典(序列号为键，设备对象为值)</p>
+    </div>
+    
+    <div class="category">
+        <h3>3.2 应用管理</h3>
+    </div>
+    
+    <div class="method">
+        <h4><span class="method-name">installAppFromUrl(device, url)</span> [静态方法]</h4>
+        <p>从URL安装应用。</p>
+        <p><strong>参数:</strong></p>
+        <ul>
+            <li><span class="param">device</span> - 设备对象</li>
+            <li><span class="param">url</span> - 应用下载URL</li>
+        </ul>
+    </div>
+    
+    <div class="method">
+        <h4><span class="method-name">installAppFromLocal(device, apkPath, remotePath=Constant.REMOTE_APK)</span> [静态方法]</h4>
+        <p>从本地安装应用。</p>
+        <p><strong>参数:</strong></p>
+        <ul>
+            <li><span class="param">device</span> - 设备对象</li>
+            <li><span class="param">apkPath</span> - 本地APK路径</li>
+            <li><span class="param">remotePath</span> - 远程路径(默认Constant.REMOTE_APK)</li>
+        </ul>
+        <p><strong>返回:</strong> <span class="return">str</span> - 安装结果</p>
+    </div>
+    
+    <div class="method">
+        <h4><span class="method-name">uninstallApp(device, packageName)</span> [静态方法]</h4>
+        <p>卸载应用。</p>
+        <p><strong>参数:</strong></p>
+        <ul>
+            <li><span class="param">device</span> - 设备对象</li>
+            <li><span class="param">packageName</span> - 应用包名</li>
+        </ul>
+        <p><strong>返回:</strong> <span class="return">str</span> - 卸载结果</p>
+    </div>
+    
+    <div class="method">
+        <h4><span class="method-name">startActivity(package, activity, displayId=0)</span> [静态方法]</h4>
+        <p>启动指定Activity。</p>
+        <p><strong>参数:</strong></p>
+        <ul>
+            <li><span class="param">package</span> - 应用包名</li>
+            <li><span class="param">activity</span> - Activity全路径名</li>
+            <li><span class="param">displayId</span> - 显示ID(默认0)</li>
+        </ul>
+        <p><strong>返回:</strong> <span class="return">bool</span> - 是否启动成功</p>
+    </div>
+    
+    <div class="method">
+        <h4><span class="method-name">launchApp(device, packageName, activity=None)</span> [静态方法]</h4>
+        <p>启动应用。</p>
+        <p><strong>参数:</strong></p>
+        <ul>
+            <li><span class="param">device</span> - 设备对象</li>
+            <li><span class="param">packageName</span> - 应用包名</li>
+            <li><span class="param">activity</span> - Activity名称(可选)</li>
+        </ul>
+    </div>
+    
+    <div class="method">
+        <h4><span class="method-name">stopApp(device, packageName)</span> [静态方法]</h4>
+        <p>停止应用。</p>
+        <p><strong>参数:</strong></p>
+        <ul>
+            <li><span class="param">device</span> - 设备对象</li>
+            <li><span class="param">packageName</span> - 应用包名</li>
+        </ul>
+    </div>
+    
+    <div class="method">
+        <h4><span class="method-name">getAppInfo(device, packageName)</span> [静态方法]</h4>
+        <p>获取应用信息。</p>
+        <p><strong>参数:</strong></p>
+        <ul>
+            <li><span class="param">device</span> - 设备对象</li>
+            <li><span class="param">packageName</span> - 应用包名</li>
+        </ul>
+        <p><strong>返回:</strong> <span class="return">dict</span> - 应用信息</p>
+    </div>
+    
+    <div class="method">
+        <h4><span class="method-name">getAllRunningApps(device)</span> [静态方法]</h4>
+        <p>获取所有正在运行的应用。</p>
+        <p><strong>参数:</strong> <span class="param">device</span> - 设备对象</p>
+        <p><strong>返回:</strong> <span class="return">list</span> - 正在运行的应用列表</p>
+    </div>
+    
+    <div class="method">
+        <h4><span class="method-name">waitAppRunning(device, packageName, timeout)</span> [静态方法]</h4>
+        <p>等待应用运行。</p>
+        <p><strong>参数:</strong></p>
+        <ul>
+            <li><span class="param">device</span> - 设备对象</li>
+            <li><span class="param">packageName</span> - 应用包名</li>
+            <li><span class="param">timeout</span> - 超时时间</li>
+        </ul>
+        <p><strong>返回:</strong> <span class="return">bool</span> - 是否运行</p>
+    </div>
+    
+    <div class="method">
+        <h4><span class="method-name">getCurrentApp(device)</span> [静态方法]</h4>
+        <p>获取当前应用。</p>
+        <p><strong>参数:</strong> <span class="param">device</span> - 设备对象</p>
+        <p><strong>返回:</strong> <span class="return">str</span> - 当前应用包名</p>
+    </div>
+    
+    <div class="category">
+        <h3>3.3 文件操作</h3>
+    </div>
+    
+    <div class="method">
+        <h4><span class="method-name">pushFile(device, local, remote, mode=None)</span> [静态方法]</h4>
+        <p>推送文件到设备。</p>
+        <p><strong>参数:</strong></p>
+        <ul>
+            <li><span class="param">device</span> - 设备对象</li>
+            <li><span class="param">local</span> - 本地文件路径</li>
+            <li><span class="param">remote</span> - 远程文件路径</li>
+            <li><span class="param">mode</span> - 文件模式(可选)</li>
+        </ul>
+    </div>
+    
+    <div class="method">
+        <h4><span class="method-name">pullFile(device, remote, local)</span> [静态方法]</h4>
+        <p>从设备拉取文件。</p>
+        <p><strong>参数:</strong></p>
+        <ul>
+            <li><span class="param">device</span> - 设备对象</li>
+            <li><span class="param">remote</span> - 远程文件路径</li>
+            <li><span class="param">local</span> - 本地文件路径</li>
+        </ul>
+    </div>
+    
+    <div class="method">
+        <h4><span class="method-name">execShell(device, command)</span> [静态方法]</h4>
+        <p>执行shell命令。</p>
+        <p><strong>参数:</strong></p>
+        <ul>
+            <li><span class="param">device</span> - 设备对象</li>
+            <li><span class="param">command</span> - shell命令(字符串或列表)</li>
+        </ul>
+        <p><strong>返回:</strong> <span class="return">str</span> - 命令输出</p>
+    </div>
+    
+    <div class="category">
+        <h3>3.4 设备信息</h3>
+    </div>
+    
+    <div class="method">
+        <h4><span class="method-name">getDeviceInfo(device)</span> [静态方法]</h4>
+        <p>获取设备信息。</p>
+        <p><strong>参数:</strong> <span class="param">device</span> - 设备对象</p>
+        <p><strong>返回:</strong> <span class="return">dict</span> - 设备信息</p>
+    </div>
+    
+    <div class="method">
+        <h4><span class="method-name">getWindowSize(device)</span> [静态方法]</h4>
+        <p>获取窗口大小。</p>
+        <p><strong>参数:</strong> <span class="param">device</span> - 设备对象</p>
+        <p><strong>返回:</strong> <span class="return">tuple</span> - (宽度, 高度)</p>
+    </div>
+    
+    <div class="method">
+        <h4><span class="method-name">getSoftwareVersion()</span> [静态方法]</h4>
+        <p>获取软件版本。</p>
+        <p><strong>返回:</strong> <span class="return">str</span> - 软件版本</p>
+    </div>
+    
+    <div class="method">
+        <h4><span class="method-name">getVcuSerial()</span> [静态方法]</h4>
+        <p>获取VCU序列号。</p>
+        <p><strong>返回:</strong> <span class="return">str</span> - VCU序列号</p>
+    </div>
+    
+    <div class="method">
+        <h4><span class="method-name">getVipVersion()</span> [静态方法]</h4>
+        <p>获取VIP版本。</p>
+        <p><strong>返回:</strong> <span class="return">str</span> - VIP版本</p>
+    </div>
+    
+    <div class="category">
+        <h3>3.5 其他功能</h3>
+    </div>
+    
+    <div class="method">
+        <h4><span class="method-name">inputText(device, text)</span> [静态方法]</h4>
+        <p>输入文本。</p>
+        <p><strong>参数:</strong></p>
+        <ul>
+            <li><span class="param">device</span> - 设备对象</li>
+            <li><span class="param">text</span> - 要输入的文本</li>
+        </ul>
+    </div>
+    
+    <div class="method">
+        <h4><span class="method-name">addRootPermission()</span> [静态方法]</h4>
+        <p>添加root权限。</p>
+    </div>
+    
+    <div class="method">
+        <h4><span class="method-name">cleanupSshHosts()</span> [静态方法]</h4>
+        <p>清理SSH hosts文件。</p>
+    </div>
+    
+    <h2>4. 使用示例</h2>
+    
+    <h3>4.1 设备连接</h3>
+    <pre><code># 检查ADB连接
+if DeviceUtil.checkAdbConnection():
+    print("ADB连接成功")
+
+# 连接设备
+device = DeviceUtil.connectDevice("emulator-5554")</code></pre>
+    
+    <h3>4.2 应用管理</h3>
+    <pre><code># 安装应用
+DeviceUtil.installAppFromLocal(device, "app.apk")
+
+# 启动Activity
+DeviceUtil.startActivity("com.example.app", "com.example.app.MainActivity")
+
+# 获取当前应用
+current_app = DeviceUtil.getCurrentApp(device)</code></pre>
+    
+    <h3>4.3 文件操作</h3>
+    <pre><code># 推送文件
+DeviceUtil.pushFile(device, "local.txt", "/sdcard/remote.txt")
+
+# 执行shell命令
+output = DeviceUtil.execShell(device, "ls /sdcard")</code></pre>
+    
+    <h3>4.4 获取设备信息</h3>
+    <pre><code># 获取设备信息
+info = DeviceUtil.getDeviceInfo(device)
+
+# 获取软件版本
+version = DeviceUtil.getSoftwareVersion()</code></pre>
+    
+    <h2>5. 注意事项</h2>
+    <ul>
+        <li>使用前需要确保ADB或SSH连接正常</li>
+        <li>部分方法需要root权限</li>
+        <li>应用管理相关方法需要使用uiautomator2连接的设备对象</li>
+        <li>错误信息会记录到日志中，不会抛出异常</li>
+        <li>startPackageActivity和launchApp方法已标记为过期，建议使用startActivity</li>
+    </ul>
+</body>
+</html>

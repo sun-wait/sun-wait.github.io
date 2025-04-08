@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PerDataProcessor API 文档</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            color: #333;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #2980b9;
+            margin-top: 30px;
+        }
+        .class-name {
+            background-color: #f8f9fa;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-family: monospace;
+            color: #d63384;
+            font-weight: bold;
+        }
+        .method {
+            background-color: #f8f9fa;
+            padding: 10px;
+            border-left: 4px solid #6c757d;
+            margin: 15px 0;
+            border-radius: 0 4px 4px 0;
+        }
+        .method-name {
+            font-weight: bold;
+            color: #0066cc;
+        }
+        .param {
+            font-family: monospace;
+            color: #28a745;
+        }
+        .return {
+            font-family: monospace;
+            color: #dc3545;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        code {
+            background-color: #f8f9fa;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+    <h1>PerDataProcessor API 文档</h1>
+    
+    <h2>概述</h2>
+    <p><span class="class-name">PerDataProcessor</span> 是一个用于处理性能数据并生成Excel报告的类。它能够从Android和QNX系统中收集各种性能指标（如CPU、内存、GPU、DMA等），分析数据并生成可视化的报告。</p>
+    
+    <h2>类属性</h2>
+    <table>
+        <tr>
+            <th>属性名</th>
+            <th>类型</th>
+            <th>描述</th>
+        </tr>
+        <tr>
+            <td>android_important_process</td>
+            <td>list</td>
+            <td>Android系统中重要的进程列表</td>
+        </tr>
+        <tr>
+            <td>android_mem_avg/android_mem_max</td>
+            <td>float</td>
+            <td>Android内存平均值/最大值</td>
+        </tr>
+        <tr>
+            <td>android_cpu_avg/android_cpu_max</td>
+            <td>float</td>
+            <td>Android CPU平均值/最大值</td>
+        </tr>
+        <tr>
+            <td>qnx_mem_avg/qnx_mem_max</td>
+            <td>float</td>
+            <td>QNX内存平均值/最大值</td>
+        </tr>
+        <tr>
+            <td>qnx_cpu_avg/qnx_cpu_max</td>
+            <td>float</td>
+            <td>QNX CPU平均值/最大值</td>
+        </tr>
+        <tr>
+            <td>qnx_dma_avg/qnx_dma_max</td>
+            <td>float</td>
+            <td>QNX DMA平均值/最大值</td>
+        </tr>
+        <tr>
+            <td>qnx_gpu_avg/qnx_gpu_max</td>
+            <td>float</td>
+            <td>QNX GPU平均值/最大值</td>
+        </tr>
+        <tr>
+            <td>app_mem_avg/app_mem_max</td>
+            <td>float</td>
+            <td>应用内存平均值/最大值</td>
+        </tr>
+        <tr>
+            <td>app_cpu_avg/app_cpu_max</td>
+            <td>float</td>
+            <td>应用CPU平均值/最大值</td>
+        </tr>
+    </table>
+    
+    <h2>主要方法</h2>
+    
+    <div class="method">
+        <div class="method-name">getInstance()</div>
+        <p><strong>描述</strong>: 获取PerDataProcessor的单例实例。</p>
+        <p><strong>返回</strong>: <span class="return">PerDataProcessor</span> 实例</p>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">android_total_mem(android_file_path, report_file_path)</div>
+        <p><strong>描述</strong>: 生成安卓侧整体内存数据和图表，根据安卓侧info目录中的totalMEM.csv生成sheet页：Android_Total_MEM。</p>
+        <p><strong>参数</strong>:</p>
+        <ul>
+            <li><span class="param">android_file_path</span>: Android数据文件路径</li>
+            <li><span class="param">report_file_path</span>: 报告文件路径</li>
+        </ul>
+        <p><strong>返回</strong>: <span class="return">bool</span> 是否成功</p>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">android_total_cpu(qnx_file_path, report_file_path)</div>
+        <p><strong>描述</strong>: 生成安卓侧整体CPU的图表，根据QNX侧info目录中的cpu.csv生成sheet页：Android-Total-CPU。</p>
+        <p><strong>参数</strong>:</p>
+        <ul>
+            <li><span class="param">qnx_file_path</span>: QNX数据文件路径</li>
+            <li><span class="param">report_file_path</span>: 报告文件路径</li>
+        </ul>
+        <p><strong>返回</strong>: <span class="return">bool</span> 是否成功</p>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">qnx_total_mem(qnx_file_path, top_file_path, report_file_path)</div>
+        <p><strong>描述</strong>: 生成QNX侧整体内存情况，根据QNX侧生成的top文件和showmemSummary.csv生成sheet页：QNX-Total-MEM。</p>
+        <p><strong>参数</strong>:</p>
+        <ul>
+            <li><span class="param">qnx_file_path</span>: QNX数据文件路径</li>
+            <li><span class="param">top_file_path</span>: top文件路径</li>
+            <li><span class="param">report_file_path</span>: 报告文件路径</li>
+        </ul>
+        <p><strong>返回</strong>: <span class="return">bool</span> 是否成功</p>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">qnx_total_cpu(top_file_path, report_file_path)</div>
+        <p><strong>描述</strong>: 生成QNX侧整体CPU情况，根据QNX侧生成的top文件生成sheet页：QNX-Total-CPU。</p>
+        <p><strong>参数</strong>:</p>
+        <ul>
+            <li><span class="param">top_file_path</span>: top文件路径</li>
+            <li><span class="param">report_file_path</span>: 报告文件路径</li>
+        </ul>
+        <p><strong>返回</strong>: <span class="return">bool</span> 是否成功</p>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">android_detail_mem(android_file_path, report_file_path)</div>
+        <p><strong>描述</strong>: 生成安卓侧具体内存占用情况，根据安卓侧info目录中的memoryruntime.csv生成sheet页：android_memoryruntime。</p>
+        <p><strong>参数</strong>:</p>
+        <ul>
+            <li><span class="param">android_file_path</span>: Android数据文件路径</li>
+            <li><span class="param">report_file_path</span>: 报告文件路径</li>
+        </ul>
+        <p><strong>返回</strong>: <span class="return">bool</span> 是否成功</p>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">android_detail_cpu(android_file_path, report_file_path)</div>
+        <p><strong>描述</strong>: 生成安卓侧具体CPU情况，根据安卓侧生成的top.csv生成sheet页：android_场景名_top。</p>
+        <p><strong>参数</strong>:</p>
+        <ul>
+            <li><span class="param">android_file_path</span>: Android数据文件路径</li>
+            <li><span class="param">report_file_path</span>: 报告文件路径</li>
+        </ul>
+        <p><strong>返回</strong>: <span class="return">bool</span> 是否成功</p>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">qnx_detail_mem(qnx_file_path, report_file_path)</div>
+        <p><strong>描述</strong>: 生成QNX侧具体内存占用情况，根据QNX侧info目录中的showmemMEM.csv生成sheet页：qnx_memoryruntime。</p>
+        <p><strong>参数</strong>:</p>
+        <ul>
+            <li><span class="param">qnx_file_path</span>: QNX数据文件路径</li>
+            <li><span class="param">report_file_path</span>: 报告文件路径</li>
+        </ul>
+        <p><strong>返回</strong>: <span class="return">bool</span> 是否成功</p>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">qnx_detail_cpu(qnx_file_path, report_file_path)</div>
+        <p><strong>描述</strong>: 生成QNX侧具体CPU占用情况，根据QNX侧info目录中的showmemMEM.csv生成sheet页：qnx_memoryruntime。</p>
+        <p><strong>参数</strong>:</p>
+        <ul>
+            <li><span class="param">qnx_file_path</span>: QNX数据文件路径</li>
+            <li><span class="param">report_file_path</span>: 报告文件路径</li>
+        </ul>
+        <p><strong>返回</strong>: <span class="return">bool</span> 是否成功</p>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">senario_test_result(report_file_path)</div>
+        <p><strong>描述</strong>: 生成单应用场景的测试结果首页报告。</p>
+        <p><strong>参数</strong>:</p>
+        <ul>
+            <li><span class="param">report_file_path</span>: 报告文件路径</li>
+        </ul>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">data_processing_runner(scenes_name, android_file_path, top_file_path, qnx_file_path, runningAppList, package_name=None)</div>
+        <p><strong>描述</strong>: 主函数，执行所有数据处理流程。</p>
+        <p><strong>参数</strong>:</p>
+        <ul>
+            <li><span class="param">scenes_name</span>: 场景名称</li>
+            <li><span class="param">android_file_path</span>: Android数据文件路径</li>
+            <li><span class="param">top_file_path</span>: top文件路径</li>
+            <li><span class="param">qnx_file_path</span>: QNX数据文件路径</li>
+            <li><span class="param">runningAppList</span>: 运行中的应用列表</li>
+            <li><span class="param">package_name</span>: 包名(可选)</li>
+        </ul>
+        <p><strong>返回</strong>: <span class="return">dict</span> 包含所有性能数据的字典</p>
+    </div>
+    
+    <h2>辅助方法</h2>
+    <ul>
+        <li><code>count_max_avg(ws, df, col_list)</code>: 统计一列数据的平均值和最大值，并写入sheet页</li>
+        <li><code>compare_process_kpi(sourcedata, package_name, terminal, memory=False, cpu=False)</code>: 比较进程内存/CPU与KPI</li>
+        <li><code>compare_gpu(gpu_data, kpi)</code>: 比较GPU数据与KPI</li>
+        <li><code>del_erro_data(data_Frame, erro_index)</code>: 删除DataFrame中的异常数据</li>
+        <li><code>unified_unit(mem)</code>: 统一内存单位到MB</li>
+        <li><code>get_app_detail(df_mem, df_cpu, scenario, system)</code>: 获取应用详情</li>
+    </ul>
+    
+    <h2>使用示例</h2>
+    <pre><code>
+# 获取实例
+processor = PerDataProcessor.getInstance()
+
+# 处理数据并生成报告
+result = processor.data_processing_runner(
+    scenes_name="test_scenario",
+    android_file_path="/path/to/android/data",
+    top_file_path="/path/to/top/file",
+    qnx_file_path="/path/to/qnx/data",
+    runningAppList=["com.example.app1", "com.example.app2"],
+    package_name="com.example.app1"
+)
+
+# 输出结果
+print(result)
+    </code></pre>
+    
+    <h2>报告内容</h2>
+    <p>生成的Excel报告包含以下sheet页(根据场景不同可能有所变化):</p>
+    <ul>
+        <li>ANDROID_TOTAL_MEM: Android整体内存使用情况</li>
+        <li>ANDROID_TOTAL_CPU: Android整体CPU使用情况</li>
+        <li>QNX_TOTAL_MEM: QNX整体内存使用情况</li>
+        <li>QNX_TOTAL_CPU: QNX整体CPU使用情况</li>
+        <li>android_detail_mem: Android详细内存使用</li>
+        <li>android_detail_cpu: Android详细CPU使用</li>
+        <li>qnx_detail_mem: QNX详细内存使用</li>
+        <li>qnx_detail_cpu: QNX详细CPU使用</li>
+        <li>SENARIO_TEST_RESULT: 场景测试结果汇总</li>
+    </ul>
+</body>
+</html>

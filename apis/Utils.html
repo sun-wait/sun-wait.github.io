@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Utils API 文档</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #2980b9;
+            margin-top: 30px;
+        }
+        .class-name {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-left: 4px solid #3498db;
+            margin: 20px 0;
+            font-family: monospace;
+            font-size: 18px;
+        }
+        .method {
+            background-color: #f0f7ff;
+            padding: 12px;
+            border-left: 3px solid #2980b9;
+            margin: 15px 0;
+        }
+        .method-name {
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        .param {
+            font-style: italic;
+            color: #7f8c8d;
+        }
+        .return {
+            color: #27ae60;
+        }
+        code {
+            background-color: #f0f0f0;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-family: monospace;
+        }
+        .constant {
+            color: #8e44ad;
+            font-weight: bold;
+        }
+        .section {
+            margin-top: 40px;
+            border-top: 1px solid #eee;
+            padding-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Utils API 文档</h1>
+    
+    <div class="section">
+        <div class="class-name">class LogUtil</div>
+        
+        <p>日志工具类，提供日志记录和打印功能，实现了单例模式。</p>
+        
+        <h2>类方法</h2>
+        
+        <div class="method">
+            <div class="method-name">@classmethod getInstance()</div>
+            <p>获取 LogUtil 的单例实例。</p>
+            <p><strong>返回:</strong> <span class="return">LogUtil</span> - LogUtil 的单例实例</p>
+        </div>
+        
+        <h2>实例方法</h2>
+        
+        <div class="method">
+            <div class="method-name">print(message, level="info")</div>
+            <p>在控制台打印消息并记录到日志文件。</p>
+            <p><strong>参数:</strong></p>
+            <ul>
+                <li><span class="param">message</span> - 要打印的消息</li>
+                <li><span class="param">level</span> - 日志级别，可选"info"或"error"，默认为"info"</li>
+            </ul>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">log(message)</div>
+            <p>记录错误日志，包含调用堆栈信息。</p>
+            <p><strong>参数:</strong></p>
+            <ul>
+                <li><span class="param">message</span> - 错误消息</li>
+            </ul>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">@staticmethod clearStack(stack)</div>
+            <p>清理堆栈对象。</p>
+            <p><strong>参数:</strong></p>
+            <ul>
+                <li><span class="param">stack</span> - 要清理的堆栈对象</li>
+            </ul>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">@staticmethod get_top_level_filename()</div>
+            <p>获取调用栈顶部的文件名。</p>
+            <p><strong>返回:</strong> <span class="return">str</span> - 文件名，失败返回None</p>
+        </div>
+    </div>
+    
+    <div class="section">
+        <div class="class-name">class FileUtil</div>
+        
+        <p>文件操作工具类，提供各种文件系统操作功能。</p>
+        
+        <h2>静态方法</h2>
+        
+        <div class="method">
+            <div class="method-name">isFileExist(path)</div>
+            <p>检查文件或目录是否存在。</p>
+            <p><strong>参数:</strong></p>
+            <ul>
+                <li><span class="param">path</span> - 文件或目录路径</li>
+            </ul>
+            <p><strong>返回:</strong> <span class="return">bool</span> - 是否存在</p>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">getLogDir()</div>
+            <p>获取最新的日志目录。</p>
+            <p><strong>返回:</strong> <span class="return">str</span> - 日志目录路径</p>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">getProjectDir(target_folder="automation_cases")</div>
+            <p>使用多线程在多个磁盘分区中查找目标文件夹。</p>
+            <p><strong>参数:</strong></p>
+            <ul>
+                <li><span class="param">target_folder</span> - 要查找的目标文件夹名，默认为"automation_cases"</li>
+            </ul>
+            <p><strong>返回:</strong> <span class="return">str</span> - 找到的完整路径，失败返回None</p>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">getParentDir(path)</div>
+            <p>获取指定路径的父目录。</p>
+            <p><strong>参数:</strong></p>
+            <ul>
+                <li><span class="param">path</span> - 文件或目录路径</li>
+            </ul>
+            <p><strong>返回:</strong> <span class="return">str</span> - 父目录路径</p>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">generateAbsPath(*params)</div>
+            <p>生成绝对路径。</p>
+            <p><strong>参数:</strong></p>
+            <ul>
+                <li><span class="param">*params</span> - 路径组成部分</li>
+            </ul>
+            <p><strong>返回:</strong> <span class="return">str</span> - 生成的绝对路径，失败返回None</p>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">getContent(path, encoding="utf-8")</div>
+            <p>读取文件内容。</p>
+            <p><strong>参数:</strong></p>
+            <ul>
+                <li><span class="param">path</span> - 文件路径</li>
+                <li><span class="param">encoding</span> - 文件编码，默认为"utf-8"</li>
+            </ul>
+            <p><strong>返回:</strong> <span class="return">str</span> - 文件内容，失败返回None</p>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">createFolder(path)</div>
+            <p>创建目录。</p>
+            <p><strong>参数:</strong></p>
+            <ul>
+                <li><span class="param">path</span> - 目录路径</li>
+            </ul>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">delete(filePath)</div>
+            <p>删除文件或空目录。</p>
+            <p><strong>参数:</strong></p>
+            <ul>
+                <li><span class="param">filePath</span> - 文件或目录路径</li>
+            </ul>
+            <p><strong>返回:</strong> <span class="return">bool</span> - 是否删除成功</p>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">writeFile(filePath, content, mode="w+", encoding="utf-8")</div>
+            <p>写入文件内容。</p>
+            <p><strong>参数:</strong></p>
+            <ul>
+                <li><span class="param">filePath</span> - 文件路径</li>
+                <li><span class="param">content</span> - 要写入的内容</li>
+                <li><span class="param">mode</span> - 写入模式，默认为"w+"</li>
+                <li><span class="param">encoding</span> - 文件编码，默认为"utf-8"</li>
+            </ul>
+            <p><strong>返回:</strong> <span class="return">bool</span> - 是否写入成功</p>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">deleteFolder(folder)</div>
+            <p>递归删除目录及其内容。</p>
+            <p><strong>参数:</strong></p>
+            <ul>
+                <li><span class="param">folder</span> - 目录路径</li>
+            </ul>
+            <p><strong>返回:</strong> <span class="return">bool</span> - 是否删除成功</p>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">listDir(path)</div>
+            <p>列出目录内容。</p>
+            <p><strong>参数:</strong></p>
+            <ul>
+                <li><span class="param">path</span> - 目录路径</li>
+            </ul>
+            <p><strong>返回:</strong> <span class="return">list</span> - 目录内容列表，失败返回None</p>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">isFile(file)</div>
+            <p>检查路径是否为文件。</p>
+            <p><strong>参数:</strong></p>
+            <ul>
+                <li><span class="param">file</span> - 路径</li>
+            </ul>
+            <p><strong>返回:</strong> <span class="return">bool</span> - 是否为文件</p>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">isDir(file)</div>
+            <p>检查路径是否为目录。</p>
+            <p><strong>参数:</strong></p>
+            <ul>
+                <li><span class="param">file</span> - 路径</li>
+            </ul>
+            <p><strong>返回:</strong> <span class="return">bool</span> - 是否为目录</p>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">copyFile(srcFile, dstFolder)</div>
+            <p>复制文件到目标目录。</p>
+            <p><strong>参数:</strong></p>
+            <ul>
+                <li><span class="param">srcFile</span> - 源文件路径</li>
+                <li><span class="param">dstFolder</span> - 目标目录路径</li>
+            </ul>
+            <p><strong>返回:</strong> <span class="return">bool</span> - 是否复制成功</p>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">moveFile(srcFile, dstFolder)</div>
+            <p>移动文件到目标目录。</p>
+            <p><strong>参数:</strong></p>
+            <ul>
+                <li><span class="param">srcFile</span> - 源文件路径</li>
+                <li><span class="param">dstFolder</span> - 目标目录路径</li>
+            </ul>
+            <p><strong>返回:</strong> <span class="return">bool</span> - 是否移动成功</p>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">getBaseName(file)</div>
+            <p>获取文件名（不含路径）。</p>
+            <p><strong>参数:</strong></p>
+            <ul>
+                <li><span class="param">file</span> - 文件路径</li>
+            </ul>
+            <p><strong>返回:</strong> <span class="return">str</span> - 文件名，失败返回None</p>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">gzipfile(srcFile, dstFile)</div>
+            <p>解压gzip文件。</p>
+            <p><strong>参数:</strong></p>
+            <ul>
+                <li><span class="param">srcFile</span> - 源gzip文件路径</li>
+                <li><span class="param">dstFile</span> - 目标文件路径</li>
+            </ul>
+            <p><strong>返回:</strong> <span class="return">bool</span> - 是否解压成功</p>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">get_filename_suffix(file_name)</div>
+            <p>获取文件后缀名。</p>
+            <p><strong>参数:</strong></p>
+            <ul>
+                <li><span class="param">file_name</span> - 文件名或路径</li>
+            </ul>
+            <p><strong>返回:</strong> <span class="return">str</span> - 文件后缀名，失败返回None</p>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">get_filename(file_path)</div>
+            <p>从路径中获取文件名。</p>
+            <p><strong>参数:</strong></p>
+            <ul>
+                <li><span class="param">file_path</span> - 文件路径</li>
+            </ul>
+            <p><strong>返回:</strong> <span class="return">str</span> - 文件名，失败返回None</p>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">zip(src_file, zip_file)</div>
+            <p>压缩文件或目录为zip格式。</p>
+            <p><strong>参数:</strong></p>
+            <ul>
+                <li><span class="param">src_file</span> - 要压缩的源文件或目录</li>
+                <li><span class="param">zip_file</span> - 目标zip文件名</li>
+            </ul>
+            <p><strong>返回:</strong> <span class="return">str</span> - 生成的zip文件路径，失败返回None</p>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">unzip(zip_file, dst_folder=None)</div>
+            <p>解压zip文件。</p>
+            <p><strong>参数:</strong></p>
+            <ul>
+                <li><span class="param">zip_file</span> - zip文件路径</li>
+                <li><span class="param">dst_folder</span> - 目标解压目录，默认为zip文件所在目录</li>
+            </ul>
+            <p><strong>返回:</strong> <span class="return">str</span> - 解压目录路径，失败返回None</p>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">getSize(file)</div>
+            <p>获取文件或目录大小（字节）。</p>
+            <p><strong>参数:</strong></p>
+            <ul>
+                <li><span class="param">file</span> - 文件或目录路径</li>
+            </ul>
+            <p><strong>返回:</strong> <span class="return">int</span> - 大小（字节）</p>
+        </div>
+    </div>
+    
+    <h2>全局变量</h2>
+    <ul>
+        <li><span class="constant">PROJECT_PATH</span> - 缓存项目路径的字典</li>
+        <li><span class="constant">SEARCH_PROJECT_DIR_THREAD_EVENT</span> - 线程事件对象</li>
+        <li><span class="constant">SEARCH_PROJECT_DIR_THREAD_LOCK</span> - 线程锁对象</li>
+    </ul>
+    
+    <h2>注意事项</h2>
+    <ul>
+        <li>LogUtil 是单例类，应通过 getInstance() 方法获取实例</li>
+        <li>FileUtil 的所有方法都是静态方法，无需实例化即可使用</li>
+        <li>文件路径操作都使用 Path 对象处理，确保跨平台兼容性</li>
+        <li>所有方法都有异常处理，失败时会记录日志并返回安全值</li>
+        <li>getProjectDir 方法使用多线程搜索磁盘，性能较高</li>
+    </ul>
+</body>
+</html>

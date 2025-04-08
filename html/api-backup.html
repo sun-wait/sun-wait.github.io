@@ -164,11 +164,29 @@
 
 <div id="api">
 
+<!--    <div class="app-header">-->
+<!--        <div class="app-header-homepagetitle">-->
+<!--&lt;!&ndash;                    <span class="header-nav">&ndash;&gt;-->
+<!--&lt;!&ndash;                        <a id="back_homepage"><span>Homepage</span></a>&ndash;&gt;-->
+<!--&lt;!&ndash;                        <a href="../html/mannul-guide.html"><span>Overview</span></a>&ndash;&gt;-->
+<!--&lt;!&ndash;                        <a href="../html/api.html" style="background-color: #f6c00e;"><span>API</span></a>&ndash;&gt;-->
 
+<!--&lt;!&ndash;                    </span>&ndash;&gt;-->
+<!--        </div>-->
+<!--    </div>-->
 
     <nav class="navbar">
         <a href="#" class="nav-logo">API文档</a>
         <div class="nav-links">
+<!--            <div class="nav-dropdown">-->
+<!--                <a href="#" class="nav-link">指南</a>-->
+<!--                <div class="dropdown-menu">-->
+<!--                    <a href="./html/overview.html" class="dropdown-item">Overview</a>-->
+<!--                    <a href="./resources/user-manual.pdf" class="dropdown-item" target="_blank">部署文档</a>-->
+
+<!--                    <a href="./html/api.html" class="dropdown-item">API文档</a>-->
+<!--                </div>-->
+<!--            </div>-->
             <a href="../index.html" class="nav-link">首页</a>
             <a href="./deploy.html" class="nav-link"  target="_blank">部署文档</a>
             <a href="./api.html" class="nav-link">API文档</a>
@@ -180,13 +198,7 @@
         <div class="class_list" id="class_list">
 
         </div>
-        <div class="project_structure" id="project_structure" style="background: None;">
-
-        </div>
     </div>
-
-
-
     <div class="api-detail">
 
         <div id="ADASSettingManager">
@@ -24243,21 +24255,21 @@ watcher.stop(device)
                 使用示例
             </h3>
             <pre>
-                # 获取WifiManager实例
-                wifi_manager = WifiManager.getInstance()
+# 获取WifiManager实例
+wifi_manager = WifiManager.getInstance()
 
-                # 开启WiFi
-                wifi_manager.switchWifi(True)
+# 开启WiFi
+wifi_manager.switchWifi(True)
 
-                # 连接WiFi
-                wifi_manager.connect("MyWiFi", "password123")
+# 连接WiFi
+wifi_manager.connect("MyWiFi", "password123")
 
-                # 获取当前WiFi
-                current_wifi = wifi_manager.getCurrentWifi()
+# 获取当前WiFi
+current_wifi = wifi_manager.getCurrentWifi()
 
-                # 断开WiFi
-                wifi_manager.disconnect("MyWiFi")
-                    </pre>
+# 断开WiFi
+wifi_manager.disconnect("MyWiFi")
+    </pre>
         </div>
 
 
@@ -24284,346 +24296,115 @@ watcher.stop(device)
 
 
 <script>
+  const homepage_url = sessionStorage.getItem("homepage_url")
+  // console.log(homepage_url)
+  // document.getElementById("back_homepage").addEventListener("click", function(event) {
+  //   event.preventDefault();
+  //   if(homepage_url){
+  //     window.location.replace(homepage_url)
+  //   }
+  //   return false; // 阻止事件冒泡和默认行为
+  // });
 
-</script>
-<script>
+  const api_class_list = ['ADASSettingManager', 'AdbLogger', 'AudioLogger', 'AudioManager', 'AudioRecording', 'BaseLocator', 'BaseModel', 'BasePage', 'BaseScenarioRunner', 'BaseSqliteManager', 'BluetoothLogger', 'CalibrationManager', 'Camera', 'CanBusClient', 'CarplayLogger', 'CaseReporter', 'ChartManager', 'ClusterFunctionThread', 'ClusterGeneralManager', 'CommandExcutor', 'CommonLogTask', 'DataProcessor', 'DeviceUtil', 'DisplayLogger', 'DltDumpThread', 'DmaMemoryChecker', 'EventEmitter', 'ExceptionChecker', 'FeatureLogTask', 'FrameRateManager', 'GpsSimulationGeneralMangager', 'ImageUtils', 'IncLogger', 'IncTrafficMonitor', 'IoMonitor', 'KeyEventer', 'LifeCycle', 'LinGeneralManager', 'LogAnalyzer', 'LogCleaner', 'LogParser', 'MemoryCpuManager', 'MessageSender', 'MonkeyMonitor', 'NaviLogger', 'PackageActivityLocator', 'PageLocator', 'PowerCycleLogger', 'PowerCycleScenario', 'Register', 'RvcManager', 'ScreenRecorder', 'ScreenShoter', 'SerialClient', 'ServiceLocator', 'Simulator', 'Slogger', 'StartupManager', 'SystemLogger', 'SystemServiceChecker', 'TcpDumper', 'TimeUtil', 'TraceLogger', 'UsbLogger', 'Utils', 'VALogger', 'VehicleInitManager', 'VehicleTypeManager', 'Watcher', 'WifiManager'];
+  const apiListContainer = document.getElementById('class_list');
+  // 创建文档片段优化性能
+  const fragment = document.createDocumentFragment();
+  api_class_list.forEach(className => {
+      // 创建列表项
+      const li = document.createElement('li');
+      li.className = className; // 使用与文件列表相同的样式
+      li.textContent = className;
+      li.classList.add('api_class_name');
+      // 添加点击事件
+      li.addEventListener('click', function() {
+          const listItems = document.querySelectorAll('.api_class_name');
+          listItems.forEach(li => li.classList.remove('active'));
+          // 为当前点击元素添加active类
+          this.classList.add('active');
+          handleApiClassClick(className);
+      });
+      fragment.appendChild(li);
+  });
 
-</script>
+  // 一次性添加到DOM
+  apiListContainer.appendChild(fragment);
 
-<script src="../js/echarts.min.js"></script>
-<script>
+  // 点击处理函数示例
+  function handleApiClassClick(className) {
+        // 获取所有列表项
 
-    const jsonData = {
-        "customLib": {
-            "audio": {
-                "AudioManager": {
-                    "type": "file",
-                    "path": "customLib\\audio\\AudioManager"
-                }
-            },
-            "calibration": {
-                "CalibrationManager": {
-                    "type": "file",
-                    "path": "customLib\\calibration\\CalibrationManager"
-                }
-            },
-            "canbus": {
-                "CanBusClient": {
-                    "type": "file",
-                    "path": "customLib\\canbus\\CanBusClient"
-                }
-            },
-            "cluster": {
-                "ADASSettingManager": {
-                    "type": "file",
-                    "path": "customLib\\cluster\\ADASSettingManager"
-                },
-                "ClusterGeneralManager": {
-                    "type": "file",
-                    "path": "customLib\\cluster\\ClusterGeneralManager"
-                },
-                "GpsSimulationGeneralMangager": {
-                    "type": "file",
-                    "path": "customLib\\cluster\\GpsSimulationGeneralMangager"
-                },
-                "LinGeneralManager": {
-                    "type": "file",
-                    "path": "customLib\\cluster\\LinGeneralManager"
-                },
-                "MessageSender": {
-                    "type": "file",
-                    "path": "customLib\\cluster\\MessageSender"
-                },
-                "RvcManager": {
-                    "type": "file",
-                    "path": "customLib\\cluster\\RvcManager"
-                },
-                "VehicleInitManager": {
-                    "type": "file",
-                    "path": "customLib\\cluster\\VehicleInitManager"
-                }
-            },
-            "common": {
-                "CommandExcutor": {
-                    "type": "file",
-                    "path": "customLib\\common\\CommandExcutor"
-                },
-                "DeviceUtil": {
-                    "type": "file",
-                    "path": "customLib\\common\\DeviceUtil"
-                },
-                "KeyEventer": {
-                    "type": "file",
-                    "path": "customLib\\common\\KeyEventer"
-                },
-                "ScreenRecorder": {
-                    "type": "file",
-                    "path": "customLib\\common\\ScreenRecorder"
-                },
-                "ScreenShoter": {
-                    "type": "file",
-                    "path": "customLib\\common\\ScreenShoter"
-                },
-                "SerialClient": {
-                    "type": "file",
-                    "path": "customLib\\common\\SerialClient"
-                },
-                "TimeUtil": {
-                    "type": "file",
-                    "path": "customLib\\common\\TimeUtil"
-                },
-                "Utils": {
-                    "type": "file",
-                    "path": "customLib\\common\\Utils"
-                },
-                "VehicleTypeManager": {
-                    "type": "file",
-                    "path": "customLib\\common\\VehicleTypeManager"
-                },
-                "Watcher": {
-                    "type": "file",
-                    "path": "customLib\\common\\Watcher"
-                }
-            },
-            "loggers": {
-                "AdbLogger": {
-                    "type": "file",
-                    "path": "customLib\\loggers\\AdbLogger"
-                },
-                "AudioRecording": {
-                    "type": "file",
-                    "path": "customLib\\loggers\\AudioRecording"
-                },
-                "CommonLogTask": {
-                    "type": "file",
-                    "path": "customLib\\loggers\\CommonLogTask"
-                },
-                "DltDumpThread": {
-                    "type": "file",
-                    "path": "customLib\\loggers\\DltDumpThread"
-                },
-                "FeatureLogTask": {
-                    "type": "file",
-                    "path": "customLib\\loggers\\FeatureLogTask"
-                },
-                "IncLogger": {
-                    "type": "file",
-                    "path": "customLib\\loggers\\IncLogger"
-                },
-                "LogCleaner": {
-                    "type": "file",
-                    "path": "customLib\\loggers\\LogCleaner"
-                },
-                "LogParser": {
-                    "type": "file",
-                    "path": "customLib\\loggers\\LogParser"
-                },
-                "Slogger": {
-                    "type": "file",
-                    "path": "customLib\\loggers\\Slogger"
-                },
-                "UsbLogger": {
-                    "type": "file",
-                    "path": "customLib\\loggers\\UsbLogger"
-                }
-            },
-            "opencv": {
-                "Camera": {
-                    "type": "file",
-                    "path": "customLib\\opencv\\Camera"
-                }
-            },
-            "performance": {
-                "BaseScenarioRunner": {
-                    "type": "file",
-                    "path": "customLib\\performance\\BaseScenarioRunner"
-                },
-                "DmaMemoryChecker": {
-                    "type": "file",
-                    "path": "customLib\\performance\\DmaMemoryChecker"
-                },
-                "IncTrafficMonitor": {
-                    "type": "file",
-                    "path": "customLib\\performance\\IncTrafficMonitor"
-                },
-                "IoMonitor": {
-                    "type": "file",
-                    "path": "customLib\\performance\\IoMonitor"
-                },
-                "MemoryCpuManager": {
-                    "type": "file",
-                    "path": "customLib\\performance\\MemoryCpuManager"
-                },
-                "MonkeyMonitor": {
-                    "type": "file",
-                    "path": "customLib\\performance\\MonkeyMonitor"
-                },
-                "StartupManager": {
-                    "type": "file",
-                    "path": "customLib\\performance\\StartupManager"
-                }
-            },
-            "powercycle": {
-                "LogAnalyzer": {
-                    "type": "file",
-                    "path": "customLib\\powercycle\\LogAnalyzer"
-                },
-                "PowerCycleLogger": {
-                    "type": "file",
-                    "path": "customLib\\powercycle\\PowerCycleLogger"
-                },
-                "PowerCycleScenario": {
-                    "type": "file",
-                    "path": "customLib\\powercycle\\PowerCycleScenario"
-                }
-            }
-        }
-    }
+
+      // console.log(`选中类/id: ${className}`);
+      scrollToId(className,60)
+      // 这里可以添加加载具体类信息的逻辑
+      // 例如：loadClassContent(className);
+  }
+
+
+  function scrollToId(id,offset=100) {
+      try {
+          const element = document.getElementById(id);
+          if (!element) {
+              console.warn(`未找到ID为 ${id} 的元素`);
+              return;
+          }
+          const elementTop = element.getBoundingClientRect().top + window.pageYOffset;
+
+          // 计算目标滚动位置
+          const targetPosition = elementTop - offset;
+
+          window.scrollTo({
+              top: targetPosition,
+              behavior: 'smooth'
+          });
+
+
+      } catch (error) {
+          console.error('滚动时发生错误:', error);
+      }
+  }
+
+  const sections = document.querySelectorAll('div[id]');
+  const sidebarLinks = document.querySelectorAll('.api_class_name');
+
+  window.addEventListener('scroll', () => {
+      let currentSection = '';
+      sections.forEach(section => {
+          const sectionTop = section.offsetTop;
+          if (pageYOffset >= sectionTop - 50) {
+              currentSection = section.getAttribute('id');
+              // console.log(currentSection)
+          }
+      });
+
+      sidebarLinks.forEach(link => {
+          // console.log(link.classList,link.classList.length)
+          if(link.classList.contains(currentSection)){
+              link.classList.add('active');
+              link.scrollIntoView({ behavior: 'smooth' });
+          }
+          else{
+              link.classList.remove('active');
+          }
+      });
+  });
 
 
 
-    // 将 JSON 数据转换为 ECharts 所需的树形结构
-    function convertToTreeData(data) {
-        const root = {
-            name: 'customLib',
-            children: []
-        };
-
-        function processNode(currentNode, data) {
-            for (const key in data) {
-                if (data[key].type === 'file') {
-                    currentNode.children.push({
-                        name: key,
-                        value: data[key].path
-                    });
-                } else if (typeof data[key] === 'object') {
-                    const newNode = {
-                        name: key,
-                        children: []
-                    };
-                    currentNode.children.push(newNode);
-                    processNode(newNode, data[key]);
-                }
-            }
-        }
-
-        processNode(root, data.customLib);
-        return root;
-    }
-
-    // 初始化 ECharts 实例
-    // const chartDom = document.createElement('div');
-    const chartDom = document.getElementById('project_structure');
-    chartDom.style.width = '600px';
-    chartDom.style.height =  '1200px';
-    // document.body.appendChild(chartDom);
-    const myChart = echarts.init(chartDom);
 
 
-    const option = {
-        tooltip: {
-            trigger: 'item',
-            triggerOn: 'mousemove'
-        },
-        series: [
-            {
-                type: 'tree',
-                id: 0,
-                name: 'tree1',
-                data:  [convertToTreeData(jsonData)],
-                top: '0%',
-                left: '0%',
-                bottom: '0%',
-                right: '50%',
-                symbolSize: 7,
-                edgeShape: 'curve',
-                edgeForkPosition: '45%',
-                initialTreeDepth: 3,
-                lineStyle: {
-                    width: 1,
-                    color: '#666',
-                    curveness: 0.8 // 增加 curveness 值，使线条变为折线
-                },
-                // layout: {
-                //   verticalGap: 30, // 减小垂直间距
-                //   horizontalGap: 15 // 减小水平间距
-                // },
-                label: {
-                    backgroundColor: '#fff',
-                    position: 'left',
-                    verticalAlign: 'middle',
-                    align: 'right',
-                    color: '#000000', // 设置字体颜色为蓝色
-                    show: true, // 默认显示标签
-                    formatter: function (params) {
-                        // 如果是根节点，返回空字符串
-                        if (params.name === 'customLib') {
-                            return '';
-                        }
-                        return params.name;
-                    }
-
-
-                },
-                leaves: {
-                    label: {
-                        position: 'right',
-                        verticalAlign: 'left',
-                        align: 'left',
-                        fontSize: 12, // 调整叶子节点字体大
-                    }
-                },
-                emphasis: {
-                    focus: 'ancestor',
-                },
-
-                expandAndCollapse: false,
-                animationDuration: 0,
-                animationDurationUpdate: 0
-            }
-        ]
-    };
-
-    // 渲染图表
-    myChart.setOption(option);
-
-
-    // 监听节点点击事件
-    myChart.on('click', function (params) {
-        // 判断是否为叶子节点
-        if (params.data.children === undefined || params.data.children.length === 0) {
-            console.log('点击了叶子节点:', params.name);
-            // 在这里添加你的点击处理逻辑
-            scrollToId(params.name)
-            // alert('点击了叶子节点: ' + params.name);
-        }
-    });
-
-    function scrollToId(id,offset=60) {
-        try {
-            const element = document.getElementById(id);
-            if (!element) {
-                console.warn(`未找到ID为 ${id} 的元素`);
-                return;
-            }
-            const elementTop = element.getBoundingClientRect().top + window.pageYOffset;
-
-            // 计算目标滚动位置
-            const targetPosition = elementTop - offset;
-
-            window.scrollTo({
-                top: targetPosition,
-                behavior: 'smooth'
-            });
-
-
-        } catch (error) {
-            console.error('滚动时发生错误:', error);
-        }
-    }
+//   var now = new Date();
+//   var year = now.getFullYear()
+//   $('.copyright').text(`© - ${year} PATAC. All Rights Reserved.`)
 
 
 
 </script>
 
+<style>
+
+
+
+</style>
 </html>

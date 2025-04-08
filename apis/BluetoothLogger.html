@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BluetoothLogger API 文档</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #2980b9;
+            margin-top: 30px;
+            border-left: 4px solid #3498db;
+            padding-left: 10px;
+        }
+        .class-name {
+            background-color: #f8f9fa;
+            padding: 10px 15px;
+            border-radius: 4px;
+            border-left: 4px solid #3498db;
+            font-family: monospace;
+            font-size: 1.2em;
+            margin: 20px 0;
+            color: #2c3e50;
+        }
+        .method {
+            background-color: #f0f7ff;
+            padding: 10px;
+            border-radius: 4px;
+            margin: 15px 0;
+            border-left: 3px solid #7f8c8d;
+        }
+        .method-name {
+            font-weight: bold;
+            color: #16a085;
+        }
+        .method-desc {
+            margin-top: 5px;
+            color: #555;
+        }
+        .method-params {
+            margin-top: 10px;
+            font-size: 0.9em;
+        }
+        .param {
+            margin-left: 20px;
+            font-family: monospace;
+        }
+        .param-name {
+            font-weight: bold;
+            color: #8e44ad;
+        }
+        .param-desc {
+            margin-left: 5px;
+        }
+        .method-return {
+            margin-top: 5px;
+            font-size: 0.9em;
+        }
+        .return-desc {
+            margin-left: 20px;
+            font-family: monospace;
+        }
+        code {
+            background-color: #f0f0f0;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-family: monospace;
+            font-size: 0.9em;
+        }
+        .cmd {
+            background-color: #f0f0f0;
+            padding: 8px 12px;
+            border-radius: 4px;
+            font-family: monospace;
+            display: block;
+            margin: 10px 0;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>BluetoothLogger API 文档</h1>
+    
+    <p>该模块提供了收集蓝牙相关日志的功能，包括开启蓝牙日志记录和导出蓝牙日志文件。</p>
+    
+    <h2>命令说明</h2>
+    <div class="cmd">SET_BLUETOOTH_LOG_CMD = 'adb shell setprop persist.bluetooth.btsnooplogmode full'</div>
+    <p>设置蓝牙日志模式为完整记录模式。</p>
+    
+    <div class="cmd">DUMP_BLUETOOTH_LOG_CMD = "adb pull /data/misc/bluetooth {}/BluetoothLog"</div>
+    <p>导出蓝牙日志文件到指定目录。</p>
+    
+    <div class="cmd">DUMP_BLUEDROID_CMD = "adb pull /data/misc/bluedroid {}/BluetoothLog"</div>
+    <p>导出Bluedroid日志文件到指定目录。</p>
+    
+    <div class="cmd">CLEAR_BLUETOOTH_LOG_CMD = 'adb shell "echo -n > /data/misc/bluetooth/logs/btsnoop_hci.log"'</div>
+    <p>清空蓝牙HCI日志文件。</p>
+    
+    <div class="cmd">DELETE_BLUEDROID_CMD = "adb shell rm /data/misc/bluedroid/*"</div>
+    <p>删除Bluedroid目录下的所有文件。</p>
+    
+    <h2>类文档</h2>
+    
+    <div class="class-name">BluetoothLogger</div>
+    <p>蓝牙日志收集器的主类，提供收集蓝牙相关日志的功能。</p>
+    
+    <div class="method">
+        <div class="method-name">getInstance()</div>
+        <div class="method-desc">获取BluetoothLogger的单例实例。</div>
+        <div class="method-return">
+            <span>返回:</span>
+            <div class="return-desc">BluetoothLogger的实例</div>
+        </div>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">startBluetoothLog()</div>
+        <div class="method-desc">开启蓝牙日志记录功能。</div>
+        <div class="method-return">
+            <span>返回:</span>
+            <div class="return-desc">布尔值，表示是否成功开启</div>
+        </div>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">dumpBluetoothLog(caseFolder)</div>
+        <div class="method-desc">导出蓝牙日志文件到指定目录，并清理日志文件。</div>
+        <div class="method-params">
+            <div class="param">
+                <span class="param-name">caseFolder</span>
+                <span class="param-desc">日志保存的文件夹路径</span>
+            </div>
+        </div>
+        <div class="method-return">
+            <span>返回:</span>
+            <div class="return-desc">布尔值，表示是否成功导出</div>
+        </div>
+    </div>
+    
+    <h2>使用示例</h2>
+    <pre><code>
+# 获取BluetoothLogger实例
+logger = BluetoothLogger.getInstance()
+
+# 开启蓝牙日志记录
+logger.startBluetoothLog()
+
+# 进行蓝牙相关测试...
+
+# 导出蓝牙日志到指定目录
+logger.dumpBluetoothLog("/path/to/logs")
+    </code></pre>
+    
+    <h2>工作流程</h2>
+    <ol>
+        <li>调用<code>startBluetoothLog()</code>开启蓝牙日志记录</li>
+        <li>进行蓝牙相关测试操作</li>
+        <li>调用<code>dumpBluetoothLog(caseFolder)</code>导出日志文件</li>
+        <li>日志文件将被保存在<code>caseFolder/BluetoothLog</code>目录下</li>
+        <li>导出完成后会自动清理设备上的日志文件</li>
+    </ol>
+</body>
+</html>

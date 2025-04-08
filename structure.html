@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CustomLib 目录结构</title>
+  <style>
+    .tree-node {
+      margin-left: 20px;
+      cursor: pointer;
+    }
+    .tree-node .icon {
+      margin-right: 5px;
+    }
+    .tree-node .children {
+      display: none;
+    }
+    .tree-node.expanded .children {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+<h1>CustomLib 目录结构</h1>
+<div id="tree-root"></div>
+
+<script>
+  // 树形结构数据
+  const treeData = {
+    name: "customLib",
+    type: "directory",
+    children: [
+      {
+        name: "audio",
+        type: "directory",
+        children: [
+          {
+            name: "AudioManager.py",
+            type: "file"
+          }
+        ]
+      },
+      {
+        name: "calibration",
+        type: "directory",
+        children: [
+          {
+            name: "CalibrationManager.py",
+            type: "file"
+          },
+          {
+            name: "cleanupAndroidOverrides.bat",
+            type: "file"
+          },
+          {
+            name: "cleanupQnxOverrides.bat",
+            type: "file"
+          },
+          {
+            name: "override.bat",
+            type: "file"
+          }
+        ]
+      },
+      {
+        name: "canbus",
+        type: "directory",
+        children: [
+          {
+            name: "CanBusClient.py",
+            type: "file"
+          },
+          {
+            name: "CanBusServer.py",
+            type: "file"
+          },
+          {
+            name: "CanMessageSend.py",
+            type: "file"
+          },
+          {
+            name: "CanRegister.py",
+            type: "file"
+          },
+          {
+            name: "CanShareData.py",
+            type: "file"
+          },
+          {
+            name: "CysMacDll.py",
+            type: "file"
+          },
+          {
+            name: "DataDefinition.py",
+            type: "file"
+          },
+          {
+            name: "dbc",
+            type: "directory",
+            children: [
+              {
+                name: "GB",
+                type: "directory",
+                children: [
+                  {
+                    name: "24.24.170",
+                    type: "directory",
+                    children: [
+                      {
+                        name: "exclude_messages.json",
+                        type: "file"
+                      }
+                    ]
+                  },
+                  {
+                    name: "24.24.175",
+                    type: "directory",
+                    children: [
+                      {
+                        name: "exclude_messages.json",
+                        type: "file"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            name: "macdll",
+            type: "directory",
+            children: [
+              {
+                name: "maclog.txt",
+                type: "file"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        name: "chart",
+        type: "directory",
+        children: [
+          {
+            name: "ChartManager.py",
+            type: "file"
+          }
+        ]
+      },
+      {
+        name: "cloud_test",
+        type: "directory",
+        children: [
+          {
+            name: "MessageResponsor.py",
+            type: "file"
+          },
+          {
+            name: "StateManager.py",
+            type: "file"
+          }
+        ]
+      },
+      {
+        name: "tools",
+        type: "directory",
+        children: [
+          {
+            name: "performance_reporter",
+            type: "directory",
+            children: [
+              {
+                name: "config",
+                type: "directory",
+                children: [
+                  {
+                    name: "qnx_process_list.txt",
+                    type: "file"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  };
+
+  // 渲染树形结构
+  function renderTree(node, parentElement) {
+    const div = document.createElement("div");
+    div.className = "tree-node";
+
+    // 图标和名称
+    const icon = document.createElement("span");
+    icon.className = "icon";
+    icon.textContent = node.type === "directory" ? "📁" : "📄";
+    div.appendChild(icon);
+
+    const name = document.createElement("span");
+    name.textContent = node.name;
+    div.appendChild(name);
+
+    // 如果是目录，添加点击事件
+    if (node.type === "directory") {
+      div.addEventListener("click", (e) => {
+        e.stopPropagation(); // 阻止事件冒泡
+        div.classList.toggle("expanded");
+      });
+    }
+
+    // 如果有子节点，递归渲染
+    if (node.children) {
+      const childrenDiv = document.createElement("div");
+      childrenDiv.className = "children";
+      node.children.forEach((child) => renderTree(child, childrenDiv));
+      div.appendChild(childrenDiv);
+    }
+
+    parentElement.appendChild(div);
+  }
+
+  // 初始化渲染
+  const rootElement = document.getElementById("tree-root");
+  renderTree(treeData, rootElement);
+</script>
+</body>
+</html>

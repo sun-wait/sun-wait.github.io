@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DmaMemoryChecker API 文档</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #2980b9;
+            margin-top: 30px;
+        }
+        .class-name {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-left: 4px solid #3498db;
+            margin: 20px 0;
+            font-family: monospace;
+            font-size: 18px;
+        }
+        .method {
+            background-color: #f0f7ff;
+            padding: 12px;
+            border-left: 3px solid #2980b9;
+            margin: 15px 0;
+        }
+        .method-name {
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        .param {
+            font-style: italic;
+            color: #7f8c8d;
+        }
+        .return {
+            color: #27ae60;
+        }
+        code {
+            background-color: #f0f0f0;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-family: monospace;
+        }
+        .constant {
+            color: #8e44ad;
+            font-weight: bold;
+        }
+        .note {
+            background-color: #fff3cd;
+            padding: 10px;
+            border-left: 3px solid #ffc107;
+            margin: 15px 0;
+        }
+        .warning {
+            background-color: #f8d7da;
+            padding: 10px;
+            border-left: 3px solid #dc3545;
+            margin: 15px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>DmaMemoryChecker API 文档</h1>
+
+    <h2>全局常量</h2>
+    <ul>
+        <li><span class="constant">DUMP_MEMORY_INFO_TIMEOUT</span> = 60 - 内存信息收集超时时间(秒)</li>
+        <li><span class="constant">DUMP_DMA_TIMEOUT</span> = 60 - DMA收集超时时间(秒)</li>
+        <li><span class="constant">QNX_DMA_TIMEOUT</span> = 3 - QNX DMA收集超时时间(秒)</li>
+        <li><span class="constant">LOG_DATE_TIME_FORMAT</span> = "%Y%m%d%H%M%S" - 日志日期时间格式</li>
+        <li><span class="constant">ION_MEMORY_DATE_TIME_FORMAT</span> = "%Y-%m-%d_%H:%M:%S" - ION内存日期时间格式</li>
+    </ul>
+
+    <div class="class-name">class DmaMemoryChecker(threading.Thread)</div>
+    
+    <p>DMA内存检查器类，继承自Thread，用于后台收集Android和QNX系统的DMA和内存信息。</p>
+    
+    <div class="note">
+        <strong>注意：</strong>该类是线程类，需要在外部管理线程生命周期。
+    </div>
+    
+    <h2>初始化方法</h2>
+    
+    <div class="method">
+        <div class="method-name">__init__(caseFolder, androiddma=True, qnxdma=False, androidmem=True, npu=True, monitor_time_threshold=300)</div>
+        <p>初始化DMA内存检查器。</p>
+        <p><strong>参数:</strong></p>
+        <ul>
+            <li><span class="param">caseFolder</span> - 本地文件保存路径</li>
+            <li><span class="param">androiddma</span> - Android DMA数据收集开关，默认为True</li>
+            <li><span class="param">qnxdma</span> - QNX DMA数据收集开关，默认为False</li>
+            <li><span class="param">androidmem</span> - Android内存数据收集开关，默认为True</li>
+            <li><span class="param">npu</span> - NPU数据收集开关，默认为True</li>
+            <li><span class="param">monitor_time_threshold</span> - 监控时间间隔(秒)，默认为300</li>
+        </ul>
+        <div class="warning">
+            <strong>注意：</strong>开启qnxdma开关后将无法生成GPU数据，如需生成GPU数据，请关闭此开关。
+        </div>
+    </div>
+    
+    <h2>实例方法</h2>
+    
+    <div class="method">
+        <div class="method-name">createMemInfoFolder(caseFolder)</div>
+        <p>创建内存信息文件夹。</p>
+        <p><strong>参数:</strong></p>
+        <ul>
+            <li><span class="param">caseFolder</span> - 用例文件夹路径</li>
+        </ul>
+        <p><strong>返回:</strong> <span class="return">str</span> - 创建的文件夹路径</p>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">dumpAndroidDma(logFolder)</div>
+        <p>收集Android DMA信息。</p>
+        <p><strong>参数:</strong></p>
+        <ul>
+            <li><span class="param">logFolder</span> - 日志文件夹路径</li>
+        </ul>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">dumpQnxDma(logFolder)</div>
+        <p>收集QNX DMA信息。</p>
+        <p><strong>参数:</strong></p>
+        <ul>
+            <li><span class="param">logFolder</span> - 日志文件夹路径</li>
+        </ul>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">dumpAndroidMemoryInfo(logFolder)</div>
+        <p>收集Android内存信息。</p>
+        <p><strong>参数:</strong></p>
+        <ul>
+            <li><span class="param">logFolder</span> - 日志文件夹路径</li>
+        </ul>
+        <div class="note">
+            <strong>说明：</strong>会根据车辆类型收集不同的内存信息(DMA-BUF/GPU或ION)。
+        </div>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">dumpNpu()</div>
+        <p>收集NPU信息。</p>
+        <div class="note">
+            <strong>说明：</strong>仅支持特定车辆类型('557', 'MY26', 'BEV')。
+        </div>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">run()</div>
+        <p>线程运行方法，开始收集数据。</p>
+        <div class="note">
+            <strong>注意：</strong>该方法会自动调用，不应直接调用。
+        </div>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">stopTask()</div>
+        <p>停止数据收集任务。</p>
+    </div>
+    
+    <h2>注意事项</h2>
+    <ul>
+        <li>该类是线程类，需要调用stopTask()方法来停止任务</li>
+        <li>数据收集功能可按需配置(androiddma/qnxdma/androidmem/npu)</li>
+        <li>QNX DMA和GPU数据收集功能互斥，只能选择其一</li>
+        <li>NPU数据收集仅支持特定车辆类型</li>
+        <li>所有方法都有异常处理，失败时会记录日志</li>
+        <li>数据收集间隔由monitor_time_threshold参数控制</li>
+    </ul>
+</body>
+</html>

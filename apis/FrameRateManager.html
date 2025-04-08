@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FrameRateManager API 文档</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            color: #333;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #2980b9;
+            margin-top: 30px;
+        }
+        .class-name {
+            background-color: #f8f9fa;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-family: monospace;
+            color: #d63384;
+            font-weight: bold;
+        }
+        .method {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            border-left: 4px solid #3498db;
+        }
+        .method-name {
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        .method-params {
+            margin-top: 10px;
+            padding-left: 20px;
+        }
+        .method-return {
+            margin-top: 10px;
+            font-style: italic;
+        }
+        code {
+            background-color: #f8f9fa;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-family: monospace;
+            color: #d63384;
+        }
+        .note {
+            background-color: #fff3cd;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+            border-left: 4px solid #ffc107;
+        }
+        .constant {
+            background-color: #e7f5ff;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 5px 0;
+        }
+        .enum {
+            background-color: #e6f7e6;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>FrameRateManager API 文档</h1>
+    
+    <div class="note">
+        <p>该文档描述了 <span class="class-name">FrameRateManager</span> 类的API接口，用于管理Android应用的帧率和卡顿率测试。</p>
+    </div>
+    
+    <h2>类概述</h2>
+    <p><span class="class-name">FrameRateManager</span> 是一个单例类，提供了以下功能：</p>
+    <ul>
+        <li>测量应用的帧率和卡顿率</li>
+        <li>管理测试数据收集和存储</li>
+        <li>将测试结果保存到Excel文件</li>
+        <li>比较测试结果与阈值</li>
+        <li>生成测试日志文件</li>
+    </ul>
+    
+    <h2>枚举类型</h2>
+    
+    <div class="enum">
+        <div class="method-name">FrameRateResult</div>
+        <p>帧率测试结果枚举。</p>
+        <ul>
+            <li><code>success</code> - 测试通过 ("PASS")</li>
+            <li><code>fail</code> - 测试失败 ("FAIL")</li>
+        </ul>
+    </div>
+    
+    <h2>类方法</h2>
+    
+    <div class="method">
+        <div class="method-name">getInstance()</div>
+        <p>获取 <span class="class-name">FrameRateManager</span> 的单例实例。</p>
+        <div class="method-return">
+            <strong>返回:</strong> FrameRateManager 实例
+        </div>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">get_frame_rates_kpi(package_name)</div>
+        <p>根据包名获取帧率KPI阈值。</p>
+        <div class="method-params">
+            <strong>参数:</strong>
+            <ul>
+                <li><code>package_name</code> - 应用包名</li>
+            </ul>
+        </div>
+        <div class="method-return">
+            <strong>返回:</strong> 帧率阈值字符串
+        </div>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">FrameRateallClear()</div>
+        <p>清空所有应用的帧率数据列表。</p>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">startFrameRateTest(device, packageName, fragmentName, logFolder, testTimes)</div>
+        <p>启动帧率测试。</p>
+        <div class="method-params">
+            <strong>参数:</strong>
+            <ul>
+                <li><code>device</code> - 设备对象</li>
+                <li><code>packageName</code> - 应用包名</li>
+                <li><code>fragmentName</code> - 页面名称</li>
+                <li><code>logFolder</code> - 日志文件夹路径</li>
+                <li><code>testTimes</code> - 测试次数</li>
+            </ul>
+        </div>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">getFrameRate(device, packageName)</div>
+        <p>获取应用的帧率和卡顿率。</p>
+        <div class="method-params">
+            <strong>参数:</strong>
+            <ul>
+                <li><code>device</code> - 设备对象</li>
+                <li><code>packageName</code> - 应用包名</li>
+            </ul>
+        </div>
+        <div class="method-return">
+            <strong>返回:</strong> 元组 (帧率, 卡顿率)
+        </div>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">addData(data)</div>
+        <p>添加帧率数据到当前应用列表。</p>
+        <div class="method-params">
+            <strong>参数:</strong>
+            <ul>
+                <li><code>data</code> - 包含包名、页面名、帧率和卡顿率的字典</li>
+            </ul>
+        </div>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">addAverageData(average)</div>
+        <p>添加平均帧率数据到当前应用列表。</p>
+        <div class="method-params">
+            <strong>参数:</strong>
+            <ul>
+                <li><code>average</code> - 包含包名、页面名、平均帧率和测试结果的字典</li>
+            </ul>
+        </div>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">getFrameRateList()</div>
+        <p>获取当前应用的帧率数据列表。</p>
+        <div class="method-return">
+            <strong>返回:</strong> 当前应用的帧率数据列表
+        </div>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">getallFrameRateList()</div>
+        <p>获取所有应用的帧率数据列表。</p>
+        <div class="method-return">
+            <strong>返回:</strong> 所有应用的帧率数据列表
+        </div>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">generateLogFile(logFolder)</div>
+        <p>生成帧率测试日志文件。</p>
+        <div class="method-params">
+            <strong>参数:</strong>
+            <ul>
+                <li><code>logFolder</code> - 日志文件夹路径</li>
+            </ul>
+        </div>
+        <div class="method-return">
+            <strong>返回:</strong> 布尔值，表示操作是否成功
+        </div>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">getThresholdByProject(packageName)</div>
+        <p>根据包名获取帧率阈值。</p>
+        <div class="method-params">
+            <strong>参数:</strong>
+            <ul>
+                <li><code>packageName</code> - 应用包名</li>
+            </ul>
+        </div>
+        <div class="method-return">
+            <strong>返回:</strong> 帧率阈值字符串
+        </div>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">getFrameRateResult(testResult, threshold)</div>
+        <p>比较测试结果与阈值，返回测试结果。</p>
+        <div class="method-params">
+            <strong>参数:</strong>
+            <ul>
+                <li><code>testResult</code> - 测试结果值</li>
+                <li><code>threshold</code> - 阈值</li>
+            </ul>
+        </div>
+        <div class="method-return">
+            <strong>返回:</strong> 测试结果 (FrameRateResult)
+        </div>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">saveDatasToLocalFile(path)</div>
+        <p>将当前应用的帧率数据保存到本地Excel文件。</p>
+        <div class="method-params">
+            <strong>参数:</strong>
+            <ul>
+                <li><code>path</code> - Excel文件路径</li>
+            </ul>
+        </div>
+        <div class="method-return">
+            <strong>返回:</strong> 最后一条数据记录
+        </div>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">saveallDatasToLocalFile(path)</div>
+        <p>将所有应用的帧率数据保存到本地Excel文件。</p>
+        <div class="method-params">
+            <strong>参数:</strong>
+            <ul>
+                <li><code>path</code> - Excel文件路径</li>
+            </ul>
+        </div>
+    </div>
+    
+    <h2>常量</h2>
+    
+    <div class="constant">
+        <code>GET_FRAME_RATE_RESET_COMMAND</code> - 重置帧率统计命令模板
+    </div>
+    
+    <div class="constant">
+        <code>GET_FRAME_RATE_COMMAND</code> - 获取帧率统计命令模板
+    </div>
+    
+    <div class="constant">
+        <code>GET_JANKY_RATE_DEFAULT_VALUE</code> - 默认卡顿率值 (-1)
+    </div>
+    
+    <div class="constant">
+        <code>GET_FRAME_RATE_DEFAULT_VALUE</code> - 默认帧率值 (-1)
+    </div>
+    
+    <div class="constant">
+        <code>GET_FRAME_RATE_DURATION</code> - 帧率统计持续时间 (2秒)
+    </div>
+    
+    <div class="constant">
+        <code>FRAME_RATE_FILE</code> - 帧率数据Excel文件名 ("frameRate.xlsx")
+    </div>
+    
+    <div class="constant">
+        <code>FRAME_RATE_LOG_PREFIX</code> - 帧率日志文件前缀 ("frameRate_")
+    </div>
+    
+    <h2>注意事项</h2>
+    <div class="note">
+        <ul>
+            <li>使用前需要确保设备已正确连接</li>
+            <li>需要预先配置好各应用的帧率KPI阈值</li>
+            <li>测试结果会自动保存到日志文件和Excel文件</li>
+            <li>该类实现了单例模式，应通过<code>getInstance()</code>方法获取实例</li>
+            <li>测试过程中会自动重置帧率统计</li>
+        </ul>
+    </div>
+</body>
+</html>

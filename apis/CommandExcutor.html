@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CommandExcutor API 文档</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #2980b9;
+            margin-top: 30px;
+        }
+        h3 {
+            color: #16a085;
+        }
+        .class-name {
+            background-color: #f8f9fa;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-family: monospace;
+            color: #d63384;
+            font-weight: bold;
+        }
+        .method {
+            background-color: #e9ecef;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+        .method-name {
+            font-weight: bold;
+            color: #6f42c1;
+        }
+        .param {
+            font-style: italic;
+            color: #e83e8c;
+        }
+        .return {
+            font-weight: bold;
+            color: #20c997;
+        }
+        code {
+            background-color: #f8f9fa;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-family: monospace;
+            color: #d63384;
+        }
+        pre {
+            background-color: #f8f9fa;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        .param-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        .param-table th, .param-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        .param-table th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h1>CommandExcutor API 文档</h1>
+    
+    <h2>1. 概述</h2>
+    <p>该API提供了命令执行功能，包括本地命令执行和SSH远程操作，支持同步/异步执行、超时控制、输出重定向等功能。</p>
+    
+    <h2>2. 主要类</h2>
+    
+    <h3><span class="class-name">CommandExcutor</span></h3>
+    <p>命令执行器类，提供本地命令执行功能。</p>
+    
+    <h3><span class="class-name">SshExecutor</span></h3>
+    <p>SSH执行器类，提供远程SSH操作功能。</p>
+    
+    <h2>3. 主要方法</h2>
+    
+    <h3>3.1 CommandExcutor 方法</h3>
+    
+    <div class="method">
+        <h4><span class="method-name">excute(cmd, timeout=DEFAULT_EXECUTE_TIMEOUT, shell=False, input=None, text=None, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, universal_newlines=True)</span> [静态方法]</h4>
+        <p>同步执行命令并获取结果。</p>
+        <table class="param-table">
+            <tr>
+                <th>参数</th>
+                <th>类型</th>
+                <th>默认值</th>
+                <th>描述</th>
+            </tr>
+            <tr>
+                <td><span class="param">cmd</span></td>
+                <td>str/list</td>
+                <td>-</td>
+                <td>要执行的命令</td>
+            </tr>
+            <tr>
+                <td><span class="param">timeout</span></td>
+                <td>int</td>
+                <td>10</td>
+                <td>执行超时时间(秒)</td>
+            </tr>
+            <tr>
+                <td><span class="param">shell</span></td>
+                <td>bool</td>
+                <td>False</td>
+                <td>是否通过shell执行</td>
+            </tr>
+            <tr>
+                <td><span class="param">input</span></td>
+                <td>str</td>
+                <td>None</td>
+                <td>输入内容</td>
+            </tr>
+            <tr>
+                <td><span class="param">text</span></td>
+                <td>bool</td>
+                <td>None</td>
+                <td>是否以文本模式处理输入输出</td>
+            </tr>
+            <tr>
+                <td><span class="param">stdout</span></td>
+                <td>file</td>
+                <td>subprocess.PIPE</td>
+                <td>标准输出处理方式</td>
+            </tr>
+            <tr>
+                <td><span class="param">stderr</span></td>
+                <td>file</td>
+                <td>subprocess.STDOUT</td>
+                <td>标准错误处理方式</td>
+            </tr>
+            <tr>
+                <td><span class="param">universal_newlines</span></td>
+                <td>bool</td>
+                <td>True</td>
+                <td>是否使用通用换行符</td>
+            </tr>
+        </table>
+        <p><strong>返回:</strong> <span class="return">tuple</span> - (返回码, 输出内容)</p>
+    </div>
+    
+    <div class="method">
+        <h4><span class="method-name">popen(cmd, stdin=None, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, timeout=None, shell=False, terminate=True)</span> [静态方法]</h4>
+        <p>异步执行命令。</p>
+        <p><strong>参数:</strong></p>
+        <ul>
+            <li><span class="param">cmd</span> - 要执行的命令</li>
+            <li><span class="param">stdin</span> - 标准输入</li>
+            <li><span class="param">stdout</span> - 标准输出处理方式</li>
+            <li><span class="param">stderr</span> - 标准错误处理方式</li>
+            <li><span class="param">timeout</span> - 超时时间</li>
+            <li><span class="param">shell</span> - 是否通过shell执行</li>
+            <li><span class="param">terminate</span> - 是否在完成后终止进程</li>
+        </ul>
+        <p><strong>返回:</strong> <span class="return">tuple</span> - (执行结果, 进程对象)</p>
+    </div>
+    
+    <div class="method">
+        <h4><span class="method-name">startExcute(cmd, file, mode="w+", stream=False, encoding="utf-8", timeout=DEFAULT_EXECUTE_TIMEOUT)</span> [静态方法]</h4>
+        <p>执行命令并将输出重定向到文件。</p>
+        <p><strong>参数:</strong></p>
+        <ul>
+            <li><span class="param">cmd</span> - 要执行的命令</li>
+            <li><span class="param">file</span> - 输出文件路径</li>
+            <li><span class="param">mode</span> - 文件打开模式</li>
+            <li><span class="param">stream</span> - 是否保持流式输出</li>
+            <li><span class="param">encoding</span> - 文件编码</li>
+            <li><span class="param">timeout</span> - 超时时间</li>
+        </ul>
+        <p><strong>返回:</strong> <span class="return">tuple</span> - (进程对象, 文件流对象)</p>
+    </div>
+    
+    <div class="method">
+        <h4><span class="method-name">stopExcute(processObject, fileStream=None)</span> [静态方法]</h4>
+        <p>停止执行并清理资源。</p>
+        <p><strong>参数:</strong></p>
+        <ul>
+            <li><span class="param">processObject</span> - 要终止的进程对象</li>
+            <li><span class="param">fileStream</span> - 要关闭的文件流对象</li>
+        </ul>
+    </div>
+    
+    <h3>3.2 SshExecutor 方法</h3>
+    
+    <div class="method">
+        <h4><span class="method-name">execSshCommand(sshAdrress, cmd, timeout=DEFAULT_EXECUTE_TIMEOUT)</span> [静态方法]</h4>
+        <p>执行SSH命令。</p>
+        <p><strong>参数:</strong></p>
+        <ul>
+            <li><span class="param">sshAdrress</span> - SSH地址</li>
+            <li><span class="param">cmd</span> - 要执行的命令</li>
+            <li><span class="param">timeout</span> - 超时时间</li>
+        </ul>
+        <p><strong>返回:</strong> <span class="return">tuple</span> - (返回码, 输出内容)</p>
+    </div>
+    
+    <div class="method">
+        <h4><span class="method-name">upload(sshAdrress, localFile, remoteFile, timeout=DEFAULT_EXECUTE_TIMEOUT)</span> [静态方法]</h4>
+        <p>上传文件到远程主机。</p>
+        <p><strong>参数:</strong></p>
+        <ul>
+            <li><span class="param">sshAdrress</span> - SSH地址</li>
+            <li><span class="param">localFile</span> - 本地文件路径</li>
+            <li><span class="param">remoteFile</span> - 远程文件路径</li>
+            <li><span class="param">timeout</span> - 超时时间</li>
+        </ul>
+        <p><strong>返回:</strong> <span class="return">tuple</span> - (返回码, 输出内容)</p>
+    </div>
+    
+    <div class="method">
+        <h4><span class="method-name">download(sshAdrress, remoteFile, localFile, timeout=DEFAULT_EXECUTE_TIMEOUT)</span> [静态方法]</h4>
+        <p>从远程主机下载文件。</p>
+        <p><strong>参数:</strong></p>
+        <ul>
+            <li><span class="param">sshAdrress</span> - SSH地址</li>
+            <li><span class="param">remoteFile</span> - 远程文件路径</li>
+            <li><span class="param">localFile</span> - 本地文件路径</li>
+            <li><span class="param">timeout</span> - 超时时间</li>
+        </ul>
+        <p><strong>返回:</strong> <span class="return">tuple</span> - (返回码, 输出内容)</p>
+    </div>
+    
+    <div class="method">
+        <h4><span class="method-name">checkConnection(sshAddress)</span> [静态方法]</h4>
+        <p>检查SSH连接是否可用。</p>
+        <p><strong>参数:</strong> <span class="param">sshAddress</span> - SSH地址</p>
+        <p><strong>返回:</strong> <span class="return">bool</span> - 连接是否成功</p>
+    </div>
+    
+    <h2>4. 使用示例</h2>
+    
+    <h3>4.1 本地命令执行</h3>
+    <pre><code># 同步执行命令
+ret, output = CommandExcutor.excute("ls -l", timeout=5)
+print(f"返回码: {ret}, 输出: {output}")
+
+# 异步执行命令
+result, process = CommandExcutor.popen("ping 127.0.0.1", terminate=False)</code></pre>
+    
+    <h3>4.2 SSH远程操作</h3>
+    <pre><code># 执行远程命令
+ret, output = SshExecutor.execSshCommand("192.168.1.100", "ls /tmp")
+
+# 上传文件
+SshExecutor.upload("192.168.1.100", "local.txt", "/tmp/remote.txt")
+
+# 检查连接
+if SshExecutor.checkConnection("192.168.1.100"):
+    print("SSH连接正常")</code></pre>
+    
+    <h2>5. 注意事项</h2>
+    <ul>
+        <li>所有方法都是静态方法，无需实例化类即可使用</li>
+        <li>执行命令时建议设置合理的超时时间</li>
+        <li>异步执行的命令需要手动终止或设置terminate=True</li>
+        <li>SSH操作需要确保网络连通性和认证通过</li>
+        <li>错误信息会记录到日志中，不会抛出异常</li>
+    </ul>
+</body>
+</html>

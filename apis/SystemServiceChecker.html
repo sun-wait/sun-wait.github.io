@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SystemServiceChecker API 文档</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            color: #333;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #2980b9;
+            margin-top: 30px;
+        }
+        .class-name {
+            background-color: #f8f9fa;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-family: monospace;
+            color: #d63384;
+            font-weight: bold;
+        }
+        .method {
+            background-color: #f8f9fa;
+            padding: 10px;
+            border-left: 4px solid #6c757d;
+            margin: 15px 0;
+            border-radius: 0 4px 4px 0;
+        }
+        .method-name {
+            font-weight: bold;
+            color: #0066cc;
+        }
+        .param {
+            font-family: monospace;
+            color: #28a745;
+        }
+        .return {
+            font-family: monospace;
+            color: #dc3545;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        code {
+            background-color: #f8f9fa;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-family: monospace;
+        }
+        .note {
+            background-color: #fff3cd;
+            padding: 10px;
+            border-left: 4px solid #ffc107;
+            margin: 15px 0;
+            border-radius: 0 4px 4px 0;
+        }
+        .constant {
+            background-color: #e7f5ff;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+    <h1>SystemServiceChecker API 文档</h1>
+    
+    <h2>概述</h2>
+    <p><span class="class-name">SystemServiceChecker</span> 是一个继承自 threading.Thread 的系统服务检测线程类，用于监控关键系统服务(com.android.car和com.patac.service)的运行状态，当检测到服务崩溃时自动收集相关日志。</p>
+    
+    <h2>类初始化</h2>
+    <div class="method">
+        <div class="method-name">__init__(caseFolder)</div>
+        <p><strong>描述</strong>: 初始化系统服务检测线程。</p>
+        <p><strong>参数</strong>:</p>
+        <ul>
+            <li><span class="param">caseFolder</span>: 日志保存的基础目录路径</li>
+        </ul>
+    </div>
+    
+    <h2>常量</h2>
+    <table>
+        <tr>
+            <th>常量名</th>
+            <th>值</th>
+            <th>描述</th>
+        </tr>
+        <tr>
+            <td>GET_ANDROID_CAR_PID_CMD</td>
+            <td><span class="constant">adb shell命令</span></td>
+            <td>获取com.android.car进程ID的命令</td>
+        </tr>
+        <tr>
+            <td>GET_PATAC_SERVICE_PID_CMD</td>
+            <td><span class="constant">adb shell命令</span></td>
+            <td>获取com.patac.service进程ID的命令</td>
+        </tr>
+        <tr>
+            <td>CHECK_ANDROID_CAR_PID_DURATION</td>
+            <td><span class="constant">1800</span> (30分钟)</td>
+            <td>com.android.car进程检查周期</td>
+        </tr>
+        <tr>
+            <td>CHECK_PATAC_SERVICE_PID_DURATION</td>
+            <td><span class="constant">1800</span> (30分钟)</td>
+            <td>com.patac.service进程检查周期</td>
+        </tr>
+        <tr>
+            <td>ANDROID_CAR_CRASH_TIMES_MAX</td>
+            <td><span class="constant">5</span></td>
+            <td>com.android.car进程崩溃最大允许次数</td>
+        </tr>
+        <tr>
+            <td>PATAC_SERVICE_CRASH_TIMES_MAX</td>
+            <td><span class="constant">5</span></td>
+            <td>com.patac.service进程崩溃最大允许次数</td>
+        </tr>
+        <tr>
+            <td>EXCEPTION_CHECK_INTERVAL</td>
+            <td><span class="constant">60</span> (60秒)</td>
+            <td>异常检查间隔时间</td>
+        </tr>
+    </table>
+    
+    <h2>主要方法</h2>
+    
+    <div class="method">
+        <div class="method-name">getAndroidCarId()</div>
+        <p><strong>描述</strong>: 获取当前com.android.car进程ID。</p>
+        <p><strong>返回</strong>: <span class="return">str</span> 进程ID，获取失败返回None</p>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">getPatacServiceId()</div>
+        <p><strong>描述</strong>: 获取当前com.patac.service进程ID。</p>
+        <p><strong>返回</strong>: <span class="return">str</span> 进程ID，获取失败返回None</p>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">checkAndroidCar()</div>
+        <p><strong>描述</strong>: 检查com.android.car进程是否变化。</p>
+        <p><strong>逻辑</strong>:</p>
+        <ul>
+            <li>每30分钟重置崩溃计数</li>
+            <li>比较当前进程ID与初始值</li>
+            <li>进程变化则增加崩溃计数</li>
+            <li>崩溃次数超过阈值返回False</li>
+        </ul>
+        <p><strong>返回</strong>: <span class="return">bool</span> 进程是否正常</p>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">checkPatacService()</div>
+        <p><strong>描述</strong>: 检查com.patac.service进程是否变化。</p>
+        <p><strong>逻辑</strong>:</p>
+        <ul>
+            <li>每30分钟重置崩溃计数</li>
+            <li>比较当前进程ID与初始值</li>
+            <li>进程变化则增加崩溃计数</li>
+            <li>崩溃次数超过阈值返回False</li>
+        </ul>
+        <p><strong>返回</strong>: <span class="return">bool</span> 进程是否正常</p>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">onAndroidCarCrashed()</div>
+        <p><strong>描述</strong>: com.android.car崩溃处理函数，收集以下日志:</p>
+        <ul>
+            <li>ANR日志(/data/anr)</li>
+            <li>Tombstones日志(/data/tombstones)</li>
+            <li>Gmlogger日志(/data/gmlogger)</li>
+            <li>Dropbox日志(/data/system/dropbox)</li>
+            <li>系统dump(adb shell dumpsys)</li>
+        </ul>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">onPatacServiceCrashed()</div>
+        <p><strong>描述</strong>: com.patac.service崩溃处理函数，收集日志(同onAndroidCarCrashed)。</p>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">run()</div>
+        <p><strong>描述</strong>: 线程主函数，执行服务检测循环。</p>
+        <p><strong>检测逻辑</strong>:</p>
+        <ol>
+            <li>获取初始进程ID</li>
+            <li>循环检测(间隔60秒):
+                <ul>
+                    <li>检查com.android.car进程</li>
+                    <li>检查com.patac.service进程</li>
+                </ul>
+            </li>
+            <li>任何一项检查失败则收集相关日志</li>
+        </ol>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">stopTask()</div>
+        <p><strong>描述</strong>: 停止服务检测任务。</p>
+    </div>
+    
+    <h2>使用示例</h2>
+    <pre><code>
+# 创建系统服务检测线程
+service_checker = SystemServiceChecker(
+    caseFolder="/path/to/log/folder"
+)
+
+# 启动线程
+service_checker.start()
+
+# 停止线程
+service_checker.stopTask()
+    </code></pre>
+    
+    <h2>检测流程</h2>
+    <ol>
+        <li>初始化时设置日志保存目录</li>
+        <li>启动线程后获取初始进程ID</li>
+        <li>周期性检测两个关键服务:
+            <ul>
+                <li>com.android.car</li>
+                <li>com.patac.service</li>
+            </ul>
+        </li>
+        <li>检测到服务重启超过阈值(5次/30分钟)则判定为崩溃</li>
+        <li>崩溃时自动收集系统日志并保存到指定目录</li>
+        <li>调用stopTask()可以停止检测</li>
+    </ol>
+    
+    <h2>注意事项</h2>
+    <ul>
+        <li>检测间隔为60秒，但内部循环间隔为5秒</li>
+        <li>崩溃计数每30分钟重置一次</li>
+        <li>日志收集操作可能需要较长时间(每个pull操作默认5分钟超时)</li>
+        <li>dumpsys操作可能需要更长时间(5分钟超时)</li>
+        <li>需要确保ADB连接正常</li>
+    </ul>
+</body>
+</html>

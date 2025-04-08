@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CanBusClient API 文档</title>
+    <style>
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #2980b9;
+            margin-top: 30px;
+        }
+        h3 {
+            color: #16a085;
+        }
+        .class-name {
+            background-color: #f8f9fa;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-family: monospace;
+            color: #c7254e;
+            font-weight: bold;
+        }
+        .method {
+            background-color: #f5f5f5;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            border-left: 4px solid #3498db;
+        }
+        .method-name {
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        .param {
+            margin-left: 20px;
+        }
+        .param-name {
+            font-style: italic;
+        }
+        .return {
+            font-weight: bold;
+            color: #27ae60;
+        }
+        code {
+            background-color: #f8f9fa;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-family: monospace;
+            color: #c7254e;
+        }
+        pre {
+            background-color: #f8f9fa;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        .enum {
+            background-color: #e8f4f8;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+        .enum-value {
+            color: #2980b9;
+        }
+        .warning {
+            color: #e74c3c;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>CanBusClient API 文档</h1>
+
+    <section>
+        <h2>类 <span class="class-name">CanBusClient</span></h2>
+        <p><span class="class-name">CanBusClient</span> 是一个基于WebSocket的CAN总线客户端类，用于与CAN总线服务器通信。它继承自<code>threading.Thread</code>，采用单例模式设计，通过 <code>getInstance()</code> 方法获取实例。</p>
+        
+        <h3>连接状态枚举 <span class="class-name">State</span></h3>
+        <div class="enum">
+            <p><span class="enum-value">idle</span> = "idle" - 空闲状态</p>
+            <p><span class="enum-value">closed</span> = "closed" - 连接已关闭</p>
+            <p><span class="enum-value">connecting</span> = "connecting" - 连接中</p>
+            <p><span class="enum-value">connected</span> = "connected" - 已连接</p>
+        </div>
+
+        <h3>常量</h3>
+        <ul>
+            <li><code>WEBSOCKET_SERVER_ADDRESS</code> = "ws://127.0.0.1:8998" - 默认WebSocket服务器地址</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>方法列表</h2>
+
+        <div class="method">
+            <h3><span class="method-name">getInstance()</span></h3>
+            <p><strong>描述</strong>：获取 CanBusClient 的单例实例。</p>
+            <p><strong>返回</strong>：<span class="return">CanBusClient</span> 的实例。</p>
+            <pre>@classmethod
+def getInstance(cls)</pre>
+        </div>
+
+        <div class="method">
+            <h3><span class="method-name">connect()</span></h3>
+            <p><strong>描述</strong>：连接到WebSocket服务器。</p>
+            <p><strong>返回</strong>：<span class="return">True</span> 表示连接成功，<span class="return">False</span> 表示连接失败。</p>
+            <pre>def connect(self)</pre>
+        </div>
+
+        <div class="method">
+            <h3><span class="method-name">close()</span></h3>
+            <p><strong>描述</strong>：关闭WebSocket连接。</p>
+            <pre>def close(self)</pre>
+        </div>
+
+        <div class="method">
+            <h3><span class="method-name">websocket_send(message, timeout=5)</span></h3>
+            <p><strong>描述</strong>：通过WebSocket发送消息。</p>
+            <p><strong>参数</strong>：</p>
+            <ul>
+                <li class="param"><span class="param-name">message</span>：要发送的消息内容。</li>
+                <li class="param"><span class="param-name">timeout</span>：发送超时时间（秒），默认为5秒。</li>
+            </ul>
+            <pre>def websocket_send(self, message, timeout=5)</pre>
+        </div>
+
+        <div class="method">
+            <h3><span class="method-name">receive_message(session_id, timeout=5)</span></h3>
+            <p><strong>描述</strong>：接收特定会话ID的消息。</p>
+            <p><strong>参数</strong>：</p>
+            <ul>
+                <li class="param"><span class="param-name">session_id</span>：会话ID。</li>
+                <li class="param"><span class="param-name">timeout</span>：接收超时时间（秒），默认为5秒。</li>
+            </ul>
+            <p><strong>返回</strong>：接收到的消息内容，超时或未连接返回 <span class="return">None</span>。</p>
+            <pre>def receive_message(self, session_id, timeout=5)</pre>
+        </div>
+
+        <div class="method">
+            <h3><span class="method-name">send_message(ids, is_mac=None, signals=None, datas=None, cycle_times=None)</span></h3>
+            <p><strong>描述</strong>：发送CAN消息。</p>
+            <p><strong>参数</strong>：</p>
+            <ul>
+                <li class="param"><span class="param-name">ids</span>：CAN ID列表。</li>
+                <li class="param"><span class="param-name">signals</span>：信号列表，可选。</li>
+                <li class="param"><span class="param-name">datas</span>：数据列表，可选。</li>
+                <li class="param"><span class="param-name">cycle_times</span>：循环时间列表，可选。</li>
+            </ul>
+            <pre>def send_message(self, ids, is_mac=None, signals=None, datas=None, cycle_times=None)</pre>
+        </div>
+
+        <div class="method">
+            <h3><span class="method-name">stop_message(can_id="all")</span></h3>
+            <p><strong>描述</strong>：停止发送指定CAN ID的消息。</p>
+            <p><strong>参数</strong>：</p>
+            <ul>
+                <li class="param"><span class="param-name">can_id</span>：要停止的CAN ID，默认为"all"表示所有ID。</li>
+            </ul>
+            <pre>def stop_message(self, can_id="all")</pre>
+        </div>
+
+        <div class="method">
+            <h3><span class="method-name">get_signal_value(can_id, signal)</span></h3>
+            <p><strong>描述</strong>：获取指定CAN信号的值。</p>
+            <p class="warning">注意：此方法不是线程安全的！</p>
+            <p><strong>参数</strong>：</p>
+            <ul>
+                <li class="param"><span class="param-name">can_id</span>：CAN ID。</li>
+                <li class="param"><span class="param-name">signal</span>：信号名称。</li>
+            </ul>
+            <p><strong>返回</strong>：信号值。</p>
+            <pre>def get_signal_value(self, can_id, signal)</pre>
+        </div>
+
+        <div class="method">
+            <h3><span class="method-name">start_logging(log_file="can_log.asc")</span></h3>
+            <p><strong>描述</strong>：开始记录CAN日志。</p>
+            <p><strong>参数</strong>：</p>
+            <ul>
+                <li class="param"><span class="param-name">log_file</span>：日志文件名，默认为"can_log.asc"。</li>
+            </ul>
+            <pre>def start_logging(self, log_file="can_log.asc")</pre>
+        </div>
+
+        <div class="method">
+            <h3><span class="method-name">stop_logging()</span></h3>
+            <p><strong>描述</strong>：停止记录CAN日志。</p>
+            <pre>def stop_logging(self)</pre>
+        </div>
+
+        <div class="method">
+            <h3><span class="method-name">add_monitor(request, bytefunc)</span></h3>
+            <p><strong>描述</strong>：添加CAN信号监控。</p>
+            <p><strong>参数</strong>：</p>
+            <ul>
+                <li class="param"><span class="param-name">request</span>：监控请求。</li>
+                <li class="param"><span class="param-name">bytefunc</span>：字节流处理函数。</li>
+            </ul>
+            <pre>def add_monitor(self, request, bytefunc)</pre>
+        </div>
+
+        <div class="method">
+            <h3><span class="method-name">remove_monitor(can_id, signal_name)</span></h3>
+            <p><strong>描述</strong>：移除CAN信号监控。</p>
+            <p><strong>参数</strong>：</p>
+            <ul>
+                <li class="param"><span class="param-name">can_id</span>：CAN ID。</li>
+                <li class="param"><span class="param-name">signal_name</span>：信号名称。</li>
+            </ul>
+            <pre>def remove_monitor(self, can_id, signal_name)</pre>
+        </div>
+    </section>
+
+    <section>
+        <h2>回调方法</h2>
+
+        <div class="method">
+            <h3><span class="method-name">onOpen(ws)</span></h3>
+            <p><strong>描述</strong>：WebSocket连接建立时的回调。</p>
+            <p><strong>参数</strong>：</p>
+            <ul>
+                <li class="param"><span class="param-name">ws</span>：WebSocketApp对象。</li>
+            </ul>
+            <pre>def onOpen(self, ws)</pre>
+        </div>
+
+        <div class="method">
+            <h3><span class="method-name">onMessage(ws, message)</span></h3>
+            <p><strong>描述</strong>：接收到WebSocket消息时的回调。</p>
+            <p><strong>参数</strong>：</p>
+            <ul>
+                <li class="param"><span class="param-name">ws</span>：WebSocketApp对象。</li>
+                <li class="param"><span class="param-name">message</span>：接收到的消息。</li>
+            </ul>
+            <pre>def onMessage(self, ws, message)</pre>
+        </div>
+
+        <div class="method">
+            <h3><span class="method-name">onError(ws, error)</span></h3>
+            <p><strong>描述</strong>：WebSocket发生错误时的回调。</p>
+            <p><strong>参数</strong>：</p>
+            <ul>
+                <li class="param"><span class="param-name">ws</span>：WebSocketApp对象。</li>
+                <li class="param"><span class="param-name">error</span>：错误信息。</li>
+            </ul>
+            <pre>def onError(self, ws, error)</pre>
+        </div>
+
+        <div class="method">
+            <h3><span class="method-name">onClose(ws, close_status_code, close_msg)</span></h3>
+            <p><strong>描述</strong>：WebSocket连接关闭时的回调。</p>
+            <p><strong>参数</strong>：</p>
+            <ul>
+                <li class="param"><span class="param-name">ws</span>：WebSocketApp对象。</li>
+                <li class="param"><span class="param-name">close_status_code</span>：关闭状态码。</li>
+                <li class="param"><span class="param-name">close_msg</span>：关闭消息。</li>
+            </ul>
+            <pre>def onClose(self, ws, close_status_code, close_msg)</pre>
+        </div>
+    </section>
+
+    <section>
+        <h2>使用示例</h2>
+        <div class="method">
+            <h3>基本使用</h3>
+            <pre># 获取客户端实例
+client = CanBusClient.getInstance()
+
+# 发送CAN消息
+client.send_message(ids=["123", "456"])
+
+# 获取信号值
+value = client.get_signal_value("123", "speed")
+print(f"当前速度: {value}")
+
+# 关闭连接
+client.close()</pre>
+        </div>
+
+        <div class="method">
+            <h3>日志记录</h3>
+            <pre>client = CanBusClient.getInstance()
+
+# 开始记录日志
+client.start_logging("my_can_log.asc")
+
+# ...执行其他操作...
+
+# 停止记录日志
+client.stop_logging()</pre>
+        </div>
+    </section>
+</body>
+</html>

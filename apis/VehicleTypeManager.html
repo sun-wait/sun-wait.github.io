@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VehicleTypeManager API 文档</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #2980b9;
+            margin-top: 30px;
+        }
+        .class-name {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-left: 4px solid #3498db;
+            margin: 20px 0;
+            font-family: monospace;
+            font-size: 18px;
+        }
+        .method {
+            background-color: #f0f7ff;
+            padding: 12px;
+            border-left: 3px solid #2980b9;
+            margin: 15px 0;
+        }
+        .method-name {
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        .param {
+            font-style: italic;
+            color: #7f8c8d;
+        }
+        .return {
+            color: #27ae60;
+        }
+        code {
+            background-color: #f0f0f0;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-family: monospace;
+        }
+        .note {
+            background-color: #fff3cd;
+            padding: 10px;
+            border-left: 3px solid #ffc107;
+            margin: 15px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>VehicleTypeManager API 文档</h1>
+    
+    <div class="class-name">class VehicleTypeManager</div>
+    
+    <p>VehicleTypeManager 是一个车辆类型管理类，实现了单例模式，用于管理车辆项目信息、平台类型及相关文件路径。</p>
+    
+    <div class="note">
+        <strong>注意：</strong>该类是单例类，应通过 <code>getInstance()</code> 方法获取实例。初始化时会验证配置信息，如果车辆类型未知会直接退出程序。
+    </div>
+    
+    <h2>类方法</h2>
+    
+    <div class="method">
+        <div class="method-name">@classmethod getInstance()</div>
+        <p>获取 VehicleTypeManager 的单例实例。</p>
+        <p><strong>返回:</strong> <span class="return">VehicleTypeManager</span> - VehicleTypeManager 的单例实例</p>
+        <p><strong>说明:</strong> 该方法会从配置文件中读取项目信息(PROJECT, MODEL_YEAR, VEHICLE_PROPULSION_TYPE)并验证其有效性。</p>
+    </div>
+    
+    <h2>实例方法</h2>
+    
+    <div class="method">
+        <div class="method-name">getVehicleType()</div>
+        <p>获取车辆类型元组。</p>
+        <p><strong>返回:</strong> <span class="return">tuple</span> - (项目, 车型年份, 动力类型) 组成的元组</p>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">getVehicleModel()</div>
+        <p>获取车辆项目名称。</p>
+        <p><strong>返回:</strong> <span class="return">str</span> - 车辆项目名称</p>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">getVehiclePropulsionType()</div>
+        <p>获取车辆动力类型。</p>
+        <p><strong>返回:</strong> <span class="return">str</span> - 车辆动力类型</p>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">getPlatformType()</div>
+        <p>获取平台类型。</p>
+        <p><strong>返回:</strong> <span class="return">str</span> - 平台类型</p>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">getVehiclePlatformType()</div>
+        <p>获取车辆平台类型。</p>
+        <p><strong>返回:</strong> <span class="return">str</span> - 车辆平台类型</p>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">getArxmlVersion()</div>
+        <p>获取ARXML版本。</p>
+        <p><strong>返回:</strong> <span class="return">str</span> - ARXML版本</p>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">getArxmlName()</div>
+        <p>获取ARXML文件名。</p>
+        <p><strong>返回:</strong> <span class="return">str</span> - ARXML文件名</p>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">getMactName()</div>
+        <p>获取MACT文件名。</p>
+        <p><strong>返回:</strong> <span class="return">str</span> - MACT文件名</p>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">getSWBranch()</div>
+        <p>获取软件分支。</p>
+        <p><strong>返回:</strong> <span class="return">str</span> - 软件分支名称</p>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">get_database_json_abspath()</div>
+        <p>获取数据库JSON文件的绝对路径。</p>
+        <p><strong>返回:</strong> <span class="return">str</span> - JSON文件的绝对路径</p>
+        <p><strong>路径格式:</strong> .../canbus/dbc/[平台类型]/[ARXML版本]/[ARXML名称].json</p>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">get_mact_abspath()</div>
+        <p>获取MACT文件的绝对路径。</p>
+        <p><strong>返回:</strong> <span class="return">str</span> - MACT文件的绝对路径</p>
+        <p><strong>路径格式:</strong> .../canbus/dbc/[平台类型]/[ARXML版本]/[MACT名称]</p>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">get_ssm_abspath()</div>
+        <p>获取SSM文件的绝对路径。</p>
+        <p><strong>返回:</strong> <span class="return">str</span> - SSM文件的绝对路径</p>
+        <p><strong>路径格式:</strong> .../canbus/dbc/[平台类型]/[ARXML版本]/[平台类型]_SSM.txt</p>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">get_exclude_abspath()</div>
+        <p>获取排除消息JSON文件的绝对路径。</p>
+        <p><strong>返回:</strong> <span class="return">str</span> - 排除消息JSON文件的绝对路径</p>
+        <p><strong>路径格式:</strong> .../canbus/dbc/[平台类型]/[ARXML版本]/exclude_messages.json</p>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">get_qnx_screen_size()</div>
+        <p>获取QNX屏幕尺寸信息。</p>
+        <p><strong>返回:</strong> <span class="return">str</span> - QNX屏幕尺寸字符串，格式为"[(x1,y1),(x2,y2)]"</p>
+        <p><strong>说明:</strong> 根据车辆平台类型和车型返回不同的屏幕尺寸：
+            <ul>
+                <li>Caddy: [(0,0),(5010,1320)]</li>
+                <li>GBBuick: [(0,0),(3000,926)]</li>
+                <li>CLEABuick: NDLB车型为[(0,0),(3000,926)]，557车型为[(0,0),(1920,720)]</li>
+            </ul>
+        </p>
+    </div>
+    
+    <h2>注意事项</h2>
+    <ul>
+        <li>该类依赖于配置文件中的PROJECT、MODEL_YEAR和VEHICLE_PROPULSION_TYPE设置</li>
+        <li>所有车辆类型信息都存储在Constant.PROJECT_INFO字典中</li>
+        <li>路径相关方法返回的都是基于项目目录结构的绝对路径</li>
+        <li>如果配置的车辆类型不在Constant.PROJECT_INFO中，程序会直接退出</li>
+    </ul>
+</body>
+</html>

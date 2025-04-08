@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IoMonitor API 文档</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #2980b9;
+            margin-top: 30px;
+        }
+        .class-name {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-left: 4px solid #3498db;
+            margin: 20px 0;
+            font-family: monospace;
+            font-size: 18px;
+        }
+        .method {
+            background-color: #f0f7ff;
+            padding: 12px;
+            border-left: 3px solid #2980b9;
+            margin: 15px 0;
+        }
+        .method-name {
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        .param {
+            font-style: italic;
+            color: #7f8c8d;
+        }
+        .return {
+            color: #27ae60;
+        }
+        code {
+            background-color: #f0f0f0;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-family: monospace;
+        }
+        .constant {
+            color: #8e44ad;
+            font-weight: bold;
+        }
+        .note {
+            background-color: #fff3cd;
+            padding: 10px;
+            border-left: 3px solid #ffc107;
+            margin: 15px 0;
+        }
+        .warning {
+            background-color: #f8d7da;
+            padding: 10px;
+            border-left: 3px solid #dc3545;
+            margin: 15px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>IoMonitor API 文档</h1>
+
+    <h2>全局常量</h2>
+    <ul>
+        <li><span class="constant">IVI_DATA_PATH</span> = "/data" - IVI数据路径</li>
+        <li><span class="constant">QNX_VAR_PATH</span> = "/var" - QNX var路径</li>
+        <li><span class="constant">QNX_OTA_UPDATE_PATH</span> = "/ota_update" - QNX OTA更新路径</li>
+        <li><span class="constant">GET_INIT_WRITE_BYTES_TIMES_MAX</span> = 3 - 获取初始写入字节数的最大尝试次数</li>
+        <li><span class="constant">IO_MONITOR_INTERVAL</span> = 60 - IO监控间隔(秒)</li>
+        <li><span class="constant">DUMP_DISK_DETAIL_THRESHOLD</span> = 95 - 磁盘详细转储阈值(%)</li>
+        <li><span class="constant">DUMP_DISK_TIMES_MAX</span> = 3 - 磁盘详细转储最大次数</li>
+    </ul>
+
+    <div class="class-name">class IoMonitor(threading.Thread)</div>
+    
+    <p>IO监控器类，继承自Thread，用于监控磁盘使用情况和特定应用的IO写入量。</p>
+    
+    <div class="note">
+        <strong>注意：</strong>该类是线程类，需要在外部管理线程生命周期。
+    </div>
+    
+    <h2>初始化方法</h2>
+    
+    <div class="method">
+        <div class="method-name">__init__(caseFolder, package=None)</div>
+        <p>初始化IO监控器。</p>
+        <p><strong>参数:</strong></p>
+        <ul>
+            <li><span class="param">caseFolder</span> - 用例文件夹路径</li>
+            <li><span class="param">package</span> - 要监控的应用包名，可选</li>
+        </ul>
+    </div>
+    
+    <h2>核心监控方法</h2>
+    
+    <div class="method">
+        <div class="method-name">monitorIviDiskUsage(iviPath)</div>
+        <p>监控IVI系统磁盘使用情况。</p>
+        <p><strong>参数:</strong></p>
+        <ul>
+            <li><span class="param">iviPath</span> - IVI系统路径</li>
+        </ul>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">monitorQnxDiskUsage(qnxPath)</div>
+        <p>监控QNX系统磁盘使用情况。</p>
+        <p><strong>参数:</strong></p>
+        <ul>
+            <li><span class="param">qnxPath</span> - QNX系统路径</li>
+        </ul>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">monitorPackageIoStatus(package)</div>
+        <p>监控应用IO写入状态。</p>
+        <p><strong>参数:</strong></p>
+        <ul>
+            <li><span class="param">package</span> - 应用包名</li>
+        </ul>
+    </div>
+    
+    <h2>辅助方法</h2>
+    
+    <div class="method">
+        <div class="method-name">getPackageWriteBytes(package)</div>
+        <p>获取应用的写入字节数。</p>
+        <p><strong>参数:</strong></p>
+        <ul>
+            <li><span class="param">package</span> - 应用包名</li>
+        </ul>
+        <p><strong>返回:</strong> <span class="return">tuple</span> - (进程ID, 写入字节数)</p>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">dumpDiskDetail(diskInfo)</div>
+        <p>转储磁盘详细信息。</p>
+        <p><strong>参数:</strong></p>
+        <ul>
+            <li><span class="param">diskInfo</span> - 磁盘信息字典</li>
+        </ul>
+        <div class="note">
+            <strong>说明：</strong>当磁盘使用率超过阈值(95%)时，会记录详细磁盘使用情况。
+        </div>
+    </div>
+    
+    <h2>线程控制方法</h2>
+    
+    <div class="method">
+        <div class="method-name">run()</div>
+        <p>线程运行方法，开始监控IO状态。</p>
+        <div class="note">
+            <strong>说明：</strong>该方法会自动调用，不应直接调用。会定期监控：
+            <ul>
+                <li>IVI系统磁盘使用情况</li>
+                <li>QNX系统磁盘使用情况</li>
+                <li>指定应用的IO写入量</li>
+            </ul>
+        </div>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">stopTask()</div>
+        <p>停止监控任务。</p>
+    </div>
+    
+    <h2>数据保存方法</h2>
+    
+    <div class="method">
+        <div class="method-name">saveDiskInfoToLocal(diskUsageFile, diskInfoDict)</div>
+        <p>保存磁盘信息到本地文件。</p>
+        <p><strong>参数:</strong></p>
+        <ul>
+            <li><span class="param">diskUsageFile</span> - 磁盘使用信息文件路径</li>
+            <li><span class="param">diskInfoDict</span> - 磁盘信息字典</li>
+        </ul>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">savePackageIoToLocal(packageIoFile, packageIoDict)</div>
+        <p>保存应用IO信息到本地文件。</p>
+        <p><strong>参数:</strong></p>
+        <ul>
+            <li><span class="param">packageIoFile</span> - IO信息文件路径</li>
+            <li><span class="param">packageIoDict</span> - IO信息字典</li>
+        </ul>
+    </div>
+    
+    <h2>注意事项</h2>
+    <ul>
+        <li>该类是线程类，需要调用stopTask()方法来停止任务</li>
+        <li>监控间隔固定为60秒</li>
+        <li>磁盘使用率超过95%时会记录详细使用情况，最多记录3次</li>
+        <li>支持同时监控Android(IVI)和QNX系统的磁盘使用情况</li>
+        <li>可以监控特定应用的IO写入量</li>
+        <li>所有方法都有异常处理，失败时会记录日志</li>
+    </ul>
+</body>
+</html>

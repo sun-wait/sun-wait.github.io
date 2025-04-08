@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>LogParser API 文档</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #2980b9;
+            margin-top: 30px;
+            border-left: 4px solid #3498db;
+            padding-left: 10px;
+        }
+        .class-name {
+            background-color: #f8f9fa;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-family: monospace;
+            color: #d63384;
+            font-weight: bold;
+        }
+        .method {
+            background-color: #f8f9fa;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            border-left: 3px solid #6c757d;
+        }
+        .method-name {
+            font-weight: bold;
+            color: #0066cc;
+        }
+        .method-desc {
+            margin-top: 5px;
+            color: #6c757d;
+        }
+        .param {
+            font-family: monospace;
+        }
+        code {
+            background-color: #f8f9fa;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-family: monospace;
+            color: #d63384;
+        }
+        .note {
+            background-color: #fff3cd;
+            padding: 10px;
+            border-radius: 5px;
+            border-left: 3px solid #ffc107;
+            margin: 15px 0;
+        }
+        .log-type {
+            font-weight: bold;
+            color: #28a745;
+        }
+    </style>
+</head>
+<body>
+    <h1>LogParser API 文档</h1>
+    <p>该模块提供了多种日志文件的时间解析和验证功能，支持CAN日志、系统日志和Android logcat日志。</p>
+
+    <div class="note">
+        <strong>主要功能：</strong>
+        <ul>
+            <li>解析日志文件中的时间信息</li>
+            <li>验证特定时间点是否在日志记录范围内</li>
+            <li>支持多种日志格式的时间提取</li>
+            <li>处理压缩的gmlogger日志文件</li>
+        </ul>
+    </div>
+
+    <h2>类文档</h2>
+
+    <div class="method">
+        <h3><span class="class-name">LogParser</span></h3>
+        <p>日志解析工具类，提供多种日志文件的时间解析和验证功能。</p>
+        
+        <div class="method">
+            <div class="method-name">getInstance(cls)</div>
+            <div class="method-desc">获取LogParser的单例实例。</div>
+            <p><strong>返回:</strong> LogParser实例</p>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">getCanLogTimeOffset(self, file)</div>
+            <div class="method-desc">获取CAN日志文件的时间偏移量。</div>
+            <p><strong>参数:</strong></p>
+            <ul>
+                <li><span class="param">file</span>: CAN日志文件路径</li>
+            </ul>
+            <p><strong>返回:</strong> 时间偏移量(秒)，失败返回None</p>
+            <p><strong>实现细节:</strong></p>
+            <ul>
+                <li>读取文件最后5行</li>
+                <li>匹配ASC格式的CAN日志行</li>
+                <li>提取时间戳并计算偏移量</li>
+            </ul>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">checkCanLogTime(self, file, localTime)</div>
+            <div class="method-desc">检查本地时间是否在CAN日志记录时间范围内。</div>
+            <p><strong>参数:</strong></p>
+            <ul>
+                <li><span class="param">file</span>: CAN日志文件路径</li>
+                <li><span class="param">localTime</span>: 要检查的本地时间</li>
+            </ul>
+            <p><strong>返回:</strong> 布尔值，表示时间是否在日志范围内</p>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">getSlogTime(self, file, year, month, head=True)</div>
+            <div class="method-desc">从系统日志中提取时间信息。</div>
+            <p><strong>参数:</strong></p>
+            <ul>
+                <li><span class="param">file</span>: 系统日志文件路径</li>
+                <li><span class="param">year</span>: 年份</li>
+                <li><span class="param">month</span>: 月份</li>
+                <li><span class="param">head</span>: 是否从文件头部读取，默认为True</li>
+            </ul>
+            <p><strong>返回:</strong> 格式化后的时间字符串，失败返回None</p>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">checkSlogTime(self, file, localTime)</div>
+            <div class="method-desc">检查本地时间是否在系统日志记录时间范围内。</div>
+            <p><strong>参数:</strong></p>
+            <ul>
+                <li><span class="param">file</span>: 系统日志文件路径</li>
+                <li><span class="param">localTime</span>: 要检查的本地时间</li>
+            </ul>
+            <p><strong>返回:</strong> 布尔值，表示时间是否在日志范围内</p>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">getLogcatTime(self, file, year, head=True)</div>
+            <div class="method-desc">从logcat日志中提取时间信息。</div>
+            <p><strong>参数:</strong></p>
+            <ul>
+                <li><span class="param">file</span>: logcat日志文件路径</li>
+                <li><span class="param">year</span>: 年份</li>
+                <li><span class="param">head</span>: 是否从文件头部读取，默认为True</li>
+            </ul>
+            <p><strong>返回:</strong> 格式化后的时间字符串，失败返回None</p>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">checkGmloggerZipTime(self, gmlogFolder, timestamp)</div>
+            <div class="method-desc">检查gmlogger压缩日志文件是否包含特定时间点。</div>
+            <p><strong>参数:</strong></p>
+            <ul>
+                <li><span class="param">gmlogFolder</span>: gmlogger日志文件夹路径</li>
+                <li><span class="param">timestamp</span>: 要检查的时间戳</li>
+            </ul>
+            <p><strong>返回:</strong> 布尔值，表示是否找到匹配的日志</p>
+            <p><strong>实现细节:</strong></p>
+            <ul>
+                <li>查找文件名中包含时间戳的gzip文件</li>
+                <li>解压文件并检查logcat时间</li>
+                <li>清理临时解压文件</li>
+            </ul>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">checkLogcatTime(self, file, androidTime)</div>
+            <div class="method-desc">检查Android时间是否在logcat日志记录时间范围内。</div>
+            <p><strong>参数:</strong></p>
+            <ul>
+                <li><span class="param">file</span>: logcat日志文件路径</li>
+                <li><span class="param">androidTime</span>: 要检查的Android时间</li>
+            </ul>
+            <p><strong>返回:</strong> 布尔值，表示时间是否在日志范围内</p>
+        </div>
+    </div>
+
+    <h2>支持的日志格式</h2>
+    <ul>
+        <li><span class="log-type">CAN日志</span>: canlog_时间戳.asc</li>
+        <li><span class="log-type">系统日志</span>: slog_时间戳.log</li>
+        <li><span class="log-type">logcat日志</span>: 标准Android logcat格式</li>
+        <li><span class="log-type">gmlogger日志</span>: 时间戳-main.log.gz</li>
+    </ul>
+
+    <h2>使用示例</h2>
+    <pre>
+# 获取LogParser实例
+log_parser = LogParser.getInstance()
+
+# 检查CAN日志时间范围
+can_log_valid = log_parser.checkCanLogTime("C:/logs/canlog_20230101120000.asc", "2023-01-01 12:05:00")
+
+# 检查系统日志时间范围
+slog_valid = log_parser.checkSlogTime("C:/logs/slog_20230101.log", "2023-01-01 12:05:00")
+
+# 检查gmlogger日志
+gmlog_valid = log_parser.checkGmloggerZipTime("C:/logs/gmlogger", "2023_01_01_12_05_00")
+    </pre>
+
+    <h2>注意事项</h2>
+    <ul>
+        <li>时间格式必须与日志文件中的格式匹配</li>
+        <li>gmlogger检查会创建临时解压文件，检查完成后自动删除</li>
+        <li>系统日志需要提供年份和月份参数</li>
+        <li>文件路径中的反斜杠需要正确处理</li>
+    </ul>
+</body>
+</html>

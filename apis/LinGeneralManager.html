@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LIN总线管理API文档</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #2980b9;
+            margin-top: 30px;
+        }
+        h3 {
+            color: #16a085;
+        }
+        .class-name {
+            background-color: #f8f9fa;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-family: monospace;
+            color: #d63384;
+            font-weight: bold;
+        }
+        .method {
+            background-color: #e9ecef;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+        .method-name {
+            font-weight: bold;
+            color: #6f42c1;
+        }
+        .param {
+            font-style: italic;
+            color: #e83e8c;
+        }
+        .return {
+            font-weight: bold;
+            color: #20c997;
+        }
+        code {
+            background-color: #f8f9fa;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-family: monospace;
+            color: #d63384;
+        }
+        pre {
+            background-color: #f8f9fa;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h1>LIN总线管理API文档</h1>
+    
+    <h2>1. 概述</h2>
+    <p>该API提供了通过LIN总线控制方向盘按键和仪表盘视图的功能，支持GB和CLEA两种平台。</p>
+    
+    <h2>2. 主要类</h2>
+    
+    <h3><span class="class-name">LinGeneralManager</span></h3>
+    <p>LIN总线管理的主类，提供方向盘按键控制和仪表盘视图切换功能。</p>
+    
+    <h3>2.1 方向盘按键控制方法</h3>
+    <table>
+        <tr>
+            <th>方法名</th>
+            <th>描述</th>
+            <th>参数</th>
+            <th>返回值</th>
+        </tr>
+        <tr>
+            <td><span class="method-name">switch1_Favorites_Up</span></td>
+            <td>发送"收藏上"按键信号</td>
+            <td>
+                <span class="param">during_time</span>: 持续时间(ms, 默认500)<br>
+                <span class="param">times</span>: 发送次数(默认1)
+            </td>
+            <td>无</td>
+        </tr>
+        <tr>
+            <td><span class="method-name">switch2_Favorites_Down</span></td>
+            <td>发送"收藏下"按键信号</td>
+            <td>
+                <span class="param">during_time</span>: 持续时间(ms, 默认500)<br>
+                <span class="param">times</span>: 发送次数(默认1)
+            </td>
+            <td>无</td>
+        </tr>
+        <tr>
+            <td><span class="method-name">switch3_Volume_Up</span></td>
+            <td>发送"音量加"按键信号</td>
+            <td>
+                <span class="param">during_time</span>: 持续时间(ms, 默认500)<br>
+                <span class="param">times</span>: 发送次数(默认1)
+            </td>
+            <td>无</td>
+        </tr>
+        <tr>
+            <td><span class="method-name">switch4_Volume_Down</span></td>
+            <td>发送"音量减"按键信号</td>
+            <td>
+                <span class="param">during_time</span>: 持续时间(ms, 默认500)<br>
+                <span class="param">times</span>: 发送次数(默认1)
+            </td>
+            <td>无</td>
+        </tr>
+        <tr>
+            <td><span class="method-name">switch5_Up</span></td>
+            <td>发送"上"按键信号</td>
+            <td>
+                <span class="param">during_time</span>: 持续时间(ms, 默认500)<br>
+                <span class="param">times</span>: 发送次数(默认1)
+            </td>
+            <td>无</td>
+        </tr>
+        <tr>
+            <td><span class="method-name">switch6_Down</span></td>
+            <td>发送"下"按键信号</td>
+            <td>
+                <span class="param">during_time</span>: 持续时间(ms, 默认500)<br>
+                <span class="param">times</span>: 发送次数(默认1)
+            </td>
+            <td>无</td>
+        </tr>
+        <tr>
+            <td><span class="method-name">switch_Source</span></td>
+            <td>发送"源/左"按键信号</td>
+            <td>
+                <span class="param">during_time</span>: 持续时间(ms, 默认500)<br>
+                <span class="param">times</span>: 发送次数(默认1)
+            </td>
+            <td>无</td>
+        </tr>
+        <tr>
+            <td><span class="method-name">switch_Phone</span></td>
+            <td>发送"电话/右"按键信号</td>
+            <td>
+                <span class="param">during_time</span>: 持续时间(ms, 默认500)<br>
+                <span class="param">times</span>: 发送次数(默认1)
+            </td>
+            <td>无</td>
+        </tr>
+        <tr>
+            <td><span class="method-name">switch_Select</span></td>
+            <td>发送"选择"按键信号</td>
+            <td>
+                <span class="param">during_time</span>: 持续时间(ms, 默认500)<br>
+                <span class="param">times</span>: 发送次数(默认1)
+            </td>
+            <td>无</td>
+        </tr>
+        <tr>
+            <td><span class="method-name">switch_Speech</span></td>
+            <td>发送"语音"按键信号</td>
+            <td>
+                <span class="param">during_time</span>: 持续时间(ms, 默认500)<br>
+                <span class="param">times</span>: 发送次数(默认1)
+            </td>
+            <td>无</td>
+        </tr>
+        <tr>
+            <td><span class="method-name">switch_Mute</span></td>
+            <td>发送"静音"按键信号</td>
+            <td>
+                <span class="param">during_time</span>: 持续时间(ms, 默认500)<br>
+                <span class="param">times</span>: 发送次数(默认1)
+            </td>
+            <td>无</td>
+        </tr>
+        <tr>
+            <td><span class="method-name">switch_Cluster_View</span></td>
+            <td>发送"仪表视图"按键信号</td>
+            <td>
+                <span class="param">during_time</span>: 持续时间(ms, 默认500)<br>
+                <span class="param">times</span>: 发送次数(默认1)
+            </td>
+            <td>无</td>
+        </tr>
+    </table>
+    
+    <h3>2.2 仪表视图控制方法</h3>
+    
+    <div class="method">
+        <h4><span class="method-name">check_view_result()</span></h4>
+        <p>检查当前仪表视图状态。</p>
+        <p><strong>返回:</strong> <span class="return">str</span> - 当前视图名称</p>
+    </div>
+    
+    <div class="method">
+        <h4><span class="method-name">check_zone_result()</span></h4>
+        <p>检查当前Zone2视图状态。</p>
+        <p><strong>返回:</strong> <span class="return">str</span> - 当前Zone2视图名称</p>
+    </div>
+    
+    <div class="method">
+        <h4><span class="method-name">cluster_view_by_lin(cluster_view, device=None)</span></h4>
+        <p>切换仪表主视图。</p>
+        <p><strong>参数:</strong></p>
+        <ul>
+            <li><span class="param">cluster_view</span> - 目标视图(从Constant.PATAC_SETTINGS_CLUSTER_VIEW_*中选择)</li>
+            <li><span class="param">device</span> - PCAN设备(可选)</li>
+        </ul>
+        <p><strong>返回:</strong> <span class="return">bool</span> - 是否切换成功</p>
+    </div>
+    
+    <div class="method">
+        <h4><span class="method-name">cluster_zone2(zone2_view, device=None)</span></h4>
+        <p>切换Zone2视图。</p>
+        <p><strong>参数:</strong></p>
+        <ul>
+            <li><span class="param">zone2_view</span> - 目标视图(从Constant.PATAC_SETTINGS_ZONE2_VIEW_*中选择)</li>
+            <li><span class="param">device</span> - PCAN设备(可选)</li>
+        </ul>
+        <p><strong>返回:</strong> <span class="return">bool</span> - 是否切换成功</p>
+    </div>
+    
+    <div class="method">
+        <h4><span class="method-name">cluster_zone3(zone3_view, device=None)</span></h4>
+        <p>切换Zone3视图。</p>
+        <p><strong>参数:</strong></p>
+        <ul>
+            <li><span class="param">zone3_view</span> - 目标视图(从Constant.PATAC_SETTINGS_ZONE3_VIEW_*中选择)</li>
+            <li><span class="param">device</span> - PCAN设备(可选)</li>
+        </ul>
+        <p><strong>返回:</strong> <span class="return">bool</span> - 是否切换成功</p>
+    </div>
+    
+    <h2>3. 使用示例</h2>
+    
+    <h3>3.1 方向盘按键控制示例</h3>
+    <pre><code>lin_manager = LinGeneralManager.getInstance()
+lin_manager.switch3_Volume_Up()  # 音量加
+lin_manager.switch_Cluster_View()  # 切换仪表视图</code></pre>
+    
+    <h3>3.2 仪表视图切换示例</h3>
+    <pre><code>lin_manager = LinGeneralManager.getInstance()
+# 切换到仪表视图
+lin_manager.cluster_view_by_lin(Constant.PATAC_SETTINGS_CLUSTER_VIEW_GUAGE)
+# 切换到Zone2的胎压视图
+lin_manager.cluster_zone2(Constant.PATAC_SETTINGS_ZONE2_VIEW_TIREPRESSURE)</code></pre>
+    
+    <h2>4. 注意事项</h2>
+    <ul>
+        <li>使用前需要确保LIN总线连接正常</li>
+        <li>不同平台(GB/CLEA)的LIN信号ID和名称可能不同</li>
+        <li>视图切换可能需要多次尝试才能成功</li>
+        <li>部分车型可能不支持所有视图</li>
+    </ul>
+</body>
+</html>

@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulator 模块 API 文档</title>
+    <style>
+        body {
+            font-family: "Microsoft YaHei", sans-serif;
+            line-height: 1.8;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 25px;
+            color: #333;
+            background-color: #f5f5f5;
+        }
+        h1 {
+            color: #1e50a2;
+            border-bottom: 2px solid #1e50a2;
+            padding-bottom: 10px;
+            text-align: center;
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        h2 {
+            color: #1e50a2;
+            margin-top: 35px;
+            border-left: 5px solid #1e50a2;
+            padding-left: 15px;
+            background-color: white;
+            padding: 15px;
+            border-radius: 5px 0 0 5px;
+        }
+        h3 {
+            color: #2b6cb0;
+            margin-top: 25px;
+            padding-bottom: 5px;
+            border-bottom: 1px dashed #2b6cb0;
+        }
+        .class-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 25px;
+            border-left: 4px solid #4a89dc;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .method {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            border-left: 3px solid #a0b3d6;
+        }
+        .class-name {
+            color: #d9480f;
+            font-weight: bold;
+            font-family: Consolas, monospace;
+            background-color: #f8f9fa;
+            padding: 2px 5px;
+            border-radius: 3px;
+        }
+        .property {
+            color: #2b6cb0;
+            font-family: Consolas, monospace;
+            font-weight: bold;
+        }
+        code {
+            background-color: #f8f9fa;
+            padding: 3px 5px;
+            border-radius: 3px;
+            font-family: Consolas, monospace;
+            color: #333;
+        }
+        pre {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            border-left: 3px solid #4a89dc;
+            font-family: Consolas, monospace;
+        }
+        .note {
+            background-color: #fff8e1;
+            padding: 15px;
+            border-left: 4px solid #ffc107;
+            margin: 20px 0;
+            border-radius: 0 5px 5px 0;
+        }
+        .param-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        .param-table th {
+            background-color: #e7f1ff;
+            text-align: left;
+            padding: 8px;
+            border: 1px solid #d0d0d0;
+        }
+        .param-table td {
+            padding: 8px;
+            border: 1px solid #d0d0d0;
+        }
+        .return {
+            font-weight: bold;
+            color: #2b6cb0;
+        }
+        .highlight {
+            background-color: #fffacd;
+            padding: 2px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Simulator 模块 API 文档</h1>
+    
+    <div class="class-container">
+        <h2><span class="class-name">Simulator</span> 类</h2>
+        <p>模拟器主控类，提供车辆模拟器的启动和停止功能，支持不同平台和项目的回调表加载。</p>
+        
+        <h3>类属性</h3>
+        <ul>
+            <li><span class="property">_instance</span>: 类实例(单例模式使用)，初始为None</li>
+        </ul>
+        
+        <h3>实例属性</h3>
+        <ul>
+            <li><span class="property">_platform</span>: 当前平台类型(从VehicleTypeManager获取)</li>
+            <li><span class="property">_project</span>: 当前项目型号(从VehicleTypeManager获取)</li>
+            <li><span class="property">_callbacktable</span>: 加载的回调表</li>
+            <li><span class="property">_simulator_instance</span>: 模拟器实例</li>
+        </ul>
+        
+        <div class="method">
+            <h3><code class="class-name">__init__()</code></h3>
+            <p>构造函数，初始化模拟器实例。</p>
+            
+            <h4>功能说明:</h4>
+            <ol>
+                <li>从VehicleTypeManager获取平台类型和项目型号</li>
+                <li>初始化回调表和模拟器实例为None</li>
+                <li>调用<span class="highlight">_load_callback_table()</span>加载回调表</li>
+            </ol>
+        </div>
+        
+        <div class="method">
+            <h3><code class="class-name">getInstance()</code> <small>类方法</small></h3>
+            <p>获取模拟器单例实例。</p>
+            
+            <h4>返回值:</h4>
+            <p><span class="return">Simulator</span> - 模拟器单例实例</p>
+            
+            <h4>功能说明:</h4>
+            <ol>
+                <li>检查类实例是否存在</li>
+                <li>如果不存在则创建新实例</li>
+                <li>返回单例实例</li>
+            </ol>
+            
+            <h4>示例代码:</h4>
+            <pre><code># 获取模拟器单例
+simulator = Simulator.getInstance()</code></pre>
+        </div>
+        
+        <div class="method">
+            <h3><code class="class-name">_load_callback_table()</code></h3>
+            <p>加载对应平台和项目的回调表。</p>
+            
+            <h4>功能说明:</h4>
+            <ol>
+                <li>根据平台和项目类型加载不同的回调表</li>
+                <li>支持平台:
+                    <ul>
+                        <li><span class="highlight">GB</span>: 使用CallBackTableGB和SimulatorGB</li>
+                        <li><span class="highlight">CLEA 557</span>: 使用CallBackTable557和Simulator557</li>
+                    </ul>
+                </li>
+                <li>不支持的平台会打印警告信息</li>
+            </ol>
+        </div>
+        
+        <div class="method">
+            <h3><code class="class-name">start_simulator_task()</code></h3>
+            <p>启动模拟器任务，注册CAN总线监控。</p>
+            
+            <h4>功能说明:</h4>
+            <ol>
+                <li>检查回调表是否已加载</li>
+                <li>遍历回调表中的所有函数</li>
+                <li>通过模拟器实例注册每个函数</li>
+                <li>使用pickle序列化回调函数</li>
+                <li>通过CanBusClient添加监控</li>
+                <li>捕获并打印所有异常</li>
+                <li>无论成功与否都会打印完成信息</li>
+            </ol>
+            
+            <h4>示例代码:</h4>
+            <pre><code># 启动模拟器任务
+Simulator.getInstance().start_simulator_task()</code></pre>
+        </div>
+        
+        <div class="method">
+            <h3><code class="class-name">stop_simulator_task()</code></h3>
+            <p>停止模拟器任务，移除CAN总线监控。</p>
+            
+            <h4>功能说明:</h4>
+            <ol>
+                <li>检查回调表是否已加载</li>
+                <li>遍历回调表中的所有函数</li>
+                <li>获取每个请求的CAN ID和信号名称</li>
+                <li>通过CanBusClient移除监控</li>
+                <li>捕获并打印所有异常</li>
+                <li>无论成功与否都会打印完成信息</li>
+            </ol>
+            
+            <h4>示例代码:</h4>
+            <pre><code># 停止模拟器任务
+Simulator.getInstance().stop_simulator_task()</code></pre>
+        </div>
+    </div>
+    
+    <div class="note">
+        <h3>支持平台</h3>
+        <table class="param-table">
+            <tr>
+                <th>平台</th>
+                <th>项目</th>
+                <th>回调表</th>
+                <th>模拟器类</th>
+            </tr>
+            <tr>
+                <td>GB</td>
+                <td>-</td>
+                <td>CallBackTableGB</td>
+                <td>SimulatorGB</td>
+            </tr>
+            <tr>
+                <td>CLEA</td>
+                <td>557</td>
+                <td>CallBackTable557</td>
+                <td>Simulator557</td>
+            </tr>
+        </table>
+    </div>
+    
+    <div class="note">
+        <h3>注意事项</h3>
+        <ul>
+            <li>该类使用单例模式，必须通过<span class="highlight">getInstance()</span>获取实例</li>
+            <li>回调函数使用pickle序列化后通过CAN总线传输</li>
+            <li>启动和停止任务时会打印开始和结束信息</li>
+            <li>所有异常都会被捕获并打印，但不会中断程序执行</li>
+            <li>需要提前配置好VehicleTypeManager的平台和项目信息</li>
+        </ul>
+    </div>
+    
+    <div class="note">
+        <h3>典型使用模式</h3>
+        <pre><code># 初始化VehicleTypeManager (伪代码)
+VehicleTypeManager.setPlatformType("GB")
+VehicleTypeManager.setVehicleModel("")
+
+# 获取模拟器实例并启动任务
+simulator = Simulator.getInstance()
+simulator.start_simulator_task()
+
+# ...执行测试...
+
+# 停止模拟器任务
+simulator.stop_simulator_task()</code></pre>
+    </div>
+</body>
+</html>

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ImageUtils API 文档</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #2980b9;
+            margin-top: 30px;
+        }
+        .class-name {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-left: 4px solid #3498db;
+            margin: 20px 0;
+            font-family: monospace;
+            font-size: 18px;
+        }
+        .method {
+            background-color: #f0f7ff;
+            padding: 12px;
+            border-left: 3px solid #2980b9;
+            margin: 15px 0;
+        }
+        .method-name {
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        .param {
+            font-style: italic;
+            color: #7f8c8d;
+        }
+        .return {
+            color: #27ae60;
+        }
+        code {
+            background-color: #f0f0f0;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-family: monospace;
+        }
+        .constant {
+            color: #8e44ad;
+            font-weight: bold;
+        }
+        .note {
+            background-color: #fff3cd;
+            padding: 10px;
+            border-left: 3px solid #ffc107;
+            margin: 15px 0;
+        }
+        .warning {
+            background-color: #f8d7da;
+            padding: 10px;
+            border-left: 3px solid #dc3545;
+            margin: 15px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>ImageUtils API 文档</h1>
+
+    <h2>全局常量</h2>
+    <ul>
+        <li><span class="constant">SCALE</span> = 1 - 图像缩放比例</li>
+    </ul>
+
+    <div class="class-name">class ImageUtils</div>
+    
+    <p>图像处理工具类，实现了单例模式，提供图像比对和OCR文字识别功能。</p>
+    
+    <div class="note">
+        <strong>注意：</strong>该类是单例类，应通过 <code>getInstance()</code> 方法获取实例。
+    </div>
+    
+    <h2>类方法</h2>
+    
+    <div class="method">
+        <div class="method-name">@classmethod getInstance()</div>
+        <p>获取 ImageUtils 的单例实例。</p>
+        <p><strong>返回:</strong> <span class="return">ImageUtils</span> - ImageUtils 的单例实例</p>
+    </div>
+    
+    <h2>实例方法</h2>
+    
+    <div class="method">
+        <div class="method-name">compareImage(dstFile, srcFile, threshold=0.95)</div>
+        <p>在大图中查找小图或进行两张图片的比对。</p>
+        <p><strong>参数:</strong></p>
+        <ul>
+            <li><span class="param">dstFile</span> - 目标大图路径</li>
+            <li><span class="param">srcFile</span> - 模板图路径</li>
+            <li><span class="param">threshold</span> - 相似度阈值(0-1)，默认为0.95</li>
+        </ul>
+        <p><strong>返回:</strong> <span class="return">tuple</span> - (比对结果bool, 坐标列表[左上角,右下角])</p>
+        <p><strong>可能抛出的异常:</strong></p>
+        <ul>
+            <li>FileNotFoundError - 图片文件不存在</li>
+            <li>Exception - 无法读取图片或模板尺寸大于目标图片</li>
+        </ul>
+        <div class="note">
+            <strong>说明：</strong>使用OpenCV的模板匹配算法(TM_CCOEFF_NORMED)，返回匹配区域的坐标。
+        </div>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">imageToText(imagePath, language='Chinese', preserve_newlines=False)</div>
+        <p>识别图片中的文字(OCR功能)。</p>
+        <p><strong>参数:</strong></p>
+        <ul>
+            <li><span class="param">imagePath</span> - 图片路径</li>
+            <li><span class="param">language</span> - 语言选项('Chinese'或'English')，默认为'Chinese'</li>
+            <li><span class="param">preserve_newlines</span> - 是否保留换行符，默认为False</li>
+        </ul>
+        <p><strong>返回:</strong> <span class="return">str</span> - 识别出的文本内容</p>
+        <p><strong>可能抛出的异常:</strong></p>
+        <ul>
+            <li>FileNotFoundError - 图片文件不存在</li>
+        </ul>
+        <div class="note">
+            <strong>说明：</strong>使用agentocr库进行OCR识别，支持中英文识别。
+        </div>
+    </div>
+    
+    <h2>注意事项</h2>
+    <ul>
+        <li>该类实现了单例模式，确保全局唯一实例</li>
+        <li>compareImage方法要求模板图尺寸必须小于目标图</li>
+        <li>imageToText方法需要安装agentocr库</li>
+        <li>所有方法都有异常处理，失败时会记录日志并返回安全值</li>
+        <li>compareImage返回的坐标是匹配区域的左上角和右下角坐标</li>
+        <li>imageToText默认会去除文本中的换行符，除非preserve_newlines设为True</li>
+    </ul>
+</body>
+</html>

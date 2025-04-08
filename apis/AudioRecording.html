@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>AudioRecording API 文档</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #2980b9;
+            margin-top: 30px;
+            border-left: 4px solid #3498db;
+            padding-left: 10px;
+        }
+        .class-name {
+            background-color: #f8f9fa;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-family: monospace;
+            color: #d63384;
+            font-weight: bold;
+        }
+        .method {
+            background-color: #f8f9fa;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            border-left: 3px solid #6c757d;
+        }
+        .method-name {
+            font-weight: bold;
+            color: #0066cc;
+        }
+        .method-desc {
+            margin-top: 5px;
+            color: #6c757d;
+        }
+        .param {
+            font-family: monospace;
+        }
+        code {
+            background-color: #f8f9fa;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-family: monospace;
+            color: #d63384;
+        }
+    </style>
+</head>
+<body>
+    <h1>AudioRecording API 文档</h1>
+    <p>该模块提供了音频录制功能，支持定期录制音频文件。</p>
+
+    <h2>类文档</h2>
+
+    <div class="method">
+        <h3><span class="class-name">AudioRecoringThread</span></h3>
+        <p>一个线程类，用于定期录制音频文件。</p>
+        <p><strong>注意：</strong>类名拼写有误，应为"AudioRecordingThread"</p>
+        
+        <div class="method">
+            <div class="method-name">__init__(self, caseFolder)</div>
+            <div class="method-desc">构造函数，初始化音频录制任务。</div>
+            <p><strong>参数:</strong></p>
+            <ul>
+                <li><span class="param">caseFolder</span>: 测试用例文件夹路径，用于存储录制的音频文件</li>
+            </ul>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">stopTask(self)</div>
+            <div class="method-desc">停止音频录制任务。</div>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">recordAudio(self)</div>
+            <div class="method-desc">执行单次音频录制，持续30秒。</div>
+            <p><strong>实现细节:</strong></p>
+            <ul>
+                <li>使用当前时间生成唯一的音频文件名</li>
+                <li>调用AudioManager的startRecordAudio方法开始录制</li>
+                <li>等待30秒后调用stopRecordAudio方法停止录制</li>
+            </ul>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">run(self)</div>
+            <div class="method-desc">线程主循环，每隔30分钟执行一次音频录制。</div>
+            <p><strong>工作流程:</strong></p>
+            <ol>
+                <li>检查是否收到停止信号</li>
+                <li>如果达到时间间隔(30分钟)或首次运行，执行录制</li>
+                <li>循环检查直到任务停止</li>
+            </ol>
+        </div>
+    </div>
+
+    <h2>常量</h2>
+    <ul>
+        <li><code>TIME_INTERVAL</code>: 音频录制间隔时间(秒)，默认为1800(30分钟)</li>
+    </ul>
+
+    <h2>使用示例</h2>
+    <pre>
+# 创建音频录制线程
+audio_thread = AudioRecoringThread("C:/test_case")
+# 启动录制
+audio_thread.start()
+# 停止录制
+audio_thread.stopTask()
+audio_thread.join()
+    </pre>
+</body>
+</html>

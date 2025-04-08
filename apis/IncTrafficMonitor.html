@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IncTrafficMonitor API 文档</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #2980b9;
+            margin-top: 30px;
+        }
+        .class-name {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-left: 4px solid #3498db;
+            margin: 20px 0;
+            font-family: monospace;
+            font-size: 18px;
+        }
+        .method {
+            background-color: #f0f7ff;
+            padding: 12px;
+            border-left: 3px solid #2980b9;
+            margin: 15px 0;
+        }
+        .method-name {
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        .param {
+            font-style: italic;
+            color: #7f8c8d;
+        }
+        .return {
+            color: #27ae60;
+        }
+        code {
+            background-color: #f0f0f0;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-family: monospace;
+        }
+        .constant {
+            color: #8e44ad;
+            font-weight: bold;
+        }
+        .note {
+            background-color: #fff3cd;
+            padding: 10px;
+            border-left: 3px solid #ffc107;
+            margin: 15px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>IncTrafficMonitor API 文档</h1>
+
+    <h2>全局常量</h2>
+    <ul>
+        <li><span class="constant">GET_INC_TRAFFIC_INFO_CMD</span> - 获取INC流量信息的SSH命令</li>
+        <li><span class="constant">MONITOR_INTERVAL</span> = 60 - 默认监控间隔(秒)</li>
+    </ul>
+
+    <div class="class-name">class IncTrafficMonitor(threading.Thread)</div>
+    
+    <p>增量流量监控类，继承自Thread，用于后台监控INC网络流量。</p>
+    
+    <div class="note">
+        <strong>注意：</strong>该类是线程类，需要在外部管理线程生命周期。
+    </div>
+    
+    <h2>初始化方法</h2>
+    
+    <div class="method">
+        <div class="method-name">__init__(base_case_folder, monitor_interval=MONITOR_INTERVAL)</div>
+        <p>初始化增量流量监控器。</p>
+        <p><strong>参数:</strong></p>
+        <ul>
+            <li><span class="param">base_case_folder</span> - 基础用例文件夹路径</li>
+            <li><span class="param">monitor_interval</span> - 监控间隔(秒)，默认为60秒</li>
+        </ul>
+    </div>
+    
+    <h2>实例方法</h2>
+    
+    <div class="method">
+        <div class="method-name">get_uptime(response)</div>
+        <p>从响应中获取uptime信息。</p>
+        <p><strong>参数:</strong></p>
+        <ul>
+            <li><span class="param">response</span> - INC流量信息响应</li>
+        </ul>
+        <p><strong>返回:</strong> <span class="return">float</span> - uptime值(秒)，失败返回None</p>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">run()</div>
+        <p>线程运行方法，开始监控INC流量。</p>
+        <div class="note">
+            <strong>说明：</strong>该方法会自动调用，不应直接调用。会定期收集以下信息：
+            <ul>
+                <li>当前时间</li>
+                <li>uptime</li>
+                <li>总流量(KB)</li>
+                <li>流量速率(KB/s)</li>
+            </ul>
+            并写入到"inc_traffic"文件中。
+        </div>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">stopTask()</div>
+        <p>停止监控任务。</p>
+    </div>
+    
+    <h2>注意事项</h2>
+    <ul>
+        <li>该类是线程类，需要调用stopTask()方法来停止任务</li>
+        <li>使用SSH连接获取INC流量信息，确保网络连接正常</li>
+        <li>监控间隔由monitor_interval参数控制</li>
+        <li>数据会追加写入到"inc_traffic"文件中</li>
+        <li>所有方法都有异常处理，失败时会记录日志</li>
+        <li>监控内容包括总流量和流量速率</li>
+    </ul>
+</body>
+</html>

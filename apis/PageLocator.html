@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>PageLocator API 文档</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            color: #333;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #2980b9;
+            margin-top: 30px;
+        }
+        .class-name {
+            background-color: #f8f9fa;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-family: monospace;
+            color: #d63384;
+            font-weight: bold;
+        }
+        .method {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            border-left: 4px solid #3498db;
+        }
+        .method-name {
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        .method-desc {
+            margin-top: 10px;
+        }
+        .param {
+            margin-top: 10px;
+        }
+        .param-name {
+            font-weight: bold;
+        }
+        .config-section {
+            background-color: #e8f4f8;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 20px 0;
+        }
+        .config-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .inheritance {
+            background-color: #e8f5e9;
+            padding: 10px;
+            border-left: 4px solid #4caf50;
+            margin: 10px 0;
+        }
+        .singleton {
+            background-color: #fff3e0;
+            padding: 10px;
+            border-left: 4px solid #ffa726;
+            margin: 10px 0;
+        }
+        .note {
+            background-color: #fff8e1;
+            padding: 10px;
+            border-left: 4px solid #ffc107;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>PageLocator API 文档</h1>
+
+    <div class="inheritance">
+        <strong>继承关系：</strong> 继承自 <code>BaseLocator</code> 类
+    </div>
+
+    <div class="singleton">
+        <strong>单例模式：</strong> 该类采用单例设计模式，请使用 <code>getInstance()</code> 方法获取实例
+    </div>
+
+    <div class="config-section">
+        <div class="config-title">配置常量</div>
+        <ul>
+            <li><strong>DEFAULT_MODE</strong>: 默认模式 (默认: "default")</li>
+            <li><strong>JSON_FILE_SUFFIX</strong>: JSON文件后缀 (默认: ".json")</li>
+        </ul>
+    </div>
+
+    <h2><span class="class-name">PageLocator</span> 类</h2>
+    <p>该类用于定位VCU和手机应用的页面元素，基于项目配置和设备序列号自动选择正确的配置项。</p>
+
+    <div class="method">
+        <div class="method-name">__init__(self)</div>
+        <div class="method-desc">
+            构造函数，初始化PageLocator实例。
+            <p>从配置中获取项目(PROJECT)、车型年份(MODEL_YEAR)和车辆动力类型(VEHICLE_PROPULSION_TYPE)信息，组合生成模式字符串。</p>
+        </div>
+    </div>
+
+    <div class="method">
+        <div class="method-name">getInstance()</div>
+        <div class="method-desc">
+            获取PageLocator单例实例。
+        </div>
+        <div class="param">
+            <span class="param-name">返回:</span> PageLocator实例
+        </div>
+    </div>
+
+    <div class="method">
+        <div class="method-name">getVCUIndicator(filePath, indicatorName)</div>
+        <div class="method-desc">
+            获取VCU应用的指定页面元素指示器。
+            <p>如果指定的文件路径不存在，会根据Constant.INDICATORMAP中的映射关系自动生成正确的文件路径。</p>
+            <p>首先尝试从与当前模式匹配的配置中获取，如果找不到则使用默认配置。</p>
+        </div>
+        <div class="param">
+            <span class="param-name">参数:</span>
+            <ul>
+                <li>filePath - 配置文件路径（可以是相对路径或绝对路径）</li>
+                <li>indicatorName - 要获取的指示器名称</li>
+            </ul>
+            <span class="param-name">返回:</span> 指示器值，如果失败返回None
+        </div>
+        <div class="note">
+            <strong>注意：</strong> 如果filePath参数指定的文件不存在，会自动尝试从默认位置加载配置文件。
+        </div>
+    </div>
+
+    <div class="method">
+        <div class="method-name">getPhoneIndicator(filePath, indicatorName, serial)</div>
+        <div class="method-desc">
+            获取手机应用的指定页面元素指示器。
+            <p>如果指定的文件路径不存在，会根据Constant.INDICATORMAP中的映射关系自动生成正确的文件路径。</p>
+            <p>首先尝试从与设备序列号匹配的配置中获取，如果找不到则使用默认配置。</p>
+        </div>
+        <div class="param">
+            <span class="param-name">参数:</span>
+            <ul>
+                <li>filePath - 配置文件路径（可以是相对路径或绝对路径）</li>
+                <li>indicatorName - 要获取的指示器名称</li>
+                <li>serial - 手机设备序列号</li>
+            </ul>
+            <span class="param-name">返回:</span> 指示器值，如果失败返回None
+        </div>
+        <div class="note">
+            <strong>注意：</strong> 如果filePath参数指定的文件不存在，会自动尝试从默认位置加载配置文件。
+        </div>
+    </div>
+
+    <h3>配置文件查找逻辑</h3>
+    <ul>
+        <li>首先检查传入的filePath是否存在</li>
+        <li>如果不存在，根据Constant.INDICATORMAP中的映射关系生成默认路径</li>
+        <li>默认路径格式：<code>项目目录/customAPI/uiautomator/locators/[映射文件名].json</code></li>
+    </ul>
+
+    <h3>配置项查找优先级</h3>
+    <ul>
+        <li><strong>VCU配置</strong>: 优先查找[项目_年份_动力类型]节点 → 查找default节点</li>
+        <li><strong>手机配置</strong>: 优先查找[设备序列号]节点 → 查找default节点</li>
+    </ul>
+</body>
+</html>

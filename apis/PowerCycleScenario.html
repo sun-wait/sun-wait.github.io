@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PowerCycleScenario API 文档</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            color: #333;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #2980b9;
+            margin-top: 30px;
+        }
+        .class-name {
+            background-color: #f8f9fa;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-family: monospace;
+            color: #d63384;
+            font-weight: bold;
+        }
+        .method {
+            background-color: #f8f9fa;
+            padding: 10px;
+            border-left: 4px solid #6c757d;
+            margin: 15px 0;
+            border-radius: 0 4px 4px 0;
+        }
+        .method-name {
+            font-weight: bold;
+            color: #0066cc;
+        }
+        .param {
+            font-family: monospace;
+            color: #28a745;
+        }
+        .return {
+            font-family: monospace;
+            color: #dc3545;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        code {
+            background-color: #f8f9fa;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-family: monospace;
+        }
+        .note {
+            background-color: #fff3cd;
+            padding: 10px;
+            border-left: 4px solid #ffc107;
+            margin: 15px 0;
+            border-radius: 0 4px 4px 0;
+        }
+        .enum {
+            background-color: #e7f5ff;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+    <h1>PowerCycleScenario API 文档</h1>
+    
+    <h2>概述</h2>
+    <p><span class="class-name">PowerCycleScenario</span> 是一个电源循环测试场景类，用于模拟车辆电源开关循环测试，支持冷启动(Cold Boot)、挂起到内存(Suspend to RAM)和回拉(Pullback)等多种唤醒类型。</p>
+    
+    <h2>类初始化</h2>
+    <div class="method">
+        <div class="method-name">__init__()</div>
+        <p><strong>描述</strong>: 初始化电源循环测试场景。</p>
+        <p><strong>初始化属性</strong>:</p>
+        <ul>
+            <li><span class="param">_wakeup_type</span>: 唤醒类型，默认为冷启动</li>
+            <li><span class="param">_platform</span>: 车辆平台类型</li>
+            <li><span class="param">_video_thread</span>: 视频录制线程</li>
+            <li><span class="param">_exp_checker</span>: 异常检测器</li>
+            <li><span class="param">_service_checker</span>: 系统服务检测器</li>
+        </ul>
+    </div>
+    
+    <h2>上下文管理方法</h2>
+    <div class="method">
+        <div class="method-name">__enter__()</div>
+        <p><strong>描述</strong>: 进入电源循环测试上下文时执行的操作。</p>
+        <p><strong>操作</strong>:</p>
+        <ol>
+            <li>创建日志文件夹</li>
+            <li>启动日志记录器</li>
+            <li>执行电源开启操作</li>
+            <li>启动异常检测器</li>
+            <li>启动系统服务检测器</li>
+        </ol>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">__exit__(exc_type, exc_val, exc_tb)</div>
+        <p><strong>描述</strong>: 退出电源循环测试上下文时执行的操作。</p>
+        <p><strong>参数</strong>:</p>
+        <ul>
+            <li><span class="param">exc_type</span>: 异常类型</li>
+            <li><span class="param">exc_val</span>: 异常值</li>
+            <li><span class="param">exc_tb</span>: 异常追踪信息</li>
+        </ul>
+        <p><strong>操作</strong>:</p>
+        <ol>
+            <li>停止检测器</li>
+            <li>停止日志记录</li>
+            <li>执行电源关闭操作</li>
+            <li>分析CAN日志和串口日志</li>
+        </ol>
+    </div>
+    
+    <h2>主要方法</h2>
+    
+    <div class="method">
+        <div class="method-name">power_cycle_pre_work()</div>
+        <p><strong>描述</strong>: 电源循环测试前准备工作。</p>
+        <p><strong>操作</strong>:</p>
+        <ul>
+            <li>清理Android日志</li>
+            <li>推送日志收集脚本到Android和QNX系统</li>
+            <li>启动视频录制</li>
+            <li>注册异常事件处理</li>
+        </ul>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">power_cycle_on()</div>
+        <p><strong>描述</strong>: 执行电源开启操作。</p>
+        <p><strong>操作</strong>:</p>
+        <ol>
+            <li>设置电源模式为Off(网络管理)</li>
+            <li>发送所有DBC消息模拟车辆环境</li>
+            <li>设置仪表盘亮度</li>
+            <li>激活进场动画(GB平台)</li>
+            <li>进入车辆模式</li>
+            <li>依次设置电源模式为Run → Crank → Propulsion</li>
+        </ol>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">power_cycle_off()</div>
+        <p><strong>描述</strong>: 执行电源关闭操作。</p>
+        <p><strong>操作</strong>:</p>
+        <ol>
+            <li>同步UTC时间</li>
+            <li>发送STR相关信号(根据唤醒类型)</li>
+            <li>重置仪表盘状态</li>
+            <li>设置电源模式为Off</li>
+            <li>离开车辆模式</li>
+            <li>重置进场动画(GB平台)</li>
+            <li>停止所有CAN消息</li>
+            <li>等待VCU进入睡眠状态</li>
+        </ol>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">test_power_cycle()</div>
+        <p><strong>描述</strong>: 电源循环测试主函数，需要在子类中重写。</p>
+        <p><strong>默认实现</strong>:</p>
+        <ol>
+            <li>执行准备工作</li>
+            <li>进入电源循环上下文</li>
+            <li>等待3分钟(静置场景)</li>
+            <li>退出电源循环上下文</li>
+        </ol>
+        <div class="note">
+            <strong>注意</strong>: 此方法需要在子类中重写以实现具体的测试逻辑
+        </div>
+    </div>
+    
+    <h2>辅助方法</h2>
+    <ul>
+        <li><code>start_exception_checker()</code>: 启动异常检测器</li>
+        <li><code>stop_exception_checker()</code>: 停止异常检测器</li>
+        <li><code>start_system_service_checker()</code>: 启动系统服务检测器</li>
+        <li><code>stop_system_service_checker()</code>: 停止系统服务检测器</li>
+        <li><code>teardown()</code>: 测试结束时的清理操作</li>
+    </ul>
+    
+    <h2>唤醒类型枚举</h2>
+    <table>
+        <tr>
+            <th>枚举值</th>
+            <th>描述</th>
+        </tr>
+        <tr>
+            <td><span class="enum">COLD_BOOT</span></td>
+            <td>冷启动</td>
+        </tr>
+        <tr>
+            <td><span class="enum">SUSPEND_TO_RAM</span></td>
+            <td>挂起到内存</td>
+        </tr>
+        <tr>
+            <td><span class="enum">PULLBACK</span></td>
+            <td>回拉</td>
+        </tr>
+    </table>
+    
+    <h2>使用示例</h2>
+    <pre><code>
+# 自定义电源循环测试类
+class CustomPowerCycleTest(PowerCycleScenario):
+    def test_power_cycle(self):
+        self.power_cycle_pre_work()
+        with self:
+            # 执行自定义测试逻辑
+            for i in range(5):
+                # 模拟测试操作
+                time.sleep(60)
+                # 可以动态修改唤醒类型
+                self._wakeup_type = PowerCycleConstant.WakeupType.SUSPEND_TO_RAM.value
+
+# 运行测试
+test = CustomPowerCycleTest()
+test.test_power_cycle()
+    </code></pre>
+    
+    <h2>测试流程</h2>
+    <ol>
+        <li>准备工作(清理日志、推送脚本等)</li>
+        <li>电源开启操作</li>
+        <li>执行测试逻辑(需在子类中实现)</li>
+        <li>电源关闭操作</li>
+        <li>日志分析和结果收集</li>
+    </ol>
+    
+    <h2>注意事项</h2>
+    <ul>
+        <li>测试主函数<code>test_power_cycle()</code>需要在子类中重写</li>
+        <li>支持多种唤醒类型，可通过修改<code>_wakeup_type</code>属性切换</li>
+        <li>测试过程中会自动收集系统日志和视频</li>
+        <li>检测到异常时会自动执行清理操作</li>
+        <li>不同车辆平台(GB/CLEA)可能有不同的处理逻辑</li>
+    </ul>
+</body>
+</html>

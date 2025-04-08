@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CaseReporter 模块 API 文档</title>
+    <style>
+        body {
+            font-family: "Microsoft YaHei", sans-serif;
+            line-height: 1.8;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 25px;
+            color: #333;
+            background-color: #f5f5f5;
+        }
+        h1 {
+            color: #1e50a2;
+            border-bottom: 2px solid #1e50a2;
+            padding-bottom: 10px;
+            text-align: center;
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        h2 {
+            color: #1e50a2;
+            margin-top: 35px;
+            border-left: 5px solid #1e50a2;
+            padding-left: 15px;
+            background-color: white;
+            padding: 15px;
+            border-radius: 5px 0 0 5px;
+        }
+        h3 {
+            color: #2b6cb0;
+            margin-top: 25px;
+            padding-bottom: 5px;
+            border-bottom: 1px dashed #2b6cb0;
+        }
+        .class-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 25px;
+            border-left: 4px solid #4a89dc;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .method {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            border-left: 3px solid #a0b3d6;
+        }
+        .class-name {
+            color: #d9480f;
+            font-weight: bold;
+            font-family: Consolas, monospace;
+            background-color: #f8f9fa;
+            padding: 2px 5px;
+            border-radius: 3px;
+        }
+        code {
+            background-color: #f8f9fa;
+            padding: 3px 5px;
+            border-radius: 3px;
+            font-family: Consolas, monospace;
+            color: #333;
+        }
+        pre {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            border-left: 3px solid #4a89dc;
+            font-family: Consolas, monospace;
+        }
+        .note {
+            background-color: #fff8e1;
+            padding: 15px;
+            border-left: 4px solid #ffc107;
+            margin: 20px 0;
+            border-radius: 0 5px 5px 0;
+        }
+        .param {
+            font-weight: bold;
+            color: #555;
+        }
+        .param-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        .param-table th {
+            background-color: #e7f1ff;
+            text-align: left;
+            padding: 8px;
+            border: 1px solid #d0d0d0;
+        }
+        .param-table td {
+            padding: 8px;
+            border: 1px solid #d0d0d0;
+        }
+        .return {
+            font-weight: bold;
+            color: #2b6cb0;
+        }
+    </style>
+</head>
+<body>
+    <h1>CaseReporter 模块 API 文档</h1>
+    
+    <div class="class-container">
+        <h2><span class="class-name">CloudTestReporter</span> 类</h2>
+        <p>云测试报告生成器类，提供测试结果的记录和查询功能。</p>
+        
+        <div class="method">
+            <h3><code class="class-name">addReport(timestamp, senario, result, reason="na", mode="w+")</code></h3>
+            <p>添加测试报告到本地文件。</p>
+            
+            <h4>参数说明:</h4>
+            <table class="param-table">
+                <tr>
+                    <th>参数名</th>
+                    <th>类型</th>
+                    <th>默认值</th>
+                    <th>说明</th>
+                </tr>
+                <tr>
+                    <td><span class="param">timestamp</span></td>
+                    <td>str</td>
+                    <td>-</td>
+                    <td>报告时间戳</td>
+                </tr>
+                <tr>
+                    <td><span class="param">senario</span></td>
+                    <td>str</td>
+                    <td>-</td>
+                    <td>测试场景名称</td>
+                </tr>
+                <tr>
+                    <td><span class="param">result</span></td>
+                    <td>bool</td>
+                    <td>-</td>
+                    <td>测试结果(True/False)</td>
+                </tr>
+                <tr>
+                    <td><span class="param">reason</span></td>
+                    <td>str</td>
+                    <td>"na"</td>
+                    <td>测试失败原因</td>
+                </tr>
+                <tr>
+                    <td><span class="param">mode</span></td>
+                    <td>str</td>
+                    <td>"w+"</td>
+                    <td>文件写入模式("w+"或"a+")</td>
+                </tr>
+            </table>
+            
+            <h4>返回值:</h4>
+            <p><span class="return">bool</span> - 操作是否成功</p>
+            
+            <h4>功能说明:</h4>
+            <ol>
+                <li>验证测试场景名称有效性</li>
+                <li>将布尔结果转换为"pass"/"fail"字符串</li>
+                <li>确保报告目录存在</li>
+                <li>格式化报告内容为"时间戳;场景;结果;原因"格式</li>
+                <li>将报告写入指定文件</li>
+                <li>捕获并记录所有异常</li>
+            </ol>
+            
+            <h4>示例代码:</h4>
+            <pre><code># 添加成功测试报告
+CloudTestReporter.addReport("20230101120000", "登录测试", True)
+
+# 添加失败测试报告
+CloudTestReporter.addReport("20230101120001", "支付测试", False, "支付超时")</code></pre>
+        </div>
+        
+        <div class="method">
+            <h3><code class="class-name">getReport()</code></h3>
+            <p>获取所有测试报告记录。</p>
+            
+            <h4>返回值:</h4>
+            <p><span class="return">list</span> - 包含所有测试报告的字典列表，格式为：
+            <pre>[
+    {
+        "timestamp": "时间戳",
+        "senario": "测试场景",
+        "result": "pass/fail",
+        "fail_reason": "失败原因"
+    },
+    ...
+]</pre></p>
+            
+            <h4>功能说明:</h4>
+            <ol>
+                <li>读取报告文件内容</li>
+                <li>使用正则表达式解析每行报告</li>
+                <li>将每行报告转换为字典格式</li>
+                <li>捕获并记录所有异常</li>
+                <li>始终返回列表(即使出错也返回空列表)</li>
+            </ol>
+            
+            <h4>示例代码:</h4>
+            <pre><code># 获取所有测试报告
+reports = CloudTestReporter.getReport()
+for report in reports:
+    print(f"场景: {report['senario']}, 结果: {report['result']}")</code></pre>
+        </div>
+    </div>
+    
+    <div class="note">
+        <h3>全局变量说明</h3>
+        <ul>
+            <li><code class="class-name">REPORT_FOLDER</code>: 报告文件存储目录(取自Constant.BASE_LOG_PATH)</li>
+            <li><code class="class-name">REPORT_FILE</code>: 报告文件完整路径(cloud_test_report.txt)</li>
+        </ul>
+    </div>
+    
+    <div class="note">
+        <h3>注意事项</h3>
+        <ul>
+            <li>报告文件格式为每行"; "分隔的: 时间戳;场景;结果;原因</li>
+            <li>getReport()方法使用正则表达式解析报告内容</li>
+            <li>addReport()会自动创建不存在的报告目录</li>
+            <li>所有异常都会被捕获并记录到日志</li>
+        </ul>
+    </div>
+</body>
+</html>

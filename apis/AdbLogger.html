@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>AdbLogger API 文档</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #2980b9;
+            margin-top: 30px;
+            border-left: 4px solid #3498db;
+            padding-left: 10px;
+        }
+        .class-name {
+            background-color: #f8f9fa;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-family: monospace;
+            color: #d63384;
+            font-weight: bold;
+        }
+        .method {
+            background-color: #f8f9fa;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            border-left: 3px solid #6c757d;
+        }
+        .method-name {
+            font-weight: bold;
+            color: #0066cc;
+        }
+        .method-desc {
+            margin-top: 5px;
+            color: #6c757d;
+        }
+        .param {
+            font-family: monospace;
+        }
+        code {
+            background-color: #f8f9fa;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-family: monospace;
+            color: #d63384;
+        }
+    </style>
+</head>
+<body>
+    <h1>AdbLogger API 文档</h1>
+    <p>该模块提供了通过ADB(Android Debug Bridge)收集设备日志的功能，包括常规日志和统计信息。</p>
+
+    <h2>类文档</h2>
+
+    <div class="method">
+        <h3><span class="class-name">LogcatStatisticsTask</span></h3>
+        <p>一个线程类，用于定期收集和转储logcat统计信息。</p>
+        
+        <div class="method">
+            <div class="method-name">__init__(self, caseFolder)</div>
+            <div class="method-desc">构造函数，初始化日志统计任务。</div>
+            <p><strong>参数:</strong></p>
+            <ul>
+                <li><span class="param">caseFolder</span>: 测试用例文件夹路径，用于存储统计日志</li>
+            </ul>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">dumpLogcatStatistics(self)</div>
+            <div class="method-desc">执行logcat统计命令并将结果保存到文件。</div>
+            <p><strong>返回:</strong> 布尔值，表示操作是否成功</p>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">run(self)</div>
+            <div class="method-desc">线程主循环，每隔5秒检查是否需要转储统计信息。</div>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">stopTask(self)</div>
+            <div class="method-desc">停止统计任务，并执行最后一次统计转储。</div>
+        </div>
+    </div>
+
+    <div class="method">
+        <h3><span class="class-name">AdbLogger</span></h3>
+        <p>主日志收集类，提供ADB日志收集的各类功能。</p>
+        
+        <div class="method">
+            <div class="method-name">getInstance(cls)</div>
+            <div class="method-desc">获取AdbLogger的单例实例。</div>
+            <p><strong>返回:</strong> AdbLogger实例</p>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">adb_log_callback(self)</div>
+            <div class="method-desc">默认的ADB日志停止回调函数。</div>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">startAdbLogTask(self, baseLogFolder, caseName, duration=10, callback=None)</div>
+            <div class="method-desc">启动一个带定时停止的ADB日志收集任务。</div>
+            <p><strong>参数:</strong></p>
+            <ul>
+                <li><span class="param">baseLogFolder</span>: 基础日志文件夹路径</li>
+                <li><span class="param">caseName</span>: 测试用例名称</li>
+                <li><span class="param">duration</span>: 日志收集持续时间(秒)，默认为10</li>
+                <li><span class="param">callback</span>: 停止时的回调函数，默认为adb_log_callback</li>
+            </ul>
+            <p><strong>返回:</strong> 整型，-1表示失败</p>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">startAdbLog(self, baseLogFolder, caseName)</div>
+            <div class="method-desc">启动ADB日志收集，不带自动停止功能。</div>
+            <p><strong>参数:</strong></p>
+            <ul>
+                <li><span class="param">baseLogFolder</span>: 基础日志文件夹路径</li>
+                <li><span class="param">caseName</span>: 测试用例名称</li>
+            </ul>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">stopAdbLog(self, gmlogger=False)</div>
+            <div class="method-desc">停止ADB日志收集。</div>
+            <p><strong>参数:</strong></p>
+            <ul>
+                <li><span class="param">gmlogger</span>: 是否同时收集gmlogger日志，默认为False</li>
+            </ul>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">createLocalFolder(self, path)</div>
+            <div class="method-desc">创建本地文件夹。</div>
+            <p><strong>参数:</strong></p>
+            <ul>
+                <li><span class="param">path</span>: 要创建的文件夹路径</li>
+            </ul>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">deleteAdbLog(self)</div>
+            <div class="method-desc">删除当前ADB日志文件。</div>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">getCurrentDateTime(self, dateTimeFormat)</div>
+            <div class="method-desc">获取当前日期时间字符串。</div>
+            <p><strong>参数:</strong></p>
+            <ul>
+                <li><span class="param">dateTimeFormat</span>: 日期时间格式字符串</li>
+            </ul>
+            <p><strong>返回:</strong> 格式化后的日期时间字符串</p>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">startTimer(self, duration, runner)</div>
+            <div class="method-desc">启动定时器。</div>
+            <p><strong>参数:</strong></p>
+            <ul>
+                <li><span class="param">duration</span>: 定时器持续时间(秒)</li>
+                <li><span class="param">runner</span>: 定时器到期时执行的函数</li>
+            </ul>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">stopTimer(self)</div>
+            <div class="method-desc">停止定时器。</div>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">startLogcatStatistics(self, caseFolder)</div>
+            <div class="method-desc">启动logcat统计任务。</div>
+            <p><strong>参数:</strong></p>
+            <ul>
+                <li><span class="param">caseFolder</span>: 测试用例文件夹路径</li>
+            </ul>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">stopLogcatStatistics(self)</div>
+            <div class="method-desc">停止logcat统计任务。</div>
+        </div>
+    </div>
+
+    <h2>常量</h2>
+    <ul>
+        <li><code>ADB_PREFIX</code>: ADB日志文件前缀，默认为"gmlog_"</li>
+        <li><code>LOG_SUFFIX</code>: 日志文件后缀，默认为".log"</li>
+        <li><code>LOG_DATE_TIME_FORMAT</code>: 日志日期时间格式，默认为"%Y%m%d%H%M%S"</li>
+        <li><code>ADB_LOGCAT_CMD</code>: ADB logcat命令，默认为"adb logcat -v threadtime"</li>
+        <li><code>ADB_PULL_GMLOG_CMD</code>: 拉取gmlogger日志的命令模板，默认为"adb pull /data/gmlogger {}"</li>
+        <li><code>ADB_CONNECT_SUCCESS</code>: ADB连接成功状态码，默认为0</li>
+        <li><code>ADB_CONNECT_COMPLETE</code>: ADB连接完成状态码，默认为3328</li>
+        <li><code>LOGCAT_STATISTICS_CMD</code>: logcat统计命令，默认为"adb shell logcat -S"</li>
+        <li><code>DUMP_INTERVAL</code>: 统计信息转储间隔(秒)，默认为300</li>
+    </ul>
+</body>
+</html>

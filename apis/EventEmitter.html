@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EventEmitter API 文档</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #2980b9;
+            margin-top: 30px;
+        }
+        .class-name {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-left: 4px solid #3498db;
+            margin: 20px 0;
+            font-family: monospace;
+            font-size: 18px;
+        }
+        .method {
+            background-color: #f0f7ff;
+            padding: 12px;
+            border-left: 3px solid #2980b9;
+            margin: 15px 0;
+        }
+        .method-name {
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        .param {
+            font-style: italic;
+            color: #7f8c8d;
+        }
+        .return {
+            color: #27ae60;
+        }
+        code {
+            background-color: #f0f0f0;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-family: monospace;
+        }
+        .note {
+            background-color: #fff3cd;
+            padding: 10px;
+            border-left: 3px solid #ffc107;
+            margin: 15px 0;
+        }
+        .warning {
+            background-color: #f8d7da;
+            padding: 10px;
+            border-left: 3px solid #dc3545;
+            margin: 15px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>EventEmitter API 文档</h1>
+    
+    <div class="class-name">class EventEmitter</div>
+    
+    <p>事件发射器类，实现了单例模式，提供事件的注册、触发和注销功能。</p>
+    
+    <div class="note">
+        <strong>注意：</strong>该类是单例类，应通过 <code>getInstance()</code> 方法获取实例。
+    </div>
+    
+    <div class="warning">
+        <strong>警告：</strong>使用后必须调用注销方法，避免内存泄漏。
+    </div>
+    
+    <h2>类方法</h2>
+    
+    <div class="method">
+        <div class="method-name">@classmethod getInstance()</div>
+        <p>获取 EventEmitter 的单例实例。</p>
+        <p><strong>返回:</strong> <span class="return">EventEmitter</span> - EventEmitter 的单例实例</p>
+    </div>
+    
+    <h2>实例方法</h2>
+    
+    <div class="method">
+        <div class="method-name">emit(event)</div>
+        <p>触发指定事件，执行所有已注册的回调函数。</p>
+        <p><strong>参数:</strong></p>
+        <ul>
+            <li><span class="param">event</span> - 要触发的事件名称</li>
+        </ul>
+        <p><strong>返回:</strong> <span class="return">bool</span> - 是否触发成功</p>
+        <p><strong>说明:</strong> 会遍历所有模块中注册的该事件回调函数并执行。</p>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">register(event, callback, callback_kwargs=None, module=EventConstant.EventModule.default.value)</div>
+        <p>注册事件回调函数。</p>
+        <p><strong>参数:</strong></p>
+        <ul>
+            <li><span class="param">event</span> - 事件名称</li>
+            <li><span class="param">callback</span> - 回调函数</li>
+            <li><span class="param">callback_kwargs</span> - 回调函数参数(字典形式)，可选</li>
+            <li><span class="param">module</span> - 模块名称，默认为EventConstant.EventModule.default.value</li>
+        </ul>
+        <p><strong>返回:</strong> <span class="return">bool</span> - 是否注册成功</p>
+        <p><strong>说明:</strong> callback_kwargs参数必须为字典类型，否则会被设置为None。</p>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">unregister(event, module=EventConstant.EventModule.default.value)</div>
+        <p>注销指定事件。</p>
+        <p><strong>参数:</strong></p>
+        <ul>
+            <li><span class="param">event</span> - 要注销的事件名称</li>
+            <li><span class="param">module</span> - 模块名称，默认为EventConstant.EventModule.default.value</li>
+        </ul>
+        <p><strong>返回:</strong> <span class="return">bool</span> - 是否注销成功</p>
+        <div class="warning">
+            <strong>重要：</strong>必须调用此方法或unregisterAll()来释放资源，避免内存泄漏。
+        </div>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">unregisterAll()</div>
+        <p>注销所有事件。</p>
+        <p><strong>返回:</strong> <span class="return">bool</span> - 是否注销成功</p>
+        <div class="warning">
+            <strong>重要：</strong>必须在程序结束时调用此方法来释放所有资源，避免内存泄漏。
+        </div>
+    </div>
+    
+    <h2>注意事项</h2>
+    <ul>
+        <li>该类实现了单例模式，确保全局唯一实例</li>
+        <li>事件按模块分组管理，默认模块为EventConstant.EventModule.default.value</li>
+        <li>回调函数参数必须通过字典形式传递</li>
+        <li>所有方法都有异常处理，失败时会记录日志</li>
+        <li><strong>必须</strong>在使用完毕后调用注销方法，避免内存泄漏</li>
+        <li>emit()方法会触发所有模块中注册的该事件回调函数</li>
+    </ul>
+</body>
+</html>

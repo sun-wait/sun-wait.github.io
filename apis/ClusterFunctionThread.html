@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ClusterFunctionThread API 文档</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            color: #333;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #2980b9;
+            margin-top: 30px;
+        }
+        .class-name {
+            background-color: #f8f9fa;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-family: monospace;
+            color: #d63384;
+            font-weight: bold;
+        }
+        .method {
+            background-color: #f8f9fa;
+            padding: 10px;
+            border-left: 4px solid #6c757d;
+            margin: 15px 0;
+            border-radius: 0 4px 4px 0;
+        }
+        .method-name {
+            font-weight: bold;
+            color: #0066cc;
+        }
+        .param {
+            font-family: monospace;
+            color: #28a745;
+        }
+        .return {
+            font-family: monospace;
+            color: #dc3545;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        code {
+            background-color: #f8f9fa;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+    <h1>ClusterFunctionThread API 文档</h1>
+    
+    <h2>概述</h2>
+    <p><span class="class-name">ClusterFunctionThread</span> 是一个继承自 threading.Thread 的类，用于在集群环境中随机触发功能模块的线程。它可以在指定的时间间隔内随机激活集群模块的功能，并支持暂停、恢复和停止操作。</p>
+    
+    <h2>类初始化</h2>
+    <div class="method">
+        <div class="method-name">__init__(module, sendInterval=SEND_MESSAGE_INTERVAL, duration=0, randomSeed=0)</div>
+        <p><strong>描述</strong>: 初始化集群功能线程。</p>
+        <p><strong>参数</strong>:</p>
+        <ul>
+            <li><span class="param">module</span>: 集群模块名称</li>
+            <li><span class="param">sendInterval</span>: 消息发送间隔(秒)，默认0.3秒(300ms)</li>
+            <li><span class="param">duration</span>: 任务持续时间(秒)，0表示无限</li>
+            <li><span class="param">randomSeed</span>: 随机种子，用于可重复的随机行为</li>
+        </ul>
+    </div>
+    
+    <h2>主要方法</h2>
+    
+    <div class="method">
+        <div class="method-name">isTaskTimeout(startTime, duration)</div>
+        <p><strong>描述</strong>: 检查任务是否超时。</p>
+        <p><strong>参数</strong>:</p>
+        <ul>
+            <li><span class="param">startTime</span>: 任务开始时间</li>
+            <li><span class="param">duration</span>: 任务持续时间</li>
+        </ul>
+        <p><strong>返回</strong>: <span class="return">bool</span> 是否超时</p>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">stopTask()</div>
+        <p><strong>描述</strong>: 停止任务并等待线程结束。</p>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">pauseTask()</div>
+        <p><strong>描述</strong>: 暂停任务执行。</p>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">resumeTask()</div>
+        <p><strong>描述</strong>: 恢复暂停的任务。</p>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">activateAllFuntions()</div>
+        <p><strong>描述</strong>: 激活模块的所有功能。</p>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">resetAllFuntions()</div>
+        <p><strong>描述</strong>: 重置模块的所有功能。</p>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">run()</div>
+        <p><strong>描述</strong>: 线程主函数，执行随机触发功能的任务。</p>
+        <p><strong>行为</strong>:</p>
+        <ul>
+            <li>获取模块的所有功能键</li>
+            <li>记录开始时间</li>
+            <li>使用随机种子初始化随机数生成器</li>
+            <li>循环随机选择功能并激活，直到任务停止或超时</li>
+            <li>支持暂停/恢复功能</li>
+        </ul>
+    </div>
+    
+    <h2>常量</h2>
+    <table>
+        <tr>
+            <th>常量名</th>
+            <th>值</th>
+            <th>描述</th>
+        </tr>
+        <tr>
+            <td>SEND_MESSAGE_INTERVAL</td>
+            <td>0.3</td>
+            <td>默认消息发送间隔(300毫秒)</td>
+        </tr>
+    </table>
+    
+    <h2>使用示例</h2>
+    <pre><code>
+# 创建集群功能线程
+cluster_thread = ClusterFunctionThread(
+    module="example_module",
+    sendInterval=0.5,  # 500ms间隔
+    duration=60,       # 运行60秒
+    randomSeed=42      # 固定随机种子
+)
+
+# 启动线程
+cluster_thread.start()
+
+# 暂停任务
+cluster_thread.pauseTask()
+
+# 恢复任务
+cluster_thread.resumeTask()
+
+# 停止任务
+cluster_thread.stopTask()
+    </code></pre>
+    
+    <h2>工作原理</h2>
+    <p><span class="class-name">ClusterFunctionThread</span> 通过以下方式工作:</p>
+    <ol>
+        <li>初始化时设置模块、发送间隔、持续时间和随机种子</li>
+        <li>启动线程后，随机选择模块的功能键并发送激活消息</li>
+        <li>每次发送后等待指定的间隔时间</li>
+        <li>可以随时暂停或恢复任务</li>
+        <li>当达到指定持续时间或调用stopTask()时，线程结束</li>
+    </ol>
+    
+    <h2>注意事项</h2>
+    <ul>
+        <li>线程启动后会自动运行，不需要手动调用run()方法</li>
+        <li>设置randomSeed可以确保每次运行产生相同的随机序列</li>
+        <li>duration=0表示线程会一直运行直到手动停止</li>
+        <li>暂停状态下线程会每5秒检查一次是否恢复</li>
+    </ul>
+</body>
+</html>

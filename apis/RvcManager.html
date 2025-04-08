@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RvcManager API 文档</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #2980b9;
+            margin-top: 30px;
+        }
+        h3 {
+            color: #16a085;
+        }
+        .class-name {
+            background-color: #f8f9fa;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-family: monospace;
+            color: #d63384;
+            font-weight: bold;
+        }
+        .method {
+            background-color: #e9ecef;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+        .method-name {
+            font-weight: bold;
+            color: #6f42c1;
+        }
+        .param {
+            font-style: italic;
+            color: #e83e8c;
+        }
+        .return {
+            font-weight: bold;
+            color: #20c997;
+        }
+        code {
+            background-color: #f8f9fa;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-family: monospace;
+            color: #d63384;
+        }
+        pre {
+            background-color: #f8f9fa;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        .platform-table {
+            width: 60%;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>RvcManager API 文档</h1>
+    
+    <h2>1. 概述</h2>
+    <p>该API提供了RVC(倒车影像)系统的控制功能，支持GB和CLEA两种平台。</p>
+    
+    <h2>2. 主要类</h2>
+    
+    <h3><span class="class-name">RvcManager</span></h3>
+    <p>RVC系统管理类，提供RVC系统的启动和停止功能。</p>
+    
+    <h2>3. 主要方法</h2>
+    
+    <div class="method">
+        <h4><span class="method-name">getInstance()</span> [类方法]</h4>
+        <p>获取RvcManager单例实例。</p>
+        <p><strong>返回:</strong> <span class="return">RvcManager</span> - RvcManager实例</p>
+    </div>
+    
+    <div class="method">
+        <h4><span class="method-name">start()</span></h4>
+        <p>启动RVC系统。</p>
+        <p>根据平台类型发送不同的CAN消息：</p>
+        <table class="platform-table">
+            <tr>
+                <th>平台</th>
+                <th>CAN ID</th>
+                <th>信号</th>
+                <th>值</th>
+            </tr>
+            <tr>
+                <td>CLEA</td>
+                <td>0x220</td>
+                <td>Body Information Signal Group : Vehicle Movement State</td>
+                <td>3</td>
+            </tr>
+            <tr>
+                <td>GB</td>
+                <td>0x524</td>
+                <td>VMMP_VehMtnMvmtStatAuth</td>
+                <td>3</td>
+            </tr>
+        </table>
+    </div>
+    
+    <div class="method">
+        <h4><span class="method-name">stop()</span></h4>
+        <p>停止RVC系统。</p>
+        <p>根据平台类型发送不同的CAN消息：</p>
+        <table class="platform-table">
+            <tr>
+                <th>平台</th>
+                <th>CAN ID</th>
+                <th>信号</th>
+                <th>值</th>
+            </tr>
+            <tr>
+                <td>CLEA</td>
+                <td>0x220</td>
+                <td>Body Information Signal Group : Vehicle Movement State</td>
+                <td>0</td>
+            </tr>
+            <tr>
+                <td>GB</td>
+                <td>0x524</td>
+                <td>VMMP_VehMtnMvmtStatAuth</td>
+                <td>0</td>
+            </tr>
+        </table>
+    </div>
+    
+    <h2>4. 使用示例</h2>
+    
+    <h3>4.1 启动RVC系统</h3>
+    <pre><code>rvc_manager = RvcManager.getInstance()
+rvc_manager.start()</code></pre>
+    
+    <h3>4.2 停止RVC系统</h3>
+    <pre><code>rvc_manager = RvcManager.getInstance()
+rvc_manager.stop()</code></pre>
+    
+    <h2>5. 注意事项</h2>
+    <ul>
+        <li>使用前需要确保CAN总线连接正常</li>
+        <li>不同平台(GB/CLEA)的消息ID和信号不同</li>
+        <li>CLEA平台在启动/停止RVC时会额外将车速设置为0</li>
+        <li>该方法会捕获并记录异常，不会抛出异常</li>
+    </ul>
+</body>
+</html>

@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MessageSender API 文档</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #2980b9;
+            margin-top: 30px;
+        }
+        h3 {
+            color: #16a085;
+        }
+        .class-name {
+            background-color: #f8f9fa;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-family: monospace;
+            color: #d63384;
+            font-weight: bold;
+        }
+        .method {
+            background-color: #e9ecef;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+        .method-name {
+            font-weight: bold;
+            color: #6f42c1;
+        }
+        .param {
+            font-style: italic;
+            color: #e83e8c;
+        }
+        .return {
+            font-weight: bold;
+            color: #20c997;
+        }
+        code {
+            background-color: #f8f9fa;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-family: monospace;
+            color: #d63384;
+        }
+        pre {
+            background-color: #f8f9fa;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .enum-table {
+            width: 50%;
+        }
+    </style>
+</head>
+<body>
+    <h1>MessageSender API 文档</h1>
+    
+    <h2>1. 概述</h2>
+    <p>该API提供了通过CAN总线发送集群消息的功能，支持GB、CLEA和CLEA_557三种平台。</p>
+    
+    <h2>2. 主要类和枚举</h2>
+    
+    <h3><span class="class-name">ClusterModule</span> 枚举</h3>
+    <p>定义集群模块类型。</p>
+    <table class="enum-table">
+        <tr>
+            <th>枚举值</th>
+            <th>描述</th>
+        </tr>
+        <tr>
+            <td>AdasSetting</td>
+            <td>ADAS设置模块</td>
+        </tr>
+        <tr>
+            <td>Adas</td>
+            <td>ADAS模块</td>
+        </tr>
+        <tr>
+            <td>AmbientLight</td>
+            <td>环境灯模块</td>
+        </tr>
+        <tr>
+            <td>Boot</td>
+            <td>启动模块</td>
+        </tr>
+        <tr>
+            <td>Chime</td>
+            <td>提示音模块</td>
+        </tr>
+        <tr>
+            <td>Climate</td>
+            <td>空调模块</td>
+        </tr>
+        <tr>
+            <td>Guage</td>
+            <td>仪表模块</td>
+        </tr>
+        <tr>
+            <td>Setting</td>
+            <td>设置模块</td>
+        </tr>
+        <tr>
+            <td>Telltale</td>
+            <td>指示灯模块</td>
+        </tr>
+        <tr>
+            <td>VehicleControl</td>
+            <td>车辆控制模块</td>
+        </tr>
+        <tr>
+            <td>VehicleInfo</td>
+            <td>车辆信息模块</td>
+        </tr>
+        <tr>
+            <td>Warning</td>
+            <td>警告模块</td>
+        </tr>
+    </table>
+    
+    <h3><span class="class-name">TupleValueType</span> 枚举</h3>
+    <p>定义元组值类型。</p>
+    <table class="enum-table">
+        <tr>
+            <th>枚举值</th>
+            <th>描述</th>
+        </tr>
+        <tr>
+            <td>int</td>
+            <td>整型值</td>
+        </tr>
+        <tr>
+            <td>real</td>
+            <td>实数值</td>
+        </tr>
+    </table>
+    
+    <h3><span class="class-name">MessageSender</span> 类</h3>
+    <p>消息发送主类，提供集群消息发送功能。</p>
+    
+    <h2>3. 主要方法</h2>
+    
+    <div class="method">
+        <h4><span class="method-name">getInstance()</span> [类方法]</h4>
+        <p>获取MessageSender单例实例。</p>
+        <p><strong>返回:</strong> <span class="return">MessageSender</span> - MessageSender实例</p>
+    </div>
+    
+    <div class="method">
+        <h4><span class="method-name">getTable(module)</span></h4>
+        <p>获取指定模块的表格数据。</p>
+        <p><strong>参数:</strong> <span class="param">module</span> - 模块名称(ClusterModule枚举值)</p>
+        <p><strong>返回:</strong> <span class="return">dict</span> - 模块表格数据</p>
+    </div>
+    
+    <div class="method">
+        <h4><span class="method-name">checkCalibrations(module, description)</span></h4>
+        <p>检查校准值是否符合预期。</p>
+        <p><strong>参数:</strong></p>
+        <ul>
+            <li><span class="param">module</span> - 模块名称(ClusterModule枚举值)</li>
+            <li><span class="param">description</span> - 功能描述</li>
+        </ul>
+        <p><strong>返回:</strong> <span class="return">bool</span> - 校准值是否符合预期</p>
+    </div>
+    
+    <div class="method">
+        <h4><span class="method-name">resetMessage(ids)</span></h4>
+        <p>重置指定ID的消息。</p>
+        <p><strong>参数:</strong> <span class="param">ids</span> - 要重置的消息ID列表</p>
+    </div>
+    
+    <div class="method">
+        <h4><span class="method-name">filterMessageList(module, conditions)</span></h4>
+        <p>根据条件过滤消息列表。</p>
+        <p><strong>参数:</strong></p>
+        <ul>
+            <li><span class="param">module</span> - 模块名称(ClusterModule枚举值)</li>
+            <li><span class="param">conditions</span> - 过滤条件字典</li>
+        </ul>
+        <p><strong>返回:</strong> <span class="return">list</span> - 过滤后的消息列表</p>
+    </div>
+    
+    <div class="method">
+        <h4><span class="method-name">sendMessages(modules, messageLists, options, autoSwitch=False)</span></h4>
+        <p>发送集群消息。</p>
+        <p><strong>参数:</strong></p>
+        <ul>
+            <li><span class="param">modules</span> - 模块列表</li>
+            <li><span class="param">messageLists</span> - 消息列表(嵌套列表，每个子列表对应一个模块)</li>
+            <li><span class="param">options</span> - 选项列表(每个元素对应一个模块)</li>
+            <li><span class="param">autoSwitch</span> - 是否自动切换状态(默认False)</li>
+        </ul>
+    </div>
+    
+    <div class="method">
+        <h4><span class="method-name">getTupleSignalValue(tupleValue)</span></h4>
+        <p>获取元组类型的随机信号值。</p>
+        <p><strong>参数:</strong> <span class="param">tupleValue</span> - 元组值(类型,最小值,最大值)</p>
+        <p><strong>返回:</strong> <span class="return">int/float</span> - 随机信号值</p>
+    </div>
+    
+    <h2>4. 使用示例</h2>
+    
+    <h3>4.1 发送单个模块消息</h3>
+    <pre><code>sender = MessageSender.getInstance()
+sender.sendMessages(
+    modules=[ClusterModule.Telltale.value],
+    messageLists=[["left_turn_signal", "right_turn_signal"]],
+    options=["on"]
+)</code></pre>
+    
+    <h3>4.2 发送多个模块消息</h3>
+    <pre><code>sender = MessageSender.getInstance()
+sender.sendMessages(
+    modules=[ClusterModule.Telltale.value, ClusterModule.Warning.value],
+    messageLists=[["left_turn_signal", "right_turn_signal"], ["low_fuel_warning"]],
+    options=["on", "on"]
+)</code></pre>
+    
+    <h3>4.3 使用自动切换</h3>
+    <pre><code>sender = MessageSender.getInstance()
+sender.sendMessages(
+    modules=[ClusterModule.Telltale.value],
+    messageLists=[["left_turn_signal"]],
+    options=[],
+    autoSwitch=True
+)</code></pre>
+    
+    <h3>4.4 过滤消息列表</h3>
+    <pre><code>sender = MessageSender.getInstance()
+filtered_messages = sender.filterMessageList(
+    module=ClusterModule.Telltale.value,
+    conditions={"telltaleType": "cyclic"}
+)</code></pre>
+    
+    <h2>5. 注意事项</h2>
+    <ul>
+        <li>使用前需要确保CAN总线连接正常</li>
+        <li>不同平台(GB/CLEA/CLEA_557)的消息ID和信号可能不同</li>
+        <li>filterMessageList方法目前只支持"AND"操作符，如需"OR"操作符，请使用文档中提到的变通方法</li>
+        <li>autoSwitch参数启用时，options参数将被忽略</li>
+    </ul>
+</body>
+</html>

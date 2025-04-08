@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChartManager API 文档</title>
+    <style>
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #2980b9;
+            margin-top: 30px;
+        }
+        h3 {
+            color: #16a085;
+        }
+        .class-name {
+            background-color: #f8f9fa;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-family: monospace;
+            color: #c7254e;
+            font-weight: bold;
+        }
+        .method {
+            background-color: #f5f5f5;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            border-left: 4px solid #3498db;
+        }
+        .method-name {
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        .param {
+            margin-left: 20px;
+        }
+        .param-name {
+            font-style: italic;
+        }
+        .return {
+            font-weight: bold;
+            color: #27ae60;
+        }
+        code {
+            background-color: #f8f9fa;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-family: monospace;
+            color: #c7254e;
+        }
+        pre {
+            background-color: #f8f9fa;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        .note {
+            background-color: #fff8e1;
+            padding: 10px;
+            border-radius: 5px;
+            border-left: 4px solid #ffc107;
+            margin: 15px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>ChartManager API 文档</h1>
+
+    <section>
+        <h2>类 <span class="class-name">ChartManager</span></h2>
+        <p><span class="class-name">ChartManager</span> 是一个图表管理类，提供数据可视化功能。它采用单例模式设计，通过 <code>getInstance()</code> 方法获取实例。</p>
+        <div class="note">
+            <p><strong>依赖说明</strong>：此类依赖于 pandas 库进行数据处理和图表生成。</p>
+        </div>
+    </section>
+
+    <section>
+        <h2>方法列表</h2>
+
+        <div class="method">
+            <h3><span class="method-name">getInstance()</span></h3>
+            <p><strong>描述</strong>：获取 ChartManager 的单例实例。</p>
+            <p><strong>返回</strong>：<span class="return">ChartManager</span> 的实例。</p>
+            <pre>@classmethod
+def getInstance(cls)</pre>
+        </div>
+
+        <div class="method">
+            <h3><span class="method-name">drawMemoryLinePlot(excel, xAxis, yAxis, imagePath, filterColumn=None, filterAppPackage=None, lambdaFunc=None, lambaFuncAxis=None, rot=None, fontsize=None)</span></h3>
+            <p><strong>描述</strong>：从Excel/CSV数据生成内存折线图并保存为图片。</p>
+            <p><strong>参数</strong>：</p>
+            <ul>
+                <li class="param"><span class="param-name">excel</span>：CSV/Excel文件路径。</li>
+                <li class="param"><span class="param-name">xAxis</span>：X轴数据列名。</li>
+                <li class="param"><span class="param-name">yAxis</span>：Y轴数据列名。</li>
+                <li class="param"><span class="param-name">imagePath</span>：生成的图片保存路径。</li>
+                <li class="param"><span class="param-name">filterColumn</span>：过滤条件列名，可选。</li>
+                <li class="param"><span class="param-name">filterAppPackage</span>：过滤条件的值，与filterColumn配合使用，可选。</li>
+                <li class="param"><span class="param-name">lambdaFunc</span>：数据处理函数，可选。</li>
+                <li class="param"><span class="param-name">lambaFuncAxis</span>：应用数据处理函数的数据列名，与lambdaFunc配合使用，可选。</li>
+                <li class="param"><span class="param-name">rot</span>：X轴标签旋转角度，可选。</li>
+                <li class="param"><span class="param-name">fontsize</span>：字体大小，可选。</li>
+            </ul>
+            <pre>def drawMemoryLinePlot(self, excel, xAxis, yAxis, imagePath, filterColumn=None, filterAppPackage=None, lambdaFunc=None, lambaFuncAxis=None, rot=None, fontsize=None)</pre>
+        </div>
+    </section>
+
+    <section>
+        <h2>使用示例</h2>
+        <div class="method">
+            <h3>基本折线图生成</h3>
+            <pre># 获取ChartManager实例
+chart_manager = ChartManager.getInstance()
+
+# 从CSV文件生成折线图
+chart_manager.drawMemoryLinePlot(
+    excel="memory_data.csv",
+    xAxis="timestamp",
+    yAxis="memory_usage",
+    imagePath="memory_usage.png"
+)</pre>
+        </div>
+
+        <div class="method">
+            <h3>带过滤条件和数据处理的折线图</h3>
+            <pre># 获取ChartManager实例
+chart_manager = ChartManager.getInstance()
+
+# 定义数据处理函数
+def convert_to_mb(kb):
+    return kb / 1024
+
+# 生成特定应用的折线图，并将KB转换为MB
+chart_manager.drawMemoryLinePlot(
+    excel="memory_data.csv",
+    xAxis="timestamp",
+    yAxis="memory_usage",
+    imagePath="app_memory_mb.png",
+    filterColumn="package_name",
+    filterAppPackage="com.example.app",
+    lambdaFunc=convert_to_mb,
+    lambaFuncAxis="memory_usage",
+    rot=45,
+    fontsize=10
+)</pre>
+        </div>
+    </section>
+
+    <section>
+        <h2>注意事项</h2>
+        <div class="note">
+            <ul>
+                <li>输入文件必须是CSV格式或Excel格式</li>
+                <li>指定的xAxis和yAxis参数必须存在于输入文件的列名中</li>
+                <li>当使用filterColumn和filterAppPackage参数时，将只保留满足条件的数据</li>
+                <li>lambdaFunc和lambaFuncAxis参数需要同时使用，用于对特定列的数据进行转换</li>
+                <li>生成的图片格式由imagePath的文件扩展名决定（如.png, .jpg等）</li>
+            </ul>
+        </div>
+    </section>
+</body>
+</html>

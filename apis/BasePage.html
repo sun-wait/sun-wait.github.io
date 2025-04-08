@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>BasePage API 文档</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #2980b9;
+            margin-top: 30px;
+            border-left: 4px solid #3498db;
+            padding-left: 10px;
+        }
+        .class-name {
+            background-color: #f8f9fa;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-family: monospace;
+            color: #d63384;
+            font-weight: bold;
+        }
+        .method {
+            background-color: #f8f9fa;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            border-left: 3px solid #6c757d;
+        }
+        .method-name {
+            font-weight: bold;
+            color: #0066cc;
+        }
+        .method-desc {
+            margin-top: 5px;
+            color: #6c757d;
+        }
+        .param {
+            font-family: monospace;
+        }
+        code {
+            background-color: #f8f9fa;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-family: monospace;
+            color: #d63384;
+        }
+        .note {
+            background-color: #fff3cd;
+            padding: 10px;
+            border-radius: 5px;
+            border-left: 3px solid #ffc107;
+            margin: 15px 0;
+        }
+        .section {
+            margin-top: 30px;
+            padding: 15px;
+            background-color: #f0f8ff;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>BasePage API 文档</h1>
+    <p>该模块是UI自动化测试的基础页面类，封装了常用的设备操作和元素定位方法。</p>
+
+    <div class="note">
+        <strong>主要功能：</strong>
+        <ul>
+            <li>元素定位与存在性检查</li>
+            <li>元素点击与长按操作</li>
+            <li>滑动与滚动操作</li>
+            <li>拖拽操作</li>
+            <li>文本输入与获取</li>
+            <li>元素属性获取</li>
+            <li>Toast消息处理</li>
+        </ul>
+    </div>
+
+    <h2>类文档</h2>
+
+    <div class="method">
+        <h3><span class="class-name">BasePage</span></h3>
+        <p>UI自动化测试基础类，提供设备操作和元素定位的通用方法。</p>
+        
+        <div class="method">
+            <div class="method-name">__init__(self, device=None)</div>
+            <div class="method-desc">构造函数，初始化基础页面对象。</div>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">workTimeout(self, duration, workFunc=None, workInterval=10, timeoutCallback=None)</div>
+            <div class="method-desc">带超时的工作循环。</div>
+            <p><strong>参数:</strong></p>
+            <ul>
+                <li><span class="param">duration</span>: 总持续时间(秒)</li>
+                <li><span class="param">workFunc</span>: 工作函数，默认为None</li>
+                <li><span class="param">workInterval</span>: 工作间隔(秒)，默认为10</li>
+                <li><span class="param">timeoutCallback</span>: 超时回调函数，默认为None</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>元素定位方法</h2>
+        
+        <div class="method">
+            <div class="method-name">getSelector(self, *device, **kwargs)</div>
+            <div class="method-desc">通过属性获取元素选择器。</div>
+            <p><strong>示例:</strong> getSelector(device, text="确定")</p>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">getSelectorByXpath(self, device, xpath)</div>
+            <div class="method-desc">通过XPath获取元素选择器。</div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>元素存在性检查</h2>
+        
+        <div class="method">
+            <div class="method-name">exists_by_xpath(self, device, xpath)</div>
+            <div class="method-desc">检查XPath元素是否存在。</div>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">exists_by_text(self, device, text, timeout=Constant.DEFAULT_EXIST_TIMEOUT)</div>
+            <div class="method-desc">检查文本元素是否存在。</div>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">wait_element_by_text(self, device, text, timeout)</div>
+            <div class="method-desc">等待文本元素出现。</div>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">wait_element_by_xpath(self, device, xpath, timeout)</div>
+            <div class="method-desc">等待XPath元素出现。</div>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">wait_element_gone_by_text(self, device, text, timeout)</div>
+            <div class="method-desc">等待文本元素消失。</div>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">wait_element_gone_by_xpath(self, device, xpath, timeout)</div>
+            <div class="method-desc">等待XPath元素消失。</div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>元素点击操作</h2>
+        
+        <div class="method">
+            <div class="method-name">click_element_by_text(self, device, text, timeout=Constant.DEFAULT_CLICK_TIMEOUT)</div>
+            <div class="method-desc">点击文本元素。</div>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">click_element_by_resourceId(self, device, resourceId, timeout=Constant.DEFAULT_CLICK_TIMEOUT)</div>
+            <div class="method-desc">点击resourceId元素。</div>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">click_element_by_xpath(self, device, xpath, timeout=Constant.DEFAULT_CLICK_TIMEOUT)</div>
+            <div class="method-desc">点击XPath元素。</div>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">click_exists_element_by_xpath(self, device, xpath, timeout=Constant.DEFAULT_CLICK_TIMEOUT)</div>
+            <div class="method-desc">如果XPath元素存在则点击。</div>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">long_click_element_by_text(self, device, text)</div>
+            <div class="method-desc">长按文本元素。</div>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">long_click_element_by_xpath(self, device, xpath)</div>
+            <div class="method-desc">长按XPath元素。</div>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">click_by_position(self, device, x, y)</div>
+            <div class="method-desc">点击指定坐标位置。</div>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">double_click_by_position(self, device, x, y, duration=Constant.DEFAULT_DOUBLE_CLICK_DURATION)</div>
+            <div class="method-desc">双击指定坐标位置。</div>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">long_click_by_position(self, device, x, y, duration=Constant.DEFAULT_LONG_CLICK_DURATION)</div>
+            <div class="method-desc">长按指定坐标位置。</div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>滑动操作</h2>
+        
+        <div class="method">
+            <div class="method-name">swipe_device_by_position(self, device, sx, sy, ex, ey, time=0.5)</div>
+            <div class="method-desc">从起点坐标滑动到终点坐标。</div>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">swipe_device_by_direction(self, device, direction, scale=Constant.DEFAULT_SWIPE_SCALE)</div>
+            <div class="method-desc">按方向滑动设备。</div>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">swipe_element_by_text(self, device, text, direction, steps=Constant.DEFAULT_SWIPE_STEPS)</div>
+            <div class="method-desc">滑动文本元素。</div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>拖拽操作</h2>
+        
+        <div class="method">
+            <div class="method-name">drag_device_by_position(self, device, sx, sy, ex, ey, duration=Constant.DEFAULT_DRAG_DURATION)</div>
+            <div class="method-desc">从起点坐标拖拽到终点坐标。</div>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">drag_element_by_text(self, device, text, x, y, duration=Constant.DEFAULT_DRAG_DURATION)</div>
+            <div class="method-desc">拖拽文本元素到指定坐标。</div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>滚动操作</h2>
+        
+        <div class="method">
+            <div class="method-name">fling_to_head_by_vertical(self, device, steps=Constant.DEFAULT_FLING_STEPS)</div>
+            <div class="method-desc">垂直快速滚动到顶部。</div>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">fling_to_end_by_vertical(self, device, steps=Constant.DEFAULT_FLING_STEPS)</div>
+            <div class="method-desc">垂直快速滚动到底部。</div>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">scroll_by_horizontal(self, device, direction, steps=Constant.DEFAULT_SCROLL_STEPS)</div>
+            <div class="method-desc">水平滚动。</div>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">scroll_to_head_by_horizontal(self, device, steps=Constant.DEFAULT_SCROLL_STEPS)</div>
+            <div class="method-desc">水平滚动到最左。</div>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">scroll_to_end_by_horizontal(self, device, steps=Constant.DEFAULT_SCROLL_STEPS)</div>
+            <div class="method-desc">水平滚动到最右。</div>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">scroll_by_vertical(self, device, direction, steps=Constant.DEFAULT_SCROLL_STEPS)</div>
+            <div class="method-desc">垂直滚动。</div>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">scroll_to_head_by_vertical(self, device, steps=Constant.DEFAULT_SCROLL_STEPS)</div>
+            <div class="method-desc">垂直滚动到顶部。</div>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">scroll_to_end_by_vertical(self, device, steps=Constant.DEFAULT_SCROLL_STEPS)</div>
+            <div class="method-desc">垂直滚动到底部。</div>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">scroll_to_element_by_text(self, device, text, direction=Constant.ScrollDirection.vertical.value)</div>
+            <div class="method-desc">滚动到文本元素。</div>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">scroll_to_element_by_xpath(self, device, xpath, direction)</div>
+            <div class="method-desc">滚动到XPath元素。</div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>文本操作</h2>
+        
+        <div class="method">
+            <div class="method-name">get_element_text_by_text(self, device, text)</div>
+            <div class="method-desc">获取文本元素的文本内容。</div>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">set_element_text_by_text(self, device, text, content)</div>
+            <div class="method-desc">设置文本元素的文本内容。</div>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">clear_element_text_by_text(self, device, text)</div>
+            <div class="method-desc">清空文本元素的文本内容。</div>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">get_element_text_by_xpath(self, device, xpath)</div>
+            <div class="method-desc">获取XPath元素的文本内容。</div>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">set_element_text_by_xpath(self, device, xpath, content)</div>
+            <div class="method-desc">设置XPath元素的文本内容。</div>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">clear_element_text_by_resourceId(self, device, resourceId)</div>
+            <div class="method-desc">清空resourceId元素的文本内容。</div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>元素信息获取</h2>
+        
+        <div class="method">
+            <div class="method-name">get_element_all_info_by_text(self, device, text)</div>
+            <div class="method-desc">获取文本元素的所有信息。</div>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">get_element_all_info_by_xpath(self, device, xpath)</div>
+            <div class="method-desc">获取XPath元素的所有信息。</div>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">get_element_info_by_text(self, device, text, attribute)</div>
+            <div class="method-desc">获取文本元素的指定属性。</div>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">get_element_info_by_xpath(self, device, xpath, attribute)</div>
+            <div class="method-desc">获取XPath元素的指定属性。</div>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">get_element_all_info_by_resourceid(self, device, resourceid)</div>
+            <div class="method-desc">获取resourceId元素的所有信息。</div>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">get_checked_info_by_resource_id(self, device, resourceId)</div>
+            <div class="method-desc">获取resourceId元素的checked状态。</div>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">get_childElement_attribute_by_parentXpath(self, device, parentXpath, attribute)</div>
+            <div class="method-desc">通过父元素XPath获取子文本元素的属性。</div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Toast操作</h2>
+        
+        <div class="method">
+            <div class="method-name">get_toast(self, device, timeout=Constant.DEFAULT_GET_TOAST_TIMEOUT, defaultMessage=None)</div>
+            <div class="method-desc">获取Toast消息。</div>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">reset_toast(self, device)</div>
+            <div class="method-desc">重置Toast缓存。</div>
+        </div>
+    </div>
+
+    <h2>使用示例</h2>
+    <pre>
+# 初始化BasePage
+base_page = BasePage()
+
+# 检查元素是否存在
+if base_page.exists_by_text(device, "确定"):
+    # 点击元素
+    base_page.click_element_by_text(device, "确定")
+    
+    # 获取Toast消息
+    toast = base_page.get_toast(device)
+    print(f"Toast消息: {toast}")
+    
+    # 滚动到指定元素
+    base_page.scroll_to_element_by_text(device, "底部元素")
+</pre>
+
+    <h2>注意事项</h2>
+    <ul>
+        <li>所有方法都需要传入device参数</li>
+        <li>元素定位方法支持text、resourceId和xpath三种方式</li>
+        <li>操作失败时会记录日志但不会抛出异常</li>
+        <li>建议使用Constant中定义的默认超时时间</li>
+    </ul>
+</body>
+</html>

@@ -129,7 +129,7 @@
             background-size: cover;
             background-position: center;
             transition: left 1s ease-in-out;  /* 添加left属性的过渡效果 */
-            opacity: 0.6;
+            opacity: 0.8;
         }
 
         .slide.active {
@@ -168,7 +168,7 @@
             /*-webkit-background-clip: text;*/
             /*-webkit-text-fill-color: transparent;*/
             z-index: 10;
-            color: white;
+            color: var(--apple-white);
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
         }
         
@@ -181,7 +181,7 @@
             max-width: 700px;
             margin-bottom: 40px;
             z-index: 10;
-            color: white;
+            color: var(--apple-white);
             text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
         }
         
@@ -191,7 +191,7 @@
         }
         
         .hero-link {
-            color: var(--apple-blue);
+            color: var(--apple-white);
             text-decoration: none;
             font-size: 21px;
             position: relative;
@@ -213,6 +213,7 @@
         .hero-link:hover:after {
             transform: scaleX(1);
             transform-origin: left;
+            color: var(--apple-blue);
         }
         
         .section {
@@ -355,9 +356,11 @@
                 <a href="#" class="nav-link">指南</a>
                 <div class="dropdown-menu">
                     <a href="./html/overview.html" class="dropdown-item">Overview</a>
-                    <a href="./resources/user-manual.pdf" class="dropdown-item" target="_blank">部署文档</a>
+                    <a href="./html/document-center.html" class="dropdown-item">文档中心</a>
+<!--                    <a href="./html/deploy.html" class="dropdown-item" target="_blank">部署文档</a>-->
                     
                     <a href="./html/api.html" class="dropdown-item">API文档</a>
+
                 </div>
             </div>
             <a href="#projects" class="nav-link">项目</a>
@@ -453,7 +456,7 @@
                 <div class="project-content">
                     <h3 class="project-title">工具集合站</h3>
                     <p class="project-desc">精选开发工具集合，提高工作效率的利器。</p>
-                    <a href="#" class="project-link">
+                    <a href="./html/tool-set.html" class="project-link">
                         工具研制中
                         <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M1 11L11 1M11 1H1M11 1V11" stroke="#0066cc" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -466,12 +469,12 @@
     
     <section id="about" class="section" style="background-color: var(--apple-light-gray);">
         <h2 class="section-title">关于我们</h2>
-        <div style="max-width: 700px; margin: 0 auto; text-align: center;">
+        <div style="max-width: 700px; margin: 0 auto; text-align: left;text-indent: 2em;">
             <p style="font-size: 21px; color: var(--apple-gray); margin-bottom: 30px;">
-                我们是一群来自智能座舱软件测试团队、极富激情与自驱力的励志开发者，专注于构建优雅、高效的新一代智能汽车电子架构车联仿真及自动化工具链。
+                我们是一支来自智能座舱软件测试领域的精英团队，致力于打造新一代智能汽车电子架构的车联仿真与自动化测试解决方案。凭借深厚的技术积累与创新精神，我们持续推动汽车电子测试领域的智能化转型。
             </p>
             <p style="font-size: 21px; color: var(--apple-gray);">
-                技术栈包括 JavaScript, Python, Node.js 等。追求开发极致体验的自动化工具链，赋能实际生产。
+                核心技术栈涵盖 JavaScript、Python、Node.js 等现代开发技术，专注于构建高效、可靠的自动化测试工具链。我们以提升测试效率、保障产品质量为己任，为智能汽车电子系统的研发提供强有力的技术支撑。
             </p>
         </div>
     </section>

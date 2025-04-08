@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Camera API 文档</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #2980b9;
+            margin-top: 30px;
+        }
+        .class-name {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-left: 4px solid #3498db;
+            margin: 20px 0;
+            font-family: monospace;
+            font-size: 18px;
+        }
+        .method {
+            background-color: #f0f7ff;
+            padding: 12px;
+            border-left: 3px solid #2980b9;
+            margin: 15px 0;
+        }
+        .method-name {
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        .param {
+            font-style: italic;
+            color: #7f8c8d;
+        }
+        .return {
+            color: #27ae60;
+        }
+        code {
+            background-color: #f0f0f0;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-family: monospace;
+        }
+        .constant {
+            color: #8e44ad;
+            font-weight: bold;
+        }
+        .section {
+            margin-top: 40px;
+            border-top: 1px solid #eee;
+            padding-top: 20px;
+        }
+        .note {
+            background-color: #fff3cd;
+            padding: 10px;
+            border-left: 3px solid #ffc107;
+            margin: 15px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Camera API 文档</h1>
+
+    <h2>全局常量</h2>
+    <ul>
+        <li><span class="constant">DATE_TIME_FORMAT</span> = "%Y-%m-%d %H:%M:%S" - 日期时间格式</li>
+        <li><span class="constant">RECORD_VIDEO_FPS</span> = 30.0 - 视频录制帧率</li>
+        <li><span class="constant">MASK_TIMER_INTERVAL</span> = 1 - 遮罩更新时间间隔(秒)</li>
+    </ul>
+
+    <div class="section">
+        <div class="class-name">class VideoRecorderTask(threading.Thread)</div>
+        
+        <p>视频录制任务类，继承自Thread，用于后台录制视频并添加时间戳和系统状态信息。</p>
+        
+        <h2>初始化方法</h2>
+        
+        <div class="method">
+            <div class="method-name">__init__(video_save_path, record_video_duration=1800, startMaskTimer=True)</div>
+            <p>初始化视频录制任务。</p>
+            <p><strong>参数:</strong></p>
+            <ul>
+                <li><span class="param">video_save_path</span> - 视频保存路径</li>
+                <li><span class="param">record_video_duration</span> - 单次录制时长(秒)，默认为1800秒(30分钟)</li>
+                <li><span class="param">startMaskTimer</span> - 是否开启遮罩定时器，默认为True</li>
+            </ul>
+        </div>
+        
+        <h2>实例方法</h2>
+        
+        <div class="method">
+            <div class="method-name">updateMask()</div>
+            <p>更新遮罩信息(时间、系统状态、电源模式)。</p>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">startMaskTimer()</div>
+            <p>启动遮罩定时器。</p>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">getCurrentSystemState()</div>
+            <p>获取当前系统状态。</p>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">getCurrentPowerModeState()</div>
+            <p>获取当前电源模式状态。</p>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">stopMaskTimer()</div>
+            <p>停止遮罩定时器。</p>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">initCamera()</div>
+            <p>初始化摄像头。</p>
+            <p><strong>返回:</strong> <span class="return">tuple</span> - (摄像头对象, 宽度, 高度)，失败返回(None, None, None)</p>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">addImageMask(frame, text)</div>
+            <p>在视频帧上添加文字遮罩。</p>
+            <p><strong>参数:</strong></p>
+            <ul>
+                <li><span class="param">frame</span> - 视频帧</li>
+                <li><span class="param">text</span> - 要添加的文字列表</li>
+            </ul>
+            <p><strong>返回:</strong> <span class="return">frame</span> - 添加遮罩后的视频帧</p>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">run()</div>
+            <p>线程运行方法，开始录制视频。</p>
+            <div class="note">
+                <strong>注意：</strong>该方法会自动调用，不应直接调用。
+            </div>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">stopRecord()</div>
+            <p>停止录制视频。</p>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="class-name">class VideoProcessing</div>
+        
+        <p>视频处理类，提供视频剪辑功能。</p>
+        
+        <h2>类方法</h2>
+        
+        <div class="method">
+            <div class="method-name">@classmethod getInstance()</div>
+            <p>获取 VideoProcessing 的单例实例。</p>
+            <p><strong>返回:</strong> <span class="return">VideoProcessing</span> - VideoProcessing 的单例实例</p>
+        </div>
+        
+        <h2>实例方法</h2>
+        
+        <div class="method">
+            <div class="method-name">video_cropping(video_file_path, start_time_sec, end_time_sec, output_folder=None, output_name=None)</div>
+            <p>剪辑视频片段。</p>
+            <p><strong>参数:</strong></p>
+            <ul>
+                <li><span class="param">video_file_path</span> - 源视频文件路径</li>
+                <li><span class="param">start_time_sec</span> - 开始时间(秒)</li>
+                <li><span class="param">end_time_sec</span> - 结束时间(秒)</li>
+                <li><span class="param">output_folder</span> - 输出目录，默认为源文件所在目录</li>
+                <li><span class="param">output_name</span> - 输出文件名(不含扩展名)，默认为自动生成</li>
+            </ul>
+            <p><strong>返回:</strong> <span class="return">str</span> - 剪辑后的视频路径，失败返回None</p>
+            <p><strong>可能抛出的异常:</strong></p>
+            <ul>
+                <li>FileNotFoundError - 视频文件不存在</li>
+                <li>IOError - 无法打开视频文件</li>
+                <li>ValueError - 结束时间不大于开始时间</li>
+                <li>RuntimeError - 无法创建视频写入器</li>
+            </ul>
+        </div>
+    </div>
+    
+    <h2>注意事项</h2>
+    <ul>
+        <li>VideoRecorderTask 是线程类，需要在外部管理线程生命周期</li>
+        <li>视频录制使用MP4V编码，帧率固定为30FPS</li>
+        <li>视频遮罩包含时间、系统状态和电源模式信息</li>
+        <li>VideoProcessing 是单例类，提供视频剪辑功能</li>
+        <li>视频剪辑支持多种编码格式(mp4v/XVID)，会自动尝试可用格式</li>
+        <li>所有方法都有异常处理，失败时会记录日志</li>
+    </ul>
+</body>
+</html>

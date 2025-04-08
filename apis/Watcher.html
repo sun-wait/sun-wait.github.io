@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>Watcher API 文档</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        .class-name {
+            background-color: #f8f9fa;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-family: monospace;
+            color: #d63384;
+            font-weight: bold;
+        }
+        .method {
+            background-color: #f8f9fa;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            border-left: 3px solid #6c757d;
+        }
+        .method-name {
+            font-weight: bold;
+            color: #0066cc;
+        }
+        .method-desc {
+            margin-top: 5px;
+            color: #6c757d;
+        }
+        .param {
+            font-family: monospace;
+        }
+        .note {
+            background-color: #fff3cd;
+            padding: 10px;
+            border-radius: 5px;
+            border-left: 3px solid #ffc107;
+            margin: 15px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Watcher API 文档</h1>
+    <p>该模块提供了设备界面元素监控功能，可以监听特定元素的变化并触发回调。</p>
+
+    <div class="note">
+        <strong>主要功能：</strong>
+        <ul>
+            <li>添加界面元素监听器</li>
+            <li>启动/停止监控</li>
+            <li>重置监控状态</li>
+            <li>检查监控状态</li>
+        </ul>
+    </div>
+
+    <h2>类文档</h2>
+
+    <div class="method">
+        <h3><span class="class-name">Watcher</span></h3>
+        <p>界面元素监控类，负责管理设备界面元素的监控任务。</p>
+        
+        <div class="method">
+            <div class="method-name">__init__(self)</div>
+            <div class="method-desc">构造函数，初始化监控器。</div>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">getInstance(cls)</div>
+            <div class="method-desc">获取Watcher的单例实例。</div>
+            <p><strong>返回:</strong> Watcher实例</p>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">addWatcher(self, device, indicator, callback)</div>
+            <div class="method-desc">添加界面元素监控器。</div>
+            <p><strong>参数:</strong></p>
+            <ul>
+                <li><span class="param">device</span>: 设备对象</li>
+                <li><span class="param">indicator</span>: 监控指标(文本或xpath字符串)</li>
+                <li><span class="param">callback</span>: 触发回调函数</li>
+            </ul>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">start(self, device)</div>
+            <div class="method-desc">启动所有监控器。</div>
+            <p><strong>参数:</strong></p>
+            <ul>
+                <li><span class="param">device</span>: 设备对象</li>
+            </ul>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">reset(self, device)</div>
+            <div class="method-desc">重置所有监控器。</div>
+            <p><strong>参数:</strong></p>
+            <ul>
+                <li><span class="param">device</span>: 设备对象</li>
+            </ul>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">stop(self, device)</div>
+            <div class="method-desc">停止所有监控器。</div>
+            <p><strong>参数:</strong></p>
+            <ul>
+                <li><span class="param">device</span>: 设备对象</li>
+            </ul>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">isWorking(self)</div>
+            <div class="method-desc">检查监控器是否正在运行。</div>
+            <p><strong>返回:</strong> 布尔值，表示监控器是否正在运行</p>
+        </div>
+    </div>
+
+    <h2>使用示例</h2>
+    <pre>
+# 获取Watcher实例
+watcher = Watcher.getInstance()
+
+# 定义回调函数
+def my_callback():
+    print("元素被触发!")
+
+# 添加监控器
+watcher.addWatcher(device, "确定按钮", my_callback)
+
+# 启动监控
+watcher.start(device)
+
+# 检查监控状态
+if watcher.isWorking():
+    print("监控器正在运行")
+
+# 停止监控
+watcher.stop(device)
+    </pre>
+
+    <h2>注意事项</h2>
+    <ul>
+        <li>需要有效的设备连接</li>
+        <li>indicator可以是文本内容或xpath表达式</li>
+        <li>回调函数会在监控元素出现时触发</li>
+        <li>使用单例模式确保全局只有一个监控器实例</li>
+    </ul>
+</body>
+</html>

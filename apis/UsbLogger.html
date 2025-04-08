@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>UsbLogger API 文档</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        .class-name {
+            background-color: #f8f9fa;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-family: monospace;
+            color: #d63384;
+            font-weight: bold;
+        }
+        .method {
+            background-color: #f8f9fa;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            border-left: 3px solid #6c757d;
+        }
+        .method-name {
+            font-weight: bold;
+            color: #0066cc;
+        }
+        .method-desc {
+            margin-top: 5px;
+            color: #6c757d;
+        }
+        .param {
+            font-family: monospace;
+        }
+        code {
+            background-color: #f8f9fa;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-family: monospace;
+            color: #d63384;
+        }
+        .note {
+            background-color: #fff3cd;
+            padding: 10px;
+            border-radius: 5px;
+            border-left: 3px solid #ffc107;
+            margin: 15px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>UsbLogger API 文档</h1>
+    <p>该模块提供了通过USB连接收集设备日志的功能。</p>
+
+    <div class="note">
+        <strong>主要功能：</strong>
+        <ul>
+            <li>通过ADB连接设备</li>
+            <li>使用gmlc命令收集USB日志</li>
+            <li>防止重复收集</li>
+            <li>超时保护机制</li>
+        </ul>
+    </div>
+
+    <h2>类文档</h2>
+
+    <div class="method">
+        <h3><span class="class-name">UsbLogger</span></h3>
+        <p>USB日志收集类，负责通过ADB连接设备并收集USB日志。</p>
+        
+        <div class="method">
+            <div class="method-name">__init__(self)</div>
+            <div class="method-desc">构造函数，初始化USB日志收集器。</div>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">getInstance(cls)</div>
+            <div class="method-desc">获取UsbLogger的单例实例。</div>
+            <p><strong>返回:</strong> UsbLogger实例</p>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">startDump(self)</div>
+            <div class="method-desc">启动USB日志收集。</div>
+            <p><strong>工作流程:</strong></p>
+            <ol>
+                <li>检查是否已在收集日志</li>
+                <li>检查ADB连接状态</li>
+                <li>执行gmlc命令收集日志</li>
+                <li>设置超时保护(3000秒)</li>
+            </ol>
+        </div>
+    </div>
+
+    <h2>常量</h2>
+    <ul>
+        <li><code>PULL_OUT_USB_LOG_TIMEOUT</code>: USB日志收集超时时间(秒)，默认为3000</li>
+    </ul>
+
+    <h2>使用示例</h2>
+    <pre>
+# 获取UsbLogger实例
+usb_logger = UsbLogger.getInstance()
+
+# 启动USB日志收集
+usb_logger.startDump()
+    </pre>
+
+    <h2>注意事项</h2>
+    <ul>
+        <li>需要确保ADB连接已正确配置</li>
+        <li>设备上需要安装gmlc工具</li>
+        <li>日志收集是同步操作，会阻塞直到完成或超时</li>
+        <li>同一时间只能有一个收集任务运行</li>
+    </ul>
+</body>
+</html>

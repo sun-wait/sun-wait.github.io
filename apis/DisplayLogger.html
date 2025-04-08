@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DisplayLogger API 文档</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #2980b9;
+            margin-top: 30px;
+            border-left: 4px solid #3498db;
+            padding-left: 10px;
+        }
+        .class-name {
+            background-color: #f8f9fa;
+            padding: 10px 15px;
+            border-radius: 4px;
+            border-left: 4px solid #3498db;
+            font-family: monospace;
+            font-size: 1.2em;
+            margin: 20px 0;
+            color: #2c3e50;
+        }
+        .method {
+            background-color: #f0f7ff;
+            padding: 10px;
+            border-radius: 4px;
+            margin: 15px 0;
+            border-left: 3px solid #7f8c8d;
+        }
+        .method-name {
+            font-weight: bold;
+            color: #16a085;
+        }
+        .method-desc {
+            margin-top: 5px;
+            color: #555;
+        }
+        .method-params {
+            margin-top: 10px;
+            font-size: 0.9em;
+        }
+        .param {
+            margin-left: 20px;
+            font-family: monospace;
+        }
+        .param-name {
+            font-weight: bold;
+            color: #8e44ad;
+        }
+        .param-desc {
+            margin-left: 5px;
+        }
+        .method-return {
+            margin-top: 5px;
+            font-size: 0.9em;
+        }
+        .return-desc {
+            margin-left: 20px;
+            font-family: monospace;
+        }
+        code {
+            background-color: #f0f0f0;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-family: monospace;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <h1>DisplayLogger API 文档</h1>
+    
+    <p>该模块提供了收集显示相关日志的功能，包括IVI(车载信息娱乐系统)日志和QNX系统日志。</p>
+    
+    <h2>类文档</h2>
+    
+    <div class="class-name">DisplayLogger</div>
+    <p>显示日志收集器的主类，提供收集IVI和QNX显示相关日志的功能。</p>
+    
+    <div class="method">
+        <div class="method-name">getInstance()</div>
+        <div class="method-desc">获取DisplayLogger的单例实例。</div>
+        <div class="method-return">
+            <span>返回:</span>
+            <div class="return-desc">DisplayLogger的实例</div>
+        </div>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">startIviLog(caseFolder, asyncMode=True)</div>
+        <div class="method-desc">启动IVI日志收集任务。</div>
+        <div class="method-params">
+            <div class="param">
+                <span class="param-name">caseFolder</span>
+                <span class="param-desc">日志保存的文件夹路径</span>
+            </div>
+            <div class="param">
+                <span class="param-name">asyncMode</span>
+                <span class="param-desc">是否异步执行，默认为True</span>
+            </div>
+        </div>
+        <div class="method-return">
+            <span>返回:</span>
+            <div class="return-desc">布尔值，表示是否成功启动</div>
+        </div>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">startQnxLog(caseFolder, asyncMode=True)</div>
+        <div class="method-desc">启动QNX日志收集任务。</div>
+        <div class="method-params">
+            <div class="param">
+                <span class="param-name">caseFolder</span>
+                <span class="param-desc">日志保存的文件夹路径</span>
+            </div>
+            <div class="param">
+                <span class="param-name">asyncMode</span>
+                <span class="param-desc">是否异步执行，默认为True</span>
+            </div>
+        </div>
+        <div class="method-return">
+            <span>返回:</span>
+            <div class="return-desc">布尔值，表示是否成功启动</div>
+        </div>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">startLog(caseFolder, asyncMode=True)</div>
+        <div class="method-desc">同时启动IVI和QNX日志收集任务。</div>
+        <div class="method-params">
+            <div class="param">
+                <span class="param-name">caseFolder</span>
+                <span class="param-desc">日志保存的文件夹路径</span>
+            </div>
+            <div class="param">
+                <span class="param-name">asyncMode</span>
+                <span class="param-desc">是否异步执行，默认为True</span>
+            </div>
+        </div>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">waitQnxLogFinish()</div>
+        <div class="method-desc">等待QNX日志任务完成(仅异步模式下使用)。</div>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">waitIviLogFinish()</div>
+        <div class="method-desc">等待IVI日志任务完成(仅异步模式下使用)。</div>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">waitLogFinish()</div>
+        <div class="method-desc">等待所有日志任务完成(仅异步模式下使用)。</div>
+    </div>
+    
+    <div class="class-name">IviLogTask</div>
+    <p>IVI日志收集任务线程类，内部使用。</p>
+    
+    <div class="method">
+        <div class="method-name">run()</div>
+        <div class="method-desc">执行IVI日志收集任务，包括收集dumpsys window和dumpsys SurfaceFlinger信息。</div>
+    </div>
+    
+    <div class="class-name">QnxLogTask</div>
+    <p>QNX日志收集任务线程类，内部使用。</p>
+    
+    <div class="method">
+        <div class="method-name">addPermissionToScripts()</div>
+        <div class="method-desc">为远程脚本添加执行权限。</div>
+        <div class="method-return">
+            <span>返回:</span>
+            <div class="return-desc">布尔值，表示是否成功</div>
+        </div>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">run()</div>
+        <div class="method-desc">执行QNX日志收集任务，包括上传脚本、添加权限、执行脚本、拉取日志和清理远程文件。</div>
+    </div>
+    
+    <h2>常量说明</h2>
+    <ul>
+        <li><code>REMOTE_DISPLAY_SCRIPTS_PATH</code>: 远程脚本存放路径，默认为"/ota_update/display"</li>
+        <li><code>EXECUTE_DISPLAY_SCRIPT_CMD_TIMEOUT</code>: 执行显示脚本的超时时间，默认为300秒</li>
+        <li><code>PULL_OUT_DISPLAY_QNX_LOG_TIMEOUT</code>: 拉取QNX日志的超时时间，默认为60秒</li>
+    </ul>
+    
+    <h2>使用示例</h2>
+    <pre><code>
+# 同步模式收集日志
+logger = DisplayLogger.getInstance()
+logger.startLog("/path/to/logs", asyncMode=False)
+
+# 异步模式收集日志
+logger.startLog("/path/to/logs")
+# 其他操作...
+logger.waitLogFinish()
+    </code></pre>
+</body>
+</html>

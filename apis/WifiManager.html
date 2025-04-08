@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>WifiManager API 文档</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            color: #333;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #2980b9;
+            margin-top: 30px;
+        }
+        .class-name {
+            background-color: #f8f9fa;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-family: monospace;
+            color: #d63384;
+            font-weight: bold;
+        }
+        .enum-name {
+            background-color: #f0f7ff;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-family: monospace;
+            color: #2c7be5;
+            font-weight: bold;
+        }
+        .method {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            border-left: 4px solid #3498db;
+        }
+        .method-name {
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        .method-desc {
+            margin-top: 10px;
+        }
+        .param {
+            margin-top: 10px;
+        }
+        .param-name {
+            font-weight: bold;
+        }
+        .cmd-section {
+            background-color: #e8f4f8;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 20px 0;
+        }
+        .cmd-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .singleton {
+            background-color: #fff3e0;
+            padding: 10px;
+            border-left: 4px solid #ffa726;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>WifiManager API 文档</h1>
+
+    <div class="singleton">
+        <strong>单例模式：</strong> 该类采用单例设计模式，请使用 <code>getInstance()</code> 方法获取实例
+    </div>
+
+    <div class="cmd-section">
+        <div class="cmd-title">底层ADB命令</div>
+        <ul>
+            <li><code>ENABLE_WIFI_CMD</code>: 启用WiFi</li>
+            <li><code>DISABLE_WIFI_CMD</code>: 禁用WiFi</li>
+            <li><code>GET_WIFI_STATUS_CMD</code>: 获取WiFi状态</li>
+            <li><code>CONNECT_WIFI_CMD</code>: 连接WiFi网络</li>
+            <li><code>DISCONNECT_WIFI_CMD</code>: 断开WiFi网络</li>
+            <li><code>GET_WIFI_LIST_CMD</code>: 获取WiFi网络列表</li>
+        </ul>
+    </div>
+
+    <h2><span class="enum-name">EncryptionMode</span> 枚举</h2>
+    <p>定义WiFi加密模式：</p>
+    <ul>
+        <li><code>wep</code>: WEP加密</li>
+        <li><code>wpa</code>: WPA加密</li>
+        <li><code>wpa2</code>: WPA2加密 (默认)</li>
+        <li><code>wpa3</code>: WPA3加密</li>
+    </ul>
+
+    <h2><span class="class-name">WifiManager</span> 类</h2>
+    <p>该类提供了Android设备的WiFi管理功能，包括连接/断开WiFi、获取WiFi状态等。</p>
+
+    <div class="method">
+        <div class="method-name">__init__(self)</div>
+        <div class="method-desc">
+            构造函数，初始化WifiManager实例。
+        </div>
+    </div>
+
+    <div class="method">
+        <div class="method-name">getInstance()</div>
+        <div class="method-desc">
+            获取WifiManager单例实例。
+        </div>
+        <div class="param">
+            <span class="param-name">返回:</span> WifiManager实例
+        </div>
+    </div>
+
+    <div class="method">
+        <div class="method-name">isWifiEnable()</div>
+        <div class="method-desc">
+            检查WiFi是否已启用。
+        </div>
+        <div class="param">
+            <span class="param-name">返回:</span> WiFi已启用返回True，否则返回False
+        </div>
+    </div>
+
+    <div class="method">
+        <div class="method-name">switchWifi(on)</div>
+        <div class="method-desc">
+            开启或关闭WiFi。
+        </div>
+        <div class="param">
+            <span class="param-name">参数:</span>
+            <ul>
+                <li>on - True开启WiFi，False关闭WiFi</li>
+            </ul>
+            <span class="param-name">返回:</span> 操作成功返回True，失败返回False
+        </div>
+    </div>
+
+    <div class="method">
+        <div class="method-name">getCurrentWifi()</div>
+        <div class="method-desc">
+            获取当前连接的WiFi SSID。
+        </div>
+        <div class="param">
+            <span class="param-name">返回:</span> 当前连接的WiFi SSID，未连接返回None
+        </div>
+    </div>
+
+    <div class="method">
+        <div class="method-name">getNetworkId(ssid)</div>
+        <div class="method-desc">
+            获取指定SSID的网络ID。
+        </div>
+        <div class="param">
+            <span class="param-name">参数:</span>
+            <ul>
+                <li>ssid - 要查询的WiFi名称</li>
+            </ul>
+            <span class="param-name">返回:</span> 网络ID，找不到返回None
+        </div>
+    </div>
+
+    <div class="method">
+        <div class="method-name">disconnect(ssid)</div>
+        <div class="method-desc">
+            断开指定WiFi连接。
+        </div>
+        <div class="param">
+            <span class="param-name">参数:</span>
+            <ul>
+                <li>ssid - 要断开的WiFi名称</li>
+            </ul>
+            <span class="param-name">返回:</span> 操作成功返回True，失败返回False
+        </div>
+    </div>
+
+    <div class="method">
+        <div class="method-name">connect(ssid, password, encryptMode=EncryptionMode.wpa2.value)</div>
+        <div class="method-desc">
+            连接指定WiFi网络。
+        </div>
+        <div class="param">
+            <span class="param-name">参数:</span>
+            <ul>
+                <li>ssid - 要连接的WiFi名称</li>
+                <li>password - WiFi密码</li>
+                <li>encryptMode - 加密模式 (默认为WPA2)</li>
+            </ul>
+            <span class="param-name">返回:</span> 连接成功返回True，失败返回False
+        </div>
+    </div>
+
+    <h3>使用示例</h3>
+    <pre>
+# 获取WifiManager实例
+wifi_manager = WifiManager.getInstance()
+
+# 开启WiFi
+wifi_manager.switchWifi(True)
+
+# 连接WiFi
+wifi_manager.connect("MyWiFi", "password123")
+
+# 获取当前WiFi
+current_wifi = wifi_manager.getCurrentWifi()
+
+# 断开WiFi
+wifi_manager.disconnect("MyWiFi")
+    </pre>
+</body>
+</html>

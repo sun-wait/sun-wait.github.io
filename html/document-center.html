@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>customLib 文档中心</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      margin: 20px;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .navbar {
+      background-color: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 44px;
+      padding: 0 22px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      z-index: 999;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    .nav-logo {
+      font-size: 21px;
+      font-weight: 500;
+      color: var(--apple-black);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 30px;
+      align-items: center;
+    }
+
+    .nav-link {
+      color: var(--apple-black);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 400;
+      transition: opacity 0.3s;
+    }
+
+    .nav-link:hover {
+      opacity: 0.7;
+    }
+
+    .nav-dropdown {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .dropdown-menu {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background-color: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      padding: 8px 0;
+      min-width: 160px;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s, visibility 0.3s;
+    }
+
+    .dropdown-item {
+      display: block;
+      padding: 8px 16px;
+      color: var(--apple-black);
+      text-decoration: none;
+      font-size: 14px;
+      transition: background-color 0.3s;
+    }
+
+    .dropdown-item:hover {
+      background-color: var(--apple-light-gray);
+    }
+
+    .nav-dropdown:hover .dropdown-menu {
+      opacity: 1;
+      visibility: visible;
+    }
+
+
+    h1, h2, h3 {
+      color: #333;
+    }
+    a {
+      color: #007BFF;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    ul, ol {
+      padding-left: 20px;
+    }
+    .section {
+      margin-bottom: 30px;
+    }
+    .section h2 {
+      border-bottom: 2px solid #eee;
+      padding-bottom: 10px;
+    }
+    .module-list, .api-list, .faq-list {
+      list-style-type: none;
+      padding-left: 0;
+    }
+    .module-list li, .api-list li, .faq-list li {
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="navbar">
+    <a href="#" class="nav-logo">一起玩转车辆</a>
+    <div class="nav-links">
+      <a href="../index.html" class="nav-link">首页</a>
+<!--      <a href="./document-center.html" class="dropdown-item">文档中心</a>-->
+      <a href="./api.html" class="dropdown-item">API文档</a>
+    </div>
+  </nav>
+
+
+  <h1 style="padding-top: 15px;">customLib 文档中心</h1>
+
+  <h2>文档导航</h2>
+  <p>欢迎使用 customLib 文档中心。您可以通过以下链接快速访问各个文档部分：</p>
+  <ol>
+    <li><a href="README.html">项目介绍</a> - customLib 项目的整体介绍和功能概述</li>
+    <li><a href="quick-start.html">快速入门指南</a> - 快速上手 customLib 的指南和示例</li>
+    <li><a href="deploy.html">项目部署</a> - 快速部署 customLib </li>
+    <li><a href="#模块文档">模块文档</a> - 各个功能模块的详细文档</li>
+    <li><a href="#api参考">API 参考</a> - 完整的 API 参考文档</li>
+    <li><a href="#常见问题">常见问题</a> - 常见问题解答和故障排除指南</li>
+  </ol>
+
+  <h2 id="模块文档">模块文档</h2>
+  <p>customLib 包含多个功能模块，每个模块专注于特定领域的功能：</p>
+  <ul>
+    <li><a href="./api.html#BaseScenarioRunner">性能模块 (Performance)</a> - 性能监控、数据采集和分析</li>
+<!--    <li><a href="uiautomator_module.html">UI 自动化模块 (UIAutomator)</a> - UI 自动化测试工具</li>-->
+    <li><a href="./api.html#Camera">OpenCV 模块</a> - 图像处理和计算机视觉功能</li>
+    <li><a href="./api.html#AdbLogger">日志模块 (Loggers)</a> - 日志收集和管理</li>
+<!--    <li><a href="./api.html#BaseScenarioRunner">数据库模块 (SQLite)</a> - 数据库操作和管理</li>-->
+<!--    <li><a href="./api.html#BaseScenarioRunner">事件模块 (Event)</a> - 事件触发和响应机制</li>-->
+    <li><a href="./api.html#CanBusClient">CAN 总线模块</a> - CAN 总线通信工具</li>
+<!--    <li><a href="./api.html#BaseScenarioRunner">LIN 总线模块</a> - LIN 总线通信工具</li>-->
+<!--    <li><a href="./api.html#BaseScenarioRunner">图表模块 (Chart)</a> - 数据可视化工具</li>-->
+    <li><a href="./api.html#AudioManager">音频模块 (Audio)</a> - 音频处理和测试</li>
+    <li><a href="./api.html#LogAnalyzer">电源循环模块 (PowerCycle)</a> - 电源循环测试</li>
+  </ul>
+
+  <h2 id="api参考">API参考</h2>
+  <h3>通用工具 (Common)</h3>
+  <ul>
+    <li><a href="./api.html#CommandExcutor">CommandExcutor</a> - 命令执行工具类</li>
+    <li><a href="./api.html#DeviceUtil">DeviceUtil</a> - 设备工具类</li>
+    <li><a href="./api.html#KeyEventer">KeyEventer</a> - 发送按键事件工具类</li>
+    <li><a href="./api.html#ScreenRecorder">ScreenRecorder</a> - 屏幕录制工具类</li>
+    <li><a href="./api.html#ScreenShoter">ScreenShoter</a> - 屏幕截图工具类</li>
+    <li><a href="./api.html#SerialClient">SerialClient</a> - 调试串口工具管理类</li>
+    <li><a href="./api.html#TimeUtil">TimeUtil</a> - 时间工具类</li>
+    <li><a href="./api.html#Utils">Utils</a> - 日志、文件工具类</li>
+    <li><a href="./api.html#VehicleTypeManager">VehicleTypeManager</a> - 车辆类型管理类</li>
+    <li><a href="./api.html#Watcher">Watcher</a> - #################################工具类</li>
+  </ul>
+
+  <h3>音频 (audio)</h3>
+  <ul>
+    <li><a href="./api.html#AudioManager">AudioManager</a> - 音频处理和测试</li>
+  </ul>
+
+  <h3>标定 (Calibration)</h3>
+  <ul>
+    <li><a href="./api.html#CalibrationManager">CalibrationManager</a> - 读写系统标定</li>
+  </ul>
+
+  <h3>can总线服务 (canbus)</h3>
+  <ul>
+    <li><a href="./api.html#CanBusClient">CanBusClient</a> - 启动、停止canbus 服务</li>
+  </ul>
+
+  <h3>仪表 (cluster)</h3>
+  <ul>
+    <li><a href="./api.html#ADASSettingManager">ADASSettingManager</a> - 命令执行工具</li>
+    <li><a href="./api.html#ClusterGeneralManager">ClusterGeneralManager</a> - 设备工具类</li>
+    <li><a href="./api.html#GpsSimulationGeneralMangager">GpsSimulationGeneralMangager</a> - 屏幕录制工具</li>
+    <li><a href="./api.html#LinGeneralManager">LinGeneralManager</a> - 屏幕截图工具</li>
+    <li><a href="./api.html#MessageSender">MessageSender</a> - 时间工具类</li>
+    <li><a href="./api.html#RvcManager">RvcManager</a> - 通用工具类</li>
+    <li><a href="./api.html#VehicleInitManager">VehicleInitManager</a> - 通用工具类</li>
+  </ul>
+
+  <h3>性能工具 (Performance)</h3>
+  <ul>
+    <li><a href="./api.html#BaseScenarioRunner">BaseScenarioRunner</a> - 基础场景运行器</li>
+    <li><a href="./api.html#MemoryCpuManager">MemoryCpuManager</a> - 内存和 CPU 管理器</li>
+    <li><a href="./api.html#IoMonitor">IoMonitor</a> - IO 监控工具</li>
+    <li><a href="./api.html#StartupManager">StartupManager</a> - 启动管理器</li>
+    <li><a href="./api.html#PageSwitchManager">PageSwitchManager</a> - 页面切换管理器</li>
+  </ul>
+
+  <h3>UI自动化 (UIAutomator)</h3>
+  <ul>
+    <li><a href="./api.html#BasePage">BasePage</a> - 基础页面类</li>
+    <li><a href="./api.html#ElementLocator">ElementLocator</a> - 元素定位器</li>
+    <li><a href="./api.html#KeyOperation">KeyOperation</a> - 按键操作</li>
+    <li><a href="./api.html#WifiManager">WifiManager</a> - WIFI 管理器</li>
+  </ul>
+
+  <h3>图像处理 (OpenCV)</h3>
+  <ul>
+    <li><a href="./api.html#ImageUtils">ImageUtils</a> - 图像处理工具类</li>
+    <li><a href="./api.html#Camera">Camera</a> - 摄像头操作工具</li>
+  </ul>
+
+  <h2 id="常见问题">常见问题</h2>
+  <h3>安装和配置</h3>
+  <ol>
+    <li><a href="#">如何安装 customLib？</a></li>
+    <li><a href="#">如何配置开发环境？</a></li>
+    <li><a href="#">如何更新到最新版本？</a></li>
+  </ol>
+
+  <h3>设备连接</h3>
+  <ol>
+    <li><a href="#">解决 ADB 连接问题</a></li>
+    <li><a href="#">多设备连接管理</a></li>
+    <li><a href="#">无线连接设置</a></li>
+  </ol>
+
+  <h3>性能测试</h3>
+  <ol>
+    <li><a href="#">性能数据异常处理</a></li>
+    <li><a href="#">如何自定义性能指标？</a></li>
+    <li><a href="#">性能报告解读指南</a></li>
+  </ol>
+
+  <h3>UI 自动化</h3>
+  <ol>
+    <li><a href="#">元素定位失败排查</a></li>
+    <li><a href="#">UI 测试不稳定解决方案</a></li>
+    <li><a href="#">如何处理弹窗和系统通知？</a></li>
+  </ol>
+
+  <h3>图像处理</h3>
+  <ol>
+    <li><a href="#">图像比对结果不准确</a></li>
+    <li><a href="#">提高图像匹配准确率</a></li>
+    <li><a href="#">处理不同分辨率的图像</a></li>
+  </ol>
+
+  <h2>版本历史</h2>
+  <ul>
+    <li><a href="#">v0.1</a> - 初始版本发布</li>
+
+  </ul>
+
+  <h2>贡献指南</h2>
+  <ul>
+    <li><a href="#">如何贡献代码</a></li>
+    <li><a href="#">报告问题</a></li>
+    <li><a href="#">提交功能请求</a></li>
+  </ul>
+
+  <h2>联系我们</h2>
+  <ul>
+    <li><a href="#">技术支持</a></li>
+    <li><a href="#">问题反馈</a></li>
+    <li><a href="#">功能建议</a></li>
+  </ul>
+
+</body>
+
+</html>

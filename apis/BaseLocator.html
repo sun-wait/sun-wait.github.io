@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>BaseLocator API 文档</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            color: #333;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #2980b9;
+            margin-top: 30px;
+        }
+        .class-name {
+            background-color: #f8f9fa;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-family: monospace;
+            color: #d63384;
+            font-weight: bold;
+        }
+        .method {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            border-left: 4px solid #3498db;
+        }
+        .method-name {
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        .method-desc {
+            margin-top: 10px;
+        }
+        .param {
+            margin-top: 10px;
+        }
+        .param-name {
+            font-weight: bold;
+        }
+        .feature {
+            background-color: #e8f4f8;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 20px 0;
+        }
+        .feature-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>BaseLocator API 文档</h1>
+
+    <div class="feature">
+        <div class="feature-title">核心特性</div>
+        <ul>
+            <li>使用LFU缓存策略缓存文件内容，提高读取效率</li>
+            <li>自动解析JSON格式文件内容</li>
+            <li>内置异常处理机制</li>
+        </ul>
+    </div>
+
+    <h2><span class="class-name">BaseLocator</span> 类</h2>
+    <p>该类提供了基于文件路径的指示器获取功能，内置缓存机制以提高性能。</p>
+
+    <div class="method">
+        <div class="method-name">__init__(self)</div>
+        <div class="method-desc">
+            构造函数，初始化BaseLocator实例。
+            <p>初始化时会创建一个LFU缓存实例。</p>
+        </div>
+    </div>
+
+    <div class="method">
+        <div class="method-name">getIndicator(self, filePath)</div>
+        <div class="method-desc">
+            获取指定文件路径的指示器内容。
+            <p>该方法会首先检查缓存中是否已有该文件内容，如果没有则从文件系统读取并解析JSON内容，然后缓存结果。</p>
+        </div>
+        <div class="param">
+            <span class="param-name">参数:</span>
+            <ul>
+                <li>filePath - 要读取的文件路径</li>
+            </ul>
+            <span class="param-name">返回:</span> 解析后的JSON对象，如果失败返回None
+        </div>
+    </div>
+
+    <h3>缓存行为说明</h3>
+    <ul>
+        <li>使用LFU(Least Frequently Used)缓存策略</li>
+        <li>缓存键为文件路径</li>
+        <li>缓存值为解析后的JSON对象</li>
+        <li>当缓存未命中时，会自动从文件系统读取并更新缓存</li>
+    </ul>
+
+    <h3>异常处理</h3>
+    <ul>
+        <li>所有异常都会被捕获并记录日志</li>
+        <li>发生异常时方法会返回None</li>
+        <li>常见的异常情况包括：文件不存在、文件格式错误、JSON解析失败等</li>
+    </ul>
+</body>
+</html>

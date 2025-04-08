@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>FeatureLogTask API 文档</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #2980b9;
+            margin-top: 30px;
+            border-left: 4px solid #3498db;
+            padding-left: 10px;
+        }
+        .class-name {
+            background-color: #f8f9fa;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-family: monospace;
+            color: #d63384;
+            font-weight: bold;
+        }
+        .method {
+            background-color: #f8f9fa;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            border-left: 3px solid #6c757d;
+        }
+        .method-name {
+            font-weight: bold;
+            color: #0066cc;
+        }
+        .method-desc {
+            margin-top: 5px;
+            color: #6c757d;
+        }
+        .param {
+            font-family: monospace;
+        }
+        code {
+            background-color: #f8f9fa;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-family: monospace;
+            color: #d63384;
+        }
+        .note {
+            background-color: #fff3cd;
+            padding: 10px;
+            border-radius: 5px;
+            border-left: 3px solid #ffc107;
+            margin: 15px 0;
+        }
+        .config-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        .config-table th, .config-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        .config-table th {
+            background-color: #f2f2f2;
+        }
+        .config-table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+    <h1>FeatureLogTask API 文档</h1>
+    <p>该模块提供了车辆各种功能日志的管理功能，包括蓝牙、CarPlay、导航、语音助手等多种日志的收集和管理。</p>
+
+    <div class="note">
+        <strong>主要功能：</strong>
+        <ul>
+            <li>多种功能日志的统一管理</li>
+            <li>基于配置文件的日志收集控制</li>
+            <li>支持异步日志收集</li>
+            <li>提供完整的日志生命周期管理(开启-收集-恢复)</li>
+        </ul>
+    </div>
+
+    <h2>类文档</h2>
+
+    <div class="method">
+        <h3><span class="class-name">FeaturelogTask</span></h3>
+        <p>功能日志管理类，负责管理和协调各类功能日志的收集工作。</p>
+        
+        <div class="method">
+            <div class="method-name">__init__(self)</div>
+            <div class="method-desc">构造函数，初始化功能日志管理任务。</div>
+            <p><strong>初始化行为:</strong></p>
+            <ul>
+                <li>解析VehicleLog_Config.json配置文件</li>
+                <li>初始化各类功能日志收集标志</li>
+            </ul>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">getInstance(cls)</div>
+            <div class="method-desc">获取FeaturelogTask的单例实例。</div>
+            <p><strong>返回:</strong> FeaturelogTask实例</p>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">parseVehicleLogConfig(self)</div>
+            <div class="method-desc">解析自动化测试配置目录下的VehicleLog_Config.json文件。</div>
+            <p><strong>返回:</strong> 解析后的JSON对象，解析失败返回None</p>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">getFeaturelog_needdump(self, key)</div>
+            <div class="method-desc">根据配置键名获取是否需要收集对应日志。</div>
+            <p><strong>参数:</strong></p>
+            <ul>
+                <li><span class="param">key</span>: 配置键名</li>
+            </ul>
+            <p><strong>返回:</strong> 布尔值，表示是否需要收集该日志</p>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">open_featurelog(self)</div>
+            <div class="method-desc">根据配置开启各类功能日志记录。</div>
+            <p><strong>支持的功能日志:</strong></p>
+            <ul>
+                <li>语音助手日志(VALog)</li>
+                <li>导航日志(NaviLog)</li>
+                <li>CarPlay日志(CarplayLog)</li>
+                <li>蓝牙日志(BluetoothLog)</li>
+            </ul>
+            <p><strong>返回:</strong> 布尔值，表示操作是否成功</p>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">start_featurelog(self, caseFolder)</div>
+            <div class="method-desc">启动功能日志收集任务。</div>
+            <p><strong>参数:</strong></p>
+            <ul>
+                <li><span class="param">caseFolder</span>: 测试用例文件夹路径</li>
+            </ul>
+            <p><strong>支持的功能日志:</strong></p>
+            <ul>
+                <li>Jstreamer音频日志(JstreamerLog)</li>
+                <li>Ahal音频日志(AhalLog)</li>
+                <li>TCP dump日志(TcpdumpLog)</li>
+                <li>Trace日志(TraceLog)</li>
+            </ul>
+            <p><strong>返回:</strong> 布尔值，表示操作是否成功</p>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">dump_featurelog(self, logfolder)</div>
+            <div class="method-desc">转储功能日志到指定目录。</div>
+            <p><strong>参数:</strong></p>
+            <ul>
+                <li><span class="param">logfolder</span>: 日志存储文件夹路径</li>
+            </ul>
+            <p><strong>支持的功能日志:</strong></p>
+            <ul>
+                <li>蓝牙日志(BluetoothLog)</li>
+                <li>CarPlay日志(CarplayLog)</li>
+                <li>导航日志(NaviLog)</li>
+                <li>语音助手日志(VALog)</li>
+            </ul>
+            <p><strong>返回:</strong> 布尔值，表示操作是否成功</p>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">recover_featurelog(self)</div>
+            <div class="method-desc">恢复功能日志设置到初始状态。</div>
+            <p><strong>支持的功能日志:</strong></p>
+            <ul>
+                <li>语音助手日志(VALog)</li>
+                <li>导航日志(NaviLog)</li>
+                <li>CarPlay日志(CarplayLog)</li>
+            </ul>
+            <p><strong>返回:</strong> 布尔值，表示操作是否成功</p>
+        </div>
+    </div>
+
+    <h2>配置参数</h2>
+    <p>模块行为通过VehicleLog_Config.json配置文件控制，主要配置项如下：</p>
+    <table class="config-table">
+        <tr>
+            <th>配置项</th>
+            <th>类型</th>
+            <th>描述</th>
+        </tr>
+        <tr>
+            <td>BluetoothLog</td>
+            <td>boolean</td>
+            <td>是否收集蓝牙日志</td>
+        </tr>
+        <tr>
+            <td>CarplayLog</td>
+            <td>boolean</td>
+            <td>是否收集CarPlay日志</td>
+        </tr>
+        <tr>
+            <td>TcpdumpLog</td>
+            <td>boolean</td>
+            <td>是否收集TCP dump日志</td>
+        </tr>
+        <tr>
+            <td>TcpdumpLog_duration</td>
+            <td>integer</td>
+            <td>TCP dump持续时间(秒)</td>
+        </tr>
+        <tr>
+            <td>NaviLog</td>
+            <td>boolean</td>
+            <td>是否收集导航日志</td>
+        </tr>
+        <tr>
+            <td>TraceLog</td>
+            <td>boolean</td>
+            <td>是否收集Trace日志</td>
+        </tr>
+        <tr>
+            <td>TraceLog_duration</td>
+            <td>integer</td>
+            <td>Trace日志持续时间(秒)</td>
+        </tr>
+        <tr>
+            <td>VALog</td>
+            <td>boolean</td>
+            <td>是否收集语音助手日志</td>
+        </tr>
+        <tr>
+            <td>JstreamerLog</td>
+            <td>boolean</td>
+            <td>是否收集Jstreamer音频日志</td>
+        </tr>
+        <tr>
+            <td>JstreamerRouteId</td>
+            <td>integer</td>
+            <td>Jstreamer路由ID</td>
+        </tr>
+        <tr>
+            <td>JstreamerChannel</td>
+            <td>integer</td>
+            <td>Jstreamer通道</td>
+        </tr>
+        <tr>
+            <td>jstreamerRemoteFile</td>
+            <td>string</td>
+            <td>Jstreamer远程文件路径</td>
+        </tr>
+        <tr>
+            <td>JstreamerLog_duration</td>
+            <td>integer</td>
+            <td>Jstreamer日志持续时间(秒)</td>
+        </tr>
+        <tr>
+            <td>AhalLog</td>
+            <td>boolean</td>
+            <td>是否收集Ahal音频日志</td>
+        </tr>
+        <tr>
+            <td>AhalMainoption</td>
+            <td>integer</td>
+            <td>Ahal主选项</td>
+        </tr>
+        <tr>
+            <td>AhalSuboption</td>
+            <td>integer</td>
+            <td>Ahal子选项</td>
+        </tr>
+        <tr>
+            <td>AhalLog_duration</td>
+            <td>integer</td>
+            <td>Ahal日志持续时间(秒)</td>
+        </tr>
+    </table>
+
+    <h2>使用示例</h2>
+    <pre>
+# 获取FeaturelogTask实例
+feature_logger = FeaturelogTask.getInstance()
+
+# 开启功能日志记录
+feature_logger.open_featurelog()
+
+# 启动日志收集
+feature_logger.start_featurelog("C:/test_case/raw_logs")
+
+# 转储日志到最终目录
+feature_logger.dump_featurelog("C:/test_case/final_logs")
+
+# 恢复日志设置
+feature_logger.recover_featurelog()
+    </pre>
+
+    <h2>注意事项</h2>
+    <ul>
+        <li>使用前需确保VehicleLog_Config.json配置文件存在且格式正确</li>
+        <li>部分日志收集需要设备已连接并授权</li>
+        <li>异步日志收集操作可能需要等待完成(dump_featurelog会自动等待)</li>
+        <li>确保有足够的存储空间保存日志文件</li>
+    </ul>
+</body>
+</html>

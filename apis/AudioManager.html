@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AudioManager API 文档</title>
+    <style>
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #2980b9;
+            margin-top: 30px;
+        }
+        h3 {
+            color: #16a085;
+        }
+        .class-name {
+            background-color: #f8f9fa;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-family: monospace;
+            color: #c7254e;
+            font-weight: bold;
+        }
+        .method {
+            background-color: #f5f5f5;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            border-left: 4px solid #3498db;
+        }
+        .method-name {
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        .param {
+            margin-left: 20px;
+        }
+        .param-name {
+            font-style: italic;
+        }
+        .return {
+            font-weight: bold;
+            color: #27ae60;
+        }
+        code {
+            background-color: #f8f9fa;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-family: monospace;
+            color: #c7254e;
+        }
+        pre {
+            background-color: #f8f9fa;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>AudioManager API 文档</h1>
+
+    <section>
+        <h2>类 <span class="class-name">AudioManager</span></h2>
+        <p><span class="class-name">AudioManager</span> 是一个音频管理类，提供了音频录制、处理、分析和比较等功能。它采用单例模式设计，通过 <code>getInstance()</code> 方法获取实例。</p>
+    </section>
+
+    <section>
+        <h2>方法列表</h2>
+
+        <div class="method">
+            <h3><span class="method-name">getInstance()</span></h3>
+            <p><strong>描述</strong>：获取 AudioManager 的单例实例。</p>
+            <p><strong>返回</strong>：<span class="return">AudioManager</span> 的实例。</p>
+            <pre>@classmethod
+def getInstance(cls)</pre>
+        </div>
+
+        <div class="method">
+            <h3><span class="method-name">generateWav(left_channel, right_channel, output_file, channels=2, sampwidth=4, sampleRate=48000)</span></h3>
+            <p><strong>描述</strong>：将左右声道的音频数据合并并生成 WAV 文件。</p>
+            <p><strong>参数</strong>：</p>
+            <ul>
+                <li class="param"><span class="param-name">left_channel</span>：左声道音频数据。</li>
+                <li class="param"><span class="param-name">right_channel</span>：右声道音频数据。</li>
+                <li class="param"><span class="param-name">output_file</span>：输出文件路径。</li>
+                <li class="param"><span class="param-name">channels</span>：声道数，默认为 2。</li>
+                <li class="param"><span class="param-name">sampwidth</span>：采样宽度（字节数），默认为 4。</li>
+                <li class="param"><span class="param-name">sampleRate</span>：采样率，默认为 48000 Hz。</li>
+            </ul>
+            <p><strong>返回</strong>：<span class="return">True</span> 表示生成成功，<span class="return">False</span> 表示失败。</p>
+            <pre>def generateWav(self, left_channel, right_channel, output_file, channels=2, sampwidth=4, sampleRate=48000)</pre>
+        </div>
+
+        <div class="method">
+            <h3><span class="method-name">amplifyAudio(audioFile, db_increase=0)</span></h3>
+            <p><strong>描述</strong>：对音频文件进行音量放大（分贝增益）。</p>
+            <p><strong>参数</strong>：</p>
+            <ul>
+                <li class="param"><span class="param-name">audioFile</span>：输入音频文件路径。</li>
+                <li class="param"><span class="param-name">db_increase</span>：分贝增益值，默认为 0。</li>
+            </ul>
+            <p><strong>返回</strong>：返回放大后的左右声道数据及音频信息（<code>left_channel, right_channel, wav</code>）。</p>
+            <pre>def amplifyAudio(self, audioFile, db_increase=0)</pre>
+        </div>
+
+        <div class="method">
+            <h3><span class="method-name">extractFeatures(audio_data, sr=48000, n_mfcc=13)</span></h3>
+            <p><strong>描述</strong>：从音频数据中提取 MFCC（梅尔频率倒谱系数）特征。</p>
+            <p><strong>参数</strong>：</p>
+            <ul>
+                <li class="param"><span class="param-name">audio_data</span>：音频数据。</li>
+                <li class="param"><span class="param-name">sr</span>：采样率，默认为 48000 Hz。</li>
+                <li class="param"><span class="param-name">n_mfcc</span>：MFCC 系数数量，默认为 13。</li>
+            </ul>
+            <p><strong>返回</strong>：MFCC 特征矩阵（转置后），失败返回 <span class="return">None</span>。</p>
+            <pre>def extractFeatures(self, audio_data, sr=48000, n_mfcc=13)</pre>
+        </div>
+
+        <div class="method">
+            <h3><span class="method-name">normalizeAudio(audioData)</span></h3>
+            <p><strong>描述</strong>：对音频数据进行归一化处理，使其幅度范围在 [-1, 1] 之间。</p>
+            <p><strong>参数</strong>：</p>
+            <ul>
+                <li class="param"><span class="param-name">audioData</span>：输入的音频数据。</li>
+            </ul>
+            <p><strong>返回</strong>：归一化后的音频数据。</p>
+            <pre>def normalizeAudio(self, audioData)</pre>
+        </div>
+
+        <div class="method">
+            <h3><span class="method-name">parseIntervalSound(audioFile, increase_db=0, period=1)</span></h3>
+            <p><strong>描述</strong>：分析音频中的周期性声音，计算重复次数和平均间隔时间。</p>
+            <p><strong>参数</strong>：</p>
+            <ul>
+                <li class="param"><span class="param-name">audioFile</span>：音频文件路径。</li>
+                <li class="param"><span class="param-name">increase_db</span>：音量增益分贝数，默认为 0。</li>
+                <li class="param"><span class="param-name">period</span>：周期参数，默认为 1。</li>
+            </ul>
+            <p><strong>返回</strong>：元组 <code>(success, result)</code>，其中 <code>success</code> 表示是否成功，<code>result</code> 包含重复次数和平均间隔时间。</p>
+            <pre>def parseIntervalSound(self, audioFile, increase_db=0, period=1)</pre>
+        </div>
+
+        <div class="method">
+            <h3><span class="method-name">compareMusic(srcFile, dstFile)</span></h3>
+            <p><strong>描述</strong>：比较两个音乐文件的相似度。</p>
+            <p><strong>参数</strong>：</p>
+            <ul>
+                <li class="param"><span class="param-name">srcFile</span>：源音频文件路径。</li>
+                <li class="param"><span class="param-name">dstFile</span>：目标音频文件路径。</li>
+            </ul>
+            <p><strong>返回</strong>：</p>
+            <ul>
+                <li><span class="return">0</span>：相似</li>
+                <li><span class="return">1</span>：不相似</li>
+                <li><span class="return">-1</span>：出错</li>
+            </ul>
+            <pre>def compareMusic(self, srcFile, dstFile)</pre>
+        </div>
+
+        <div class="method">
+            <h3><span class="method-name">recordAudio(savepath, input_device_index, duration=None, chunk=1024, sample_format=pyaudio.paInt16, channels=1, samplingRate=44100)</span></h3>
+            <p><strong>描述</strong>：通过计算机声卡录制音频。</p>
+            <p><strong>参数</strong>：</p>
+            <ul>
+                <li class="param"><span class="param-name">savepath</span>：音频保存路径。</li>
+                <li class="param"><span class="param-name">input_device_index</span>：指定使用的声卡设备索引。</li>
+                <li class="param"><span class="param-name">duration</span>：录制时长（秒），默认为 None（持续录制直到停止）。</li>
+                <li class="param"><span class="param-name">chunk</span>：每次读取的帧数，默认为 1024。</li>
+                <li class="param"><span class="param-name">sample_format</span>：采样格式，默认为 pyaudio.paInt16。</li>
+                <li class="param"><span class="param-name">channels</span>：声道数，默认为 1。</li>
+                <li class="param"><span class="param-name">samplingRate</span>：采样率，默认为 44100 Hz。</li>
+            </ul>
+            <pre>def recordAudio(self, savepath, input_device_index, duration=None, chunk=1024, sample_format=pyaudio.paInt16, channels=1, samplingRate=44100)</pre>
+        </div>
+
+        <div class="method">
+            <h3><span class="method-name">startRecordAudio(savepath, input_device_index=None)</span></h3>
+            <p><strong>描述</strong>：开始录制音频（异步）。</p>
+            <p><strong>参数</strong>：</p>
+            <ul>
+                <li class="param"><span class="param-name">savepath</span>：音频保存路径。</li>
+                <li class="param"><span class="param-name">input_device_index</span>：指定使用的声卡设备索引，默认为 None（使用默认设备）。</li>
+            </ul>
+            <pre>def startRecordAudio(self, savepath, input_device_index=None)</pre>
+        </div>
+
+        <div class="method">
+            <h3><span class="method-name">stopRecordAudio()</span></h3>
+            <p><strong>描述</strong>：停止录制音频。</p>
+            <pre>def stopRecordAudio(self)</pre>
+        </div>
+
+        <div class="method">
+            <h3><span class="method-name">get_device_info_by_index()</span></h3>
+            <p><strong>描述</strong>：获取可用的音频输入设备信息。</p>
+            <p><strong>返回</strong>：无返回值，直接打印设备信息。</p>
+            <pre>def get_device_info_by_index(self)</pre>
+        </div>
+
+        <div class="method">
+            <h3><span class="method-name">audioNoiseReduce(audio, n_fft=1024, db_threshold=-20)</span></h3>
+            <p><strong>描述</strong>：使用频谱门控对音频进行降噪处理。</p>
+            <p><strong>参数</strong>：</p>
+            <ul>
+                <li class="param"><span class="param-name">audio</span>：输入的音频信号。</li>
+                <li class="param"><span class="param-name">n_fft</span>：FFT 窗口大小，默认为 1024。</li>
+                <li class="param"><span class="param-name">db_threshold</span>：分贝阈值，低于此值的频率被视为噪音，默认为 -20 dB。</li>
+            </ul>
+            <p><strong>返回</strong>：降噪后的音频信号。</p>
+            <pre>def audioNoiseReduce(self, audio, n_fft=1024, db_threshold=-20)</pre>
+        </div>
+
+        <div class="method">
+            <h3><span class="method-name">audioMatchingDetection(audio_file, template, threshold=0.7, noise_reduce=True)</span></h3>
+            <p><strong>描述</strong>：检测音频文件中与模板匹配的部分。</p>
+            <p><strong>参数</strong>：</p>
+            <ul>
+                <li class="param"><span class="param-name">audio_file</span>：待检测的音频文件路径。</li>
+                <li class="param"><span class="param-name">template</span>：模板音频文件路径。</li>
+                <li class="param"><span class="param-name">threshold</span>：峰值阈值，默认为 0.7。</li>
+                <li class="param"><span class="param-name">noise_reduce</span>：是否进行降噪处理，默认为 True。</li>
+            </ul>
+            <p><strong>返回</strong>：列表 <code>[匹配次数, 间隙列表]</code>。</p>
+            <pre>def audioMatchingDetection(self, audio_file, template, threshold=0.7, noise_reduce=True)</pre>
+        </div>
+
+        <div class="method">
+            <h3><span class="method-name">audioSilenceDetection(audioFile, interval=1000, duration_threshold=10000)</span></h3>
+            <p><strong>描述</strong>：检测音频中的静音片段。</p>
+            <p><strong>参数</strong>：</p>
+            <ul>
+                <li class="param"><span class="param-name">audioFile</span>：音频文件路径。</li>
+                <li class="param"><span class="param-name">interval</span>：检测间隔（毫秒），默认为 1000（1秒）。</li>
+                <li class="param"><span class="param-name">duration_threshold</span>：静音持续时间阈值（毫秒），默认为 10000（10秒）。</li>
+            </ul>
+            <p><strong>返回</strong>：返回检测结果代码（定义在 <code>AudioConstant.AudioAssertReturnCode</code> 中）。</p>
+            <pre>def audioSilenceDetection(self, audioFile, interval=1000, duration_threshold=10000)</pre>
+        </div>
+    </section>
+</body>
+</html>

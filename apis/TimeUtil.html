@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TimeUtil API 文档</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #2980b9;
+            margin-top: 30px;
+        }
+        .class-name {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-left: 4px solid #3498db;
+            margin: 20px 0;
+            font-family: monospace;
+            font-size: 18px;
+        }
+        .method {
+            background-color: #f0f7ff;
+            padding: 12px;
+            border-left: 3px solid #2980b9;
+            margin: 15px 0;
+        }
+        .method-name {
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        .param {
+            font-style: italic;
+            color: #7f8c8d;
+        }
+        .return {
+            color: #27ae60;
+        }
+        code {
+            background-color: #f0f0f0;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-family: monospace;
+        }
+        .constant {
+            color: #8e44ad;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>TimeUtil API 文档</h1>
+    
+    <div class="class-name">class TimeUtil</div>
+    
+    <p>TimeUtil 是一个时间工具类，提供各种时间格式转换、获取系统时间以及从Android/QNX设备获取时间的功能。</p>
+    
+    <h2>类常量</h2>
+    <ul>
+        <li><span class="constant">LOG_DATE_TIME_FORMAT</span> = "%Y%m%d%H%M%S" - 默认日志时间格式</li>
+    </ul>
+    
+    <h2>静态方法</h2>
+    
+    <div class="method">
+        <div class="method-name">getCurrentDateTime(dateTimeFormat=LOG_DATE_TIME_FORMAT)</div>
+        <p>获取当前本地时间并格式化为指定格式。</p>
+        <p><strong>参数:</strong></p>
+        <ul>
+            <li><span class="param">dateTimeFormat</span> - 时间格式字符串，默认为LOG_DATE_TIME_FORMAT</li>
+        </ul>
+        <p><strong>返回:</strong> <span class="return">str</span> - 格式化后的当前时间字符串</p>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">getAndroidTimeStamp()</div>
+        <p>通过adb命令获取Android设备的时间戳。</p>
+        <p><strong>返回:</strong> <span class="return">str</span> - Android设备返回的时间字符串，格式为"%Y%m%d%H%M%S"，失败返回空字符串</p>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">getQnxDateTime()</div>
+        <p>通过SSH连接获取QNX设备的时间。</p>
+        <p><strong>返回:</strong> <span class="return">str</span> - QNX设备返回的时间字符串，格式为"%Y%m%d%H%M%S"，失败返回空字符串</p>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">toTimestamp(datetime, format=LOG_DATE_TIME_FORMAT)</div>
+        <p>将时间字符串转换为时间戳。</p>
+        <p><strong>参数:</strong></p>
+        <ul>
+            <li><span class="param">datetime</span> - 时间字符串</li>
+            <li><span class="param">format</span> - 时间字符串的格式，默认为LOG_DATE_TIME_FORMAT</li>
+        </ul>
+        <p><strong>返回:</strong> <span class="return">float</span> - 对应的时间戳，失败返回None</p>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">getYear(datetimeStr, format=LOG_DATE_TIME_FORMAT)</div>
+        <p>从时间字符串中提取年份。</p>
+        <p><strong>参数:</strong></p>
+        <ul>
+            <li><span class="param">datetimeStr</span> - 时间字符串</li>
+            <li><span class="param">format</span> - 时间字符串的格式，默认为LOG_DATE_TIME_FORMAT</li>
+        </ul>
+        <p><strong>返回:</strong> <span class="return">int</span> - 年份，失败返回None</p>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">getMonth(datetimeStr, format=LOG_DATE_TIME_FORMAT)</div>
+        <p>从时间字符串中提取月份。</p>
+        <p><strong>参数:</strong></p>
+        <ul>
+            <li><span class="param">datetimeStr</span> - 时间字符串</li>
+            <li><span class="param">format</span> - 时间字符串的格式，默认为LOG_DATE_TIME_FORMAT</li>
+        </ul>
+        <p><strong>返回:</strong> <span class="return">int</span> - 月份(1-12)，失败返回None</p>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">switchTimeFormat(datetime, srcFormat, dstFormat)</div>
+        <p>将时间字符串从一种格式转换为另一种格式。</p>
+        <p><strong>参数:</strong></p>
+        <ul>
+            <li><span class="param">datetime</span> - 原始时间字符串</li>
+            <li><span class="param">srcFormat</span> - 原始时间格式</li>
+            <li><span class="param">dstFormat</span> - 目标时间格式</li>
+        </ul>
+        <p><strong>返回:</strong> <span class="return">str</span> - 转换后的时间字符串，失败返回空字符串</p>
+    </div>
+    
+    <h2>注意事项</h2>
+    <ul>
+        <li>所有方法都是静态方法，无需实例化即可使用</li>
+        <li>从设备获取时间的方法(getAndroidTimeStamp, getQnxDateTime)可能因设备连接问题而失败</li>
+        <li>时间格式转换方法(switchTimeFormat)在源格式和目标格式相同时会直接返回原字符串</li>
+        <li>所有方法都有异常处理，失败时会记录日志并返回安全值(空字符串或None)</li>
+    </ul>
+</body>
+</html>

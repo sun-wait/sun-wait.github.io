@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CalibrationManager API 文档</title>
+    <style>
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #2980b9;
+            margin-top: 30px;
+        }
+        h3 {
+            color: #16a085;
+        }
+        .class-name {
+            background-color: #f8f9fa;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-family: monospace;
+            color: #c7254e;
+            font-weight: bold;
+        }
+        .method {
+            background-color: #f5f5f5;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            border-left: 4px solid #3498db;
+        }
+        .method-name {
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        .param {
+            margin-left: 20px;
+        }
+        .param-name {
+            font-style: italic;
+        }
+        .return {
+            font-weight: bold;
+            color: #27ae60;
+        }
+        code {
+            background-color: #f8f9fa;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-family: monospace;
+            color: #c7254e;
+        }
+        pre {
+            background-color: #f8f9fa;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        .constant {
+            color: #8e44ad;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>CalibrationManager API 文档</h1>
+
+    <section>
+        <h2>类 <span class="class-name">CalibrationManager</span></h2>
+        <p><span class="class-name">CalibrationManager</span> 是一个校准管理类，提供了校准值更新、获取和清理等功能。它采用单例模式设计，通过 <code>getInstance()</code> 方法获取实例。</p>
+        
+        <h3>常量定义</h3>
+        <ul>
+            <li><span class="constant">ADB_CONNECT_SUCCESS</span> = 0 - ADB连接成功状态码</li>
+            <li><span class="constant">CALIBRATION_DEFAULT_VALUE_TYPE</span> = 4 - 默认校准值类型</li>
+            <li><span class="constant">ANDROID_CLEANUP_OVERRIDES_MODE</span> = 0 - Android清理模式</li>
+            <li><span class="constant">QNX_CLEANUP_OVERRIDES_MODE</span> = 1 - QNX清理模式</li>
+            <li><span class="constant">ANDROID_CLEANUP_OVERRIDES_FILE</span> = "cleanupAndroidOverrides.bat" - Android清理脚本文件名</li>
+            <li><span class="constant">QNX_CLEANUP_OVERRIDES_FILE</span> = "cleanupQnxOverrides.bat" - QNX清理脚本文件名</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>方法列表</h2>
+
+        <div class="method">
+            <h3><span class="method-name">getInstance()</span></h3>
+            <p><strong>描述</strong>：获取 CalibrationManager 的单例实例。</p>
+            <p><strong>返回</strong>：<span class="return">CalibrationManager</span> 的实例。</p>
+            <pre>@classmethod
+def getInstance(cls)</pre>
+        </div>
+
+        <div class="method">
+            <h3><span class="method-name">updateCalibrations(filePath)</span></h3>
+            <p><strong>描述</strong>：更新校准值，通过执行 override.bat 脚本实现。</p>
+            <p><strong>参数</strong>：</p>
+            <ul>
+                <li class="param"><span class="param-name">filePath</span>：校准文件路径。</li>
+            </ul>
+            <pre>def updateCalibrations(self, filePath)</pre>
+        </div>
+
+        <div class="method">
+            <h3><span class="method-name">getCalibrationValue(key, valueType=CALIBRATION_DEFAULT_VALUE_TYPE, defaultValue=None)</span></h3>
+            <p><strong>描述</strong>：获取指定键的校准值。</p>
+            <p><strong>参数</strong>：</p>
+            <ul>
+                <li class="param"><span class="param-name">key</span>：校准键名。</li>
+                <li class="param"><span class="param-name">valueType</span>：值类型，默认为 CALIBRATION_DEFAULT_VALUE_TYPE(4)。</li>
+                <li class="param"><span class="param-name">defaultValue</span>：默认值，可选。</li>
+            </ul>
+            <p><strong>返回</strong>：获取到的校准值，失败返回 <span class="return">None</span>。</p>
+            <pre>def getCalibrationValue(self, key, valueType=CALIBRATION_DEFAULT_VALUE_TYPE, defaultValue=None)</pre>
+        </div>
+
+        <div class="method">
+            <h3><span class="method-name">cleanupAllCalibrations()</span></h3>
+            <p><strong>描述</strong>：清理所有校准值，包括Android和QNX系统的校准。</p>
+            <pre>def cleanupAllCalibrations(self)</pre>
+        </div>
+
+        <div class="method">
+            <h3><span class="method-name">_cleanupCalibrations(mode)</span></h3>
+            <p><strong>描述</strong>：内部方法，根据模式清理特定系统的校准值。</p>
+            <p><strong>参数</strong>：</p>
+            <ul>
+                <li class="param"><span class="param-name">mode</span>：清理模式，ANDROID_CLEANUP_OVERRIDES_MODE(0) 或 QNX_CLEANUP_OVERRIDES_MODE(1)。</li>
+            </ul>
+            <pre>def _cleanupCalibrations(self, mode)</pre>
+        </div>
+
+        <div class="method">
+            <h3><span class="method-name">stopProcess()</span></h3>
+            <p><strong>描述</strong>：停止当前运行的进程。</p>
+            <pre>def stopProcess(self)</pre>
+        </div>
+    </section>
+
+    <section>
+        <h2>使用示例</h2>
+        <div class="method">
+            <h3>获取校准值</h3>
+            <pre>calManager = CalibrationManager.getInstance()
+value = calManager.getCalibrationValue("sensor.calibration.temperature")
+print(f"获取到的校准值: {value}")</pre>
+        </div>
+
+        <div class="method">
+            <h3>更新校准</h3>
+            <pre>calManager = CalibrationManager.getInstance()
+calManager.updateCalibrations("C:/calibrations/new_calibration.cal")</pre>
+        </div>
+
+        <div class="method">
+            <h3>清理所有校准</h3>
+            <pre>calManager = CalibrationManager.getInstance()
+calManager.cleanupAllCalibrations()</pre>
+        </div>
+    </section>
+</body>
+</html>

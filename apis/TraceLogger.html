@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TraceLogger API 文档</title>
+    <style>
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.7;
+            margin: 0;
+            padding: 30px;
+            color: #333;
+            background-color: #f8fafc;
+        }
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            box-shadow: 0 0 30px rgba(0,0,0,0.08);
+            border-radius: 12px;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 15px;
+            margin-top: 0;
+            font-size: 36px;
+            text-align: center;
+        }
+        h2 {
+            color: #2980b9;
+            margin-top: 45px;
+            border-left: 6px solid #3498db;
+            padding-left: 20px;
+            font-size: 28px;
+        }
+        h3 {
+            color: #16a085;
+            margin-top: 35px;
+            font-size: 24px;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 8px;
+        }
+        .class-name {
+            background-color: #f8f9fa;
+            padding: 25px;
+            border-radius: 10px;
+            border-left: 6px solid #3498db;
+            font-family: 'Fira Code', monospace;
+            font-size: 1.5em;
+            margin: 40px 0;
+            color: #2c3e50;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        .method {
+            background-color: #f0f7ff;
+            padding: 25px;
+            border-radius: 10px;
+            margin: 35px 0;
+            border-left: 5px solid #7f8c8d;
+            transition: all 0.4s ease;
+        }
+        .method:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 25px rgba(0,0,0,0.1);
+        }
+        .method-name {
+            font-weight: bold;
+            color: #16a085;
+            font-size: 1.3em;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        .method-name:before {
+            content: "↳";
+            margin-right: 10px;
+            color: #7f8c8d;
+        }
+        .method-desc {
+            color: #555;
+            line-height: 1.9;
+            font-size: 1.05em;
+        }
+        .method-params {
+            margin-top: 20px;
+            font-size: 1.05em;
+        }
+        .param {
+            margin-left: 40px;
+            font-family: 'Fira Code', monospace;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: baseline;
+        }
+        .param-name {
+            font-weight: bold;
+            color: #8e44ad;
+            min-width: 180px;
+            font-size: 1.05em;
+        }
+        .param-desc {
+            margin-left: 15px;
+            flex: 1;
+        }
+        .method-return {
+            margin-top: 20px;
+            font-size: 1.05em;
+        }
+        .return-desc {
+            margin-left: 40px;
+            font-family: 'Fira Code', monospace;
+        }
+        code {
+            background-color: #f0f0f0;
+            padding: 5px 10px;
+            border-radius: 6px;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.98em;
+        }
+        .cmd {
+            background-color: #f5f7fa;
+            padding: 18px 25px;
+            border-radius: 8px;
+            font-family: 'Fira Code', monospace;
+            display: block;
+            margin: 25px 0;
+            overflow-x: auto;
+            border-left: 5px solid #95a5a6;
+            font-size: 0.98em;
+            line-height: 1.7;
+        }
+        .note {
+            background-color: #fff8e1;
+            padding: 25px;
+            border-left: 6px solid #ffc107;
+            margin: 30px 0;
+            border-radius: 8px;
+        }
+        .note-title {
+            font-weight: bold;
+            color: #ff8f00;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+            display: flex;
+            align-items: center;
+        }
+        .note-title:before {
+            content: "⚠";
+            margin-right: 10px;
+        }
+        .example {
+            background-color: #e8f5e9;
+            padding: 25px;
+            border-radius: 10px;
+            margin: 35px 0;
+            border-left: 6px solid #4caf50;
+        }
+        .example-title {
+            font-weight: bold;
+            color: #2e7d32;
+            margin-bottom: 18px;
+            font-size: 1.25em;
+            display: flex;
+            align-items: center;
+        }
+        .example-title:before {
+            content: "✍";
+            margin-right: 10px;
+        }
+        .system-info {
+            display: flex;
+            margin: 30px 0;
+            gap: 20px;
+        }
+        .system-card {
+            flex: 1;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+        }
+        .ivi-card {
+            background-color: #e3f2fd;
+            border-left: 5px solid #2196f3;
+        }
+        .qnx-card {
+            background-color: #e8f5e9;
+            border-left: 5px solid #4caf50;
+        }
+        .system-title {
+            font-weight: bold;
+            font-size: 1.2em;
+            margin-bottom: 15px;
+            color: #2c3e50;
+        }
+        .file-path {
+            font-family: 'Fira Code', monospace;
+            background-color: rgba(0,0,0,0.05);
+            padding: 3px 6px;
+            border-radius: 3px;
+            margin: 0 2px;
+        }
+        .workflow {
+            counter-reset: step;
+            margin: 40px 0;
+        }
+        .workflow-step {
+            position: relative;
+            padding-left: 80px;
+            margin-bottom: 30px;
+            min-height: 60px;
+        }
+        .workflow-step:before {
+            counter-increment: step;
+            content: counter(step);
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 50px;
+            height: 50px;
+            background: #3498db;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .workflow-content {
+            padding-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>TraceLogger API 文档</h1>
+        
+        <p>该模块提供了同时收集IVI(车载信息娱乐系统)和QNX系统的性能追踪日志的功能，支持同步和异步模式。</p>
+        
+        <div class="system-info">
+            <div class="system-card ivi-card">
+                <div class="system-title">IVI系统追踪</div>
+                <p>使用Perfetto工具进行性能追踪：</p>
+                <ul>
+                    <li>脚本路径: <span class="file-path">/data/perfetto.sh</span></li>
+                    <li>追踪文件路径: <span class="file-path">/data/misc/perfetto-traces/trace</span></li>
+                    <li>执行超时: <code>40秒</code></li>
+                </ul>
+            </div>
+            <div class="system-card qnx-card">
+                <div class="system-title">QNX系统追踪</div>
+                <p>使用tracelogger工具进行性能追踪：</p>
+                <ul>
+                    <li>日志文件路径: <span class="file-path">/dev/shmem/tracebuffer.kev</span></li>
+                    <li>仅在userdebug模式下可用</li>
+                    <li>拉取超时: <code>60秒</code></li>
+                </ul>
+            </div>
+        </div>
+        
+        <h2>命令说明</h2>
+        <div class="cmd">UPLOAD_PERFETTO_SCRIPT_CMD = "adb push {} {}"</div>
+        <p>上传Perfetto脚本到IVI设备。</p>
+        
+        <div class="cmd">ADD_PERFETTO_PERMISSION_CMD = 'adb shell "chmod +x {}"'</div>
+        <p>为Perfetto脚本添加执行权限。</p>
+        
+        <div class="cmd">EXECUTE_PERFETTO_SCRIPT_CMD = 'adb shell "sh /data/perfetto.sh"'</div>
+        <p>执行Perfetto脚本开始IVI系统追踪。</p>
+        
+        <div class="cmd">PULL_OUT_REMOTE_TRACE_CMD = "adb pull {} {}"</div>
+        <p>从IVI设备拉取追踪文件。</p>
+        
+        <div class="cmd">DELETE_REMOTE_TRACE_CMD = 'adb shell "rm -rf /data/misc/perfetto-traces/trace"'</div>
+        <p>删除IVI设备上的追踪文件。</p>
+        
+        <div class="cmd">EXECUTE_QNX_TRACE_LOG_CMD = 'ssh root@{} "/ifs/bin/on -p 255 tracelogger -s {}"'</div>
+        <p>在QNX系统上执行tracelogger命令开始追踪。</p>
+        
+        <div class="cmd">PULL_OUT_QNX_TRACE_LOG_CMD = "scp root@{}:/dev/shmem/tracebuffer.kev {}"</div>
+        <p>从QNX系统拉取追踪日志文件。</p>
+        
+        <div class="note">
+            <div class="note-title">重要说明</div>
+            <p>1. QNX系统追踪功能仅在userdebug模式下可用。</p>
+            <p>2. IVI系统使用Perfetto工具，QNX系统使用tracelogger工具。</p>
+            <p>3. 追踪文件会自动以时间戳命名保存。</p>
+            <p>4. 操作完成后会自动清理设备上的临时文件。</p>
+        </div>
+        
+        <h2>类文档</h2>
+        
+        <div class="class-name">TraceLogger</div>
+        <p>性能追踪日志收集器的主类，提供收集IVI和QNX系统性能追踪日志的功能。</p>
+        
+        <div class="method">
+            <div class="method-name">getInstance()</div>
+            <div class="method-desc">获取TraceLogger的单例实例。</div>
+            <div class="method-return">
+                <span>返回:</span>
+                <div class="return-desc">TraceLogger的实例</div>
+            </div>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">start(caseFolder, duration, asyncMode=True)</div>
+            <div class="method-desc">启动性能追踪日志收集。</div>
+            <div class="method-params">
+                <div class="param">
+                    <span class="param-name">caseFolder</span>
+                    <span class="param-desc">日志保存的文件夹路径</span>
+                </div>
+                <div class="param">
+                    <span class="param-name">duration</span>
+                    <span class="param-desc">追踪持续时间(秒)</span>
+                </div>
+                <div class="param">
+                    <span class="param-name">asyncMode</span>
+                    <span class="param-desc">是否异步执行，默认为True</span>
+                </div>
+            </div>
+            <div class="method-return">
+                <span>返回:</span>
+                <div class="return-desc">布尔值，表示是否成功启动</div>
+            </div>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">waitTraceLogFinish()</div>
+            <div class="method-desc">等待追踪日志收集完成(异步模式下使用)。</div>
+            <div class="method-desc">
+                <p>该方法会阻塞当前线程，直到追踪任务完成。</p>
+            </div>
+        </div>
+        
+        <div class="class-name">TraceLogTask</div>
+        <p>性能追踪日志收集任务线程类，内部使用。</p>
+        
+        <div class="method">
+            <div class="method-name">iviTraceLog()</div>
+            <div class="method-desc">执行IVI系统性能追踪日志收集。</div>
+            <div class="method-return">
+                <span>返回:</span>
+                <div class="return-desc">布尔值，表示是否成功</div>
+            </div>
+            <div class="method-desc">
+                <p>执行步骤：</p>
+                <ol>
+                    <li>上传Perfetto脚本到设备</li>
+                    <li>添加执行权限</li>
+                    <li>执行脚本开始追踪</li>
+                    <li>拉取追踪文件到本地</li>
+                    <li>删除设备上的追踪文件</li>
+                </ol>
+            </div>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">qnxTraceLog(duration)</div>
+            <div class="method-desc">执行QNX系统性能追踪日志收集。</div>
+            <div class="method-params">
+                <div class="param">
+                    <span class="param-name">duration</span>
+                    <span class="param-desc">追踪持续时间(秒)</span>
+                </div>
+            </div>
+            <div class="method-return">
+                <span>返回:</span>
+                <div class="return-desc">布尔值，表示是否成功</div>
+            </div>
+            <div class="method-desc">
+                <p>执行步骤：</p>
+                <ol>
+                    <li>执行tracelogger命令开始追踪</li>
+                    <li>拉取追踪日志文件到本地</li>
+                </ol>
+            </div>
+        </div>
+        
+        <h2>使用示例</h2>
+        <div class="example">
+            <div class="example-title">同步模式收集追踪日志</div>
+            <pre><code>
+# 获取TraceLogger实例
+logger = TraceLogger.getInstance()
+
+# 同步模式收集30秒的追踪日志
+logger.start("/path/to/logs", 30, asyncMode=False)
+            </code></pre>
+        </div>
+        
+        <div class="example">
+            <div class="example-title">异步模式收集追踪日志</div>
+            <pre><code>
+# 获取TraceLogger实例
+logger = TraceLogger.getInstance()
+
+# 异步模式收集60秒的追踪日志
+logger.start("/path/to/logs", 60)
+
+# 其他操作...
+
+# 等待追踪完成
+logger.waitTraceLogFinish()
+            </code></pre>
+        </div>
+        
+        <h2>工作流程</h2>
+        <div class="workflow">
+            <div class="workflow-step">
+                <div class="workflow-content">
+                    <strong>初始化</strong>: 创建TraceLogger实例，指定日志保存目录
+                </div>
+            </div>
+            <div class="workflow-step">
+                <div class="workflow-content">
+                    <strong>IVI系统追踪</strong>: 上传并执行Perfetto脚本，开始性能数据收集
+                </div>
+            </div>
+            <div class="workflow-step">
+                <div class="workflow-content">
+                    <strong>QNX系统追踪</strong>: 执行tracelogger命令，开始内核级追踪
+                </div>
+            </div>
+            <div class="workflow-step">
+                <div class="workflow-content">
+                    <strong>数据收集</strong>: 等待指定的持续时间，收集系统性能数据
+                </div>
+            </div>
+            <div class="workflow-step">
+                <div class="workflow-content">
+                    <strong>文件拉取</strong>: 将IVI和QNX系统的追踪文件拉取到本地
+                </div>
+            </div>
+            <div class="workflow-step">
+                <div class="workflow-content">
+                    <strong>清理</strong>: 删除设备上的临时追踪文件
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

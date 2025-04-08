@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>PowerCycleLogger API 文档</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            color: #333;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #2980b9;
+            margin-top: 30px;
+        }
+        .class-name {
+            background-color: #f8f9fa;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-family: monospace;
+            color: #d63384;
+            font-weight: bold;
+        }
+        .method {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            border-left: 4px solid #3498db;
+        }
+        .method-name {
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        .method-desc {
+            margin-top: 10px;
+        }
+        .param {
+            margin-top: 10px;
+        }
+        .param-name {
+            font-weight: bold;
+        }
+        .config-section {
+            background-color: #e8f4f8;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 20px 0;
+        }
+        .config-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>PowerCycleLogger API 文档</h1>
+
+    <div class="config-section">
+        <div class="config-title">配置参数</div>
+        <p><strong>SAMPLE_TYPE</strong>: 采样类型 (默认为"C")</p>
+        <p><strong>QNX_PULL_DIR_PATH</strong>: QNX系统需要拉取的日志目录路径列表</p>
+        <p><strong>QNX_PULL_FILE_PATH</strong>: QNX系统需要拉取的日志文件路径列表</p>
+        <p><strong>ANDROID_PULL_LOG_PATH</strong>: Android系统需要拉取的日志路径列表</p>
+        <p><strong>LOGCAT_ASSERT_MSG</strong>: Logcat断言消息</p>
+        <p><strong>LOGCAT_ASSERT_TIMES</strong>: Logcat断言次数 (默认为1)</p>
+        <p><strong>SLOG_ASSERT_MSG</strong>: Slog断言消息</p>
+        <p><strong>SLOG_ASSERT_TIMES</strong>: Slog断言次数 (默认为1)</p>
+    </div>
+
+    <h2><span class="class-name">PowerCycleLogger</span> 类</h2>
+    <p>该类用于管理车辆电源循环测试中的日志记录功能，包括QNX系统日志、Android系统日志、CAN总线日志和串口日志的收集。</p>
+
+    <div class="method">
+        <div class="method-name">__init__(self, logger_folder)</div>
+        <div class="method-desc">
+            初始化PowerCycleLogger实例。
+        </div>
+        <div class="param">
+            <span class="param-name">参数:</span> logger_folder - 日志存储的文件夹路径
+        </div>
+    </div>
+
+    <div class="method">
+        <div class="method-name">start_qnx_command_log_thread()</div>
+        <div class="method-desc">
+            静态方法，启动QNX系统的命令日志记录线程。
+        </div>
+    </div>
+
+    <div class="method">
+        <div class="method-name">stop_qnx_command_log_thread()</div>
+        <div class="method-desc">
+            静态方法，停止QNX系统的命令日志记录线程。
+        </div>
+    </div>
+
+    <div class="method">
+        <div class="method-name">start_android_command_log_thread()</div>
+        <div class="method-desc">
+            静态方法，启动Android系统的命令日志记录线程。
+        </div>
+    </div>
+
+    <div class="method">
+        <div class="method-name">stop_android_command_log_thread()</div>
+        <div class="method-desc">
+            静态方法，停止Android系统的命令日志记录线程。
+        </div>
+    </div>
+
+    <div class="method">
+        <div class="method-name">get_qnx_log(self)</div>
+        <div class="method-desc">
+            从QNX系统拉取指定的日志目录和文件到本地。
+        </div>
+    </div>
+
+    <div class="method">
+        <div class="method-name">get_android_log(self)</div>
+        <div class="method-desc">
+            从Android系统拉取指定的日志到本地。
+        </div>
+    </div>
+
+    <div class="method">
+        <div class="method-name">get_current_canlog_timestamp(self)</div>
+        <div class="method-desc">
+            获取当前CAN日志的最后一条消息的时间戳。
+        </div>
+        <div class="param">
+            <span class="param-name">返回:</span> 最后一条CAN消息的时间戳，如果没有消息则返回None
+        </div>
+    </div>
+
+    <div class="method">
+        <div class="method-name">start_early_logging(self)</div>
+        <div class="method-desc">
+            启动早期日志记录，包括串口日志和CAN总线日志。这些日志需要在系统启动前开始记录，以避免丢失关键信息。
+        </div>
+    </div>
+
+    <div class="method">
+        <div class="method-name">start_logging(self)</div>
+        <div class="method-desc">
+            启动所有日志记录功能，包括：
+            <ul>
+                <li>Slog记录</li>
+                <li>QNX系统日志线程</li>
+                <li>Android logcat记录</li>
+                <li>Android系统日志线程</li>
+            </ul>
+            会根据SAMPLE_TYPE配置决定是否执行某些日志记录。
+        </div>
+    </div>
+
+    <div class="method">
+        <div class="method-name">stop_logging(self, on_finish=False)</div>
+        <div class="method-desc">
+            停止日志记录功能。
+        </div>
+        <div class="param">
+            <span class="param-name">参数:</span> on_finish - 如果为True，还会停止串口日志和CAN总线日志记录
+        </div>
+    </div>
+</body>
+</html>

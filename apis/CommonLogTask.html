@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>CommonLogTask API 文档</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #2980b9;
+            margin-top: 30px;
+            border-left: 4px solid #3498db;
+            padding-left: 10px;
+        }
+        .class-name {
+            background-color: #f8f9fa;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-family: monospace;
+            color: #d63384;
+            font-weight: bold;
+        }
+        .method {
+            background-color: #f8f9fa;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            border-left: 3px solid #6c757d;
+        }
+        .method-name {
+            font-weight: bold;
+            color: #0066cc;
+        }
+        .method-desc {
+            margin-top: 5px;
+            color: #6c757d;
+        }
+        .param {
+            font-family: monospace;
+        }
+        code {
+            background-color: #f8f9fa;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-family: monospace;
+            color: #d63384;
+        }
+        .note {
+            background-color: #fff3cd;
+            padding: 10px;
+            border-radius: 5px;
+            border-left: 3px solid #ffc107;
+            margin: 15px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>CommonLogTask API 文档</h1>
+    <p>该模块提供了综合日志收集功能，包括系统日志、CAN总线日志、串口日志、GPU信息和ADB日志等。</p>
+
+    <div class="note">
+        <strong>主要功能：</strong>
+        <ul>
+            <li>多线程日志收集</li>
+            <li>支持日志文件分割</li>
+            <li>定期收集系统资源信息(top命令)</li>
+            <li>GPU使用率信息提取</li>
+            <li>ADB日志拉取</li>
+            <li>CAN总线和串口日志记录</li>
+        </ul>
+    </div>
+
+    <h2>类文档</h2>
+
+    <div class="method">
+        <h3><span class="class-name">CommonLogTask</span></h3>
+        <p>综合日志收集线程类，负责管理和协调各类日志的收集工作。</p>
+        
+        <div class="method">
+            <div class="method-name">__init__(self, caseFolder, gpuInfo=False, topInfo=False, logSplit=True, dltLog=True, dumpGmlogger=True)</div>
+            <div class="method-desc">构造函数，初始化日志收集任务。</div>
+            <p><strong>参数:</strong></p>
+            <ul>
+                <li><span class="param">caseFolder</span>: 测试用例文件夹路径</li>
+                <li><span class="param">gpuInfo</span>: 是否收集GPU信息，默认为False</li>
+                <li><span class="param">topInfo</span>: 是否收集系统资源信息(top命令)，默认为False</li>
+                <li><span class="param">logSplit</span>: 是否分割日志文件，默认为True</li>
+                <li><span class="param">dltLog</span>: 是否收集DLT日志，默认为True</li>
+                <li><span class="param">dumpGmlogger</span>: 是否拉取gmlogger日志，默认为True</li>
+            </ul>
+            <p><strong>初始化行为:</strong></p>
+            <ul>
+                <li>创建slog、canlog、serial和gmlogger子文件夹</li>
+                <li>初始化各类日志收集标志</li>
+            </ul>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">generateGpuDatas(self, caseFolder, slogFile)</div>
+            <div class="method-desc">从系统日志中提取GPU使用率信息并保存到文件。</div>
+            <p><strong>参数:</strong></p>
+            <ul>
+                <li><span class="param">caseFolder</span>: 测试用例文件夹路径</li>
+                <li><span class="param">slogFile</span>: 系统日志文件路径</li>
+            </ul>
+            <p><strong>实现细节:</strong></p>
+            <ul>
+                <li>根据车辆类型使用不同的正则表达式匹配GPU信息</li>
+                <li>将提取的GPU信息写入gpuInfo文件</li>
+            </ul>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">startDltDumpTask(self, casePath)</div>
+            <div class="method-desc">启动DLT日志转储任务。</div>
+            <p><strong>参数:</strong></p>
+            <ul>
+                <li><span class="param">casePath</span>: 测试用例文件夹路径</li>
+            </ul>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">stopDltDumpTask(self)</div>
+            <div class="method-desc">停止DLT日志转储任务。</div>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">run(self)</div>
+            <div class="method-desc">线程主循环，管理各类日志的收集和分割。</div>
+            <p><strong>工作流程:</strong></p>
+            <ol>
+                <li>初始化各类日志收集</li>
+                <li>定期检查日志分割条件(默认5分钟)</li>
+                <li>定期执行top命令收集系统信息(如果启用)</li>
+                <li>定期拉取gmlogger日志(如果启用)</li>
+                <li>任务停止时清理资源</li>
+            </ol>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">stopTask(self)</div>
+            <div class="method-desc">停止日志收集任务。</div>
+        </div>
+    </div>
+
+    <h2>常量</h2>
+    <ul>
+        <li><code>START_TOP_CMD</code>: 执行top命令的SSH命令模板</li>
+        <li><code>DUMP_GMLOGGER_CMD</code>: 拉取gmlogger日志的命令模板</li>
+        <li><code>LOG_TIME_INTERVAL</code>: 日志分割间隔(秒)，默认为300(5分钟)</li>
+        <li><code>TOP_TIME_INTERVAL</code>: top命令执行间隔(秒)，默认为10</li>
+        <li><code>GMLOGGER_TIME_INTERVAL</code>: gmlogger拉取间隔(秒)，默认为1800(30分钟)</li>
+        <li><code>GMLOGGER_TIMEOUT</code>: gmlogger拉取超时时间(秒)，默认为500</li>
+    </ul>
+
+    <h2>使用示例</h2>
+    <pre>
+# 创建日志收集任务(收集所有类型日志)
+log_task = CommonLogTask("C:/test_case", 
+                        gpuInfo=True, 
+                        topInfo=True, 
+                        logSplit=True,
+                        dltLog=True,
+                        dumpGmlogger=True)
+
+# 启动日志收集
+log_task.start()
+
+# 停止日志收集
+log_task.stopTask()
+log_task.join()
+    </pre>
+
+    <h2>日志文件结构</h2>
+    <pre>
+test_case/
+├── canlog/            # CAN总线日志
+├── gmlogger/          # ADB gmlogger日志
+├── serial/            # 串口日志
+├── slog/              # 系统日志
+├── gpuInfo            # GPU使用率信息
+└── top                # top命令输出
+    </pre>
+</body>
+</html>

@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NaviLogger API 文档</title>
+    <style>
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+            background-color: #f9f9f9;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            border-radius: 8px;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 12px;
+            margin-top: 0;
+            font-size: 28px;
+        }
+        h2 {
+            color: #2980b9;
+            margin-top: 35px;
+            border-left: 5px solid #3498db;
+            padding-left: 15px;
+            font-size: 22px;
+        }
+        h3 {
+            color: #16a085;
+            margin-top: 25px;
+            font-size: 18px;
+        }
+        .class-name {
+            background-color: #f8f9fa;
+            padding: 18px;
+            border-radius: 6px;
+            border-left: 5px solid #3498db;
+            font-family: 'Consolas', monospace;
+            font-size: 1.3em;
+            margin: 30px 0;
+            color: #2c3e50;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.08);
+        }
+        .method {
+            background-color: #f0f7ff;
+            padding: 18px;
+            border-radius: 6px;
+            margin: 25px 0;
+            border-left: 4px solid #7f8c8d;
+            transition: all 0.3s ease;
+        }
+        .method:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .method-name {
+            font-weight: bold;
+            color: #16a085;
+            font-size: 1.15em;
+        }
+        .method-desc {
+            margin-top: 10px;
+            color: #555;
+            line-height: 1.7;
+        }
+        .method-params {
+            margin-top: 15px;
+            font-size: 0.97em;
+        }
+        .param {
+            margin-left: 25px;
+            font-family: 'Consolas', monospace;
+            margin-bottom: 8px;
+            display: flex;
+        }
+        .param-name {
+            font-weight: bold;
+            color: #8e44ad;
+            min-width: 120px;
+        }
+        .param-desc {
+            margin-left: 10px;
+            flex: 1;
+        }
+        .method-return {
+            margin-top: 12px;
+            font-size: 0.97em;
+        }
+        .return-desc {
+            margin-left: 25px;
+            font-family: 'Consolas', monospace;
+        }
+        code {
+            background-color: #f0f0f0;
+            padding: 3px 7px;
+            border-radius: 4px;
+            font-family: 'Consolas', monospace;
+            font-size: 0.92em;
+        }
+        .cmd {
+            background-color: #f5f5f5;
+            padding: 12px 18px;
+            border-radius: 5px;
+            font-family: 'Consolas', monospace;
+            display: block;
+            margin: 18px 0;
+            overflow-x: auto;
+            border-left: 4px solid #95a5a6;
+            font-size: 0.93em;
+            line-height: 1.5;
+        }
+        .note {
+            background-color: #fffde7;
+            padding: 15px;
+            border-left: 5px solid #ffd600;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+        .note-title {
+            font-weight: bold;
+            color: #f57f17;
+            margin-bottom: 8px;
+        }
+        .example {
+            background-color: #e8f5e9;
+            padding: 18px;
+            border-radius: 6px;
+            margin: 25px 0;
+            border-left: 5px solid #4caf50;
+        }
+        .example-title {
+            font-weight: bold;
+            color: #2e7d32;
+            margin-bottom: 12px;
+            font-size: 1.1em;
+        }
+        .version-info {
+            background-color: #e3f2fd;
+            padding: 12px 15px;
+            border-radius: 4px;
+            margin: 15px 0;
+            border-left: 4px solid #2196f3;
+        }
+        .version-item {
+            display: flex;
+            margin-bottom: 5px;
+        }
+        .version-value {
+            font-weight: bold;
+            color: #0d47a1;
+            min-width: 50px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>NaviLogger API 文档</h1>
+        
+        <p>该模块提供了收集百度导航(NaviAuto)相关日志的功能，包括开启日志记录、关闭日志记录和导出日志文件。</p>
+        
+        <div class="version-info">
+            <h3>版本适配信息</h3>
+            <div class="version-item">
+                <span class="version-value">5.0:</span>
+                <span>支持地图时间、新日志、Java日志和引擎日志的开关</span>
+            </div>
+            <div class="version-item">
+                <span class="version-value">6.0:</span>
+                <span>支持一键路测、测试水印和WGS84坐标的开关</span>
+            </div>
+        </div>
+        
+        <h2>命令说明</h2>
+        <div class="cmd">RESTART_NAVI_CMD = 'adb shell "am start -S -n com.baidu.naviauto/.NaviAutoActivity"'</div>
+        <p>重启百度导航应用。</p>
+        
+        <div class="cmd">GET_CURRENT_USER_ID = 'adb shell "dumpsys user | grep -i current"'</div>
+        <p>获取当前用户ID。</p>
+        
+        <div class="cmd">GET_NAVI_VERSION_CMD = 'adb shell "dumpsys package com.baidu.naviauto | grep versionName"'</div>
+        <p>获取导航应用版本号。</p>
+        
+        <div class="cmd">DUMP_BAIDUMAPAUTO_CMD = "adb pull /data/user/{}/com.baidu.naviauto/files/BaiduMapAuto {}/NaviLog"</div>
+        <p>导出百度地图Auto数据。</p>
+        
+        <div class="cmd">DUMP_INSSDKLOG_CMD = "adb pull /data/user/{}/com.baidu.naviauto/files/InssdkLog {}/NaviLog"</div>
+        <p>导出Inssdk日志。</p>
+        
+        <div class="cmd">DUMP_PBSIMULATION_CMD = "adb pull /data/user/{}/com.baidu.naviauto/files/pbsimulation {}/NaviLog"</div>
+        <p>导出pbsimulation数据。</p>
+        
+        <div class="cmd">DUMP_NOARESOURCE_CMD = "adb pull /data/user/{}/com.baidu.naviauto/files/NoaResource {}/NaviLog"</div>
+        <p>导出NoaResource数据。</p>
+        
+        <div class="cmd">DELETE_BAIDUMAPAUTO_CMD = "adb shell rm -rf /data/user/{}/com.baidu.naviauto/files/BaiduMapAuto"</div>
+        <p>删除设备上的百度地图Auto数据。</p>
+        
+        <div class="cmd">DELETE_INSSDKLOG_CMD = "adb shell rm -rf /data/user/{}/com.baidu.naviauto/files/InssdkLog"</div>
+        <p>删除设备上的Inssdk日志。</p>
+        
+        <div class="cmd">DELETE_PBSIMULATION_CMD = "adb shell rm -rf /data/user/{}/com.baidu.naviauto/files/pbsimulation"</div>
+        <p>删除设备上的pbsimulation数据。</p>
+        
+        <div class="cmd">DELETE_NOARESOURCE_CMD = "adb shell rm -rf /data/user/{}/com.baidu.naviauto/files/NoaResource"</div>
+        <p>删除设备上的NoaResource数据。</p>
+        
+        <div class="note">
+            <div class="note-title">注意：</div>
+            <p>1. 所有命令中的<code>{}</code>会被自动替换为当前用户ID。</p>
+            <p>2. 不同版本的导航应用(5.0和6.0)有不同的日志开关选项。</p>
+        </div>
+        
+        <h2>类文档</h2>
+        
+        <div class="class-name">NaviLogger</div>
+        <p>百度导航日志收集器的主类，提供收集导航相关日志的功能。</p>
+        
+        <div class="method">
+            <div class="method-name">getInstance()</div>
+            <div class="method-desc">获取NaviLogger的单例实例。</div>
+            <div class="method-return">
+                <span>返回:</span>
+                <div class="return-desc">NaviLogger的实例</div>
+            </div>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">openNaviLogger(device)</div>
+            <div class="method-desc">打开导航日志调试页面并开启日志记录功能。</div>
+            <div class="method-params">
+                <div class="param">
+                    <span class="param-name">device</span>
+                    <span class="param-desc">uiautomator设备对象，用于UI操作</span>
+                </div>
+            </div>
+            <div class="method-return">
+                <span>返回:</span>
+                <div class="return-desc">无返回值</div>
+            </div>
+            <div class="method-desc">
+                <p>根据导航版本不同，会开启不同的日志选项：</p>
+                <ul>
+                    <li><strong>5.0版本</strong>: 地图时间、新日志、Java日志、引擎日志</li>
+                    <li><strong>6.0版本</strong>: 一键路测、测试水印、WGS84坐标</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">closeNaviLogger(device)</div>
+            <div class="method-desc">打开导航日志调试页面并关闭日志记录功能。</div>
+            <div class="method-params">
+                <div class="param">
+                    <span class="param-name">device</span>
+                    <span class="param-desc">uiautomator设备对象，用于UI操作</span>
+                </div>
+            </div>
+            <div class="method-return">
+                <span>返回:</span>
+                <div class="return-desc">无返回值</div>
+            </div>
+            <div class="method-desc">
+                <p>根据导航版本不同，会关闭不同的日志选项：</p>
+                <ul>
+                    <li><strong>5.0版本</strong>: 地图时间、新日志、Java日志、引擎日志</li>
+                    <li><strong>6.0版本</strong>: 一键路测、测试水印、WGS84坐标</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">dumpNaviLogger(caseFolder)</div>
+            <div class="method-desc">导出导航日志文件到指定目录，并清理设备上的日志文件。</div>
+            <div class="method-params">
+                <div class="param">
+                    <span class="param-name">caseFolder</span>
+                    <span class="param-desc">日志保存的文件夹路径</span>
+                </div>
+            </div>
+            <div class="method-return">
+                <span>返回:</span>
+                <div class="return-desc">布尔值，表示是否成功导出</div>
+            </div>
+            <div class="method-desc">
+                <p>导出的日志文件包括：</p>
+                <ul>
+                    <li>BaiduMapAuto - 百度地图Auto数据</li>
+                    <li>InssdkLog - Inssdk日志</li>
+                    <li>pbsimulation - pbsimulation数据</li>
+                    <li>NoaResource - NoaResource数据</li>
+                </ul>
+            </div>
+        </div>
+        
+        <h2>使用示例</h2>
+        <div class="example">
+            <div class="example-title">基本使用流程</div>
+            <pre><code>
+# 获取NaviLogger实例
+logger = NaviLogger.getInstance()
+
+# 开启导航日志记录
+logger.openNaviLogger(device)
+
+# 进行导航相关测试...
+
+# 导出日志到指定目录
+logger.dumpNaviLogger("/path/to/logs")
+
+# 关闭日志记录
+logger.closeNaviLogger(device)
+            </code></pre>
+        </div>
+        
+        <h2>工作流程</h2>
+        <ol>
+            <li>调用<code>openNaviLogger(device)</code>开启导航日志记录</li>
+            <li>进行导航相关测试操作</li>
+            <li>调用<code>dumpNaviLogger(caseFolder)</code>导出日志文件</li>
+            <li>日志文件将被保存在<code>caseFolder/NaviLog</code>目录下</li>
+            <li>导出完成后会自动清理设备上的日志文件</li>
+            <li>测试完成后调用<code>closeNaviLogger(device)</code>关闭日志记录</li>
+        </ol>
+    </div>
+</body>
+</html>

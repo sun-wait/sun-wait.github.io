@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VehicleInitManager API 文档</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #2980b9;
+            margin-top: 30px;
+        }
+        h3 {
+            color: #16a085;
+        }
+        .class-name {
+            background-color: #f8f9fa;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-family: monospace;
+            color: #d63384;
+            font-weight: bold;
+        }
+        .method {
+            background-color: #e9ecef;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+        .method-name {
+            font-weight: bold;
+            color: #6f42c1;
+        }
+        .param {
+            font-style: italic;
+            color: #e83e8c;
+        }
+        .return {
+            font-weight: bold;
+            color: #20c997;
+        }
+        code {
+            background-color: #f8f9fa;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-family: monospace;
+            color: #d63384;
+        }
+        pre {
+            background-color: #f8f9fa;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        .config-table {
+            width: 80%;
+            margin: 20px 0;
+            border-collapse: collapse;
+        }
+        .config-table th, .config-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        .config-table th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h1>VehicleInitManager API 文档</h1>
+    
+    <h2>1. 概述</h2>
+    <p>该API提供了车辆初始化配置功能，用于发送车机所有总线功能相关模块的前置信号。</p>
+    <p>支持GB和557两种平台/车型的配置。</p>
+    
+    <h2>2. 主要类</h2>
+    
+    <h3><span class="class-name">VehicleInitManager</span></h3>
+    <p>车辆初始化管理类，负责加载和发送车辆初始化配置。</p>
+    
+    <h2>3. 主要方法</h2>
+    
+    <div class="method">
+        <h4><span class="method-name">getInstance()</span> [类方法]</h4>
+        <p>获取VehicleInitManager单例实例。</p>
+        <p>同时会初始化平台类型和车型信息。</p>
+        <p><strong>返回:</strong> <span class="return">VehicleInitManager</span> - VehicleInitManager实例</p>
+    </div>
+    
+    <div class="method">
+        <h4><span class="method-name">vehicle_config()</span></h4>
+        <p>发送车辆初始化配置信号。</p>
+        <p>根据平台类型和车型加载不同的配置表，并发送所有配置信号。</p>
+        
+        <h4>配置表结构说明</h4>
+        <table class="config-table">
+            <tr>
+                <th>层级</th>
+                <th>说明</th>
+            </tr>
+            <tr>
+                <td>功能模块(function)</td>
+                <td>车辆的不同功能模块分类</td>
+            </tr>
+            <tr>
+                <td>配置类型(item)</td>
+                <td>包含config(配置)、available(可用性)、flag(标志位)、init(初始化)等类型</td>
+            </tr>
+            <tr>
+                <td>CAN ID(ids)</td>
+                <td>消息的CAN ID</td>
+            </tr>
+            <tr>
+                <td>信号(signals)</td>
+                <td>要发送的具体信号和值</td>
+            </tr>
+        </table>
+        
+        <h4>支持的平台/车型配置</h4>
+        <ul>
+            <li>GB平台：使用ConfigTableGB配置表</li>
+            <li>557车型：使用ConfigTable557配置表</li>
+        </ul>
+    </div>
+    
+    <h2>4. 使用示例</h2>
+    
+    <h3>4.1 发送车辆初始化配置</h3>
+    <pre><code># 获取实例并发送初始化配置
+init_manager = VehicleInitManager.getInstance()
+init_manager.vehicle_config()</code></pre>
+    
+    <h2>5. 注意事项</h2>
+    <ul>
+        <li>使用前需要确保CAN总线连接正常</li>
+        <li>不同平台/车型使用不同的配置表</li>
+        <li>该方法会捕获并记录异常，不会抛出异常</li>
+        <li>无论成功与否，最后都会打印"VehicleInit send fail..."日志</li>
+        <li>目前仅明确支持GB平台和557车型，其他平台/车型需要扩展配置表</li>
+    </ul>
+</body>
+</html>

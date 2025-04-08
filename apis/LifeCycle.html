@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LifeCycle 模块 API 文档</title>
+    <style>
+        body {
+            font-family: "Microsoft YaHei", sans-serif;
+            line-height: 1.8;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 25px;
+            color: #333;
+            background-color: #f5f5f5;
+        }
+        h1 {
+            color: #1e50a2;
+            border-bottom: 2px solid #1e50a2;
+            padding-bottom: 10px;
+            text-align: center;
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        h2 {
+            color: #1e50a2;
+            margin-top: 35px;
+            border-left: 5px solid #1e50a2;
+            padding-left: 15px;
+            background-color: white;
+            padding: 15px;
+            border-radius: 5px 0 0 5px;
+        }
+        h3 {
+            color: #2b6cb0;
+            margin-top: 25px;
+            padding-bottom: 5px;
+            border-bottom: 1px dashed #2b6cb0;
+        }
+        .decorator {
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 25px;
+            border-left: 4px solid #4a89dc;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .class-name {
+            color: #d9480f;
+            font-weight: bold;
+            font-family: Consolas, monospace;
+            background-color: #f8f9fa;
+            padding: 2px 5px;
+            border-radius: 3px;
+        }
+        code {
+            background-color: #f8f9fa;
+            padding: 3px 5px;
+            border-radius: 3px;
+            font-family: Consolas, monospace;
+            color: #333;
+        }
+        pre {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            border-left: 3px solid #4a89dc;
+            font-family: Consolas, monospace;
+        }
+        .note {
+            background-color: #fff8e1;
+            padding: 15px;
+            border-left: 4px solid #ffc107;
+            margin: 20px 0;
+            border-radius: 0 5px 5px 0;
+        }
+        .param {
+            font-weight: bold;
+            color: #555;
+        }
+        .section {
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+    <h1>LifeCycle 模块 API 文档</h1>
+    
+    <div class="section">
+        <h2>模块概述</h2>
+        <p>LifeCycle 模块提供了一套装饰器，用于管理测试场景的生命周期，包括初始化(setup)、执行(main)和清理(teardown)三个阶段。该模块集成了日志记录、文件管理和线程监控等功能。</p>
+    </div>
+    
+    <div class="section">
+        <h2>装饰器 API</h2>
+        
+        <div class="decorator">
+            <h3><code class="class-name">setup(senario)</code></h3>
+            <p>测试场景初始化装饰器工厂函数。</p>
+            
+            <h4>参数说明:</h4>
+            <ul>
+                <li><span class="param">senario</span> (str): 测试场景名称，用于创建专属日志目录</li>
+            </ul>
+            
+            <h4>功能说明:</h4>
+            <ol>
+                <li>在基础日志路径下创建格式为<code>{senario}_{当前时间}</code>的日志目录</li>
+                <li>执行被装饰函数并传入日志目录路径参数</li>
+                <li>捕获并记录执行过程中的所有异常</li>
+            </ol>
+            
+            <h4>示例代码:</h4>
+            <pre><code>@setup("登录测试")
+def test_login(*args, logFolder):
+    # 测试代码
+    pass</code></pre>
+        </div>
+        
+        <div class="decorator">
+            <h3><code class="class-name">main(func)</code></h3>
+            <p>测试执行阶段核心装饰器。</p>
+            
+            <h4>参数说明:</h4>
+            <ul>
+                <li><span class="param">func</span>: 被装饰的测试函数</li>
+            </ul>
+            
+            <h4>功能说明:</h4>
+            <ol>
+                <li>执行被装饰的测试函数</li>
+                <li>提供空的finally块用于扩展</li>
+            </ol>
+            
+            <h4>示例代码:</h4>
+            <pre><code>@main
+def test_functionality():
+    # 测试代码
+    pass</code></pre>
+        </div>
+        
+        <div class="decorator">
+            <h3><code class="class-name">teardown(func)</code></h3>
+            <p>测试清理阶段装饰器。</p>
+            
+            <h4>参数说明:</h4>
+            <ul>
+                <li><span class="param">func</span>: 被装饰的清理函数</li>
+            </ul>
+            
+            <h4>功能说明:</h4>
+            <ol>
+                <li>执行被装饰的清理函数</li>
+                <li>等待30秒后执行清理操作</li>
+                <li>清理阶段会：
+                    <ul>
+                        <li>列出所有运行中的线程</li>
+                        <li>如果存在多个线程，强制退出程序(<code>os._exit(0)</code>)</li>
+                        <li>捕获并记录清理过程中的异常</li>
+                    </ul>
+                </li>
+            </ol>
+            
+            <h4>示例代码:</h4>
+            <pre><code>@teardown
+def cleanup():
+    # 清理代码
+    pass</code></pre>
+        </div>
+    </div>
+    
+    <div class="section">
+        <h2>依赖模块</h2>
+        <ul>
+            <li><code class="class-name">FileUtil</code>: 文件和目录操作工具</li>
+            <li><code class="class-name">LogUtil</code>: 日志记录工具</li>
+            <li><code class="class-name">TimeUtil</code>: 时间处理工具</li>
+            <li><code class="class-name">Constant</code>: 常量定义</li>
+            <li>Python标准库: <code>os</code>, <code>threading</code>, <code>time</code>, <code>functools</code></li>
+        </ul>
+    </div>
+    
+    <div class="section">
+        <h2>典型使用模式</h2>
+        <p>通常组合使用这三个装饰器来管理完整的测试场景生命周期：</p>
+        <pre><code>@setup("用户登录场景")
+@main
+@teardown
+def test_login_case(logFolder=None):
+    # 测试实现代码
+    pass</code></pre>
+    </div>
+    
+    <div class="note">
+        <h3>注意事项</h3>
+        <ul>
+            <li><code class="class-name">setup</code>装饰器会自动为每个场景创建带时间戳的日志目录</li>
+            <li><code class="class-name">teardown</code>装饰器包含强制清理逻辑，当存在未结束线程时会强制终止程序</li>
+            <li>所有异常都会被捕获并记录在整个生命周期过程中</li>
+            <li>清理阶段有30秒延迟，确保测试结果完全输出</li>
+        </ul>
+    </div>
+</body>
+</html>

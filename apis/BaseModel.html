@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>BaseModel API 文档</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            color: #333;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #2980b9;
+            margin-top: 30px;
+        }
+        .class-name {
+            background-color: #f8f9fa;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-family: monospace;
+            color: #d63384;
+            font-weight: bold;
+        }
+        .method {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            border-left: 4px solid #3498db;
+        }
+        .method-name {
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        .method-desc {
+            margin-top: 10px;
+        }
+        .inheritance {
+            background-color: #e8f5e9;
+            padding: 10px;
+            border-left: 4px solid #4caf50;
+            margin: 10px 0;
+        }
+        .abstract {
+            background-color: #fff3e0;
+            padding: 10px;
+            border-left: 4px solid #ffa726;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>BaseModel API 文档</h1>
+
+    <div class="inheritance">
+        <strong>继承关系：</strong> 继承自 <code>EventEmitter</code> 类
+    </div>
+
+    <div class="abstract">
+        <strong>抽象类：</strong> 这是一个基础抽象类，需要子类实现具体的数据操作方法
+    </div>
+
+    <h2><span class="class-name">BaseModel</span> 类</h2>
+    <p>该类是所有模型类的基类，提供了基本的数据操作接口和事件发射能力。</p>
+
+    <div class="method">
+        <div class="method-name">__init__(self)</div>
+        <div class="method-desc">
+            构造函数，初始化BaseModel实例。
+            <p>继承自EventEmitter的事件发射能力。</p>
+        </div>
+    </div>
+
+    <div class="method">
+        <div class="method-name">setData(data)</div>
+        <div class="method-desc">
+            设置模型数据（需子类实现具体逻辑）。
+        </div>
+        <div class="param">
+            <span class="param-name">参数:</span>
+            <ul>
+                <li>data - 要设置的数据</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="method">
+        <div class="method-name">getData()</div>
+        <div class="method-desc">
+            获取模型数据（需子类实现具体逻辑）。
+        </div>
+        <div class="param">
+            <span class="param-name">返回:</span> 模型数据
+        </div>
+    </div>
+
+    <h3>使用说明</h3>
+    <ul>
+        <li>该类是一个抽象基类，需要子类继承并实现setData和getData方法</li>
+        <li>继承自EventEmitter，因此具有事件发射和监听能力</li>
+        <li>适合作为MV*架构中的Model层基类</li>
+    </ul>
+
+    <div class="method">
+        <div class="method-name">继承自EventEmitter的方法</div>
+        <div class="method-desc">
+            <p>BaseModel继承了EventEmitter的所有方法，包括但不限于：</p>
+            <ul>
+                <li>on(event, listener) - 添加事件监听器</li>
+                <li>once(event, listener) - 添加一次性事件监听器</li>
+                <li>emit(event, *args) - 触发事件</li>
+                <li>removeListener(event, listener) - 移除事件监听器</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

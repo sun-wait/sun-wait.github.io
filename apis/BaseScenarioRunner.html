@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BaseScenarioRunner API 文档</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #2980b9;
+            margin-top: 30px;
+        }
+        .class-name {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-left: 4px solid #3498db;
+            margin: 20px 0;
+            font-family: monospace;
+            font-size: 18px;
+        }
+        .method {
+            background-color: #f0f7ff;
+            padding: 12px;
+            border-left: 3px solid #2980b9;
+            margin: 15px 0;
+        }
+        .method-name {
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        .param {
+            font-style: italic;
+            color: #7f8c8d;
+        }
+        .return {
+            color: #27ae60;
+        }
+        code {
+            background-color: #f0f0f0;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-family: monospace;
+        }
+        .note {
+            background-color: #fff3cd;
+            padding: 10px;
+            border-left: 3px solid #ffc107;
+            margin: 15px 0;
+        }
+        .section {
+            margin-top: 40px;
+            border-top: 1px solid #eee;
+            padding-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>BaseScenarioRunner API 文档</h1>
+    
+    <div class="class-name">class BaseScenarioRunner</div>
+    
+    <p>基础场景运行器类，提供性能测试场景的基础功能，包括日志收集、性能监控、数据存储等。</p>
+    
+    <div class="note">
+        <strong>注意：</strong>该类是性能测试的基础类，提供了完整的测试生命周期管理功能。
+    </div>
+    
+    <h2>初始化方法</h2>
+    
+    <div class="method">
+        <div class="method-name">__init__()</div>
+        <p>初始化基础场景运行器。</p>
+    </div>
+    
+    <h2>核心方法</h2>
+    
+    <div class="method">
+        <div class="method-name">init(caseFolder, scenarioType, duration, wifiConnect=False, finishEvent=EventConstant.eventName.baseScenarioFinished.value, finishCallback=None)</div>
+        <p>初始化测试场景。</p>
+        <p><strong>参数:</strong></p>
+        <ul>
+            <li><span class="param">caseFolder</span> - 测试用例文件夹路径</li>
+            <li><span class="param">scenarioType</span> - 场景类型</li>
+            <li><span class="param">duration</span> - 测试持续时间</li>
+            <li><span class="param">wifiConnect</span> - 是否连接WiFi，默认为False</li>
+            <li><span class="param">finishEvent</span> - 完成事件名称，默认为baseScenarioFinished</li>
+            <li><span class="param">finishCallback</span> - 完成回调函数，可选</li>
+        </ul>
+        <p><strong>返回:</strong> <span class="return">bool</span> - 初始化是否成功</p>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">dumpDatas(scenario=None, caseFolder=None, appMonitor=False, dumpDmaMemInfo=False, ioPackage=None, breakPointResume=False, memoryMonitor=False, cleanupLogs=False)</div>
+        <p>开始收集性能数据。</p>
+        <p><strong>参数:</strong></p>
+        <ul>
+            <li><span class="param">scenario</span> - 场景类型，可选</li>
+            <li><span class="param">caseFolder</span> - 用例文件夹路径，可选</li>
+            <li><span class="param">appMonitor</span> - 是否监控应用，默认为False</li>
+            <li><span class="param">dumpDmaMemInfo</span> - 是否收集DMA内存信息，默认为False</li>
+            <li><span class="param">ioPackage</span> - 要监控IO的包名，可选</li>
+            <li><span class="param">breakPointResume</span> - 是否断点续传，默认为False</li>
+            <li><span class="param">memoryMonitor</span> - 是否监控内存，默认为False</li>
+            <li><span class="param">cleanupLogs</span> - 是否清理日志，默认为False</li>
+        </ul>
+        <p><strong>返回:</strong> <span class="return">bool</span> - 数据收集是否成功启动</p>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">waitFinish(durationSec=0, finishEvent=None)</div>
+        <p>等待测试完成。</p>
+        <p><strong>参数:</strong></p>
+        <ul>
+            <li><span class="param">durationSec</span> - 等待时长(秒)，默认为0</li>
+            <li><span class="param">finishEvent</span> - 完成事件名称，可选</li>
+        </ul>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">onFinish()</div>
+        <p>测试完成时的清理操作。</p>
+        <div class="note">
+            <strong>说明：</strong>会自动停止所有监控任务并生成报告。
+        </div>
+    </div>
+    
+    <h2>数据收集方法</h2>
+    
+    <div class="method">
+        <div class="method-name">startCommonLogTask(casePath)</div>
+        <p>启动通用日志收集任务。</p>
+        <p><strong>参数:</strong></p>
+        <ul>
+            <li><span class="param">casePath</span> - 用例路径</li>
+        </ul>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">startIoMonitor(caseFolder, package)</div>
+        <p>启动IO监控。</p>
+        <p><strong>参数:</strong></p>
+        <ul>
+            <li><span class="param">caseFolder</span> - 用例文件夹路径</li>
+            <li><span class="param">package</span> - 要监控的包名</li>
+        </ul>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">startDmaMemoryInfo(casePath)</div>
+        <p>启动DMA内存信息收集。</p>
+        <p><strong>参数:</strong></p>
+        <ul>
+            <li><span class="param">casePath</span> - 用例路径</li>
+        </ul>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">startIncTrafficMonitor(caseFolder)</div>
+        <p>启动增量流量监控。</p>
+        <p><strong>参数:</strong></p>
+        <ul>
+            <li><span class="param">caseFolder</span> - 用例文件夹路径</li>
+        </ul>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">startCleanupLogs(casePath)</div>
+        <p>启动日志清理任务。</p>
+        <p><strong>参数:</strong></p>
+        <ul>
+            <li><span class="param">casePath</span> - 用例路径</li>
+        </ul>
+    </div>
+    
+    <h2>数据报告方法</h2>
+    
+    <div class="method">
+        <div class="method-name">generateReport(baseFolder, scenarioType, runningAppList)</div>
+        <p>生成性能报告。</p>
+        <p><strong>参数:</strong></p>
+        <ul>
+            <li><span class="param">baseFolder</span> - 基础文件夹路径</li>
+            <li><span class="param">scenarioType</span> - 场景类型</li>
+            <li><span class="param">runningAppList</span> - 运行中的应用列表</li>
+        </ul>
+        <p><strong>返回:</strong> <span class="return">dict</span> - 性能数据字典</p>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">saveSenarioDatasToDb(perfDataDict)</div>
+        <p>保存场景数据到数据库。</p>
+        <p><strong>参数:</strong></p>
+        <ul>
+            <li><span class="param">perfDataDict</span> - 性能数据字典</li>
+        </ul>
+    </div>
+    
+    <h2>注意事项</h2>
+    <ul>
+        <li>使用前必须先调用init()方法进行初始化</li>
+        <li>dumpDatas()方法可以灵活配置需要收集的数据类型</li>
+        <li>测试完成后会自动调用onFinish()进行清理</li>
+        <li>支持断点续传功能(breakPointResume参数)</li>
+        <li>所有方法都有异常处理，失败时会记录日志</li>
+    </ul>
+</body>
+</html>

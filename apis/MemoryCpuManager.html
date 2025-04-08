@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MemoryCpuManager API 文档</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            color: #333;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #2980b9;
+            margin-top: 30px;
+        }
+        .class-name {
+            background-color: #f8f9fa;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-family: monospace;
+            color: #d63384;
+            font-weight: bold;
+        }
+        .method {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            border-left: 4px solid #3498db;
+        }
+        .method-name {
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        .method-params {
+            margin-top: 10px;
+            padding-left: 20px;
+        }
+        .method-return {
+            margin-top: 10px;
+            font-style: italic;
+        }
+        code {
+            background-color: #f8f9fa;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-family: monospace;
+            color: #d63384;
+        }
+        .note {
+            background-color: #fff3cd;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+            border-left: 4px solid #ffc107;
+        }
+    </style>
+</head>
+<body>
+    <h1>MemoryCpuManager API 文档</h1>
+    
+    <div class="note">
+        <p>该文档描述了 <span class="class-name">MemoryCpuManager</span> 类的API接口，用于管理Android和QNX系统的内存和CPU信息收集。</p>
+    </div>
+    
+    <h2>类概述</h2>
+    <p><span class="class-name">MemoryCpuManager</span> 是一个单例类，提供了以下功能：</p>
+    <ul>
+        <li>准备收集环境（上传脚本文件等）</li>
+        <li>启动Android和QNX系统的信息收集进程</li>
+        <li>检查收集进程是否正在运行</li>
+        <li>停止收集进程</li>
+        <li>将收集的数据从设备拉取到本地</li>
+    </ul>
+    
+    <h2>类方法</h2>
+    
+    <div class="method">
+        <div class="method-name">getInstance()</div>
+        <p>获取 <span class="class-name">MemoryCpuManager</span> 的单例实例。</p>
+        <div class="method-return">
+            <strong>返回:</strong> MemoryCpuManager 实例
+        </div>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">prepare(senario)</div>
+        <p>准备收集环境，包括上传必要的脚本文件到Android和QNX设备。</p>
+        <div class="method-params">
+            <strong>参数:</strong>
+            <ul>
+                <li><code>senario</code> - 场景类型，决定使用哪种收集脚本</li>
+            </ul>
+        </div>
+        <div class="method-return">
+            <strong>返回:</strong> 操作结果（可能为None）
+        </div>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">dumpAndroidInfos(breakPointResume)</div>
+        <p>启动Android系统的信息收集进程。</p>
+        <div class="method-params">
+            <strong>参数:</strong>
+            <ul>
+                <li><code>breakPointResume</code> - 是否从断点恢复收集</li>
+            </ul>
+        </div>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">dumpQnxInfos(breakPointResume)</div>
+        <p>启动QNX系统的信息收集进程。</p>
+        <div class="method-params">
+            <strong>参数:</strong>
+            <ul>
+                <li><code>breakPointResume</code> - 是否从断点恢复收集</li>
+            </ul>
+        </div>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">startDump(casePath, breakPointResume=False)</div>
+        <p>同时启动Android和QNX系统的信息收集。</p>
+        <div class="method-params">
+            <strong>参数:</strong>
+            <ul>
+                <li><code>casePath</code> - 保存收集数据的本地路径</li>
+                <li><code>breakPointResume</code> - 是否从断点恢复收集（默认为False）</li>
+            </ul>
+        </div>
+        <div class="method-return">
+            <strong>返回:</strong> 布尔值，表示操作是否成功
+        </div>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">checkAndroidShellProcess()</div>
+        <p>检查Android系统的收集进程是否正在运行。</p>
+        <div class="method-return">
+            <strong>返回:</strong> 
+            <ul>
+                <li>1 - 进程正在运行</li>
+                <li>0 - 进程未运行</li>
+                <li>-1 - 检查失败</li>
+            </ul>
+        </div>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">checkQnxShellProcess()</div>
+        <p>检查QNX系统的收集进程是否正在运行。</p>
+        <div class="method-return">
+            <strong>返回:</strong> 
+            <ul>
+                <li>1 - 进程正在运行</li>
+                <li>0 - 进程未运行</li>
+                <li>-1 - 检查失败</li>
+            </ul>
+        </div>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">stopShellProcess()</div>
+        <p>停止Android和QNX系统的收集进程。</p>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">stopDump(casePath=None, stopShell=True)</div>
+        <p>停止收集并将数据从设备拉取到本地。</p>
+        <div class="method-params">
+            <strong>参数:</strong>
+            <ul>
+                <li><code>casePath</code> - 保存收集数据的本地路径（可选）</li>
+                <li><code>stopShell</code> - 是否停止收集进程（默认为True）</li>
+            </ul>
+        </div>
+        <div class="method-return">
+            <strong>返回:</strong> 布尔值，表示操作是否成功
+        </div>
+    </div>
+    
+    <h2>常量</h2>
+    <ul>
+        <li><code>PUSH_PREPARE_FILE_TIMEOUT</code> - 上传准备文件超时时间（60秒）</li>
+        <li><code>PULL_OUT_DATAS_TIMEOUT</code> - 拉取数据超时时间（2000秒）</li>
+        <li><code>QNX_REMOTE_DUMP_LOGS_FILE</code> - QNX远程日志转储脚本路径</li>
+        <li><code>QNX_REMOTE_DUMP_SCRIPT_FILE</code> - QNX信息收集脚本路径</li>
+        <li><code>QNX_LOG_PATH</code> - QNX日志存储路径</li>
+    </ul>
+    
+    <h2>注意事项</h2>
+    <div class="note">
+        <ul>
+            <li>使用前需要确保设备已正确连接（ADB和SSH）</li>
+            <li>需要预先准备好收集脚本文件</li>
+            <li>收集的数据会保存在指定的本地路径中</li>
+            <li>该类实现了单例模式，应通过<code>getInstance()</code>方法获取实例</li>
+        </ul>
+    </div>
+</body>
+</html>

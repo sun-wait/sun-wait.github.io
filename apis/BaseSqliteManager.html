@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>BaseSqliteManager API 文档</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            color: #333;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #2980b9;
+            margin-top: 30px;
+        }
+        .class-name {
+            background-color: #f8f9fa;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-family: monospace;
+            color: #d63384;
+            font-weight: bold;
+        }
+        .method {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            border-left: 4px solid #3498db;
+        }
+        .method-name {
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        .method-desc {
+            margin-top: 10px;
+        }
+        .param {
+            margin-top: 10px;
+        }
+        .param-name {
+            font-weight: bold;
+        }
+        .return {
+            margin-top: 10px;
+        }
+        .return-name {
+            font-weight: bold;
+        }
+        .note {
+            background-color: #fff8e1;
+            padding: 10px;
+            border-left: 4px solid #ffc107;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>BaseSqliteManager API 文档</h1>
+
+    <h2><span class="class-name">BaseSqliteManager</span> 类</h2>
+    <p>该类提供了SQLite数据库的基本操作功能，包括数据库连接创建、关闭、查询和执行SQL语句等。</p>
+
+    <div class="method">
+        <div class="method-name">__init__(self)</div>
+        <div class="method-desc">
+            构造函数，初始化BaseSqliteManager实例。
+        </div>
+    </div>
+
+    <div class="method">
+        <div class="method-name">dict_factory(cursor, row)</div>
+        <div class="method-desc">
+            静态方法，将查询结果转换为字典格式。
+        </div>
+        <div class="param">
+            <span class="param-name">参数:</span>
+            <ul>
+                <li>cursor - 数据库游标对象</li>
+                <li>row - 查询结果行</li>
+            </ul>
+            <span class="param-name">返回:</span> 包含列名和对应值的字典
+        </div>
+    </div>
+
+    <div class="method">
+        <div class="method-name">createDb(self, db)</div>
+        <div class="method-desc">
+            创建数据库连接并返回连接对象和游标对象。
+        </div>
+        <div class="param">
+            <span class="param-name">参数:</span>
+            <ul>
+                <li>db - 数据库文件路径</li>
+            </ul>
+            <span class="param-name">返回:</span> 元组(connection, cursor)，如果失败返回(None, None)
+        </div>
+    </div>
+
+    <div class="method">
+        <div class="method-name">closeDb(self, dbConnection)</div>
+        <div class="method-desc">
+            关闭数据库连接。
+        </div>
+        <div class="param">
+            <span class="param-name">参数:</span>
+            <ul>
+                <li>dbConnection - 要关闭的数据库连接对象</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="method">
+        <div class="method-name">getDatabase(self)</div>
+        <div class="method-desc">
+            获取当前车型对应的数据库文件路径。
+            <p>数据库文件位于脚本所在目录的database子目录下，文件名为车型名称(小写)加.db后缀。</p>
+        </div>
+        <div class="return">
+            <span class="return-name">返回:</span> 数据库文件完整路径
+        </div>
+    </div>
+
+    <div class="method">
+        <div class="method-name">query(self, cursor, sql, args=None)</div>
+        <div class="method-desc">
+            执行查询SQL语句。
+        </div>
+        <div class="param">
+            <span class="param-name">参数:</span>
+            <ul>
+                <li>cursor - 数据库游标对象</li>
+                <li>sql - 要执行的SQL语句</li>
+                <li>args - SQL参数(可选，默认为None)</li>
+            </ul>
+            <span class="param-name">返回:</span> 查询结果列表，如果失败返回None
+        </div>
+    </div>
+
+    <div class="method">
+        <div class="method-name">execute(self, conn, cursor, sql, args=None)</div>
+        <div class="method-desc">
+            执行非查询SQL语句(如INSERT, UPDATE, DELETE等)。
+        </div>
+        <div class="param">
+            <span class="param-name">参数:</span>
+            <ul>
+                <li>conn - 数据库连接对象</li>
+                <li>cursor - 数据库游标对象</li>
+                <li>sql - 要执行的SQL语句</li>
+                <li>args - SQL参数(可选，默认为None)</li>
+            </ul>
+            <span class="param-name">返回:</span> 执行成功返回True，失败返回False
+        </div>
+    </div>
+
+    <div class="note">
+        <strong>注意：</strong>
+        <ul>
+            <li>所有数据库操作都会自动捕获异常并记录日志</li>
+            <li>查询结果默认使用dict_factory转换为字典格式</li>
+            <li>execute方法会自动提交事务</li>
+        </ul>
+    </div>
+</body>
+</html>

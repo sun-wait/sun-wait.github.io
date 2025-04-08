@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CarplayLogger API 文档</title>
+    <style>
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+            background-color: #f9f9f9;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+            border-radius: 5px;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+        h2 {
+            color: #2980b9;
+            margin-top: 30px;
+            border-left: 4px solid #3498db;
+            padding-left: 10px;
+        }
+        .class-name {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 4px;
+            border-left: 4px solid #3498db;
+            font-family: 'Courier New', monospace;
+            font-size: 1.2em;
+            margin: 25px 0;
+            color: #2c3e50;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        .method {
+            background-color: #f0f7ff;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 20px 0;
+            border-left: 3px solid #7f8c8d;
+            transition: all 0.3s ease;
+        }
+        .method:hover {
+            box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+        }
+        .method-name {
+            font-weight: bold;
+            color: #16a085;
+            font-size: 1.1em;
+        }
+        .method-desc {
+            margin-top: 8px;
+            color: #555;
+        }
+        .method-params {
+            margin-top: 12px;
+            font-size: 0.95em;
+        }
+        .param {
+            margin-left: 20px;
+            font-family: 'Courier New', monospace;
+            margin-bottom: 5px;
+        }
+        .param-name {
+            font-weight: bold;
+            color: #8e44ad;
+        }
+        .param-desc {
+            margin-left: 8px;
+        }
+        .method-return {
+            margin-top: 10px;
+            font-size: 0.95em;
+        }
+        .return-desc {
+            margin-left: 20px;
+            font-family: 'Courier New', monospace;
+        }
+        code {
+            background-color: #f0f0f0;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+        .cmd {
+            background-color: #f5f5f5;
+            padding: 10px 15px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            display: block;
+            margin: 15px 0;
+            overflow-x: auto;
+            border-left: 3px solid #95a5a6;
+            font-size: 0.9em;
+        }
+        .note {
+            background-color: #fffde7;
+            padding: 10px 15px;
+            border-left: 4px solid #ffd600;
+            margin: 15px 0;
+        }
+        .example {
+            background-color: #e8f5e9;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 20px 0;
+            border-left: 4px solid #4caf50;
+        }
+        .example-title {
+            font-weight: bold;
+            color: #2e7d32;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>CarplayLogger API 文档</h1>
+        
+        <p>该模块提供了收集CarPlay Cinemo相关日志的功能，包括开启日志记录、导出日志文件和恢复默认设置。</p>
+        
+        <h2>命令说明</h2>
+        <div class="cmd">SET_CINEMO_LOGLEVEL_CMD = 'adb shell setprop persist.sys.cinemo.loglevel -1'</div>
+        <p>设置Cinemo日志级别为最高级别(-1)。</p>
+        
+        <div class="cmd">SET_CINEMO_DUMP_CMD = 'adb shell setprop persist.sys.cinemo.audio.dump.enable true'</div>
+        <p>启用Cinemo音频转储功能。</p>
+        
+        <div class="cmd">GET_USER_ID_CMD = 'adb shell "dumpsys user | grep -i current"'</div>
+        <p>获取当前用户ID。</p>
+        
+        <div class="cmd">DUMP_CINEMO_DUMP_CMD = "adb pull /data/user_de/{}/com.gm.domain.server.delayed/files/cinemo_dump {}/CarplayLog"</div>
+        <p>导出Cinemo音频转储文件到指定目录。</p>
+        
+        <div class="cmd">DUMP_CINEMO_LOG_CMD = "adb pull /data/user_de/{}/com.gm.domain.server.delayed/files/cinemo_log {}/CarplayLog"</div>
+        <p>导出Cinemo日志文件到指定目录。</p>
+        
+        <div class="cmd">DELETE_CINEMO_DUMP_CMD = 'adb shell rm -rf /data/user_de/{}/com.gm.domain.server.delayed/files/cinemo_dump'</div>
+        <p>删除设备上的Cinemo音频转储文件。</p>
+        
+        <div class="cmd">DELETE_CINEMO_LOG_CMD = "adb shell rm -rf /data/user_de/{}/com.gm.domain.server.delayed/files/cinemo_log"</div>
+        <p>删除设备上的Cinemo日志文件。</p>
+        
+        <div class="cmd">RECOVER_CINEMO_LOGLEVEL_CMD = 'adb shell setprop persist.sys.cinemo.loglevel 6'</div>
+        <p>恢复Cinemo日志级别为默认值(6)。</p>
+        
+        <div class="cmd">RECOVER_CINEMO_DUMP_CMD = 'adb shell setprop persist.sys.cinemo.audio.dump.enable false'</div>
+        <p>禁用Cinemo音频转储功能。</p>
+        
+        <div class="note">
+            <strong>注意：</strong>所有命令中的<code>{}</code>会被自动替换为当前用户ID。
+        </div>
+        
+        <h2>类文档</h2>
+        
+        <div class="class-name">CarplayLogger</div>
+        <p>CarPlay Cinemo日志收集器的主类，提供收集Cinemo相关日志的功能。</p>
+        
+        <div class="method">
+            <div class="method-name">getInstance()</div>
+            <div class="method-desc">获取CarplayLogger的单例实例。</div>
+            <div class="method-return">
+                <span>返回:</span>
+                <div class="return-desc">CarplayLogger的实例</div>
+            </div>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">startCinemoLog()</div>
+            <div class="method-desc">开启Cinemo日志记录和音频转储功能。</div>
+            <div class="method-return">
+                <span>返回:</span>
+                <div class="return-desc">布尔值，表示是否成功开启</div>
+            </div>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">dumpCinemolog(caseFolder)</div>
+            <div class="method-desc">导出Cinemo日志和音频转储文件到指定目录，并清理设备上的文件。</div>
+            <div class="method-params">
+                <div class="param">
+                    <span class="param-name">caseFolder</span>
+                    <span class="param-desc">日志保存的文件夹路径</span>
+                </div>
+            </div>
+            <div class="method-return">
+                <span>返回:</span>
+                <div class="return-desc">布尔值，表示是否成功导出</div>
+            </div>
+        </div>
+        
+        <div class="method">
+            <div class="method-name">recoverCinemolog()</div>
+            <div class="method-desc">恢复Cinemo日志级别和音频转储设置为默认值。</div>
+            <div class="method-return">
+                <span>返回:</span>
+                <div class="return-desc">布尔值，表示是否成功恢复</div>
+            </div>
+        </div>
+        
+        <h2>使用示例</h2>
+        <div class="example">
+            <div class="example-title">基本使用流程</div>
+            <pre><code>
+# 获取CarplayLogger实例
+logger = CarplayLogger.getInstance()
+
+# 开启Cinemo日志记录
+logger.startCinemoLog()
+
+# 进行CarPlay相关测试...
+
+# 导出日志到指定目录
+logger.dumpCinemolog("/path/to/logs")
+
+# 恢复默认设置
+logger.recoverCinemolog()
+            </code></pre>
+        </div>
+        
+        <h2>工作流程</h2>
+        <ol>
+            <li>调用<code>startCinemoLog()</code>开启Cinemo日志记录和音频转储</li>
+            <li>进行CarPlay相关测试操作</li>
+            <li>调用<code>dumpCinemolog(caseFolder)</code>导出日志文件</li>
+            <li>日志文件将被保存在<code>caseFolder/CarplayLog</code>目录下</li>
+            <li>导出完成后会自动清理设备上的日志文件</li>
+            <li>测试完成后调用<code>recoverCinemolog()</code>恢复默认设置</li>
+        </ol>
+    </div>
+</body>
+</html>

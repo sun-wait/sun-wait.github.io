@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MonkeyMonitor API 文档</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            color: #333;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #2980b9;
+            margin-top: 30px;
+        }
+        .class-name {
+            background-color: #f8f9fa;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-family: monospace;
+            color: #d63384;
+            font-weight: bold;
+        }
+        .method {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            border-left: 4px solid #3498db;
+        }
+        .method-name {
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        .method-params {
+            margin-top: 10px;
+            padding-left: 20px;
+        }
+        .method-return {
+            margin-top: 10px;
+            font-style: italic;
+        }
+        code {
+            background-color: #f8f9fa;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-family: monospace;
+            color: #d63384;
+        }
+        .note {
+            background-color: #fff3cd;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+            border-left: 4px solid #ffc107;
+        }
+        .constant {
+            background-color: #e7f5ff;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>MonkeyMonitor API 文档</h1>
+    
+    <div class="note">
+        <p>该文档描述了 <span class="class-name">MonkeyMonitor</span> 类的API接口，用于管理和监控Android Monkey测试。</p>
+    </div>
+    
+    <h2>类概述</h2>
+    <p><span class="class-name">MonkeyMonitor</span> 是一个继承自Thread的类，提供了以下功能：</p>
+    <ul>
+        <li>启动和管理Monkey测试</li>
+        <li>监控Monkey测试进程状态</li>
+        <li>处理白名单/黑名单应用</li>
+        <li>在测试过程中随机切换应用</li>
+        <li>处理ADB连接问题</li>
+        <li>记录Monkey测试日志</li>
+    </ul>
+    
+    <h2>构造函数</h2>
+    <div class="method">
+        <div class="method-name">__init__(touchPct=100, motionPct=0, sysKeys=0, throttle=400, times=49999999, monkeyLogFolder=None, packageActivity=None, useWhitelist=True, randomSeed=0)</div>
+        <p>初始化MonkeyMonitor实例。</p>
+        <div class="method-params">
+            <strong>参数:</strong>
+            <ul>
+                <li><code>touchPct</code> - 触摸事件百分比（默认100）</li>
+                <li><code>motionPct</code> - 动作事件百分比（默认0）</li>
+                <li><code>sysKeys</code> - 系统按键事件百分比（默认0）</li>
+                <li><code>throttle</code> - 事件间延迟（毫秒，默认400）</li>
+                <li><code>times</code> - 事件次数（默认49999999）</li>
+                <li><code>monkeyLogFolder</code> - Monkey日志文件夹路径（可选）</li>
+                <li><code>packageActivity</code> - 要测试的包名/Activity（可选）</li>
+                <li><code>useWhitelist</code> - 是否使用白名单模式（默认True）</li>
+                <li><code>randomSeed</code> - 随机种子（默认0）</li>
+            </ul>
+        </div>
+    </div>
+    
+    <h2>类方法</h2>
+    
+    <div class="method">
+        <div class="method-name">startMonkeyTest()</div>
+        <p>启动Monkey测试。</p>
+        <div class="method-return">
+            <strong>返回:</strong> 布尔值，表示操作是否成功
+        </div>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">isMonkeyAlive()</div>
+        <p>检查Monkey测试是否在运行。</p>
+        <div class="method-return">
+            <strong>返回:</strong> 布尔值，表示Monkey测试是否在运行
+        </div>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">setMonkeyAlive(alive)</div>
+        <p>设置Monkey测试运行状态。</p>
+        <div class="method-params">
+            <strong>参数:</strong>
+            <ul>
+                <li><code>alive</code> - 布尔值，表示Monkey测试是否在运行</li>
+            </ul>
+        </div>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">onFinish()</div>
+        <p>停止Monkey测试并清理资源。</p>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">restartMonkey()</div>
+        <p>重启Monkey测试。</p>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">checkMonkeyAlive()</div>
+        <p>检查Monkey进程是否存活。</p>
+        <div class="method-return">
+            <strong>返回:</strong> 布尔值，表示Monkey进程是否存活
+        </div>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">resetAdbConnectTryTimes()</div>
+        <p>重置ADB连接尝试次数计数器。</p>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">updateBlackWhiteList(project)</div>
+        <p>根据项目更新黑名单/白名单文件。</p>
+        <div class="method-params">
+            <strong>参数:</strong>
+            <ul>
+                <li><code>project</code> - 项目名称</li>
+            </ul>
+        </div>
+        <div class="method-return">
+            <strong>返回:</strong> 更新后的名单文件路径
+        </div>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">switchApp()</div>
+        <p>切换到另一个应用（如果设置了随机切换）。</p>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">monkeyrandom()</div>
+        <p>随机选择一个应用并启动。</p>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">run()</div>
+        <p>线程主方法，启动并监控Monkey测试。</p>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">stopTask()</div>
+        <p>停止Monkey测试任务。</p>
+    </div>
+    
+    <h2>常量</h2>
+    
+    <div class="constant">
+        <code>ADB_CONNECT_TIMES_MAX</code> - ADB最大连接尝试次数（10次）
+    </div>
+    
+    <div class="constant">
+        <code>MONKEY_MONITOR_INTERVAL</code> - Monkey监控间隔（30秒）
+    </div>
+    
+    <div class="constant">
+        <code>SWITCH_APP_INTERVAL</code> - 应用切换间隔（900秒/15分钟）
+    </div>
+    
+    <div class="constant">
+        <code>MONKEY_LOG_FILE</code> - Monkey日志文件名（"monkeyLog"）
+    </div>
+    
+    <h2>命令常量</h2>
+    
+    <div class="constant">
+        <code>START_ACTIVITY</code> - 启动Activity的命令模板
+    </div>
+    
+    <div class="constant">
+        <code>CURRENT_ACTIVITY</code> - 获取当前Activity的命令
+    </div>
+    
+    <div class="constant">
+        <code>PUSH_FILE_COMMAND</code> - 推送文件到设备的命令模板
+    </div>
+    
+    <div class="constant">
+        <code>KILL_MONKEY_COMMAND</code> - 杀死Monkey进程的命令
+    </div>
+    
+    <div class="constant">
+        <code>WHITELIST_MONKEY_COMMAND</code> - 使用白名单的Monkey命令模板
+    </div>
+    
+    <div class="constant">
+        <code>BLACKLIST_MONKEY_COMMAND</code> - 使用黑名单的Monkey命令模板
+    </div>
+    
+    <div class="constant">
+        <code>SINGLE_APP_MONKEY_COMMAND</code> - 测试单个应用的Monkey命令模板
+    </div>
+    
+    <h2>注意事项</h2>
+    <div class="note">
+        <ul>
+            <li>使用前需要确保ADB已正确连接</li>
+            <li>需要预先准备好白名单/黑名单文件</li>
+            <li>如果指定了monkeyLogFolder，Monkey日志将被保存到该文件夹</li>
+            <li>如果不指定packageActivity，将根据白名单/黑名单随机测试应用</li>
+            <li>该类继承自Thread，应通过start()方法启动线程</li>
+            <li>通过stopTask()方法可以安全停止测试</li>
+        </ul>
+    </div>
+</body>
+</html>

@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AudioLogger API 文档</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #2980b9;
+            margin-top: 30px;
+            border-left: 4px solid #3498db;
+            padding-left: 10px;
+        }
+        .class-name {
+            background-color: #f8f9fa;
+            padding: 10px 15px;
+            border-radius: 4px;
+            border-left: 4px solid #3498db;
+            font-family: monospace;
+            font-size: 1.2em;
+            margin: 20px 0;
+            color: #2c3e50;
+        }
+        .enum-name {
+            background-color: #f0f7ff;
+            padding: 10px 15px;
+            border-radius: 4px;
+            border-left: 4px solid #7f8c8d;
+            font-family: monospace;
+            font-size: 1.1em;
+            margin: 15px 0;
+        }
+        .method {
+            background-color: #f0f7ff;
+            padding: 10px;
+            border-radius: 4px;
+            margin: 15px 0;
+            border-left: 3px solid #7f8c8d;
+        }
+        .method-name {
+            font-weight: bold;
+            color: #16a085;
+        }
+        .method-desc {
+            margin-top: 5px;
+            color: #555;
+        }
+        .method-params {
+            margin-top: 10px;
+            font-size: 0.9em;
+        }
+        .param {
+            margin-left: 20px;
+            font-family: monospace;
+        }
+        .param-name {
+            font-weight: bold;
+            color: #8e44ad;
+        }
+        .param-desc {
+            margin-left: 5px;
+        }
+        .method-return {
+            margin-top: 5px;
+            font-size: 0.9em;
+        }
+        .return-desc {
+            margin-left: 20px;
+            font-family: monospace;
+        }
+        code {
+            background-color: #f0f0f0;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-family: monospace;
+            font-size: 0.9em;
+        }
+        .enum-item {
+            margin-left: 20px;
+            font-family: monospace;
+        }
+        .enum-value {
+            color: #e74c3c;
+        }
+    </style>
+</head>
+<body>
+    <h1>AudioLogger API 文档</h1>
+    
+    <p>该模块提供了收集音频相关日志的功能，包括使用jstreamer和AHAL(Android Hardware Abstraction Layer)两种方式。</p>
+    
+    <h2>枚举类型</h2>
+    
+    <div class="enum-name">JstreamerRouteId</div>
+    <p>jstreamer路由ID枚举，定义不同的音频路由类型。</p>
+    <div class="enum-item"><span class="param-name">chime</span>: <span class="enum-value">1</span> - 提示音</div>
+    <div class="enum-item"><span class="param-name">am_fm</span>: <span class="enum-value">100</span> - AM/FM广播</div>
+    <div class="enum-item"><span class="param-name">mic1_2</span>: <span class="enum-value">103</span> - 麦克风1和2</div>
+    <div class="enum-item"><span class="param-name">media_analog_mics</span>: <span class="enum-value">104</span> - 媒体模拟麦克风</div>
+    <div class="enum-item"><span class="param-name">media_capture</span>: <span class="enum-value">106</span> - 媒体捕获</div>
+    <div class="enum-item"><span class="param-name">avb_capture</span>: <span class="enum-value">108</span> - AVB捕获</div>
+    <div class="enum-item"><span class="param-name">acoustic_playback</span>: <span class="enum-value">110</span> - 声学回放</div>
+    <div class="enum-item"><span class="param-name">bt_call_capture</span>: <span class="enum-value">111</span> - 蓝牙通话捕获</div>
+    <div class="enum-item"><span class="param-name">navi_mix</span>: <span class="enum-value">112</span> - 导航混音</div>
+    <div class="enum-item"><span class="param-name">key_feedback_mix</span>: <span class="enum-value">113</span> - 按键反馈混音</div>
+    <div class="enum-item"><span class="param-name">avb_promptc</span>: <span class="enum-value">114</span> - AVB提示</div>
+    <div class="enum-item"><span class="param-name">a2b_media_mic_capture</span>: <span class="enum-value">115</span> - A2B媒体麦克风捕获</div>
+    <div class="enum-item"><span class="param-name">a2b_acoustic_mic_capture</span>: <span class="enum-value">116</span> - A2B声学麦克风捕获</div>
+    <div class="enum-item"><span class="param-name">reference_media_capture</span>: <span class="enum-value">121</span> - 参考媒体捕获</div>
+    <div class="enum-item"><span class="param-name">a2b_reference_media_capture</span>: <span class="enum-value">124</span> - A2B参考媒体捕获</div>
+    <div class="enum-item"><span class="param-name">analog_acoustic_mic_capture</span>: <span class="enum-value">125</span> - 模拟声学麦克风捕获</div>
+    <div class="enum-item"><span class="param-name">analog_media_mic_capture</span>: <span class="enum-value">126</span> - 模拟媒体麦克风捕获</div>
+    
+    <div class="enum-name">JstreamerChannel</div>
+    <p>jstreamer通道数枚举，定义不同路由对应的通道数量。</p>
+    <div class="enum-item"><span class="param-name">chime</span>: <span class="enum-value">1</span> - 提示音通道数</div>
+    <div class="enum-item"><span class="param-name">am_fm</span>: <span class="enum-value">2</span> - AM/FM广播通道数</div>
+    <div class="enum-item"><span class="param-name">mic1_2</span>: <span class="enum-value">2</span> - 麦克风1和2通道数</div>
+    <div class="enum-item"><span class="param-name">media_analog_mics</span>: <span class="enum-value">8</span> - 媒体模拟麦克风通道数</div>
+    <div class="enum-item"><span class="param-name">media_capture</span>: <span class="enum-value">2</span> - 媒体捕获通道数</div>
+    <div class="enum-item"><span class="param-name">avb_capture</span>: <span class="enum-value">1</span> - AVB捕获通道数</div>
+    <div class="enum-item"><span class="param-name">acoustic_playback</span>: <span class="enum-value">2</span> - 声学回放通道数</div>
+    <div class="enum-item"><span class="param-name">bt_call_capture</span>: <span class="enum-value">1</span> - 蓝牙通话捕获通道数</div>
+    <div class="enum-item"><span class="param-name">navi_mix</span>: <span class="enum-value">1</span> - 导航混音通道数</div>
+    <div class="enum-item"><span class="param-name">key_feedback_mix</span>: <span class="enum-value">1</span> - 按键反馈混音通道数</div>
+    <div class="enum-item"><span class="param-name">avb_promptc</span>: <span class="enum-value">1</span> - AVB提示通道数</div>
+    <div class="enum-item"><span class="param-name">a2b_media_mic_capture</span>: <span class="enum-value">16</span> - A2B媒体麦克风捕获通道数</div>
+    <div class="enum-item"><span class="param-name">a2b_acoustic_mic_capture</span>: <span class="enum-value">16</span> - A2B声学麦克风捕获通道数</div>
+    <div class="enum-item"><span class="param-name">reference_media_capture</span>: <span class="enum-value">8</span> - 参考媒体捕获通道数</div>
+    <div class="enum-item"><span class="param-name">a2b_reference_media_capture</span>: <span class="enum-value">5</span> - A2B参考媒体捕获通道数</div>
+    <div class="enum-item"><span class="param-name">analog_acoustic_mic_capture</span>: <span class="enum-value">2</span> - 模拟声学麦克风捕获通道数</div>
+    <div class="enum-item"><span class="param-name">analog_media_mic_capture</span>: <span class="enum-value">2</span> - 模拟媒体麦克风捕获通道数</div>
+    
+    <div class="enum-name">AhalMainOptions</div>
+    <p>AHAL主选项枚举。</p>
+    <div class="enum-item"><span class="param-name">record_single_bus</span>: <span class="enum-value">1</span> - 记录单个总线</div>
+    <div class="enum-item"><span class="param-name">record_all_active_buses</span>: <span class="enum-value">2</span> - 记录所有活动总线</div>
+    <div class="enum-item"><span class="param-name">quit</span>: <span class="enum-value">3</span> - 退出</div>
+    
+    <div class="enum-name">AhalSubOptions</div>
+    <p>AHAL子选项枚举，定义不同的音频总线类型。</p>
+    <div class="enum-item"><span class="param-name">bus0_media_out</span>: <span class="enum-value">1</span> - 媒体输出总线</div>
+    <div class="enum-item"><span class="param-name">bus1_navigation_out</span>: <span class="enum-value">2</span> - 导航输出总线</div>
+    <div class="enum-item"><span class="param-name">bus2_voice_command_out</span>: <span class="enum-value">3</span> - 语音命令输出总线</div>
+    <div class="enum-item"><span class="param-name">bus3_call_ring_out</span>: <span class="enum-value">4</span> - 电话铃声输出总线</div>
+    <div class="enum-item"><span class="param-name">bus4_call_out</span>: <span class="enum-value">5</span> - 通话输出总线</div>
+    <div class="enum-item"><span class="param-name">bus5_alarm_out</span>: <span class="enum-value">6</span> - 闹钟输出总线</div>
+    <div class="enum-item"><span class="param-name">bus6_notification_out</span>: <span class="enum-value">7</span> - 通知输出总线</div>
+    <div class="enum-item"><span class="param-name">bus7_system_sound_out</span>: <span class="enum-value">8</span> - 系统声音输出总线</div>
+    <div class="enum-item"><span class="param-name">bus8_emergency_out</span>: <span class="enum-value">9</span> - 紧急输出总线</div>
+    <div class="enum-item"><span class="param-name">bus13_high_priority_mutex_out</span>: <span class="enum-value">10</span> - 高优先级互斥输出总线</div>
+    <div class="enum-item"><span class="param-name">built_in_mic</span>: <span class="enum-value">11</span> - 内置麦克风</div>
+    <div class="enum-item"><span class="param-name">call_in_mic</span>: <span class="enum-value">12</span> - 通话输入麦克风</div>
+    <div class="enum-item"><span class="param-name">bus15_aux_out</span>: <span class="enum-value">13</span> - 辅助输出总线</div>
+    <div class="enum-item"><span class="param-name">mic_for_vr</span>: <span class="enum-value">14</span> - VR麦克风</div>
+    
+    <h2>类文档</h2>
+    
+    <div class="class-name">AudioLogger</div>
+    <p>音频日志收集器的主类，提供收集jstreamer和AHAL音频日志的功能。</p>
+    
+    <div class="method">
+        <div class="method-name">getInstance()</div>
+        <div class="method-desc">获取AudioLogger的单例实例。</div>
+        <div class="method-return">
+            <span>返回:</span>
+            <div class="return-desc">AudioLogger的实例</div>
+        </div>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">jstreamer(caseFolder, routeId, channel, remoteFile, duration, asyncMode=True, callback=jstreamerCallback)</div>
+        <div class="method-desc">启动jstreamer音频记录任务。</div>
+        <div class="method-params">
+            <div class="param">
+                <span class="param-name">caseFolder</span>
+                <span class="param-desc">日志保存的文件夹路径</span>
+            </div>
+            <div class="param">
+                <span class="param-name">routeId</span>
+                <span class="param-desc">路由ID，使用JstreamerRouteId枚举值</span>
+            </div>
+            <div class="param">
+                <span class="param-name">channel</span>
+                <span class="param-desc">通道数，使用JstreamerChannel枚举值</span>
+            </div>
+            <div class="param">
+                <span class="param-name">remoteFile</span>
+                <span class="param-desc">远程文件名</span>
+            </div>
+            <div class="param">
+                <span class="param-name">duration</span>
+                <span class="param-desc">记录持续时间(秒)</span>
+            </div>
+            <div class="param">
+                <span class="param-name">asyncMode</span>
+                <span class="param-desc">是否异步执行，默认为True</span>
+            </div>
+            <div class="param">
+                <span class="param-name">callback</span>
+                <span class="param-desc">回调函数，默认为jstreamerCallback</span>
+            </div>
+        </div>
+        <div class="method-return">
+            <span>返回:</span>
+            <div class="return-desc">布尔值，表示是否成功启动</div>
+        </div>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">jstreamerCallback(caseFolder, remoteFile)</div>
+        <div class="method-desc">jstreamer回调函数，用于拉取记录文件并删除远程文件。</div>
+        <div class="method-params">
+            <div class="param">
+                <span class="param-name">caseFolder</span>
+                <span class="param-desc">日志保存的文件夹路径</span>
+            </div>
+            <div class="param">
+                <span class="param-name">remoteFile</span>
+                <span class="param-desc">远程文件名</span>
+            </div>
+        </div>
+        <div class="method-return">
+            <span>返回:</span>
+            <div class="return-desc">布尔值，表示是否成功</div>
+        </div>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">ahal(caseFolder, options, asyncMode=True)</div>
+        <div class="method-desc">启动AHAL音频记录任务。</div>
+        <div class="method-params">
+            <div class="param">
+                <span class="param-name">caseFolder</span>
+                <span class="param-desc">日志保存的文件夹路径</span>
+            </div>
+            <div class="param">
+                <span class="param-name">options</span>
+                <span class="param-desc">选项列表，使用AhalMainOptions和AhalSubOptions枚举值</span>
+            </div>
+            <div class="param">
+                <span class="param-name">asyncMode</span>
+                <span class="param-desc">是否异步执行，默认为True</span>
+            </div>
+        </div>
+        <div class="method-return">
+            <span>返回:</span>
+            <div class="return-desc">布尔值，表示是否成功启动</div>
+        </div>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">waitJstreamerFinish()</div>
+        <div class="method-desc">等待jstreamer任务完成(仅异步模式下使用)。</div>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">waitAhalFinish()</div>
+        <div class="method-desc">等待AHAL任务完成(仅异步模式下使用)。</div>
+    </div>
+    
+    <div class="class-name">JstreamerTask</div>
+    <p>jstreamer日志收集任务线程类，内部使用。</p>
+    
+    <div class="method">
+        <div class="method-name">run()</div>
+        <div class="method-desc">执行jstreamer日志收集任务。</div>
+    </div>
+    
+    <div class="class-name">AhalTask</div>
+    <p>AHAL日志收集任务线程类，内部使用。</p>
+    
+    <div class="method">
+        <div class="method-name">formatOptions(options)</div>
+        <div class="method-desc">格式化选项为字符串。</div>
+        <div class="method-return">
+            <span>返回:</span>
+            <div class="return-desc">格式化后的选项字符串</div>
+        </div>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">run()</div>
+        <div class="method-desc">执行AHAL日志收集任务。</div>
+    </div>
+    
+    <h2>常量说明</h2>
+    <ul>
+        <li><code>PULL_OUT_AHAL_FILE_TIMEOUT</code>: 拉取AHAL文件的超时时间，默认为60秒</li>
+        <li><code>PULL_OUT_LOGS_TIMEOUT_DEFAULT</code>: 拉取日志的默认超时时间，默认为60秒</li>
+    </ul>
+    
+    <h2>使用示例</h2>
+    <pre><code>
+# 同步模式收集jstreamer日志
+logger = AudioLogger.getInstance()
+logger.jstreamer("/path/to/logs", JstreamerRouteId.media_capture, JstreamerChannel.media_capture, "audio.wav", 10, asyncMode=False)
+
+# 异步模式收集AHAL日志
+logger.ahal("/path/to/logs", [AhalMainOptions.record_single_bus, AhalSubOptions.bus0_media_out])
+# 其他操作...
+logger.waitAhalFinish()
+    </code></pre>
+</body>
+</html>

@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StartupManager API 文档</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            color: #333;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #2980b9;
+            margin-top: 30px;
+        }
+        .class-name {
+            background-color: #f8f9fa;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-family: monospace;
+            color: #d63384;
+            font-weight: bold;
+        }
+        .method {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            border-left: 4px solid #3498db;
+        }
+        .method-name {
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        .method-params {
+            margin-top: 10px;
+            padding-left: 20px;
+        }
+        .method-return {
+            margin-top: 10px;
+            font-style: italic;
+        }
+        code {
+            background-color: #f8f9fa;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-family: monospace;
+            color: #d63384;
+        }
+        .note {
+            background-color: #fff3cd;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+            border-left: 4px solid #ffc107;
+        }
+        .constant {
+            background-color: #e7f5ff;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 5px 0;
+        }
+        .enum {
+            background-color: #e6f7e6;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>StartupManager API 文档</h1>
+    
+    <div class="note">
+        <p>该文档描述了 <span class="class-name">StartupManager</span> 类的API接口，用于管理Android应用的冷启动、温启动和热启动测试。</p>
+    </div>
+    
+    <h2>类概述</h2>
+    <p><span class="class-name">StartupManager</span> 是一个单例类，提供了以下功能：</p>
+    <ul>
+        <li>管理应用的冷启动、温启动和热启动测试</li>
+        <li>测量应用的启动时间</li>
+        <li>记录启动日志</li>
+        <li>将测试结果保存到Excel文件</li>
+        <li>比较测试结果与阈值</li>
+    </ul>
+    
+    <h2>枚举类型</h2>
+    
+    <div class="enum">
+        <div class="method-name">STARTUP_TEST_RESULT</div>
+        <p>启动测试结果枚举。</p>
+        <ul>
+            <li><code>success</code> - 测试通过 ("pass")</li>
+            <li><code>fail</code> - 测试失败 ("fail")</li>
+        </ul>
+    </div>
+    
+    <h2>类方法</h2>
+    
+    <div class="method">
+        <div class="method-name">getInstance()</div>
+        <p>获取 <span class="class-name">StartupManager</span> 的单例实例。</p>
+        <div class="method-return">
+            <strong>返回:</strong> StartupManager 实例
+        </div>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">getAppList(appListFile)</div>
+        <p>从文件中获取应用列表。</p>
+        <div class="method-params">
+            <strong>参数:</strong>
+            <ul>
+                <li><code>appListFile</code> - 应用列表文件路径</li>
+            </ul>
+        </div>
+        <div class="method-return">
+            <strong>返回:</strong> 应用列表
+        </div>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">saveStartupLog(path, content)</div>
+        <p>保存启动日志到文件。</p>
+        <div class="method-params">
+            <strong>参数:</strong>
+            <ul>
+                <li><code>path</code> - 日志文件路径</li>
+                <li><code>content</code> - 日志内容</li>
+            </ul>
+        </div>
+        <div class="method-return">
+            <strong>返回:</strong> 布尔值，表示操作是否成功
+        </div>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">getStartupTime(startupMode, returnCode, output)</div>
+        <p>从命令输出中提取启动时间。</p>
+        <div class="method-params">
+            <strong>参数:</strong>
+            <ul>
+                <li><code>startupMode</code> - 启动模式 (COLD_STARTUP_TEST, WARM_STARTUP_TEST, HOT_STARTUP_TEST)</li>
+                <li><code>returnCode</code> - 命令返回码</li>
+                <li><code>output</code> - 命令输出</li>
+            </ul>
+        </div>
+        <div class="method-return">
+            <strong>返回:</strong> 启动时间（毫秒）
+        </div>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">appNeedTest(startupMode, app_cold, app_hot, app_warm)</div>
+        <p>检查应用是否需要测试指定类型的启动。</p>
+        <div class="method-params">
+            <strong>参数:</strong>
+            <ul>
+                <li><code>startupMode</code> - 启动模式</li>
+                <li><code>app_cold</code> - 应用冷启动标志</li>
+                <li><code>app_hot</code> - 应用热启动标志</li>
+                <li><code>app_warm</code> - 应用温启动标志</li>
+            </ul>
+        </div>
+        <div class="method-return">
+            <strong>返回:</strong> 布尔值，表示是否需要测试
+        </div>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">addRootPermission()</div>
+        <p>获取ADB root权限。</p>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">executeWarmStartupCmd(appName, activity, component)</div>
+        <p>执行温启动测试命令。</p>
+        <div class="method-params">
+            <strong>参数:</strong>
+            <ul>
+                <li><code>appName</code> - 应用名称</li>
+                <li><code>activity</code> - Activity名称</li>
+                <li><code>component</code> - 组件选项</li>
+            </ul>
+        </div>
+        <div class="method-return">
+            <strong>返回:</strong> 元组 (返回码, 命令输出)
+        </div>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">waitAppRecover(activity, timeout)</div>
+        <p>等待应用进程恢复。</p>
+        <div class="method-params">
+            <strong>参数:</strong>
+            <ul>
+                <li><code>activity</code> - Activity名称</li>
+                <li><code>timeout</code> - 超时时间（秒）</li>
+            </ul>
+        </div>
+        <div class="method-return">
+            <strong>返回:</strong> 布尔值，表示进程是否恢复
+        </div>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">getPid(activity)</div>
+        <p>获取应用进程ID。</p>
+        <div class="method-params">
+            <strong>参数:</strong>
+            <ul>
+                <li><code>activity</code> - Activity名称</li>
+            </ul>
+        </div>
+        <div class="method-return">
+            <strong>返回:</strong> 进程ID字符串
+        </div>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">getComponentOption(component, activity)</div>
+        <p>获取组件启动选项。</p>
+        <div class="method-params">
+            <strong>参数:</strong>
+            <ul>
+                <li><code>component</code> - 组件标志</li>
+                <li><code>activity</code> - Activity名称</li>
+            </ul>
+        </div>
+        <div class="method-return">
+            <strong>返回:</strong> 组件启动选项字符串
+        </div>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">startTest(startupMode, appList, times)</div>
+        <p>执行启动测试。</p>
+        <div class="method-params">
+            <strong>参数:</strong>
+            <ul>
+                <li><code>startupMode</code> - 启动模式</li>
+                <li><code>appList</code> - 应用列表</li>
+                <li><code>times</code> - 测试次数</li>
+            </ul>
+        </div>
+        <div class="method-return">
+            <strong>返回:</strong> 元组 (阈值列表, 启动结果字典)
+        </div>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">writeToExcel(dataFrame, excel, sheet="sheet1", index=False)</div>
+        <p>将数据写入Excel文件。</p>
+        <div class="method-params">
+            <strong>参数:</strong>
+            <ul>
+                <li><code>dataFrame</code> - Pandas DataFrame</li>
+                <li><code>excel</code> - Excel文件路径</li>
+                <li><code>sheet</code> - 工作表名称（默认为"sheet1"）</li>
+                <li><code>index</code> - 是否写入索引（默认为False）</li>
+            </ul>
+        </div>
+        <div class="method-return">
+            <strong>返回:</strong> 布尔值，表示操作是否成功
+        </div>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">compare(datas)</div>
+        <p>比较启动时间与阈值。</p>
+        <div class="method-params">
+            <strong>参数:</strong>
+            <ul>
+                <li><code>datas</code> - 包含平均值和阈值的数据</li>
+            </ul>
+        </div>
+        <div class="method-return">
+            <strong>返回:</strong> 测试结果 (STARTUP_TEST_RESULT)
+        </div>
+    </div>
+    
+    <div class="method">
+        <div class="method-name">getStartupDataFrame(startupResult, thresholdList)</div>
+        <p>将启动结果转换为DataFrame。</p>
+        <div class="method-params">
+            <strong>参数:</strong>
+            <ul>
+                <li><code>startupResult</code> - 启动结果字典</li>
+                <li><code>thresholdList</code> - 阈值列表</li>
+            </ul>
+        </div>
+        <div class="method-return">
+            <strong>返回:</strong> Pandas DataFrame
+        </div>
+    </div>
+    
+    <h2>常量</h2>
+    
+    <div class="constant">
+        <code>DEFAULT_STARTUP_TIME</code> - 默认启动时间 (-1毫秒)
+    </div>
+    
+    <div class="constant">
+        <code>KEY_EVENT_HOME</code> - Home键事件代码 (3)
+    </div>
+    
+    <div class="constant">
+        <code>HOT_STARTUP_CMD_TIMEOUT</code> - 热启动命令超时时间 (30秒)
+    </div>
+    
+    <div class="constant">
+        <code>WARM_STARTUP_CMD_TIMEOUT</code> - 温启动命令超时时间 (30秒)
+    </div>
+    
+    <div class="constant">
+        <code>WAIT_APP_RESTART_TIMEOUT</code> - 应用重启等待超时时间 (30秒)
+    </div>
+    
+    <div class="constant">
+        <code>COLD_STARTUP_TEST</code> - 冷启动测试标识 ("cold")
+    </div>
+    
+    <div class="constant">
+        <code>HOT_STARTUP_TEST</code> - 热启动测试标识 ("hot")
+    </div>
+    
+    <div class="constant">
+        <code>WARM_STARTUP_TEST</code> - 温启动测试标识 ("warm")
+    </div>
+    
+    <div class="constant">
+        <code>STARTUP_WITH_COMPONENT</code> - 组件启动标识 ("component")
+    </div>
+    
+    <h2>注意事项</h2>
+    <div class="note">
+        <ul>
+            <li>使用前需要确保ADB已正确连接</li>
+            <li>需要预先准备好应用列表文件</li>
+            <li>测试结果会自动保存到日志文件和Excel文件</li>
+            <li>该类实现了单例模式，应通过<code>getInstance()</code>方法获取实例</li>
+            <li>测试过程中会自动获取ADB root权限</li>
+        </ul>
+    </div>
+</body>
+</html>
