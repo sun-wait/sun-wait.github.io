@@ -1,191 +1,296 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 <head>
-    <title>Power Cycle & System Pressure Test Quick Start</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ClusterGeneralManager API 文档</title>
     <style>
         body {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.8;
+            margin: 40px;
+            background-color: #f9f9f9;
+            color: #333;
         }
+
+        .navbar {
+            /*background-color: rgba(255, 255, 255, 0.8);*/
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 44px;
+            padding: 0 22px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            z-index: 999;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-logo {
+            font-size: 21px;
+            font-weight: 500;
+            color: var(--apple-black);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: var(--apple-black);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 400;
+            transition: opacity 0.3s;
+        }
+
+        .nav-link:hover {
+            opacity: 0.7;
+        }
+
+        .nav-dropdown {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            /*background-color: rgba(255, 255, 255, 0.9);*/
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            padding: 8px 0;
+            min-width: 160px;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s;
+        }
+
+        .dropdown-item {
+            display: block;
+            padding: 8px 16px;
+            color: var(--apple-black);
+            text-decoration: none;
+            font-size: 14px;
+            transition: background-color 0.3s;
+        }
+
+        .dropdown-item:hover {
+            /*background-color: var(--apple-light-gray);*/
+        }
+
+        .nav-dropdown:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+        }
+
+
         h1, h2, h3 {
-            text-align: left;
+            color: #2c3e50;
         }
-        table, pre, ul {
-            width: 80%;
-            margin: 0 auto;
-            border-collapse: collapse;
+        h1 {
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+        }
+        h2 {
+            margin-top: 40px;
+            padding-bottom: 5px;
+            border-bottom: 2px solid #3498db;
+        }
+        h3 {
+            margin-top: 30px;
+            color: #2980b9;
+        }
+        code {
+            background-color: #ecf0f1;
+            padding: 3px 6px;
+            border-radius: 4px;
+            font-family: 'Courier New', Courier, monospace;
+            color: #c0392b;
         }
         pre {
-            background-color: #f5f5f5;
+            background-color: #2c3e50;
+            color: #ecf0f1;
             padding: 15px;
-            border-radius: 5px;
+            border-radius: 8px;
             overflow-x: auto;
+            font-size: 14px;
+            line-height: 1.5;
+            border: 1px solid #34495e;
+        }
+        pre code {
+            background-color: transparent;
+            color: inherit;
+            padding: 0;
+            border-radius: 0;
+        }
+        .section {
+            width: 1000px;
+            margin-bottom: 40px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin: 0 auto;
+        }
+        .section p {
+            margin: 10px 0;
+        }
+        .note {
+            background-color: #f1c40f;
+            color: #fff;
+            padding: 10px;
+            border-radius: 4px;
+            margin: 15px 0;
+        }
+        .example {
+            margin: 20px 0;
+        }
+        .example-title {
+            font-weight: bold;
+            color: #27ae60;
         }
     </style>
 </head>
 <body>
-<!--    <h1>Power Cycle & System Pressure Test Quick Start</h1>-->
 
-    <h2>1. Power Cycle Stress Test (STRStressRunner)</h2>
-    <h3>1.1 基本用法</h3>
-    <pre><code>
-from power_cycle_stress_str_test import STRStressRunner
+<!--<h1>ClusterGeneralManager API 文档</h1>-->
 
-# 创建测试实例
-test = STRStressRunner()
+<!--<div class="section">-->
+<!--    <h2>简介</h2>-->
+<!--    <p>-->
+<!--        <code>ClusterGeneralManager</code> 类提供了一组方法，用于与车辆的仪表盘系统进行交互。它允许您控制仪表盘的各种功能，例如速度、转速表、燃油量、档位、电池电量等。本文档将介绍这些方法的使用方式，并提供示例代码。-->
+<!--    </p>-->
+<!--</div>-->
+<nav class="navbar">
+    <a href="#" class="nav-logo"></a>
+    <div class="nav-links">
+        <a href="../index.html" class="nav-link">首页</a>
+        <a href="./document-center.html" class="nav-link"  target="_blank">文档中心</a>
+        <a href="./api.html" class="nav-link">API文档</a>
 
-# 运行测试（默认24小时）
-test.main()
-    </code></pre>
+    </div>
+</nav>
 
-    <h3>1.2 方法详解</h3>
-    <ul>
-        <li><strong>start_cluster_functions()</strong>: 启动集群功能
-            <pre><code>
-# 启动集群功能（仪表、ADAS、环境光等）
-test.start_cluster_functions()
-            </code></pre>
-        </li>
-        <li><strong>stop_cluster_functions()</strong>: 停止集群功能
-            <pre><code>
-# 停止所有集群功能
-test.stop_cluster_functions()
-            </code></pre>
-        </li>
-        <li><strong>start_monkey_test()</strong>: 启动Monkey测试
-            <pre><code>
-# 启动Monkey测试
-test.start_monkey_test()
-            </code></pre>
-        </li>
-        <li><strong>stop_monkey_test()</strong>: 停止Monkey测试
-            <pre><code>
-# 停止Monkey测试
-test.stop_monkey_test()
-            </code></pre>
-        </li>
-        <li><strong>teardown()</strong>: 清理测试环境
-            <pre><code>
-# 清理测试环境
-test.teardown()
-            </code></pre>
-        </li>
-    </ul>
+<div class="section">
+    <h2>快速开始</h2>
+    <p>
+        下面以使用 <code>ClusterGeneralManager</code> 类为例，展示customLib模块下各类的使用方法。首先需要获取其实例。该类采用单例模式，因此应使用 <code>getInstance()</code> 方法获取实例。
+    </p>
+    <pre><code>from customLib.cluster.ClusterGeneralManager import ClusterGuageManager
 
-    <h2>2. System Pressure Test (SystemPressureRunner)</h2>
-    <h3>2.1 基本用法</h3>
-    <pre><code>
-from SystemPressureRunner import SystemPressureRunner
+# 获取 ClusterGuageManager 的实例
+cluster_manager = ClusterGuageManager.getInstance()</code></pre>
+</div>
 
-# 创建测试实例
-stress = SystemPressureRunner()
+<div class="section">
 
-# 设置并运行测试（默认24小时）
-stress.setup(log_folder="your_log_path")
-stress.main()
-    </code></pre>
+    <h3>1. 设置速度</h3>
+    <p>
+        <code>set_speed</code> 方法用于设置车辆的速度。
+    </p>
+    <div class="example">
+        <div class="example-title">示例代码：</div>
+        <pre><code>cluster_manager.set_speed(speed=60)  # 将速度设置为 60 km/h</code></pre>
+    </div>
 
-    <h3>2.2 方法详解</h3>
-    <ul>
-        <li><strong>startMonkeyTest(packageActivity=None)</strong>: 启动Monkey测试
-            <pre><code>
-# 启动Monkey测试
-stress.startMonkeyTest()
-            </code></pre>
-        </li>
-        <li><strong>stopMonkeyTest()</strong>: 停止Monkey测试
-            <pre><code>
-# 停止Monkey测试
-stress.stopMonkeyTest()
-            </code></pre>
-        </li>
-        <li><strong>startClusterFunctions()</strong>: 启动集群功能
-            <pre><code>
-# 启动集群功能（ADAS、仪表、警告等）
-stress.startClusterFunctions()
-            </code></pre>
-        </li>
-        <li><strong>stopClusterFunctions()</strong>: 停止集群功能
-            <pre><code>
-# 停止所有集群功能
-stress.stopClusterFunctions()
-            </code></pre>
-        </li>
-        <li><strong>startExceptionChecker(module)</strong>: 启动异常检查
-            <pre><code>
-# 启动异常检查
-stress.startExceptionChecker(module="performance")
-            </code></pre>
-        </li>
-        <li><strong>stopExceptionChecker()</strong>: 停止异常检查
-            <pre><code>
-# 停止异常检查
-stress.stopExceptionChecker()
-            </code></pre>
-        </li>
-        <li><strong>startRecordVideo(videoPath)</strong>: 开始录制视频
-            <pre><code>
-# 开始录制视频
-stress.startRecordVideo(videoPath="your_video_path")
-            </code></pre>
-        </li>
-        <li><strong>stopRecordVideo()</strong>: 停止录制视频
-            <pre><code>
-# 停止录制视频
-stress.stopRecordVideo()
-            </code></pre>
-        </li>
-        <li><strong>teardown()</strong>: 清理测试环境
-            <pre><code>
-# 清理测试环境
-stress.teardown()
-            </code></pre>
-        </li>
-    </ul>
+    <h3>2. 设置转速表</h3>
+    <p>
+        <code>set_tachometer</code> 方法用于设置转速表的值。
+    </p>
+    <div class="example">
+        <div class="example-title">示例代码：</div>
+        <pre><code>cluster_manager.set_tachometer(tachometer=2000)  # 将转速表设置为 2000 RPM</code></pre>
+    </div>
 
-    <h2>3. 主要区别</h2>
-    <table border="1">
-        <tr>
-            <th>功能</th>
-            <th>STRStressRunner</th>
-            <th>SystemPressureRunner</th>
-        </tr>
-        <tr>
-            <td>测试重点</td>
-            <td>电源循环稳定性</td>
-            <td>系统压力测试</td>
-        </tr>
-        <tr>
-            <td>集群功能</td>
-            <td>基础功能</td>
-            <td>更全面的功能</td>
-        </tr>
-        <tr>
-            <td>日志收集</td>
-            <td>基本日志</td>
-            <td>全面的日志收集（包括核心转储、视频等）</td>
-        </tr>
-        <tr>
-            <td>异常处理</td>
-            <td>基本处理</td>
-            <td>完善的异常处理机制</td>
-        </tr>
-    </table>
+    <h3>3. 设置燃油量</h3>
+    <p>
+        <code>set_fuel</code> 方法用于设置燃油量的百分比。
+    </p>
+    <div class="example">
+        <div class="example-title">示例代码：</div>
+        <pre><code>cluster_manager.set_fuel(flp=50)  # 将燃油量设置为 50%</code></pre>
+    </div>
 
-    <h2>4. 选择指南</h2>
-    <ul>
-        <li>如果需要测试电源循环稳定性，选择 <strong>STRStressRunner</strong></li>
-        <li>如果需要全面的系统压力测试，选择 <strong>SystemPressureRunner</strong></li>
-    </ul>
+    <h3>4. 设置档位</h3>
+    <p>
+        <code>set_gear</code> 方法用于设置车辆的档位。
+    </p>
+    <div class="example">
+        <div class="example-title">示例代码：</div>
+        <pre><code>cluster_manager.set_gear(gear="D")  # 将档位设置为 D（驾驶档）</code></pre>
+    </div>
 
-    <h2>5. 注意事项</h2>
-    <ul>
-        <li>确保测试环境配置正确</li>
-        <li>为日志收集预留足够的存储空间</li>
-        <li>测试过程中避免手动干预</li>
-        <li>测试完成后及时分析日志</li>
-    </ul>
-</body>
-</html> 
+    <h3>5. 设置电池电量</h3>
+    <p>
+        <code>set_battery</code> 方法用于设置电池电量。
+    </p>
+    <div class="example">
+        <div class="example-title">示例代码：</div>
+        <pre><code>cluster_manager.set_battery(battery=80)  # 将电池电量设置为 80%</code></pre>
+    </div>
+
+    <h3>6. 设置电动续航里程</h3>
+    <p>
+        <code>set_electric_range</code> 方法用于设置电动续航里程。
+    </p>
+    <div class="example">
+        <div class="example-title">示例代码：</div>
+        <pre><code>cluster_manager.set_electric_range(range=300)  # 将电动续航里程设置为 300 km</code></pre>
+    </div>
+
+    <h3>7. 设置功率水平</h3>
+    <p>
+        <code>set_power</code> 方法用于设置功率水平。
+    </p>
+    <div class="example">
+        <div class="example-title">示例代码：</div>
+        <pre><code>cluster_manager.set_power(percent=50, value=1000)  # 将功率水平设置为 50%，值为 1000</code></pre>
+    </div>
+
+    <h3>8. 设置温度</h3>
+    <p>
+        <code>set_temperature</code> 方法用于设置外部温度。
+    </p>
+    <div class="example">
+        <div class="example-title">示例代码：</div>
+        <pre><code>cluster_manager.set_temperature(temperature=25)  # 将温度设置为 25°C</code></pre>
+    </div>
+
+    <h3>9. 设置里程表</h3>
+    <p>
+        <code>set_odometer</code> 方法用于设置里程表的值。
+    </p>
+    <div class="example">
+        <div class="example-title">示例代码：</div>
+        <pre><code>cluster_manager.set_odometer(odometer=10000)  # 将里程表设置为 10000 km</code></pre>
+    </div>
+
+    <h3>10. 设置指南针</h3>
+    <p>
+        <code>set_compass</code> 方法用于设置指南针方向。
+    </p>
+    <div class="example">
+        <div class="example-title">示例代码：</div>
+        <pre><code>cluster_manager.set_compass(compass="N")  # 将指南针设置为北</code></pre>
+    </div>
+
+    <h3>11. 设置背光亮度</h3>
+    <p>
+        <code>set_dimming</code> 方法用于设置背光亮度。
+    </p>
+    <div class="example">
+        <div class="example-title">示例代码：</div>
+        <pre><code>cluster_manager.set_dimming(dimming_level=50)  # 将背光亮度设置为 50%</code></pre>
+    </div>

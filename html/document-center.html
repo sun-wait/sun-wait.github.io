@@ -96,9 +96,10 @@
     }
 
 
-    h1, h2, h3 {
+    h1, h3 {
       color: #333;
     }
+
     a {
       color: #007BFF;
       text-decoration: none;
@@ -113,8 +114,18 @@
       margin-bottom: 30px;
     }
     .section h2 {
+      margin-top:15px;
       border-bottom: 2px solid #eee;
       padding-bottom: 10px;
+      font-size: 2rem;
+      color: #aeaeb6;
+    }
+    h2 {
+      border-top: 2px solid #eee;
+      /*margin-top: 20px;*/
+      /*padding-bottom: 10px;*/
+      font-size: 2rem;
+      color: #000;
     }
     .module-list, .api-list, .faq-list {
       list-style-type: none;
@@ -123,51 +134,81 @@
     .module-list li, .api-list li, .faq-list li {
       margin-bottom: 10px;
     }
+    .footer {
+      background-color: var(--apple-light-gray);
+      padding: 50px 22px;
+      text-align: center;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      margin-bottom: 30px;
+    }
+
+    .footer-link {
+      color: var(--apple-gray);
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    .footer-link:hover {
+      color: var(--apple-blue);
+    }
+
+    .copyright {
+      color: var(--apple-gray);
+      font-size: 12px;
+    }
+
   </style>
 </head>
 
 <body>
   <nav class="navbar">
-    <a href="#" class="nav-logo">一起玩转车辆</a>
+    <span href="#" class="nav-logo">一起玩转车辆</span>
     <div class="nav-links">
       <a href="../index.html" class="nav-link">首页</a>
 <!--      <a href="./document-center.html" class="dropdown-item">文档中心</a>-->
-      <a href="./api.html" class="dropdown-item">API文档</a>
+<!--      <a href="./api.html" class="dropdown-item">API文档</a>-->
     </div>
   </nav>
 
 
-  <h1 style="padding-top: 15px;">customLib 文档中心</h1>
+<!--  <h1 style="padding-top: 15px;padding-bottom: 20px;text-align: center">文档中心</h1>-->
 
-  <h2>文档导航</h2>
-  <p>欢迎使用 customLib 文档中心。您可以通过以下链接快速访问各个文档部分：</p>
-  <ol>
-    <li><a href="README.html">项目介绍</a> - customLib 项目的整体介绍和功能概述</li>
-    <li><a href="quick-start.html">快速入门指南</a> - 快速上手 customLib 的指南和示例</li>
-    <li><a href="deploy.html">项目部署</a> - 快速部署 customLib </li>
-    <li><a href="#模块文档">模块文档</a> - 各个功能模块的详细文档</li>
-    <li><a href="#api参考">API 参考</a> - 完整的 API 参考文档</li>
-    <li><a href="#常见问题">常见问题</a> - 常见问题解答和故障排除指南</li>
-  </ol>
+  <h2>部署文档</h2>
+<!--  <p>欢迎使用 customLib 文档中心。您可以通过以下链接快速访问各个文档部分：</p>-->
+  <ul>
+<!--    <li><a href="README.html">项目介绍</a> - customLib 项目的整体介绍和功能概述</li>-->
+<!--    <li><a href="quick-start.html">快速入门指南</a> - 快速上手 customLib 的指南和示例</li>-->
+    <li><a href="deploy.html">项目部署</a> - 快速部署 customLib 库自动化仿真测试环境 </li>
+<!--    <li><a href="#模块文档">模块文档</a> - 各个功能模块的详细文档</li>-->
+<!--    <li><a href="#api参考">API 参考</a> - 完整的 API 参考文档</li>-->
+<!--    <li><a href="#常见问题">常见问题</a> - 常见问题解答和故障排除指南</li>-->
+  </ul>
 
   <h2 id="模块文档">模块文档</h2>
   <p>customLib 包含多个功能模块，每个模块专注于特定领域的功能：</p>
   <ul>
-    <li><a href="./api.html#BaseScenarioRunner">性能模块 (Performance)</a> - 性能监控、数据采集和分析</li>
-<!--    <li><a href="uiautomator_module.html">UI 自动化模块 (UIAutomator)</a> - UI 自动化测试工具</li>-->
-    <li><a href="./api.html#Camera">OpenCV 模块</a> - 图像处理和计算机视觉功能</li>
-    <li><a href="./api.html#AdbLogger">日志模块 (Loggers)</a> - 日志收集和管理</li>
+    <li><a href="./README.html#Common">通用模块 (Common)</a> - 性能监控、数据采集和分析</li>
+    <li><a href="./README.html#ClusterGeneralManager">仪表模块 (Cluster)</a> - 性能监控、数据采集和分析</li>
+    <li><a href="./README.html#Performance">性能模块 (Performance)</a> - 性能监控、数据采集和分析</li>
+    <li><a href="./README.html#Calibration">标定模块 (Calibration)</a> - UI 自动化测试工具</li>
+    <li><a href="./README.html#opencv">OpenCV 模块</a> - 图像处理和计算机视觉功能</li>
+    <li><a href="./README.html#Loggers">日志模块 (Loggers)</a> - 日志收集和管理</li>
 <!--    <li><a href="./api.html#BaseScenarioRunner">数据库模块 (SQLite)</a> - 数据库操作和管理</li>-->
 <!--    <li><a href="./api.html#BaseScenarioRunner">事件模块 (Event)</a> - 事件触发和响应机制</li>-->
-    <li><a href="./api.html#CanBusClient">CAN 总线模块</a> - CAN 总线通信工具</li>
+<!--    <li><a href="./api.html#c">CAN 总线模块</a> - CAN 总线通信工具</li>-->
 <!--    <li><a href="./api.html#BaseScenarioRunner">LIN 总线模块</a> - LIN 总线通信工具</li>-->
 <!--    <li><a href="./api.html#BaseScenarioRunner">图表模块 (Chart)</a> - 数据可视化工具</li>-->
     <li><a href="./api.html#AudioManager">音频模块 (Audio)</a> - 音频处理和测试</li>
-    <li><a href="./api.html#LogAnalyzer">电源循环模块 (PowerCycle)</a> - 电源循环测试</li>
+<!--    <li><a href="./api.html#">电源循环模块 (PowerCycle)</a> - 电源循环测试</li>-->
   </ul>
 
   <h2 id="api参考">API参考</h2>
-  <h3>通用工具 (Common)</h3>
+  <h3>通用 (Common)</h3>
   <ul>
     <li><a href="./api.html#CommandExcutor">CommandExcutor</a> - 命令执行工具类</li>
     <li><a href="./api.html#DeviceUtil">DeviceUtil</a> - 设备工具类</li>
@@ -178,7 +219,7 @@
     <li><a href="./api.html#TimeUtil">TimeUtil</a> - 时间工具类</li>
     <li><a href="./api.html#Utils">Utils</a> - 日志、文件工具类</li>
     <li><a href="./api.html#VehicleTypeManager">VehicleTypeManager</a> - 车辆类型管理类</li>
-    <li><a href="./api.html#Watcher">Watcher</a> - #################################工具类</li>
+<!--    <li><a href="./api.html#Watcher">Watcher</a> - #################################工具类</li>-->
   </ul>
 
   <h3>音频 (audio)</h3>
@@ -198,22 +239,22 @@
 
   <h3>仪表 (cluster)</h3>
   <ul>
-    <li><a href="./api.html#ADASSettingManager">ADASSettingManager</a> - 命令执行工具</li>
-    <li><a href="./api.html#ClusterGeneralManager">ClusterGeneralManager</a> - 设备工具类</li>
-    <li><a href="./api.html#GpsSimulationGeneralMangager">GpsSimulationGeneralMangager</a> - 屏幕录制工具</li>
-    <li><a href="./api.html#LinGeneralManager">LinGeneralManager</a> - 屏幕截图工具</li>
-    <li><a href="./api.html#MessageSender">MessageSender</a> - 时间工具类</li>
-    <li><a href="./api.html#RvcManager">RvcManager</a> - 通用工具类</li>
-    <li><a href="./api.html#VehicleInitManager">VehicleInitManager</a> - 通用工具类</li>
+    <li><a href="./api.html#ADASSettingManager">ADASSettingManager</a> - ADAS Setting类</li>
+    <li><a href="./api.html#ClusterGeneralManager">ClusterGeneralManager</a> - 仪表功能管理类</li>
+    <li><a href="./api.html#GpsSimulationGeneralMangager">GpsSimulationGeneralMangager</a> - GPS仿真类</li>
+    <li><a href="./api.html#LinGeneralManager">LinGeneralManager</a> - Lin发送接收类</li>
+    <li><a href="./api.html#MessageSender">MessageSender</a> - 报文消息发送类</li>
+    <li><a href="./api.html#RvcManager">RvcManager</a> - RVC 管理类</li>
+    <li><a href="./api.html#VehicleInitManager">VehicleInitManager</a> - 发送车辆初始化信号类</li>
   </ul>
 
-  <h3>性能工具 (Performance)</h3>
+  <h3>性能 (Performance)</h3>
   <ul>
-    <li><a href="./api.html#BaseScenarioRunner">BaseScenarioRunner</a> - 基础场景运行器</li>
-    <li><a href="./api.html#MemoryCpuManager">MemoryCpuManager</a> - 内存和 CPU 管理器</li>
-    <li><a href="./api.html#IoMonitor">IoMonitor</a> - IO 监控工具</li>
-    <li><a href="./api.html#StartupManager">StartupManager</a> - 启动管理器</li>
-    <li><a href="./api.html#PageSwitchManager">PageSwitchManager</a> - 页面切换管理器</li>
+    <li><a href="./api.html#BaseScenarioRunner">BaseScenarioRunner</a> - 基础场景运行基类</li>
+    <li><a href="./api.html#MemoryCpuManager">MemoryCpuManager</a> - 内存和 CPU 数据采集类</li>
+    <li><a href="./api.html#IoMonitor">IoMonitor</a> - IO 监控类</li>
+    <li><a href="./api.html#StartupManager">StartupManager</a> - 冷/暖/热启动管理类</li>
+    <li><a href="./api.html#PageSwitchManager">PageSwitchManager</a> - 页面切换管理类</li>
   </ul>
 
   <h3>UI自动化 (UIAutomator)</h3>
@@ -245,26 +286,26 @@
     <li><a href="#">无线连接设置</a></li>
   </ol>
 
-  <h3>性能测试</h3>
-  <ol>
-    <li><a href="#">性能数据异常处理</a></li>
-    <li><a href="#">如何自定义性能指标？</a></li>
-    <li><a href="#">性能报告解读指南</a></li>
-  </ol>
+<!--  <h3>性能测试</h3>-->
+<!--  <ol>-->
+<!--    <li><a href="#">性能数据异常处理</a></li>-->
+<!--    <li><a href="#">如何自定义性能指标？</a></li>-->
+<!--    <li><a href="#">性能报告解读指南</a></li>-->
+<!--  </ol>-->
 
-  <h3>UI 自动化</h3>
-  <ol>
-    <li><a href="#">元素定位失败排查</a></li>
-    <li><a href="#">UI 测试不稳定解决方案</a></li>
-    <li><a href="#">如何处理弹窗和系统通知？</a></li>
-  </ol>
+<!--  <h3>UI 自动化</h3>-->
+<!--  <ol>-->
+<!--    <li><a href="#">元素定位失败排查</a></li>-->
+<!--    <li><a href="#">UI 测试不稳定解决方案</a></li>-->
+<!--    <li><a href="#">如何处理弹窗和系统通知？</a></li>-->
+<!--  </ol>-->
 
-  <h3>图像处理</h3>
-  <ol>
-    <li><a href="#">图像比对结果不准确</a></li>
-    <li><a href="#">提高图像匹配准确率</a></li>
-    <li><a href="#">处理不同分辨率的图像</a></li>
-  </ol>
+<!--  <h3>图像处理</h3>-->
+<!--  <ol>-->
+<!--    <li><a href="#">图像比对结果不准确</a></li>-->
+<!--    <li><a href="#">提高图像匹配准确率</a></li>-->
+<!--    <li><a href="#">处理不同分辨率的图像</a></li>-->
+<!--  </ol>-->
 
   <h2>版本历史</h2>
   <ul>
@@ -272,20 +313,29 @@
 
   </ul>
 
-  <h2>贡献指南</h2>
-  <ul>
-    <li><a href="#">如何贡献代码</a></li>
-    <li><a href="#">报告问题</a></li>
-    <li><a href="#">提交功能请求</a></li>
-  </ul>
+<!--  <h2>贡献指南</h2>-->
+<!--  <ul>-->
+<!--    <li><a href="#">如何贡献代码</a></li>-->
+<!--    <li><a href="#">报告问题</a></li>-->
+<!--    <li><a href="#">提交功能请求</a></li>-->
+<!--  </ul>-->
 
-  <h2>联系我们</h2>
-  <ul>
-    <li><a href="#">技术支持</a></li>
-    <li><a href="#">问题反馈</a></li>
-    <li><a href="#">功能建议</a></li>
-  </ul>
-
+<!--  <h2>联系我们</h2>-->
+<!--  <ul>-->
+<!--    <li><a href="#">技术支持</a></li>-->
+<!--    <li><a href="#">问题反馈</a></li>-->
+<!--    <li><a href="#">功能建议</a></li>-->
+<!--  </ul>-->
+  <footer class="footer">
+    <!--        <div class="footer-links">-->
+    <!--            <a href="#" class="footer-link">GitHub</a>-->
+    <!--            <a href="#" class="footer-link">Twitter</a>-->
+    <!--            <a href="#" class="footer-link">LinkedIn</a>-->
+    <!--            <a href="#" class="footer-link">知乎</a>-->
+    <!--        </div>-->
+    <!--        <p class="copyright">© 2023 Sun Wait. All rights reserved.</p>-->
+    <p class="copyright">© - 2025 PATAC. All Rights Reserved.</p>
+  </footer>
 </body>
 
 </html>

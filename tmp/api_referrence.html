@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ClusterGeneralManager API 文档</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.8;
+      margin: 40px;
+      background-color: #f9f9f9;
+      color: #333;
+    }
+    h1, h2, h3 {
+      color: #2c3e50;
+    }
+    h1 {
+      border-bottom: 3px solid #3498db;
+      padding-bottom: 10px;
+    }
+    h2 {
+      margin-top: 40px;
+      padding-bottom: 5px;
+      border-bottom: 2px solid #3498db;
+    }
+    h3 {
+      margin-top: 30px;
+      color: #2980b9;
+    }
+    code {
+      background-color: #ecf0f1;
+      padding: 3px 6px;
+      border-radius: 4px;
+      font-family: 'Courier New', Courier, monospace;
+      color: #c0392b;
+    }
+    pre {
+      background-color: #2c3e50;
+      color: #ecf0f1;
+      padding: 15px;
+      border-radius: 8px;
+      overflow-x: auto;
+      font-size: 14px;
+      line-height: 1.5;
+      border: 1px solid #34495e;
+    }
+    pre code {
+      background-color: transparent;
+      color: inherit;
+      padding: 0;
+      border-radius: 0;
+    }
+    .section {
+      width: 1000px;
+      margin-bottom: 40px;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      margin: 0 auto;
+    }
+    .section p {
+      margin: 10px 0;
+    }
+    .note {
+      background-color: #f1c40f;
+      color: #fff;
+      padding: 10px;
+      border-radius: 4px;
+      margin: 15px 0;
+    }
+    .example {
+      margin: 20px 0;
+    }
+    .example-title {
+      font-weight: bold;
+      color: #27ae60;
+    }
+  </style>
+</head>
+<body>
+
+<!--<h1>ClusterGeneralManager API 文档</h1>-->
+
+<div class="section">
+<!--  <h2>简介</h2>-->
+<!--  <p>-->
+<!--    <code>ClusterGeneralManager</code> 类提供了一组方法，用于与车辆的仪表盘系统进行交互。它允许您控制仪表盘的各种功能，例如速度、转速表、燃油量、档位、电池电量等。本文档将介绍这些方法的使用方式，并提供示例代码。-->
+<!--  </p>-->
+</div>
+
+<div class="section">
+  <h2>快速开始</h2>
+  <p>
+    要使用 <code>ClusterGeneralManager</code> 类，首先需要获取其实例。该类采用单例模式，因此应使用 <code>getInstance()</code> 方法获取实例。
+  </p>
+  <pre><code>from automation_lib.customLib.cluster.ClusterGeneralManager import ClusterGuageManager
+
+# 获取 ClusterGuageManager 的实例
+cluster_manager = ClusterGuageManager.getInstance()</code></pre>
+</div>
+
+<div class="section">
+  <h2>API 方法</h2>
+
+  <h3>1. 设置速度</h3>
+  <p>
+    <code>set_speed</code> 方法用于设置车辆的速度。
+  </p>
+  <div class="example">
+    <div class="example-title">示例代码：</div>
+    <pre><code>cluster_manager.set_speed(speed=60)  # 将速度设置为 60 km/h</code></pre>
+  </div>
+
+  <h3>2. 设置转速表</h3>
+  <p>
+    <code>set_tachometer</code> 方法用于设置转速表的值。
+  </p>
+  <div class="example">
+    <div class="example-title">示例代码：</div>
+    <pre><code>cluster_manager.set_tachometer(tachometer=2000)  # 将转速表设置为 2000 RPM</code></pre>
+  </div>
+
+  <h3>3. 设置燃油量</h3>
+  <p>
+    <code>set_fuel</code> 方法用于设置燃油量的百分比。
+  </p>
+  <div class="example">
+    <div class="example-title">示例代码：</div>
+    <pre><code>cluster_manager.set_fuel(flp=50)  # 将燃油量设置为 50%</code></pre>
+  </div>
+
+  <h3>4. 设置档位</h3>
+  <p>
+    <code>set_gear</code> 方法用于设置车辆的档位。
+  </p>
+  <div class="example">
+    <div class="example-title">示例代码：</div>
+    <pre><code>cluster_manager.set_gear(gear="D")  # 将档位设置为 D（驾驶档）</code></pre>
+  </div>
+
+  <h3>5. 设置电池电量</h3>
+  <p>
+    <code>set_battery</code> 方法用于设置电池电量。
+  </p>
+  <div class="example">
+    <div class="example-title">示例代码：</div>
+    <pre><code>cluster_manager.set_battery(battery=80)  # 将电池电量设置为 80%</code></pre>
+  </div>
+
+  <h3>6. 设置电动续航里程</h3>
+  <p>
+    <code>set_electric_range</code> 方法用于设置电动续航里程。
+  </p>
+  <div class="example">
+    <div class="example-title">示例代码：</div>
+    <pre><code>cluster_manager.set_electric_range(range=300)  # 将电动续航里程设置为 300 km</code></pre>
+  </div>
+
+  <h3>7. 设置功率水平</h3>
+  <p>
+    <code>set_power</code> 方法用于设置功率水平。
+  </p>
+  <div class="example">
+    <div class="example-title">示例代码：</div>
+    <pre><code>cluster_manager.set_power(percent=50, value=1000)  # 将功率水平设置为 50%，值为 1000</code></pre>
+  </div>
+
+  <h3>8. 设置温度</h3>
+  <p>
+    <code>set_temperature</code> 方法用于设置外部温度。
+  </p>
+  <div class="example">
+    <div class="example-title">示例代码：</div>
+    <pre><code>cluster_manager.set_temperature(temperature=25)  # 将温度设置为 25°C</code></pre>
+  </div>
+
+  <h3>9. 设置里程表</h3>
+  <p>
+    <code>set_odometer</code> 方法用于设置里程表的值。
+  </p>
+  <div class="example">
+    <div class="example-title">示例代码：</div>
+    <pre><code>cluster_manager.set_odometer(odometer=10000)  # 将里程表设置为 10000 km</code></pre>
+  </div>
+
+  <h3>10. 设置指南针</h3>
+  <p>
+    <code>set_compass</code> 方法用于设置指南针方向。
+  </p>
+  <div class="example">
+    <div class="example-title">示例代码：</div>
+    <pre><code>cluster_manager.set_compass(compass="N")  # 将指南针设置为北</code></pre>
+  </div>
+
+  <h3>11. 设置调光水平</h3>
+  <p>
+    <code>set_dimming</code> 方法用于设置内部调光水平。
+  </p>
+  <div class="example">
+    <div class="example-title">示例代码：</div>
+    <pre><code>cluster_manager.set_dimming(dimming_level=50)  # 将调光水平设置为 50%</code></pre>
+  </div>
+
+  <h3>12. 准备 USB 更新</h3>
+  <p>
+    <code>ready_for_usb_update</code> 方法用于准备车辆进行 USB 更新。
+  </p>
+  <div class="example">
+    <div class="example-title">示例代码：</div>
+    <pre><code>cluster_manager.ready_for_usb_update()</code></pre>
+  </div>

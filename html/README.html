@@ -398,7 +398,8 @@
 
 <div class="card">
   <div class="section-title">项目概述</div>
-  <p><code>customLib</code> 是一个综合性的 Python 库集合，专为车载系统测试、性能监控、自动化测试和数据分析而设计。该库封装了多种常用功能模块，使开发人员和测试人员能够快速实现各种测试场景，提高测试效率和质量。<code>customLib</code> 提供了丰富的工具和接口，支持从音频处理、CAN 总线通信到性能监控等多种功能，适用于车载系统的开发、测试和验证。</p>
+  <p style="text-indent: 2em;"><code>customLib</code> 是一个综合性的 Python 库集合，专为车载系统测试、性能监控、自动化测试和数据分析而设计。该库封装了多种常用功能模块，使开发人员和测试人员能够快速实现各种测试场景，提高测试效率和质量。<code>customLib</code> 提供了丰富的工具和接口，支持从音频处理、CAN 总线通信到性能监控等多种功能，适用于车载系统的开发、测试和验证。</p>
+  <p style="text-indent: 2em;"><code>customLib</code> 库具备的所有能力，都可以在 <code>automation_cases</code> 工程下的具体业务脚本中去使用。</p>
 </div>
 
 
@@ -409,7 +410,7 @@
   <div class="project_structure" id="project_structure">
   </div>
 
-  <div class="module-card">
+  <div class="module-card" id="AudioManager">
     <h3>1. AudioManager - 音频管理模块</h3>
     <p><strong>功能描述</strong>：负责音频文件的录制、播放、特征提取、音频匹配检测等功能。</p>
     <div class="func-list">
@@ -428,7 +429,7 @@
     </div>
   </div>
 
-  <div class="module-card">
+  <div class="module-card" id="CalibrationManager">
     <h3>2. CalibrationManager - 标定管理模块</h3>
     <p><strong>功能描述</strong>：负责车载系统的标定管理，包括标定值的获取、清理等操作。</p>
     <div class="func-list">
@@ -445,7 +446,7 @@
     </div>
   </div>
 
-  <div class="module-card">
+  <div class="module-card" id="CanBusManager">
     <h3>3. CanBusManager - CAN 总线管理模块</h3>
     <p><strong>功能描述</strong>：负责 CAN 总线的通信、消息发送、接收、监控等功能。</p>
     <div class="func-list">
@@ -464,7 +465,7 @@
     </div>
   </div>
 
-  <div class="module-card">
+  <div class="module-card" id="ClusterGeneralManager">
     <h3>3. ClusterGeneralManager - 仪表功能模块</h3>
     <p><strong>功能描述</strong>：负责 仪表Guage、warning、Taletell、Chime、ADAS模块总线信号的的通信、消息发送、接收、监控等功能。</p>
     <div class="func-list">
@@ -485,7 +486,7 @@
     </div>
   </div>
 
-  <div class="module-card">
+  <div class="module-card" id="Common">
     <h3>4. Common - 通用操作封装</h3>
     <p><strong>功能描述</strong>：对自动化通用操作的封装。</p>
     <div class="func-list">
@@ -507,7 +508,7 @@
     </div>
   </div>
 
-  <div class="module-card">
+  <div class="module-card" id="linbus">
     <h3>5. Lin总线 - lin总线</h3>
     <p><strong>功能描述</strong>：车辆Lin信号相关功能仿真。</p>
     <div class="func-list">
@@ -524,7 +525,7 @@
   </div>
 
 
-  <div class="module-card">
+  <div class="module-card" id="Loggers">
     <h3>6. Loggers - 日志模块</h3>
     <p><strong>功能描述</strong>：负责系统常用日志，feature日志，系统日志及性能数据的采集。</p>
     <div class="func-list">
@@ -541,68 +542,49 @@
       </div>
     </div>
   </div>
-</div>
-
-<div class="module-card">
-  <h3>7. opencv - 本地摄像头视频(帧)管理模块</h3>
-  <p><strong>功能描述</strong>：负责自动化脚本执行过程中对台架屏幕的视频录制。</p>
-  <div class="func-list">
-    <div class="func-item">
-      <strong>核心功能</strong>：
-      <ul>
-        <li>Camera: 摄像头开始/停止录制视频</li>
-        <li>ImageUtils: 图像处理工具类</li>
-      </ul>
-    </div>
-    <div class="func-item">
-      <strong>应用场景</strong>：给自动化过程出现的异常行为，提供有效的视频证据，帮助分析系统行为。
-    </div>
-  </div>
-</div>
-</div>
 
 
-<!--<div class="module-card">-->
-<!--  <h3>8. pages - 安卓自动化模块</h3>-->
-<!--  <p><strong>功能描述</strong>：对安卓自动化。</p>-->
-<!--  <div class="func-list">-->
-<!--    <div class="func-item">-->
-<!--      <strong>核心功能</strong>：-->
-<!--      <ul>-->
-<!--        <li>性能数据的收集与处理</li>-->
-<!--        <li>性能报告的生成与导出</li>-->
-<!--      </ul>-->
-<!--    </div>-->
-<!--    <div class="func-item">-->
-<!--      <strong>应用场景</strong>：车载系统性能的监控与优化，确保系统的高效运行。-->
-<!--    </div>-->
-<!--  </div>-->
-<!--</div>-->
-<!--</div>-->
-
-
-<div class="module-card">
-  <h3>8. PerformanceReporter - 性能报告模块</h3>
-  <p><strong>功能描述</strong>：负责系统全门类性能数据的采集，分析模块。</p>
-  <div class="func-list">
-    <div class="func-item">
-      <strong>核心功能</strong>：
-      <ul>
-        <li>BaseScenarioRunner类是作为场景压测的基类，继承该基类可实现对大多数性能数据的采集</li>
-        <li>DmaMemoryChecker类是主要负责对系统dma,memory,npu性能指标进行抓取</li>
-        <li>IncTrafficMonitor类是主要负责对系统inc traffic相关性能指标进行抓取</li>
-        <li>IoMonitor类是对系统磁盘各重点分区的使用情况进行监控</li>
-        <li>MemoryCpuManager类是用于抓取系统cpu,memory性能指标</li>
-        <li>MonkeyMonitor类是对安卓使用黑/白名单开始/结束monkey测试能力的封装</li>
-        <li>StartupManager类是对安卓应用冷/暖/热启动性能指标测试的封装</li>
-        <li>...</li>
-      </ul>
-    </div>
-    <div class="func-item">
-      <strong>应用场景</strong>：自动化压测，自动化功能测试，power cycle测试等任一测试场景。
+  <div class="module-card" id="opencv">
+    <h3>7. opencv - 本地摄像头视频(帧)管理模块</h3>
+    <p><strong>功能描述</strong>：负责自动化脚本执行过程中对台架屏幕的视频录制。</p>
+    <div class="func-list">
+      <div class="func-item">
+        <strong>核心功能</strong>：
+        <ul>
+          <li>Camera: 摄像头开始/停止录制视频</li>
+          <li>ImageUtils: 图像处理工具类</li>
+        </ul>
+      </div>
+      <div class="func-item">
+        <strong>应用场景</strong>：给自动化过程出现的异常行为，提供有效的视频证据，帮助分析系统行为。
+      </div>
     </div>
   </div>
-</div>
+
+
+
+  <div class="module-card" id="Performance">
+    <h3>8. Performance - 性能模块</h3>
+    <p><strong>功能描述</strong>：负责系统全门类性能数据的采集，分析模块。</p>
+    <div class="func-list">
+      <div class="func-item">
+        <strong>核心功能</strong>：
+        <ul>
+          <li>BaseScenarioRunner类是作为场景压测的基类，继承该基类可实现对大多数性能数据的采集</li>
+          <li>DmaMemoryChecker类是主要负责对系统dma,memory,npu性能指标进行抓取</li>
+          <li>IncTrafficMonitor类是主要负责对系统inc traffic相关性能指标进行抓取</li>
+          <li>IoMonitor类是对系统磁盘各重点分区的使用情况进行监控</li>
+          <li>MemoryCpuManager类是用于抓取系统cpu,memory性能指标</li>
+          <li>MonkeyMonitor类是对安卓使用黑/白名单开始/结束monkey测试能力的封装</li>
+          <li>StartupManager类是对安卓应用冷/暖/热启动性能指标测试的封装</li>
+          <li>...</li>
+        </ul>
+      </div>
+      <div class="func-item">
+        <strong>应用场景</strong>：自动化压测，自动化功能测试，power cycle测试等任一测试场景。
+      </div>
+    </div>
+  </div>
 </div>
 
 
@@ -614,11 +596,17 @@
   <div class="feature-grid">
     <div class="feature-item">
       <h3>车载系统测试</h3>
-      <p>通过 <code>AudioManager</code> 和 <code>CanBusManager</code> 等模块，对车载系统的音频、CAN 总线等功能进行测试与验证。</p>
+      <p>通过 <code>ClusterGeneralManager</code> 、<code>Uiautomator</code> 、<code>AudioManager</code> 和 <code>CanBusManager</code> 等模块，对车载系统的音频、仪表、中控娱乐屏等功能进行测试与验证。</p>
     </div>
     <div class="feature-item">
       <h3>性能监控</h3>
-      <p>通过 <code>PerformanceReporter</code> 和 <code>ChartManager</code> 等模块，对车载系统的性能进行监控与优化。</p>
+      <p>通过 <code>Performance</code> 模块内置了提供了丰富的能力，可实现对车载系统的性能参数进行监控。</p>
+    </div>
+    <div class="feature-item">
+      <h3>自动化</h3>
+      <p>通过 <code>Cluster</code>  和 <code>MonkeyMonitor</code> 模块可实现对系统持续48h,72h稳定性相关验证。</p>
+      <p>通过 <code>powercycle</code> 模块可实现对系统启动状态稳定性持续数百次的验证，还可以耦合自定义场景，实现专项问题压测。</p>
+      <p>通过 <code>BaseScenarioRunner</code> 类，耦合自定义测试场景，实现专项问题压测 。</p>
     </div>
     <div class="feature-item">
       <h3>云端测试</h3>
@@ -626,7 +614,7 @@
     </div>
     <div class="feature-item">
       <h3>标定管理</h3>
-      <p>通过 <code>CalibrationManager</code> 模块，对车载系统的标定数据进行管理，确保系统参数的准确性。</p>
+      <p>通过 <code>CalibrationManager</code> 模块，对车载系统的标定数据进行管理，对功能自动化更加友好。</p>
     </div>
   </div>
 </div>
@@ -655,17 +643,19 @@
     </div>
 
     <div class="tech-item">
-      <h3>用户友好</h3>
-      <p>新用户使用没有门槛，同时还有全面的开发文档支持用户开发。</p>
+      <h3>赋能产品</h3>
+      <p>完善的log截取能力、高效的问题复现能力，为产品质量保驾护航。</p>
     </div>
+
+
     <div class="tech-item">
       <h3>可扩展性</h3>
       <p>支持自定义功能扩展，用户可以根据需求添加新的功能模块。</p>
     </div>
 
     <div class="tech-item">
-      <h3>跨平台支持</h3>
-      <p>支持 Android 和 QNX 等多种车载系统平台。</p>
+      <h3>用户友好</h3>
+      <p>新用户使用没有门槛，同时还有全面的开发文档支持用户开发。</p>
     </div>
 
     <div class="tech-item">

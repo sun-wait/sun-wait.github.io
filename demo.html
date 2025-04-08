@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="content">
+
+</div>
+</body>
+<script src="./js/showdown.min.js"></script>
+<script>
+
+    const converter = new showdown.Converter();
+    // const markdownText = "# Hello, Showdown!";
+    // const htmlContent = converter.makeHtml(markdownText);
+    // document.body.innerHTML = htmlContent;
+
+      // 要加载的 Markdown 文件路径
+      // const markdownFile = 'uiautomator.md';
+
+      // 使用 fetch 加载 Markdown 文件
+      // fetch(markdownFile)
+      //         .then(response => {
+      //           if (!response.ok) {
+      //             throw new Error('文件加载失败');
+      //           }
+      //           return response.text();
+      //         })
+      //         .then(markdownText => {
+      //           // const htmlContent = marked.parse(markdownText);
+      //
+      //
+      //
+      //           const htmlContent = converter.makeHtml(markdownText);
+      //           // document.body.innerHTML = htmlContent;
+      //           document.getElementById('content').innerHTML = htmlContent;
+      //
+      //         })
+      //         .catch(error => {
+      //           console.error('错误:', error);
+      //           document.getElementById('content').innerHTML = `<p style="color: red;">${error.message}</p>`;
+      // });
+
+
+
+    const markdownFile = 'uiautomator.md';
+
+    // 使用 XMLHttpRequest 加载文件
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', markdownFile, true);
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4) {
+            if (xhr.status === 200) {
+                // 使用 Showdown 将 Markdown 转换为 HTML
+                // const converter = new showdown.Converter();
+                // const htmlContent = converter.makeHtml(xhr.responseText);
+                // // 渲染到页面
+                // document.getElementById('content').innerHTML = htmlContent;
+
+                const htmlContent = converter.makeHtml(markdownText);
+                // document.body.innerHTML = htmlContent;
+                document.getElementById('content').innerHTML = htmlContent;
+
+
+            } else {
+                document.getElementById('content').innerHTML = `<p style="color: red;">文件加载失败</p>`;
+            }
+        }
+    };
+    xhr.send(null);
+
+
+
+
+
+</script>
+</html>
