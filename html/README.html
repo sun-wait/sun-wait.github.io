@@ -410,81 +410,134 @@
   <div class="project_structure" id="project_structure">
   </div>
 
-  <div class="module-card" id="AudioManager">
-    <h3>1. AudioManager - 音频管理模块</h3>
-    <p><strong>功能描述</strong>：负责音频文件的录制、播放、特征提取、音频匹配检测等功能。</p>
-    <div class="func-list">
-      <div class="func-item">
-        <strong>核心功能</strong>：
-        <ul>
-          <li>音频录制与播放</li>
-          <li>音频特征提取（如 MFCC）</li>
-          <li>音频匹配检测（基于归一化互相关算法）</li>
-          <li>音频降噪处理</li>
-        </ul>
-      </div>
-      <div class="func-item">
-        <strong>应用场景</strong>：车载音频系统的测试与验证，如语音识别、音频播放质量检测等。
-      </div>
-    </div>
-  </div>
-
-  <div class="module-card" id="CalibrationManager">
-    <h3>2. CalibrationManager - 标定管理模块</h3>
-    <p><strong>功能描述</strong>：负责车载系统的标定管理，包括标定值的获取、清理等操作。</p>
-    <div class="func-list">
-      <div class="func-item">
-        <strong>核心功能</strong>：
-        <ul>
-          <li>获取标定值</li>
-          <li>清理标定数据（支持 Android 和 QNX 系统）</li>
-        </ul>
-      </div>
-      <div class="func-item">
-        <strong>应用场景</strong>：车载系统的标定管理，确保系统参数的准确性。
-      </div>
-    </div>
-  </div>
 
   <div class="module-card" id="CanBusManager">
-    <h3>3. CanBusManager - CAN 总线管理模块</h3>
-    <p><strong>功能描述</strong>：负责 CAN 总线的通信、消息发送、接收、监控等功能。</p>
+    <h3>1. 总线模块</h3>
+    <p><strong>功能描述</strong>：支持CAN、LIN、CAN FD多种总线协议的的通信，包括消息发送、接收、监控，报文录制等功能。</p>
     <div class="func-list">
       <div class="func-item">
         <strong>核心功能</strong>：
         <ul>
-          <li>CAN 消息的发送与接收</li>
-          <li>CAN 消息的监控与日志记录</li>
-          <li>CAN 消息的解析与处理</li>
-          <li>MAC 消息的同步与验证</li>
+          <li>支持报文id、信号长名、信号短名、16进制数据等多种形式发送总线报文 </li>
+          <li>支持CAN、LIN、CAN FD多种总线协议 </li>
+          <li>支持录制报文消息</li>
+          <li>满足仪表全功能对总线的需求</li>
+          <li>车控车设等功能台架环境可实现总线仿真闭环</li>
+          <li>适配全平台车型</li>
         </ul>
       </div>
       <div class="func-item">
-        <strong>应用场景</strong>：车载 CAN 总线的通信测试与监控，确保消息的准确性和实时性。
+        <strong>应用场景</strong>：满足车载系统仪表、车控、车设等等模块的功能自动化，及不同测试场景或工况下系统对总线状态的需求；涉及车辆硬按键功能对Lin信号依赖的测试场景。
       </div>
     </div>
   </div>
 
   <div class="module-card" id="ClusterGeneralManager">
-    <h3>3. ClusterGeneralManager - 仪表功能模块</h3>
+    <h3>2. 仪表功能模块</h3>
     <p><strong>功能描述</strong>：负责 仪表Guage、warning、Taletell、Chime、ADAS模块总线信号的的通信、消息发送、接收、监控等功能。</p>
     <div class="func-list">
       <div class="func-item">
         <strong>核心功能</strong>：
         <ul>
           <li>Guage 车速、档位等信号消息的发送与接收</li>
-          <li>任一warning 消息的发送与接收</li>
-          <li>任一Taletell 消息的发送与接收</li>
-          <li>任一Chime 消息的发送与接收</li>
-          <li>任一ADAS 消息的发送与接收</li>
+          <li>可实现对任一 warning 的触发与消除</li>
+          <li>可实现对任一Taletell 消息的发与消除</li>
+          <li>可实现对任一Chime消息的发与消除</li>
+<!--          <li>可实现对任一ADAS消息的发送与接收</li>-->
+          <li>自定义组合Guage、Warning、Taletell、Chime、ADAS一个或多个模块，可实现对总线随机压力测试</li>
           <li> ...</li>
         </ul>
       </div>
       <div class="func-item">
-        <strong>应用场景</strong>：仪表功能测试，自动化测试。
+        <strong>应用场景</strong>：仪表全功能自动化测试，系统休眠启动循环测试，系统压力测试。
       </div>
     </div>
   </div>
+
+
+
+<!--  <div class="module-card" id="linbus">-->
+<!--    <h3>5. Lin总线 - lin总线</h3>-->
+<!--    <p><strong>功能描述</strong>：车辆Lin信号相关功能仿真。</p>-->
+<!--    <div class="func-list">-->
+<!--      <div class="func-item">-->
+<!--        <strong>核心功能</strong>：-->
+<!--        <ul>-->
+<!--          <li>Lin信号发送，接收，监控，录制</li>-->
+<!--        </ul>-->
+<!--      </div>-->
+<!--      <div class="func-item">-->
+<!--        <strong>应用场景</strong>：车辆硬按键功能自动化测试，以及Lin信号与其他功能的耦合测试场景。-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+
+
+  <div class="module-card" id="Loggers">
+    <h3>4. 日志模块</h3>
+    <p><strong>功能描述</strong>：负责系统常用日志，feature日志，系统日志及性能数据的采集。</p>
+    <div class="func-list">
+      <div class="func-item">
+        <strong>核心功能</strong>：
+        <ul>
+          <li>对canlog，slog，gmlog，logcat，dlt，serail等common日志抓取实现接口封装;</li>
+          <li>对Audio日志、蓝牙日志、Carplay日志、语音导航等Feature日志的抓取实现接口封装;</li>
+          <li>对minidump，guestdump，emtrace, coredump等System日志的抓取实现接口封装;</li>
+          <li>可根据logcat,serial log 等其他log实时监控系统是否重启等一系列严重bug;</li>
+        </ul>
+      </div>
+      <div class="func-item">
+        <strong>应用场景</strong>：功能自动化、性能场景、稳定性压测所有自动化测试过程中，提供自动按需抓取日志的能力；断言关键日志压测低概率严重问题。
+      </div>
+    </div>
+  </div>
+
+
+  <div class="module-card" id="stress_test">
+    <h3>5. 核心功能稳定性压测</h3>
+    <p><strong>功能描述</strong>：负责系统常用日志，feature日志，系统日志及性能数据的采集。</p>
+    <div class="func-list">
+      <div class="func-item">
+        <strong>核心功能</strong>：
+        <ul>
+          <li>对canlog，slog，gmlog，logcat，dlt，serail等common日志抓取实现接口封装;</li>
+          <li>对Audio日志、蓝牙日志、Carplay日志、语音导航等Feature日志的抓取实现接口封装;</li>
+          <li>对minidump，guestdump，emtrace, coredump等System日志的抓取实现接口封装;</li>
+          <li>可根据logcat,serial log 等其他log实时监控系统是否重启等一系列严重bug;</li>
+        </ul>
+      </div>
+      <div class="func-item">
+        <strong>应用场景</strong>：功能自动化、性能场景、稳定性压测所有自动化测试过程中，提供自动按需抓取日志的能力；断言关键日志压测低概率严重问题。
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <div class="module-card" id="Performance">
+    <h3>6. 性能模块</h3>
+    <p><strong>功能描述</strong>：负责系统全门类性能数据的采集，分析模块。</p>
+    <div class="func-list">
+      <div class="func-item">
+        <strong>核心功能</strong>：
+        <ul>
+          <li>BaseScenarioRunner类是作为场景压测的基类，继承该基类可实现对大多数性能数据的采集</li>
+          <li>DmaMemoryChecker类是主要负责对系统dma,memory,npu性能指标进行抓取</li>
+          <li>IncTrafficMonitor类是主要负责对系统inc traffic相关性能指标进行抓取</li>
+          <li>IoMonitor类是对系统磁盘各重点分区的使用情况进行监控</li>
+          <li>MemoryCpuManager类是用于抓取系统cpu,memory性能指标</li>
+          <li>MonkeyMonitor类是对安卓使用黑/白名单开始/结束monkey测试能力的封装</li>
+          <li>StartupManager类是对安卓应用冷/暖/热启动性能指标测试的封装</li>
+          <li>...</li>
+        </ul>
+      </div>
+      <div class="func-item">
+        <strong>应用场景</strong>：自动化压测，自动化功能测试，power cycle测试等任一测试场景；生成性能数据报告，直观关注系统性能状态。
+      </div>
+    </div>
+  </div>
+</div>
 
   <div class="module-card" id="Common">
     <h3>4. Common - 通用操作封装</h3>
@@ -508,42 +561,6 @@
     </div>
   </div>
 
-  <div class="module-card" id="linbus">
-    <h3>5. Lin总线 - lin总线</h3>
-    <p><strong>功能描述</strong>：车辆Lin信号相关功能仿真。</p>
-    <div class="func-list">
-      <div class="func-item">
-        <strong>核心功能</strong>：
-        <ul>
-          <li>Lin信号发送，接收，监控，录制</li>
-        </ul>
-      </div>
-      <div class="func-item">
-        <strong>应用场景</strong>：车辆硬按键功能自动化测试，以及Lin信号与其他功能的耦合测试场景。
-      </div>
-    </div>
-  </div>
-
-
-  <div class="module-card" id="Loggers">
-    <h3>6. Loggers - 日志模块</h3>
-    <p><strong>功能描述</strong>：负责系统常用日志，feature日志，系统日志及性能数据的采集。</p>
-    <div class="func-list">
-      <div class="func-item">
-        <strong>核心功能</strong>：
-        <ul>
-          <li>对slog，gmlog，dlt，serail等common日志抓取实现接口封装;</li>
-          <li>对Audio日志、蓝牙日志、Carplay日志、语音导航等Feature日志的抓取实现接口封装;</li>
-          <li>对minidump，guestdump，emtrace, coredump等System日志的抓取实现接口封装;</li>
-        </ul>
-      </div>
-      <div class="func-item">
-        <strong>应用场景</strong>：自动化功能/性能/稳定性等测试过程中，提供自动按需抓取日志的能力。
-      </div>
-    </div>
-  </div>
-
-
   <div class="module-card" id="opencv">
     <h3>7. opencv - 本地摄像头视频(帧)管理模块</h3>
     <p><strong>功能描述</strong>：负责自动化脚本执行过程中对台架屏幕的视频录制。</p>
@@ -562,32 +579,41 @@
   </div>
 
 
-
-  <div class="module-card" id="Performance">
-    <h3>8. Performance - 性能模块</h3>
-    <p><strong>功能描述</strong>：负责系统全门类性能数据的采集，分析模块。</p>
+  <div class="module-card" id="AudioManager">
+    <h3>1. 音频管理模块</h3>
+    <p><strong>功能描述</strong>：负责音频文件的录制、播放、特征提取、音频匹配检测等功能。</p>
     <div class="func-list">
       <div class="func-item">
         <strong>核心功能</strong>：
         <ul>
-          <li>BaseScenarioRunner类是作为场景压测的基类，继承该基类可实现对大多数性能数据的采集</li>
-          <li>DmaMemoryChecker类是主要负责对系统dma,memory,npu性能指标进行抓取</li>
-          <li>IncTrafficMonitor类是主要负责对系统inc traffic相关性能指标进行抓取</li>
-          <li>IoMonitor类是对系统磁盘各重点分区的使用情况进行监控</li>
-          <li>MemoryCpuManager类是用于抓取系统cpu,memory性能指标</li>
-          <li>MonkeyMonitor类是对安卓使用黑/白名单开始/结束monkey测试能力的封装</li>
-          <li>StartupManager类是对安卓应用冷/暖/热启动性能指标测试的封装</li>
-          <li>...</li>
+          <li>音频录制与播放</li>
+          <li>音频特征提取（如 MFCC）</li>
+          <li>音频匹配检测（基于归一化互相关算法）</li>
+          <li>音频降噪处理</li>
         </ul>
       </div>
       <div class="func-item">
-        <strong>应用场景</strong>：自动化压测，自动化功能测试，power cycle测试等任一测试场景。
+        <strong>应用场景</strong>：车载音频系统的测试与验证，如语音识别、音频播放质量检测等。
       </div>
     </div>
   </div>
-</div>
 
-
+  <div class="module-card" id="CalibrationManager">
+    <h3>2. 标定管理模块</h3>
+    <p><strong>功能描述</strong>：负责车载系统的标定管理，包括标定值的获取、清理等操作。</p>
+    <div class="func-list">
+      <div class="func-item">
+        <strong>核心功能</strong>：
+        <ul>
+          <li>获取标定值</li>
+          <li>清理标定数据（支持 Android 和 QNX 系统）</li>
+        </ul>
+      </div>
+      <div class="func-item">
+        <strong>应用场景</strong>：车载系统的标定管理，确保系统参数的准确性。
+      </div>
+    </div>
+  </div>
 
 
 
