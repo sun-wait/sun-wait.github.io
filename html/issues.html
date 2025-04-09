@@ -93,7 +93,7 @@
       opacity: 1;
       visibility: visible;
     }
-  .document-center{
+  .issue-center{
     width: 1000px;
     margin: 0 auto;
     /*background: blue;*/
@@ -233,7 +233,7 @@
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     }
 
-    .document-center {
+    .issue-center {
         background: rgba(255, 255, 255, 0.95);
         backdrop-filter: blur(10px);
         padding: 30px;
@@ -245,7 +245,75 @@
     h2,h3{
         scroll-margin-top: 60px;
     }
+    .answer{
+        margin-left: 20px;
+        color: black;
+    }
 
+    .faq-list {
+        counter-reset: faq-counter;
+        padding: 0;
+    }
+
+    .faq-item {
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 8px;
+        margin-bottom: 12px;
+        padding: 16px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        transition: all 0.3s ease;
+    }
+
+    .faq-item:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .faq-question {
+        color: #333;
+        font-weight: 500;
+        text-decoration: none;
+        display: block;
+        position: relative;
+        padding-left: 30px;
+    }
+
+    .faq-question::before {
+        counter-increment: faq-counter;
+        content: counter(faq-counter);
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 20px;
+        height: 20px;
+        background: #007BFF;
+        color: white;
+        border-radius: 50%;
+        text-align: center;
+        line-height: 20px;
+        font-size: 12px;
+        font-weight: bold;
+    }
+
+    .answer {
+        margin-top: 12px;
+        padding: 12px;
+        background: rgba(0, 123, 255, 0.05);
+        border-radius: 6px;
+        border-left: 3px solid #007BFF;
+        color: #333;
+        display: none;
+    }
+
+    .faq-item.active .answer {
+        display: block;
+        animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(-10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
   </style>
 </head>
 
@@ -254,8 +322,7 @@
     <span href="#" class="nav-logo">Infinium Test · 极测无界</span>
     <div class="nav-links">
       <a href="../index.html" class="nav-link">首页</a>
-<!--      <a href="./document-center.html" class="dropdown-item">文档中心</a>-->
-<!--      <a href="./api.html" class="dropdown-item">API文档</a>-->
+      <a href="./document-center.html" class="dropdown-item">文档中心</a>
     </div>
   </nav>
 
@@ -280,112 +347,61 @@
     </ul>
   </aside>
 
-  <div class="document-center">
-
-        <h2 id="部署文档" class="section-title">部署文档</h2>
-        <ul>
-          <li><a href="deploy.html">项目部署</a> - 快速部署 <strong>Infinium Test · 极测无界</strong> 自动化仿真测试环境 </li>
-        </ul>
-
-        <h2 id="模块文档" class="section-title">模块文档</h2>
-        <p><strong>Infinium Test · 极测无界</strong> 项目包含多个功能模块，每个模块专注于特定领域的功能：</p>
-        <ul>
-          <li><a href="./README.html#Common">通用模块 (Common)</a> - 性能监控、数据采集和分析</li>
-          <li><a href="./README.html#ClusterGeneralManager">仪表模块 (Cluster)</a> - 性能监控、数据采集和分析</li>
-          <li><a href="./README.html#Performance">性能模块 (Performance)</a> - 性能监控、数据采集和分析</li>
-          <li><a href="./README.html#Calibration">标定模块 (Calibration)</a> - UI 自动化测试工具</li>
-          <li><a href="./README.html#opencv">OpenCV 模块</a> - 图像处理和计算机视觉功能</li>
-          <li><a href="./README.html#Loggers">日志模块 (Loggers)</a> - 日志收集和管理</li>
-          <li><a href="./api.html#AudioManager">音频模块 (Audio)</a> - 音频处理和测试</li>
-        </ul>
-
-        <h2 id="api参考" class="section-title">API参考</h2>
-        <h3 id="通用">通用 (Common)</h3>
-        <ul>
-          <li><a href="./api.html#CommandExcutor">CommandExcutor</a> - 命令执行工具类</li>
-          <li><a href="./api.html#DeviceUtil">DeviceUtil</a> - 设备工具类</li>
-          <li><a href="./api.html#KeyEventer">KeyEventer</a> - 发送按键事件工具类</li>
-          <li><a href="./api.html#ScreenRecorder">ScreenRecorder</a> - 屏幕录制工具类</li>
-          <li><a href="./api.html#ScreenShoter">ScreenShoter</a> - 屏幕截图工具类</li>
-          <li><a href="./api.html#SerialClient">SerialClient</a> - 调试串口工具管理类</li>
-          <li><a href="./api.html#TimeUtil">TimeUtil</a> - 时间工具类</li>
-          <li><a href="./api.html#Utils">Utils</a> - 日志、文件工具类</li>
-          <li><a href="./api.html#VehicleTypeManager">VehicleTypeManager</a> - 车辆类型管理类</li>
-        </ul>
-
-        <h3 id="音频">音频 (audio)</h3>
-        <ul>
-          <li><a href="./api.html#AudioManager">AudioManager</a> - 音频处理和测试</li>
-        </ul>
-
-        <h3 id="标定">标定 (Calibration)</h3>
-        <ul>
-          <li><a href="./api.html#CalibrationManager">CalibrationManager</a> - 读写系统标定</li>
-        </ul>
-
-        <h3 id="总线服务">总线服务 (canbus)</h3>
-        <ul>
-          <li><a href="./api.html#CanBusClient">CanBusClient</a> - 启动、停止canbus 服务</li>
-        </ul>
-
-        <h3 id="仪表">仪表 (cluster)</h3>
-        <ul>
-          <li><a href="./api.html#ADASSettingManager">ADASSettingManager</a> - ADAS Setting类</li>
-          <li><a href="./api.html#ClusterGeneralManager">ClusterGeneralManager</a> - 仪表功能管理类</li>
-          <li><a href="./api.html#GpsSimulationGeneralMangager">GpsSimulationGeneralMangager</a> - GPS仿真类</li>
-          <li><a href="./api.html#LinGeneralManager">LinGeneralManager</a> - Lin发送接收类</li>
-          <li><a href="./api.html#MessageSender">MessageSender</a> - 报文消息发送类</li>
-          <li><a href="./api.html#RvcManager">RvcManager</a> - RVC 管理类</li>
-          <li><a href="./api.html#VehicleInitManager">VehicleInitManager</a> - 发送车辆初始化信号类</li>
-        </ul>
-
-        <h3 id="性能">性能 (Performance)</h3>
-        <ul>
-          <li><a href="./api.html#BaseScenarioRunner">BaseScenarioRunner</a> - 基础场景运行基类</li>
-          <li><a href="./api.html#MemoryCpuManager">MemoryCpuManager</a> - 内存和 CPU 数据采集类</li>
-          <li><a href="./api.html#IoMonitor">IoMonitor</a> - IO 监控类</li>
-          <li><a href="./api.html#StartupManager">StartupManager</a> - 冷/暖/热启动管理类</li>
-          <li><a href="./api.html#PageSwitchManager">PageSwitchManager</a> - 页面切换管理类</li>
-        </ul>
-
-        <h3 id="UI自动化">UI自动化 (UIAutomator)</h3>
-        <ul>
-          <li><a href="./api.html#BasePage">BasePage</a> - 基础页面类</li>
-          <li><a href="./api.html#ElementLocator">ElementLocator</a> - 元素定位器</li>
-          <li><a href="./api.html#KeyOperation">KeyOperation</a> - 按键操作</li>
-          <li><a href="./api.html#WifiManager">WifiManager</a> - WIFI 管理器</li>
-        </ul>
-
-        <h3 id="图像处理">图像处理 (OpenCV)</h3>
-        <ul>
-          <li><a href="./api.html#ImageUtils">ImageUtils</a> - 图像处理工具类</li>
-          <li><a href="./api.html#Camera">Camera</a> - 摄像头操作工具</li>
-        </ul>
-
+  <div class="issue-center">
         <h2 id="常见问题" class="section-title">常见问题</h2>
-        <h3>安装和配置</h3>
-        <ol>
-          <li><a href="./issues.html">如何安装 <strong>Infinium Test · 极测无界</strong> 项目？</a></li>
-          <li><a href="#">如何配置开发环境？</a></li>
-          <li><a href="#">如何更新到最新版本？</a></li>
+        <ol class="faq-list">
+          <li id="如何安装" class="faq-item">
+            <a href="#" class="faq-question">Q: 如何安装 <strong>Infinium Test · 极测无界</strong> 项目？</a>
+            <div class="answer">
+                <p>A: 请按照部署文档中的流程说明在本地电脑上进行操作</p>
+            </div>
+          </li>
+          <li id="如何配置" class="faq-item">
+            <a href="#" class="faq-question">Q: 如何配置开发环境？</a>
+            <div class="answer">
+                <p>A: 请按照部署文档中的流程说明在本地电脑上进行操作</p>
+            </div>
+          </li>
+          <li id="如何更新" class="faq-item">
+            <a href="#" class="faq-question">Q: 如何更新到最新版本？</a>
+            <div class="answer">
+                <p>A: 需要在首页 > 下载工具 > 版本发布页面查看是否有更新的版本发布，若有新版本，可在发布页点击下载按钮下载新版本，然后根据部署文档完成更新</p>
+            </div>
+          </li>
+          <li id="ADB连接" class="faq-item">
+            <a href="#" class="faq-question">Q: 解决ADB连接问题？</a>
+            <div class="answer">
+                <p>A: 请按照部署文档中的流程说明在本地电脑上进行操作</p>
+            </div>
+          </li>
+          <li id="多设备连接" class="faq-item">
+            <a href="#" class="faq-question">Q: 多设备连接管理？</a>
+            <div class="answer">
+                <p>A: 请按照部署文档中的流程说明在本地电脑上进行操作</p>
+            </div>
+          </li>
+          <li id="线连接" class="faq-item">
+            <a href="#" class="faq-question">Q: 无线连接设置？</a>
+            <div class="answer">
+                <p>A: 请按照部署文档中的流程说明在本地电脑上进行操作</p>
+            </div>
+          </li>
         </ol>
-
-        <h3>设备连接</h3>
-        <ol>
-          <li><a href="#">解决 ADB 连接问题</a></li>
-          <li><a href="#">多设备连接管理</a></li>
-          <li><a href="#">无线连接设置</a></li>
-        </ol>
-
-        <h2 id="版本历史" class="section-title">版本历史</h2>
-        <ul>
-          <li><a href="#">v0.1</a> - 初始版本发布</li>
-        </ul>
   </div>
 
   <footer class="footer">
     <p class="copyright">© - 2025 PATAC. All Rights Reserved.</p>
   </footer>
+
+  <script>
+  document.querySelectorAll('.faq-question').forEach(question => {
+      question.addEventListener('click', function(e) {
+          e.preventDefault();
+          const item = this.parentElement;
+          item.classList.toggle('active');
+      });
+  });
+  </script>
 </body>
 
 </html>

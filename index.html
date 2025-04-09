@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Infinium Test · 极测无界 | 首页</title>
     <link rel="stylesheet" type="text/css" href="./css/animate.css" />
+<!--    <link rel="stylesheet" type="text/css" href="./css/animate.css" />-->
+<!--    <link rel="stylesheet" type="text/css" href="./css/elementui-index.css" />-->
     <style>
         :root {
             --apple-black: #1d1d1f;
@@ -446,6 +448,53 @@
             z-index: 4;
         }
 
+        .contributor-card img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--apple-blue);
+            transition: all 0.3s ease;
+            animation: rotateSlowly 30s linear infinite;
+        }
+
+        /* 奇数头像顺时针旋转 */
+        .contributor-card:nth-child(odd) img {
+            animation-direction: normal;
+        }
+
+        /* 偶数头像逆时针旋转 */
+        .contributor-card:nth-child(even) img {
+            animation-direction: reverse;
+        }
+
+        .contributor-card img:hover {
+            transform: scale(1.2);
+            box-shadow: 0 0 30px rgba(51, 153, 255, 0.8);
+            filter: brightness(1.1);
+            animation-play-state: paused;
+        }
+
+        @keyframes rotateSlowly {
+            from {
+                transform: rotate(0deg) scale(1);
+            }
+            to {
+                transform: rotate(360deg) scale(1);
+            }
+        }
+
+        @keyframes glow {
+            0% {
+                color: var(--apple-black);
+                text-shadow: 0 0 5px rgba(255, 215, 0, 0);
+            }
+            100% {
+                color: #FFD700; /* 金色 */
+                text-shadow: 0 0 10px rgba(255, 215, 0, 0.8);
+            }
+        }
+
     </style>
 </head>
 <body>
@@ -468,35 +517,6 @@
     </nav>
     
 
-
-
-<!--    <section class="hero">-->
-<!--        <div class="hero-slideshow">-->
-<!--            <div class="slide animated bounceInDown" style="background-image: url('./resources/images/buick.jpg');"></div>-->
-<!--            <div class="slide animated bounceInDown" style="background-image: url('./resources/images/buick-1.jpg');"></div>-->
-<!--            <div class="slide animated" style="background-image: url('./resources/images/buick-2.jpg');"></div>-->
-<!--            <div class="slide" style="background-image: url('./resources/images/buick-3.jpg');"></div>-->
-<!--            <div class="slide" style="background-image: url('./resources/images/buick-4.jpg');"></div>-->
-<!--            <div class="slide" style="background-image: url('./resources/images/buick-5.jpg');"></div>-->
-<!--            <div class="slide" style="background-image: url('./resources/images/buick-6.jpg');"></div>-->
-<!--            <div class="slide" style="background-image: url('./resources/images/buick-7.jpg');"></div>-->
-<!--            <div class="slide" style="background-image: url('./resources/images/buick-3.jpg');"></div>-->
-<!--            <div class="slide" style="background-image: url('./resources/images/buick-3.jpg');"></div>-->
-<!--            <div class="slide" style="background-image: url('./resources/images/cadi-1.png');"></div>-->
-<!--            <div class="slide" style="background-image: url('./resources/images/cadi-2.jpg');"></div>-->
-<!--            <div class="slide" style="background-image: url('./resources/images/cadi-3.jpg');"></div>-->
-<!--            <div class="slide" style="background-image: url('./resources/images/cadi-4.jpg');"></div>-->
-
-<!--            <div class="overlay"></div>-->
-
-
-<!--        </div>-->
-<!--        <h1 class="animated zoomInDown">Inifinize your Infotainment testing</h1>-->
-<!--        <p class="animated zoomIn">智能座舱软件测试团队</p>-->
-<!--&lt;!&ndash;        <div class="hero-links animated zoomIn">&ndash;&gt;-->
-<!--&lt;!&ndash;            <a href="#projects" class="hero-link">查看项目</a>&ndash;&gt;-->
-<!--&lt;!&ndash;        </div>&ndash;&gt;-->
-<!--    </section>-->
 
 
 
@@ -599,16 +619,72 @@
                 核心技术栈涵盖 JavaScript、Python、Node.js 等现代开发技术，专注于构建高效、可靠的自动化测试工具链。我们以提升测试效率、保障产品质量为己任，为智能汽车电子系统的研发提供强有力的技术支撑。
             </p>
         </div>
+
+        <!-- 新增贡献者信息部分 -->
+        <div class="contributors-section" style="margin-top: 150px;">
+            <h3 style="text-align: center; font-size: 28px; margin-bottom: 40px; color: var(--apple-black);">项目贡献者</h3>
+            <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 20px;">
+                <!-- 贡献者卡片 -->
+                <div class="contributor-card" style="text-align: center; width: 110px;">
+                    <img src="./resources/avatar/chengjie.jpg" alt="程劼" style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover; border: 2px solid var(--apple-blue);">
+                    <h4 style="font-size: 12.8px; margin: 8px 0 4px; color: var(--apple-black); animation: glow 3s infinite alternate;animation-delay: 0s;">程劼</h4>
+<!--                    <p style="font-size: 11.2px; color: var(&#45;&#45;apple-gray);">测试开发</p>-->
+                    <button onclick="showEmail('Cheng_Jie@patac.com.cn')" style="font-size: 9.6px; color: var(--apple-blue); background: none; border: none; cursor: pointer;">联系</button>
+                </div>
+                <div class="contributor-card" style="text-align: center; width: 110px;">
+                    <img src="./resources/avatar/chencheng.jpg" alt="陈成" style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover; border: 2px solid var(--apple-blue);">
+                    <h4 style="font-size: 12.8px; margin: 8px 0 4px; color: var(--apple-black); animation: glow 3s infinite alternate;animation-delay: 0.4s;">陈成</h4>
+<!--                    <p style="font-size: 11.2px; color: var(&#45;&#45;apple-gray);">测试开发</p>-->
+                    <button onclick="showEmail('Chen_Cheng@patac.com.cn')" style="font-size: 9.6px; color: var(--apple-blue); background: none; border: none; cursor: pointer;">联系</button>
+                </div>
+                <div class="contributor-card" style="text-align: center; width: 110px;">
+                    <img src="./resources/avatar/sunjingchong.jpg" alt="孙景翀" style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover; border: 2px solid var(--apple-blue);">
+                    <h4 style="font-size: 12.8px; margin: 8px 0 4px; color: var(--apple-black); animation: glow 3s infinite alternate;animation-delay: 0.8s;">孙景翀</h4>
+<!--                    <p style="font-size: 11.2px; color: var(&#45;&#45;apple-gray);">测试开发</p>-->
+                    <button onclick="showEmail('Sun_Jingchong@patac.com.cn')" style="font-size: 9.6px; color: var(--apple-blue); background: none; border: none; cursor: pointer;">联系</button>
+                </div>
+                <div class="contributor-card" style="text-align: center; width: 110px;">
+                    <img src="./resources/avatar/miaohaiyang.jpg" alt="苗海洋" style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover; border: 2px solid var(--apple-blue);">
+                    <h4 style="font-size: 12.8px; margin: 8px 0 4px; color: var(--apple-black); animation: glow 3s infinite alternate;animation-delay: 1.2s;">苗海洋</h4>
+<!--                    <p style="font-size: 11.2px; color: var(&#45;&#45;apple-gray);">测试开发</p>-->
+                    <button onclick="showEmail('Miao_Haiyang@patac.com.cn')" style="font-size: 9.6px; color: var(--apple-blue); background: none; border: none; cursor: pointer;">联系</button>
+                </div>
+                <div class="contributor-card" style="text-align: center; width: 110px;">
+                    <img src="./resources/avatar/sunzhiwei.jpg" alt="孙智伟" style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover; border: 2px solid var(--apple-blue);">
+                    <h4 style="font-size: 12.8px; margin: 8px 0 4px; color: var(--apple-black); animation: glow 3s infinite alternate;animation-delay: 1.6s;">孙智伟</h4>
+<!--                    <p style="font-size: 11.2px; color: var(&#45;&#45;apple-gray);">测试开发</p>-->
+                    <button onclick="showEmail('Sun_Zhiwei@patac.com.cn')" style="font-size: 9.6px; color: var(--apple-blue); background: none; border: none; cursor: pointer;">联系</button>
+                </div>
+                <div class="contributor-card" style="text-align: center; width: 110px;">
+                    <img src="./resources/avatar/liyunsong.jpg" alt="李云松" style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover; border: 2px solid var(--apple-blue);">
+                    <h4 style="font-size: 12.8px; margin: 8px 0 4px; color: var(--apple-black); animation: glow 3s infinite alternate;animation-delay: 2.0s;">李云松</h4>
+<!--                    <p style="font-size: 11.2px; color: var(&#45;&#45;apple-gray);">测试开发</p>-->
+                    <button onclick="showEmail('Li_Yunsong@patac.com.cn')" style="font-size: 9.6px; color: var(--apple-blue); background: none; border: none; cursor: pointer;">联系</button>
+                </div>
+
+                <div class="contributor-card" style="text-align: center; width: 110px;">
+                    <img src="./resources/avatar/liyunsong.jpg" alt="李云松" style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover; border: 2px solid var(--apple-blue);">
+                    <h4 style="font-size: 12.8px; margin: 8px 0 4px; color: var(--apple-black); animation: glow 3s infinite alternate;animation-delay: 2.0s;">XXXX</h4>
+<!--                    <p style="font-size: 11.2px; color: var(&#45;&#45;apple-gray);">测试开发</p>-->
+                    <button onclick="showEmail('Li_Yunsong@patac.com.cn')" style="font-size: 9.6px; color: var(--apple-blue); background: none; border: none; cursor: pointer;">联系</button>
+                </div>
+
+            </div>
+        </div>
     </section>
-    
+
     <section id="contact" class="section">
         <h2 class="section-title"></h2>
     </section>
-    
+
     <footer class="footer">
         <p class="copyright">© - 2025 PATAC. All Rights Reserved.</p>
     </footer>
 </body>
+<!--<script src="./js/jquery.js" type="text/javascript"></script>-->
+<!--<script src="./js/vue.min.js" type="text/javascript"></script>-->
+<!--<script src="./js/axios.min.js" type="text/javascript"></script>-->
+<!--<script src="./js/elementui-index.js" type="text/javascript"></script>-->
 <script>
     const slides = document.querySelectorAll('.slide');
     let currentSlide = 0;
@@ -1027,6 +1103,36 @@
         setTimeout(startAnimation, 1800);
     });
 
+    // 添加显示邮箱的函数
+    function showEmail(email) {
+        // 使用alert显示
+        alert(`联系邮箱：${email}`);
+        
+        // 或者使用更优雅的Toast提示（需要先添加Toast样式）
+        // showToast(`联系邮箱：${email}`);
+    }
+
+    // 如果需要更优雅的Toast提示，可以添加以下代码
+    /*
+    function showToast(message) {
+        const toast = document.createElement('div');
+        toast.style.position = 'fixed';
+        toast.style.bottom = '20px';
+        toast.style.left = '50%';
+        toast.style.transform = 'translateX(-50%)';
+        toast.style.backgroundColor = 'rgba(0,0,0,0.7)';
+        toast.style.color = 'white';
+        toast.style.padding = '12px 24px';
+        toast.style.borderRadius = '4px';
+        toast.style.zIndex = '1000';
+        toast.textContent = message;
+        document.body.appendChild(toast);
+        
+        setTimeout(() => {
+            document.body.removeChild(toast);
+        }, 3000);
+    }
+    */
 
 </script>
 </script>
