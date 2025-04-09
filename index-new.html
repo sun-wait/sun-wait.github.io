@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>汽车 · 仿真 · 重新定义</title>
+    <link rel="stylesheet" type="text/css" href="./css/animate.css" />
+    <!-- 引入等宽字体 -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fira+Mono:wght@400;500;700&display=swap">
+    <style>
+        :root {
+            --apple-black: #1d1d1f;
+            --apple-dark-gray: #333336;
+            --apple-gray: #86868b;
+            --apple-light-gray: #f5f5f7;
+            --apple-blue: #0066cc;
+            --apple-white: #ffffff;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+        
+        body {
+            background-color: var(--apple-white);
+            color: var(--apple-black);
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+        }
+        
+        .navbar {
+            background-color: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 44px;
+            padding: 0 22px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            z-index: 999;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+        
+        .nav-logo {
+            font-size: 21px;
+            font-weight: 500;
+            color: var(--apple-black);
+            text-decoration: none;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+        
+        .nav-link {
+            color: var(--apple-black);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 400;
+            transition: opacity 0.3s;
+        }
+        
+        .nav-link:hover {
+            opacity: 0.7;
+        }
+
+        .nav-dropdown {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            padding: 8px 0;
+            min-width: 160px;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s;
+        }
+
+        .dropdown-item {
+            display: block;
+            padding: 8px 16px;
+            color: var(--apple-black);
+            text-decoration: none;
+            font-size: 14px;
+            transition: background-color 0.3s;
+        }
+
+        .dropdown-item:hover {
+            background-color: var(--apple-light-gray);
+        }
+
+        .nav-dropdown:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .hero-slideshow {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 100%;  /* 初始位置在屏幕右侧 */
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            transition: left 1s ease-in-out;  /* 添加left属性的过渡效果 */
+            opacity: 0.8;
+        }
+
+        .slide.active {
+            left: 0;  /* 当前幻灯片移动到正常位置 */
+        }
+
+        .slide.prev {
+            left: -100%;  /* 上一张幻灯片移动到左侧 */
+        }
+        
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 22px;
+            margin-top: -44px;
+            background: linear-gradient(to bottom, var(--apple-light-gray), var(--apple-white));
+            background-color: #121212;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero h1 {
+            font-size: 80px;
+            font-weight: 600;
+            font-color: red;
+            margin-bottom: 10px;
+            z-index: 10;
+            color: var(--apple-white);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        .hero p {
+            font-size: 28px;
+            color: var(--apple-gray);
+            max-width: 700px;
+            margin-bottom: 40px;
+            z-index: 10;
+            color: var(--apple-white);
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+        
+        .hero-links {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .hero-link {
+            color: var(--apple-white);
+            text-decoration: none;
+            font-size: 21px;
+            position: relative;
+        }
+        
+        .hero-link:after {
+            content: "";
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background-color: var(--apple-blue);
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.3s ease;
+        }
+        
+        .hero-link:hover:after {
+            transform: scaleX(1);
+            transform-origin: left;
+            color: var(--apple-blue);
+        }
+        
+        .section {
+            padding: 100px 22px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .section-title {
+            font-size: 40px;
+            font-weight: 600;
+            margin-bottom: 60px;
+            text-align: center;
+        }
+        
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .project-card {
+            background-color: var(--apple-light-gray);
+            border-radius: 18px;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .project-image {
+            height: 200px;
+            background-color: #ddd;
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .project-content {
+            padding: 25px;
+        }
+        
+        .project-title {
+            font-size: 21px;
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+        
+        .project-desc {
+            color: var(--apple-gray);
+            margin-bottom: 15px;
+        }
+        
+        .project-link {
+            color: var(--apple-blue);
+            text-decoration: none;
+            font-size: 17px;
+            display: inline-flex;
+            align-items: center;
+        }
+        
+        .project-link svg {
+            margin-left: 5px;
+            transition: transform 0.3s;
+        }
+        
+        .project-link:hover svg {
+            transform: translateX(3px);
+        }
+        
+        .footer {
+            background-color: var(--apple-light-gray);
+            padding: 50px 22px;
+            text-align: center;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .footer-link {
+            color: var(--apple-gray);
+            text-decoration: none;
+            font-size: 14px;
+        }
+        
+        .footer-link:hover {
+            color: var(--apple-blue);
+        }
+        
+        .copyright {
+            color: var(--apple-gray);
+            font-size: 12px;
+        }
+        
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 48px;
+            }
+            
+            .hero p {
+                font-size: 21px;
+            }
+            
+            .section-title {
+                font-size: 32px;
+            }
+            
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5); /* 半透明黑色遮罩 */
+            z-index: 1;
+        }
+
+        h1, p, .hero-links {
+            position: relative;
+            z-index: 2; /* 确保文字在遮罩层之上 */
+        }
+        
+        /* 字母动画相关样式 */
+        .letter {
+            position: absolute;
+            font-size: 40px;
+            font-weight: bold;
+            color: #fff;
+            display: inline-block;
+            transform-origin: center;
+            z-index: 5;
+            text-shadow: 0 0 10px rgba(51, 153, 255, 0.7);
+            will-change: transform, opacity, left, top;
+            font-family: 'Fira Mono', monospace;
+        }
+        
+        .initial-letter {
+            position: relative;
+            display: inline-block;
+            transform-origin: center;
+            transform-style: preserve-3d;
+            margin: 0 2px;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+            font-family: 'Fira Mono', monospace;
+        }
+        
+        .initial-letter-container {
+            position: absolute;
+            left: 50%;
+            top: 35%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            z-index: 5;
+        }
+        
+        .remaining-letter {
+            position: absolute;
+            opacity: 0;
+            color: #fff;
+            font-size: 40px;
+            font-weight: bold;
+            text-shadow: 0 0 10px rgba(51, 153, 255, 0.7);
+            z-index: 5;
+            font-family: 'Fira Mono', monospace;
+        }
+        
+        .explosion-container {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 3;
+        }
+        
+        .particle {
+            position: absolute;
+            background-color: #3498db;
+            border-radius: 50%;
+            width: 5px;
+            height: 5px;
+            opacity: 0;
+            will-change: transform, opacity;
+        }
+        
+        .word-container {
+            position: absolute;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            height: 60px;
+            z-index: 5;
+        }
+        
+        .letter-position {
+            display: inline-block;
+            width: 24px; /* 等宽字体下的字符宽度 */
+            height: 40px;
+            text-align: center;
+            margin-right: 4px; /* 字符间距 */
+        }
+        
+        .exploding-letter {
+            position: absolute;
+            font-size: 40px;
+            font-weight: bold;
+            color: #fff;
+            text-shadow: 0 0 10px rgba(51, 153, 255, 0.7);
+            will-change: transform, opacity, left, top;
+            transition-property: transform, opacity, left, top;
+            transition-timing-function: cubic-bezier(0.25, 0.8, 0.25, 1);
+            font-family: 'Fira Mono', monospace;
+            z-index: 5;
+        }
+        
+        .motion-container {
+            position: absolute;
+            width: 100%;
+            height: 100vh;
+            z-index: 4;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <a href="#" class="nav-logo">infinitest · 极测无界</a>
+        <div class="nav-links">
+            <div class="nav-dropdown">
+                <a href="#" class="nav-link">指南</a>
+                <div class="dropdown-menu">
+                    <a href="./html/overview.html" class="dropdown-item">Overview</a>
+                    <a href="./html/document-center.html" class="dropdown-item">文档中心</a>
+                </div>
+            </div>
+            <a href="#projects" class="nav-link">项目</a>
+            <a href="#about" class="nav-link">关于</a>
+        </div>
+    </nav>
+    
+    <section class="hero">
+        <div class="hero-slideshow">
+            <div class="slide animated bounceInDown" style="background-image: url('./resources/images/home-10.png');"></div>
+            <div class="slide animated" style="background-image: url('./resources/images/home-1.png');"></div>
+            <div class="slide" style="background-image: url('./resources/images/home-2.png');"></div>
+            <div class="slide" style="background-image: url('./resources/images/home-3.png');"></div>
+            <div class="slide" style="background-image: url('./resources/images/home-4.png');"></div>
+            <div class="slide" style="background-image: url('./resources/images/home-5.png');"></div>
+            <div class="slide" style="background-image: url('./resources/images/home-6.png');"></div>
+            <div class="slide" style="background-image: url('./resources/images/home-7.png');"></div>
+            <div class="slide" style="background-image: url('./resources/images/home-8.png');"></div>
+            <div class="slide" style="background-image: url('./resources/images/home-9.png');"></div>
+            <div class="overlay"></div>
+        </div>
+        
+        <!-- 添加字母动画容器 -->
+        <div class="motion-container" id="animationContainer"></div>
+        <div class="explosion-container" id="explosionContainer"></div>
+        
+        <!-- 原有的标题和内容 - 在动画完成后显示 -->
+        <h1 class="animated zoomInDown" id="main-title" style="opacity: 0">汽车 · 仿真 · 重新定义</h1>
+        <p class="animated zoomIn" id="main-subtitle" style="opacity: 0">智能座舱软件测试团队</p>
+        <div class="hero-links animated zoomIn" id="main-links" style="opacity: 0">
+            <a href="#projects" class="hero-link">查看项目</a>
+        </div>
+        
+        <button id="startAnimation" style="display: none;">开始动画</button>
+    </section>
+    
+    <section id="projects" class="section">
+        <h2 class="section-title">精选项目</h2>
+        <div class="projects-grid">
+            <div class="project-card">
+                <div class="project-image" style="background-image: url('https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80')"></div>
+                <div class="project-content">
+                    <h3 class="project-title">VCU Simulator</h3>
+                    <p class="project-desc">专业的VCU仿真工具，支持多种测试场景和数据分析功能。</p>
+                    <a href="./html/release-info.html" class="project-link">
+                        下载工具
+                        <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M1 11L11 1M11 1H1M11 1V11" stroke="#0066cc" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="project-card">
+                <div class="project-image" style="background-image: url('https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80')"></div>
+                <div class="project-content">
+                    <h3 class="project-title">产品Overview</h3>
+                    <p class="project-desc">全面展示产品特性和技术规格的专业文档。</p>
+                    <a href="./html/overview.html" class="project-link">
+                        查看详情
+                        <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M1 11L11 1M11 1H1M11 1V11" stroke="#0066cc" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="project-card">
+                <div class="project-image" style="background-image: url('https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80')"></div>
+                <div class="project-content">
+                    <h3 class="project-title">API文档小屋</h3>
+                    <p class="project-desc">简洁高效的API文档生成与展示系统，支持多种格式。</p>
+                    <a href="./html/api.html" class="project-link">
+                        访问文档
+                        <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M1 11L11 1M11 1H1M11 1V11" stroke="#0066cc" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="project-card">
+                <div class="project-image" style="background-image: url('https://images.unsplash.com/photo-1522542550221-31fd19575a2d?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80')"></div>
+                <div class="project-content">
+                    <h3 class="project-title">工具集合站</h3>
+                    <p class="project-desc">精选开发工具集合，提高工作效率的利器。</p>
+                    <a href="./html/tool-set.html" class="project-link">
+                        工具研制中
+                        <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M1 11L11 1M11 1H1M11 1V11" stroke="#0066cc" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="about" class="section" style="background-color: var(--apple-light-gray);">
+        <h2 class="section-title">关于我们</h2>
+        <div style="max-width: 700px; margin: 0 auto; text-align: left;text-indent: 2em;">
+            <p style="font-size: 21px; color: var(--apple-gray); margin-bottom: 30px;">
+                我们是一支来自智能座舱软件测试领域的精英团队，致力于打造新一代智能汽车电子架构的车联仿真与自动化测试解决方案。凭借深厚的技术积累与创新精神，我们持续推动汽车电子测试领域的智能化转型。
+            </p>
+            <p style="font-size: 21px; color: var(--apple-gray);">
+                核心技术栈涵盖 JavaScript、Python、Node.js 等现代开发技术，专注于构建高效、可靠的自动化测试工具链。我们以提升测试效率、保障产品质量为己任，为智能汽车电子系统的研发提供强有力的技术支撑。
+            </p>
+        </div>
+    </section>
+    
+    <section id="contact" class="section">
+        <h2 class="section-title"></h2>
+    </section>
+    
+    <footer class="footer">
+        <p class="copyright">© - 2025 PATAC. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        // 原有的幻灯片相关代码
+        const slides = document.querySelectorAll('.slide');
+        let currentSlide = 0;
+
+        function showSlide(index) {
+            // 移除所有幻灯片的active和prev类
+            slides.forEach(slide => {
+                slide.classList.remove('active', 'prev');
+            });
+
+            // 如果存在上一张幻灯片，添加prev类
+            if (index > 0) {
+                slides[index - 1].classList.add('prev');
+            } else {
+                slides[slides.length - 1].classList.add('prev');
+            }
+
+            // 为当前幻灯片添加active类
+            slides[index].classList.add('active');
+        }
+
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % slides.length;
+            showSlide(currentSlide);
+        }
+
+        // 初始化：显示第一张幻灯片
+        showSlide(currentSlide);
+
+        // 设置轮播间隔时间（例如5秒）
+        setInterval(nextSlide, 5000);
+
+        // 下面是字母动画的代码
+        // 初始和终止文本 - 将第一个字母改为小写
+        const initialText = "infinitest";
+        const finalText = "initialize your infotainment testing";
+        
+        const container = document.getElementById('animationContainer');
+        const explosionContainer = document.getElementById('explosionContainer');
+        const startButton = document.getElementById('startAnimation');
+        
+        // 原始标题元素
+        const mainTitle = document.getElementById('main-title');
+        const mainSubtitle = document.getElementById('main-subtitle');
+        const mainLinks = document.getElementById('main-links');
+        
+        // 字母间距和单词间距（等宽字体）
+        const LETTER_WIDTH = 24;  // 等宽字体下每个字符的宽度
+        const LETTER_SPACING = 4; // 字符间额外间距
+        const WORD_SPACING = 28;  // 单词之间的间距
+        
+        // 创建初始文本
+        function setupInitialText() {
+            container.innerHTML = '';
+            
+            // 创建中央位置的初始文本容器
+            const initialTextContainer = document.createElement('div');
+            initialTextContainer.id = 'initialTextContainer';
+            initialTextContainer.className = 'initial-letter-container';
+            container.appendChild(initialTextContainer);
+            
+            for (let i = 0; i < initialText.length; i++) {
+                const letter = document.createElement('span');
+                letter.className = 'letter initial-letter';
+                letter.id = `letter-${i}`;
+                letter.textContent = initialText[i];
+                letter.style.display = 'inline-block';
+                initialTextContainer.appendChild(letter);
+            }
+        }
+        
+        // 创建爆炸粒子效果
+        function createExplosionParticles(count) {
+            explosionContainer.innerHTML = '';
+            
+            for (let i = 0; i < count; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = '50%';
+                particle.style.top = '50%';
+                explosionContainer.appendChild(particle);
+            }
+        }
+        
+        // 执行爆炸动画
+        function animateExplosion() {
+            const initialLetters = document.querySelectorAll('.initial-letter');
+            const centerX = window.innerWidth / 2;
+            const centerY = window.innerHeight / 2;
+            
+            // 创建爆炸字母元素，并初始位置设置为中心
+            initialLetters.forEach((letter, index) => {
+                const explodingLetter = document.createElement('div');
+                explodingLetter.className = 'exploding-letter';
+                explodingLetter.textContent = letter.textContent;
+                explodingLetter.dataset.index = index;
+                explodingLetter.style.left = `${centerX}px`;
+                explodingLetter.style.top = `${centerY}px`;
+                explodingLetter.style.opacity = '1';
+                explodingLetter.style.transform = 'scale(1)';
+                container.appendChild(explodingLetter);
+            });
+            
+            // 隐藏原始字母
+            document.getElementById('initialTextContainer').style.opacity = '0';
+            
+            // 开始爆炸动画
+            const explodingLetters = document.querySelectorAll('.exploding-letter');
+            
+            // 创建随机圆形路径
+            const radius = Math.min(window.innerWidth, window.innerHeight) * 0.3; // 圆形半径为屏幕尺寸的30%
+            const totalAngle = Math.PI * 2; // 完整圆
+            const angleStep = totalAngle / explodingLetters.length; // 每个字母的角度步进
+            
+            // 为每个字母设置不同的动画路径
+            explodingLetters.forEach((letter, index) => {
+                // 计算在圆上的位置
+                const angle = angleStep * index;
+                const finalX = centerX + Math.cos(angle) * radius;
+                const finalY = centerY + Math.sin(angle) * radius;
+                
+                // 随机缩放和旋转
+                const randomScale = 0.8 + Math.random() * 0.8; // 0.8-1.6
+                const randomRotation = Math.random() * 360; // 0-360度
+                
+                // 设置延迟
+                const delay = index * 0.08; // 每个字母的延迟
+                
+                // 添加动画 - 第一阶段：向外爆炸
+                setTimeout(() => {
+                    letter.style.transition = `left 0.8s cubic-bezier(0.2, 0.8, 0.2, 1.2), 
+                                              top 0.8s cubic-bezier(0.2, 0.8, 0.2, 1.2),
+                                              transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1.2)`;
+                    letter.style.left = `${finalX}px`;
+                    letter.style.top = `${finalY}px`;
+                    letter.style.transform = `rotate(${randomRotation}deg) scale(${randomScale})`;
+                    
+                    // 圆形路径完成后的旋转
+                    setTimeout(() => {
+                        // 在圆上随机旋转和缩放
+                        letter.style.transition = `transform 1s cubic-bezier(0.4, 0.0, 0.2, 1)`;
+                        letter.style.transform = `rotate(${randomRotation + 180}deg) scale(${randomScale * 1.2})`;
+                    }, 800);
+                }, delay * 1000);
+            });
+            
+            // 同时触发粒子爆炸效果
+            setTimeout(() => {
+                const particles = document.querySelectorAll('.particle');
+                particles.forEach((particle, index) => {
+                    // 随机角度和距离
+                    const angle = Math.random() * Math.PI * 2;
+                    const distance = 150 + Math.random() * 250;
+                    
+                    // 计算终点位置
+                    const endX = centerX + Math.cos(angle) * distance;
+                    const endY = centerY + Math.sin(angle) * distance;
+                    
+                    // 随机大小和持续时间
+                    const size = 3 + Math.random() * 5;
+                    const duration = 0.8 + Math.random() * 0.6;
+                    const delay = Math.random() * 0.3;
+                    
+                    // 设置粒子样式
+                    particle.style.width = `${size}px`;
+                    particle.style.height = `${size}px`;
+                    particle.style.backgroundColor = `hsl(${210 + Math.random() * 40}, 100%, 60%)`;
+                    
+                    // 添加动画
+                    particle.style.transition = `transform ${duration}s cubic-bezier(0.18, 0.89, 0.32, 1.28) ${delay}s, 
+                                                opacity ${duration}s ease ${delay}s`;
+                    
+                    // 延迟执行，让过渡效果生效
+                    setTimeout(() => {
+                        particle.style.opacity = '1';
+                        particle.style.transform = `translate(${endX - centerX}px, ${endY - centerY}px)`;
+                        
+                        // 粒子消失
+                        setTimeout(() => {
+                            particle.style.opacity = '0';
+                        }, duration * 900);
+                    }, 10);
+                });
+            }, 200);
+            
+            // 动画完成后清除爆炸字母
+            return new Promise(resolve => {
+                setTimeout(() => {
+                    resolve();
+                }, explodingLetters.length * 80 + 2000);
+            });
+        }
+        
+        // 布局最终文本位置
+        function layoutFinalText() {
+            const words = finalText.split(' ');
+            const wordContainers = [];
+            
+            // 计算总宽度（使用等宽字体，每个字符宽度一致）
+            let totalWidth = 0;
+            for (let i = 0; i < words.length; i++) {
+                totalWidth += words[i].length * (LETTER_WIDTH + LETTER_SPACING);
+                if (i < words.length - 1) {
+                    totalWidth += WORD_SPACING;
+                }
+            }
+            
+            // 计算起始X位置，使文本居中
+            let startX = (window.innerWidth - totalWidth) / 2;
+            const centerY = window.innerHeight / 2;
+            
+            let currentX = startX;
+            
+            // 创建每个单词的容器
+            for (let i = 0; i < words.length; i++) {
+                const wordContainer = document.createElement('div');
+                wordContainer.className = 'word-container';
+                wordContainer.dataset.word = words[i];
+                wordContainer.dataset.wordIndex = i;
+                wordContainer.style.left = `${currentX}px`;
+                wordContainer.style.top = `${centerY}px`;
+                container.appendChild(wordContainer);
+                
+                // 添加单词的每个字母的位置占位
+                for (let j = 0; j < words[i].length; j++) {
+                    const letterPosition = document.createElement('div');
+                    letterPosition.className = 'letter-position';
+                    letterPosition.dataset.wordIndex = i;
+                    letterPosition.dataset.posInWord = j;
+                    letterPosition.dataset.char = words[i][j];
+                    letterPosition.style.width = `${LETTER_WIDTH}px`;
+                    letterPosition.style.marginRight = `${LETTER_SPACING}px`;
+                    wordContainer.appendChild(letterPosition);
+                }
+                
+                const wordWidth = words[i].length * (LETTER_WIDTH + LETTER_SPACING);
+                wordContainers.push({
+                    element: wordContainer,
+                    word: words[i],
+                    left: currentX,
+                    width: wordWidth
+                });
+                
+                // 更新下一个单词的起始位置
+                currentX += wordWidth + WORD_SPACING;
+            }
+            
+            return wordContainers;
+        }
+        
+        // 依次将爆炸字母落到最终位置
+        function animateLettersFalling() {
+            // 布局最终文本
+            const wordContainers = layoutFinalText();
+            
+            // 正确的字母映射关系
+            const mappings = [
+                // "inf" to "inf" in "infotainment" (第2个单词)
+                { sourceIndex: 0, targetWordIndex: 2, targetPosInWord: 0 }, // i -> 'i' in infotainment
+                { sourceIndex: 1, targetWordIndex: 2, targetPosInWord: 1 }, // n -> 'n' in infotainment
+                { sourceIndex: 2, targetWordIndex: 2, targetPosInWord: 2 }, // f -> 'f' in infotainment
+                
+                // "init" to "init" in "initialize" (第0个单词)
+                { sourceIndex: 3, targetWordIndex: 0, targetPosInWord: 0 }, // i -> 'i' in initialize
+                { sourceIndex: 4, targetWordIndex: 0, targetPosInWord: 1 }, // n -> 'n' in initialize
+                { sourceIndex: 5, targetWordIndex: 0, targetPosInWord: 2 }, // i -> 'i' in initialize
+                { sourceIndex: 6, targetWordIndex: 0, targetPosInWord: 3 }, // t -> 't' in initialize
+                
+                // "test" to "tes" in "testing" (第3个单词)
+                { sourceIndex: 7, targetWordIndex: 3, targetPosInWord: 1 }, // e -> 'e' in testing
+                { sourceIndex: 8, targetWordIndex: 3, targetPosInWord: 2 }, // s -> 's' in testing
+                { sourceIndex: 9, targetWordIndex: 3, targetPosInWord: 3 }  // t -> 't' in testing
+            ];
+            
+            // 获取爆炸字母元素
+            const explodingLetters = document.querySelectorAll('.exploding-letter');
+            
+            // 为每个映射的字母创建飞行动画
+            mappings.forEach((mapping, index) => {
+                const delay = 0.3 + index * 0.2; // 依次落地
+                
+                // 查找目标单词容器
+                const targetWord = wordContainers[mapping.targetWordIndex];
+                
+                // 获取目标字母位置元素
+                const letterPositions = targetWord.element.querySelectorAll('.letter-position');
+                const targetLetterPosition = letterPositions[mapping.targetPosInWord];
+                
+                // 获取目标字母在页面中的绝对位置
+                const rect = targetLetterPosition.getBoundingClientRect();
+                const targetLeft = rect.left;
+                const targetTop = rect.top;
+                
+                // 找到对应的爆炸字母
+                const sourceLetterIndex = mapping.sourceIndex;
+                const explodingLetter = Array.from(explodingLetters).find(el => 
+                    parseInt(el.dataset.index) === sourceLetterIndex
+                );
+                
+                if (explodingLetter) {
+                    // 标记字母将要移动到的位置
+                    explodingLetter.dataset.targetWordIndex = mapping.targetWordIndex;
+                    explodingLetter.dataset.targetPosInWord = mapping.targetPosInWord;
+                    
+                    // 依次落地动画
+                    setTimeout(() => {
+                        // 设置弹跳效果
+                        explodingLetter.style.transition = `
+                            left 1s cubic-bezier(0.25, 0.1, 0.25, 1.4), 
+                            top 1s cubic-bezier(0.25, 0.1, 0.25, 1.4),
+                            transform 1s cubic-bezier(0.25, 0.1, 0.25, 1.4)
+                        `;
+                        explodingLetter.style.left = `${targetLeft}px`;
+                        explodingLetter.style.top = `${targetTop}px`;
+                        explodingLetter.style.transform = 'rotate(0deg) scale(1)';
+                        
+                        // 添加落地弹跳效果
+                        explodingLetter.addEventListener('transitionend', function onceEnd(e) {
+                            if (e.propertyName === 'top') {
+                                explodingLetter.style.transition = 'transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)';
+                                explodingLetter.style.transform = 'scale(1.2)';
+                                
+                                setTimeout(() => {
+                                    explodingLetter.style.transform = 'scale(1)';
+                                }, 150);
+                                
+                                explodingLetter.removeEventListener('transitionend', onceEnd);
+                            }
+                        });
+                    }, delay * 1000);
+                }
+            });
+            
+            // 所有字母到位后，显示剩余的字母完成单词
+            setTimeout(() => {
+                // 为每个字母位置添加剩余字母
+                wordContainers.forEach((wordContainer) => {
+                    const letterPositions = wordContainer.element.querySelectorAll('.letter-position');
+                    
+                    letterPositions.forEach((position, posIndex) => {
+                        const wordIndex = parseInt(position.dataset.wordIndex);
+                        const posInWord = parseInt(position.dataset.posInWord);
+                        const char = position.dataset.char;
+                        
+                        // 检查此位置是否已有爆炸字母
+                        const existingLetter = Array.from(document.querySelectorAll('.exploding-letter')).find(el => 
+                            parseInt(el.dataset.targetWordIndex) === wordIndex && 
+                            parseInt(el.dataset.targetPosInWord) === posInWord
+                        );
+                        
+                        // 如果没有爆炸字母在这个位置，添加剩余字母
+                        if (!existingLetter) {
+                            const remainingLetter = document.createElement('div');
+                            remainingLetter.className = 'remaining-letter';
+                            remainingLetter.textContent = char;
+                            
+                            // 获取位置元素的位置
+                            const rect = position.getBoundingClientRect();
+                            remainingLetter.style.left = `${rect.left}px`;
+                            remainingLetter.style.top = `${rect.top}px`;
+                            container.appendChild(remainingLetter);
+                            
+                            // 让剩余字母渐入显示，按单词顺序错开显示
+                            setTimeout(() => {
+                                remainingLetter.style.transition = 'opacity 0.5s ease';
+                                remainingLetter.style.opacity = '1';
+                            }, (wordIndex * 5 + posIndex) * 50); // 错开渐入时间
+                        }
+                    });
+                });
+                
+                // 动画完成后显示原始标题
+                setTimeout(() => {
+                    // 清理动画元素
+                    container.innerHTML = '';
+                    
+                    // 显示原始标题
+                    mainTitle.style.opacity = '1';
+                    mainSubtitle.style.opacity = '1';
+                    mainLinks.style.opacity = '1';
+                }, 1500);
+            }, (0.3 + mappings.length * 0.2 + 1.2) * 1000); // 等所有映射字母飞行结束后
+        }
+        
+        // 自动启动动画
+        async function startAnimation() {
+            // 隐藏原始标题
+            mainTitle.style.opacity = '0';
+            mainSubtitle.style.opacity = '0';
+            mainLinks.style.opacity = '0';
+            
+            // 清除容器
+            container.innerHTML = '';
+            explosionContainer.innerHTML = '';
+            
+            // 重新设置初始文本
+            setupInitialText();
+            
+            // 等待一小段时间让初始文本显示
+            setTimeout(async () => {
+                // 创建爆炸粒子
+                createExplosionParticles(150);
+                
+                // 执行爆炸动画 - 等待动画完成
+                await animateExplosion();
+                
+                // 字母落下动画
+                animateLettersFalling();
+            }, 600);
+        }
+        
+        // 页面加载完成后自动启动动画
+        window.addEventListener('load', function() {
+            setTimeout(startAnimation, 1000);
+        });
+    </script>
+</body>
+</html>

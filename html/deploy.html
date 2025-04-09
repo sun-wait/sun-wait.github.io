@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>本地部署流程详情</title>
+  <title>Infinium Test · 极测无界 | 本地部署流程详情</title>
   <!--    <link rel="icon" type="image/x-ico" href="./icon-8.png" />-->
 <!--  <link rel="stylesheet" type="text/css" href="../css/overview.css" />-->
 <!--  <link rel="stylesheet" type="text/css" href="../css/animate.css" />-->
@@ -106,6 +106,10 @@
       margin: 0;
       padding: 0;
       margin-top: 50px;
+      /*min-height: 100vh;*/
+      width: 1000px;
+      margin: 0 auto;
+      /*background: red;*/
     }
 
 
@@ -126,13 +130,14 @@
       /*background: #f5f4f4;*/
       width: 1000px;
       padding: 20px 30px;
-      margin: 0 auto;
+      /*margin: 0 auto;*/
       /*color: red;*/
       box-sizing: border-box;
     }
 
     .steps_containter{
       /*padding-left: 15px;*/
+      /*background: blue;*/
     }
 
 
@@ -188,18 +193,161 @@
       justify-content: center;
       align-items: center;
     }
+
+    /* 新增导航栏样式 */
+    .side-nav {
+      position: fixed;
+      left: 0;
+      top: 44px;
+      width: 240px;
+      height: calc(100vh - 74px);
+      background-color: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-right: 1px solid rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      overflow-y: auto;
+      z-index: 998;
+    }
+
+    .nav-item {
+      padding: 8px 12px;
+      margin: 4px 0;
+      border-radius: 6px;
+      color: #2c3e50;
+      text-decoration: none;
+      display: block;
+      transition: all 0.3s ease;
+      font-size: 14px;
+    }
+
+    .nav-item:hover {
+      background-color: rgba(52, 152, 219, 0.1);
+      color: #2980b9;
+      transform: translateX(4px);
+    }
+
+    .nav-item.active {
+      background-color: rgba(52, 152, 219, 0.2);
+      color: #2980b9;
+      font-weight: 500;
+    }
+
+    /* 调整主内容区域 */
+    /*#guidance-container {*/
+    /*  margin-left: 280px;*/
+    /*  width: calc(100% - 320px);*/
+    /*}*/
+
+    /* 新增标题样式 */
+    h1 {
+      margin-top: 30px;
+      margin-bottom: 40px;
+      font-size: 2.2rem;
+      font-weight: 600;
+      color: #2c3e50;
+      text-align: center;
+      padding-bottom: 20px;
+      border-bottom: 2px solid #3498db;
+    }
+
+    h5 {
+      padding-top: 20px;
+      padding-bottom: 10px;
+      font-size: 1.4rem;
+      font-weight: 500;
+      color: #2980b9;
+      margin-top: 30px;
+      margin-bottom: 15px;
+      border-left: 4px solid #3498db;
+      padding-left: 10px;
+      background-color: rgba(52, 152, 219, 0.05);
+    }
+
+    /* 调整列表样式 */
+    ul {
+      width: 90%;
+      margin: 15px 0;
+      padding-left: 30px;
+    }
+
+    li {
+      line-height: 2.2rem;
+      margin: 8px 0;
+      color: #34495e;
+    }
+
+    /* 增强代码块样式 */
+    pre {
+      background-color: #f5f7fa;
+      padding: 15px;
+      border-radius: 6px;
+      border: 1px solid #e1e4e8;
+      margin: 15px 0;
+    }
+
+    code {
+      background-color: #f5f7fa;
+      padding: 3px 6px;
+      border-radius: 4px;
+      border: 1px solid #e1e4e8;
+      font-family: 'Fira Code', Consolas, monospace;
+      color: #d63200;
+    }
+
+    /* 图片样式优化 */
+    .img_example {
+      width: 90%;
+      display: block;
+      margin: 15px auto;
+      border-radius: 6px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    /* 链接样式 */
+    .link {
+      color: #2980b9;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .link:hover {
+      color: #1c5980;
+      text-decoration: underline;
+    }
+    h5{
+      scroll-margin-top: 60px;
+    }
+
   </style>
 </head>
 <body>
 
 <nav class="navbar">
-  <span href="#" class="nav-logo">一起玩转车辆</span>
+  <span href="#" class="nav-logo">Infinium Test · 极测无界</span>
   <div class="nav-links">
     <a href="../index.html" class="nav-link">首页</a>
     <a href="./document-center.html" class="dropdown-item">文档中心</a>
 <!--    <a href="./api.html" class="dropdown-item">API文档</a>-->
   </div>
 </nav>
+
+<!-- 新增导航栏 -->
+<div class="side-nav" id="sideNav">
+  <a href="#step1" class="nav-item">1. 下载软件包</a>
+  <a href="#step2" class="nav-item">2. 解压到指定目录</a>
+  <a href="#step3" class="nav-item">3. 配置环境变量</a>
+  <a href="#step4" class="nav-item">4. 申请证书文件</a>
+  <a href="#step5" class="nav-item">5. 放置证书文件</a>
+  <a href="#step6" class="nav-item">6. 安装Git</a>
+  <a href="#step7" class="nav-item">7. 配置PCAN驱动</a>
+  <a href="#step8" class="nav-item">8. 配置PyCharm</a>
+  <a href="#step9" class="nav-item">9. 连接网络</a>
+  <a href="#step10" class="nav-item">10. 配置Config.json</a>
+  <a href="#step11" class="nav-item">11. 启动车机</a>
+  <a href="#step12" class="nav-item">12. Power cycle test</a>
+  <a href="#step13" class="nav-item">13. Stress test</a>
+</div>
 
 <div id="guidance">
 
@@ -210,7 +358,7 @@
 
     <div class="steps_containter">
       <div class="steps">
-        <h5>1. 下载自动化解决方案软件包</h5>
+        <h5 id="step1">1. 下载自动化解决方案软件包</h5>
         <ul>
           <li><a style="" href="https://peedp.saic-gm.com/ccm/web/projects/VCS_Info4.0_High_Platform_PATAC_RTC#action=com.ibm.team.scm.browseElement&workspaceItemId=_ewzjAL8DEemrVdX-kVROUQ&componentItemId=_eMVJwO8jEemB8pkZYRolcA&itemType=com.ibm.team.scm.Folder&itemId=_25FM8P5WEe-imMtnq71XVQ">
             <span class="link" style="color: blue;">从RTC上下载最新版本的工具包到本地PC</span></a>
@@ -220,7 +368,7 @@
           <img src="../resources/images/md5_check.png" class= "img_example"></img>
         </ul>
 
-        <h5>2. 解压到指定目录</h5>
+        <h5 id="step2">2. 解压到指定目录</h5>
         <ul>
           <li>在D盘或E盘根目录下创建一个文件夹: <strong style="color: #2980b9">auto_test</strong> (此目录今后将作为自动化测试的根目录)</li>
           <li>将下载好的软件压缩包文件解压到刚刚创建好的 <strong style="color: #2980b9">auto_test</strong> 文件夹内</li>
@@ -228,7 +376,7 @@
           <img src="../resources/images/content.png" class= "img_example"></img>
         </ul>
 
-        <h5>3. 配置python/adb环境变量 & 生成注册编号</h5>
+        <h5 id="step3">3. 配置python/adb环境变量 & 生成注册编号</h5>
         <ul>
           <li>双击lisence.bat文件，至执行完成</li>
           <li>确认当前目录下有新的注册编号文件生成</li>
@@ -236,20 +384,20 @@
           <li>可在Windows cmd窗口中使用 <code> where python</code> , <code> where pip</code>, <code> where adb</code> 这3条指令确认python,pip,adb已经正确加入环境变量</li>
         </ul>
 
-        <h5>4. 申请证书文件</h5>
+        <h5 id="step4">4. 申请证书文件</h5>
         <ul>
           <li>将 <strong style="color: black">#3</strong> 中生成的注册编号文件发送给VCU软件测试团队License管理员 @Li Zhao, @Cheng Jie 生成证书文件license.key</li>
 
         </ul>
 
-        <h5>5. 将证书文件放置到正确位置</h5>
+        <h5 id="step5">5. 将证书文件放置到正确位置</h5>
         <ul>
           <li>将生成的证书文件license.key放置在 <strong style="color: #2980b9">D:\auto_test\automation_cases\</strong> 目录下</li>
           <img src="../resources/images/license.png" class= "img_example"></img>
 
         </ul>
 
-        <h5>6. 安装Git，配置环境变量 (若曾经完成，跳过)</h5>
+        <h5 id="step6">6. 安装Git，配置环境变量 (若曾经完成，跳过)</h5>
         <ul>
           <li><a style="" href="https://git-scm.com">
             <span class="link" style="color: blue;">下载Git并安装</span></a>
@@ -258,7 +406,7 @@
 
         </ul>
 
-        <h5>7. PC连接好PCAN硬件， 配置驱动</h5>
+        <h5 id="step7">7. PC连接好PCAN硬件， 配置驱动</h5>
         <ul>
           <li>将PCAN硬件一端连接PC，另一端连接VCU侧ICAN</li>
           <li>安装PCAN硬件的驱动软件包，在设备管理器中确认PCAN设备驱动正常</li>
@@ -267,7 +415,7 @@
         </ul>
 
 
-        <h5>8. 在PyCharm中打开automation_cases工程文件夹，配置python解释器路径</h5>
+        <h5 id="step8">8. 在PyCharm中打开automation_cases工程文件夹，配置python解释器路径</h5>
         <ul>
           <li>在PyCharm中选择 automation_cases 文件夹并打开</li>
           <li>在PyCharm中 File > Settings > Python Intepreter 中设置已存在的解释器路径: <strong style="color: red">D:\auto_test\automation_lib\python-3.12.9-embed-amd64\python.exe</strong> </li>
@@ -275,11 +423,11 @@
 
         </ul>
 
-        <h5>9. PC电脑连接网络</h5>
+        <h5 id="step9">9. PC电脑连接网络</h5>
         <ul>
         </ul>
 
-        <h5>10. 配置Config.json配置文件中关于台架VCU车型参数</h5>
+        <h5 id="step10">10. 配置Config.json配置文件中关于台架VCU车型参数</h5>
         <ul>
           <li>打开 automation_cases/config/Config.json 配置文件，正确设置与当前台架匹配的 <strong> BENCH_INFO, PROJECT, MODEL_YEAR, VEHICLE_PROPULSION_TYPE </strong> 必要配置的属性值</li>
           <pre><code style="color: blue; font-weight: bolder;font-size: 1.2rem;">
@@ -291,7 +439,7 @@
         </ul>
 
 
-        <h5>11. 启动车机</h5>
+        <h5 id="step11">11. 启动车机</h5>
         <ul>
           <li>选择 automation_cases/StartServer.py 运行，启动can总线相关的服务</li>
           <li>将 automation_cases/Boot.py 代码中总线VIN相关的行的代码注释掉，然后运行该脚本，VCU会被唤醒起来，数秒后屏幕会被点亮，且最终PowerMode=Run/Propulsion (如需要使用到总线VIN，需要将此处N配置为实际的VIN值，否则会Theft Lock)</li>
@@ -300,7 +448,7 @@
 
         </ul>
 
-        <h5>12. Power cycle test</h5>
+        <h5 id="step12">12. Power cycle test</h5>
         <ul>
           <li>打开 automation_cases/config/Config.json 配置文件，正确设置与当前台架匹配的 <strong> BASE_TEST_DISK, SERIAL_PORT </strong> 必要配置的值</li>
           <pre><code style="color: blue; font-weight: bolder;font-size: 1.2rem;">
@@ -328,7 +476,7 @@ SERIAL_LOG = False  # code is in charge of recording serial log, avoid using put
 
         </ul>
 
-        <h5>13. Stress test</h5>
+        <h5 id="step13">13. Stress test</h5>
         <ul>
           <li>开始连续24h/48h/72h压测前，也需要在 automation_cases/cases/stress_test/SystemPressureRunner.py 脚本文件内配置参数</li>
           <li>选择 automation_cases/cases/stress_test/SystemPressureRunner.py 运行，开启系统压测</li>
@@ -380,8 +528,29 @@ SERIAL_LOG = False  # code is in charge of recording serial log, avoid using put
   // console.log(homepage_url)
   // sessionStorage.setItem("homepage_url",homepage_url)
 
+  // 新增导航栏交互
+  const navItems = document.querySelectorAll('.nav-item');
+  const sections = document.querySelectorAll('h5');
 
+  function updateNav() {
+    let current = '';
+    sections.forEach(section => {
+      const sectionTop = section.offsetTop;
+      if (window.scrollY >= sectionTop - 100) {
+        current = section.getAttribute('id');
+      }
+    });
 
+    navItems.forEach(item => {
+      item.classList.remove('active');
+      if (item.getAttribute('href') === `#${current}`) {
+        item.classList.add('active');
+      }
+    });
+  }
+
+  window.addEventListener('scroll', updateNav);
+  window.addEventListener('load', updateNav);
 </script>
 
 <style>
