@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Infinium Test · 极测无界 | 文档中心</title>
+    <title>infinitest · 极测无界 | 文档中心</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -126,7 +126,7 @@
       color: #aeaeb6;
     }
     h2 {
-      border-top: 2px solid #eee;
+      /*border-top: 2px solid #eee;*/
       /*margin-top: 20px;*/
       /*padding-bottom: 10px;*/
       font-size: 2rem;
@@ -319,7 +319,7 @@
 
 <body>
   <nav class="navbar">
-    <span href="#" class="nav-logo">Infinium Test · 极测无界</span>
+    <span href="#" class="nav-logo">infinitest · 极测无界</span>
     <div class="nav-links">
       <a href="../index.html" class="nav-link">首页</a>
       <a href="./document-center.html" class="dropdown-item">文档中心</a>
@@ -327,23 +327,12 @@
   </nav>
 
   <aside class="side-nav">
-    <h2>文档导航</h2>
+    <h2>问题导航</h2>
     <ul>
-      <li><a href="#部署文档">部署文档</a></li>
-      <li><a href="#模块文档">模块文档</a></li>
-      <li><a href="#api参考">API参考</a></li>
-      <ul style="margin-left: 20px; font-size: 0.9em;">
-        <li><a href="#通用">通用</a></li>
-        <li><a href="#音频">音频</a></li>
-        <li><a href="#标定">标定</a></li>
-        <li><a href="#总线服务">总线服务</a></li>
-        <li><a href="#仪表">仪表</a></li>
-        <li><a href="#性能">性能</a></li>
-        <li><a href="#UI自动化">UI自动化</a></li>
-        <li><a href="#图像处理">图像处理</a></li>
-      </ul>
-      <li><a href="#常见问题">常见问题</a></li>
-      <li><a href="#版本历史">版本历史</a></li>
+      <li><a href="#如何安装">如何部署项目？</a></li>
+      <li><a href="#如何更新到最新版本">如何更新到最新版本？</a></li>
+      <li><a href="#解决ADB连接问题">解决ADB连接问题？</a></li>
+      <li><a href="#证书过期怎么办">证书过期怎么办？</a></li>
     </ul>
   </aside>
 
@@ -351,39 +340,30 @@
         <h2 id="常见问题" class="section-title">常见问题</h2>
         <ol class="faq-list">
           <li id="如何安装" class="faq-item">
-            <a href="#" class="faq-question">Q: 如何安装 <strong>Infinium Test · 极测无界</strong> 项目？</a>
+            <a href="#" class="faq-question">Q: 如何安装 <strong>infinitest · 极测无界</strong> 项目？</a>
             <div class="answer">
                 <p>A: 请按照部署文档中的流程说明在本地电脑上进行操作</p>
             </div>
           </li>
-          <li id="如何配置" class="faq-item">
-            <a href="#" class="faq-question">Q: 如何配置开发环境？</a>
-            <div class="answer">
-                <p>A: 请按照部署文档中的流程说明在本地电脑上进行操作</p>
-            </div>
+
           </li>
-          <li id="如何更新" class="faq-item">
+          <li id="如何更新到最新版本" class="faq-item">
             <a href="#" class="faq-question">Q: 如何更新到最新版本？</a>
             <div class="answer">
-                <p>A: 需要在首页 > 下载工具 > 版本发布页面查看是否有更新的版本发布，若有新版本，可在发布页点击下载按钮下载新版本，然后根据部署文档完成更新</p>
+                <p>A: 需要在首页 > 下载工具 > 版本发布页面查看是否有更新的版本发布，若有新版本，可在发布页点击下载按钮下载新版本，然后根据部署文档完成更新。</p>
             </div>
           </li>
-          <li id="ADB连接" class="faq-item">
+          <li id="解决ADB连接问题" class="faq-item">
             <a href="#" class="faq-question">Q: 解决ADB连接问题？</a>
             <div class="answer">
-                <p>A: 请按照部署文档中的流程说明在本地电脑上进行操作</p>
+                <p>A: 1. 配置PC静态ip 为192.168.222.XX; 2. ping 192.168.222.108 查看状态,无法ping通可插拔线束或更换Hub再试。</p>
+
             </div>
           </li>
-          <li id="多设备连接" class="faq-item">
-            <a href="#" class="faq-question">Q: 多设备连接管理？</a>
+          <li id="证书过期怎么办" class="faq-item">
+            <a href="#" class="faq-question">Q: 证书过期怎么办？</a>
             <div class="answer">
-                <p>A: 请按照部署文档中的流程说明在本地电脑上进行操作</p>
-            </div>
-          </li>
-          <li id="线连接" class="faq-item">
-            <a href="#" class="faq-question">Q: 无线连接设置？</a>
-            <div class="answer">
-                <p>A: 请按照部署文档中的流程说明在本地电脑上进行操作</p>
+                <p>A: 证书过期后， <strong>infinitest · 极测无界</strong> 项目将无法继续提供服务，请邮件联系管理员申请新的证书文件。</p>
             </div>
           </li>
         </ol>
